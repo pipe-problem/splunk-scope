@@ -131,4 +131,4 @@ Scanned `src/pages` (except Intake), `src/components/report`, `src/components/so
 
 ### Prior results
 
-See [`docs/archive/TEST_RESULTS.md`](archive/TEST_RESULTS.md) for 2026-06-02 export redesign and app recommendation engine scenarios (235+ engine tests).
+See `../splunk-scope-reference/docs/archive/TEST_RESULTS.md` for 2026-06-02 export redesign and app recommendation engine scenarios (235+ engine tests).

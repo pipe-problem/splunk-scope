@@ -2,7 +2,7 @@
 /**
  * Validates every source ID in src/data/sources.json against satellite catalogs
  * (sizing rates, counting methods, use-case mappings, log capabilities, vendor
- * multipliers, research notes) and writes docs/archive/catalog-validation-report.{md,json}.
+ * multipliers, research notes) and writes catalog-validation-report.{md,json} to ../splunk-scope-reference/docs/archive/.
  *
  * Usage: node scripts/validateSourceCatalog.js
  * Exit 1 if any catalog source is missing a sizing rate or counting method; else 0.
@@ -12,11 +12,12 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import { getReferenceDocsArchiveDir } from './lib/catalogUtils.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.join(__dirname, '..')
 const DATA = path.join(ROOT, 'src', 'data')
-const DOCS = path.join(ROOT, 'docs', 'archive')
+const DOCS = getReferenceDocsArchiveDir()
 
 const RATE_ALIASES = {
   firewalls: 'firewall_logs',
@@ -396,7 +397,7 @@ function main() {
     'utf8',
   )
 
-  console.log(`Wrote docs/archive/catalog-validation-report.md and .json (${totalSources} sources).`)
+  console.log(`Wrote ${path.join(DOCS, 'catalog-validation-report.md')} and .json (${totalSources} sources).`)
 
   const blockers = rowResults.filter((r) =>
     !r.checks.sizing || !r.checks.counting,

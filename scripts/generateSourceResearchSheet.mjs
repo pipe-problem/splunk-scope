@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generates docs/source-sizing-research-template.xlsx for field research on GB/day estimates.
+ * Generates source-sizing-research-template.xlsx in ../splunk-scope-reference/docs/
  * Fill in researched values and return the sheet to update sizingRates.json.
  *
  * Usage: node scripts/generateSourceResearchSheet.mjs
@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import XLSX from 'xlsx';
+import { getReferenceDocsDir } from './lib/catalogUtils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
@@ -97,9 +98,7 @@ const instructions = [
 const ws2 = XLSX.utils.json_to_sheet(instructions);
 XLSX.utils.book_append_sheet(wb, ws2, 'Instructions');
 
-const outDir = path.join(root, 'docs');
-fs.mkdirSync(outDir, { recursive: true });
-const outPath = path.join(outDir, 'source-sizing-research-template.xlsx');
+const outPath = path.join(getReferenceDocsDir(), 'source-sizing-research-template.xlsx');
 XLSX.writeFile(wb, outPath);
 
 console.log(`Wrote ${rows.length} sources to ${outPath}`);

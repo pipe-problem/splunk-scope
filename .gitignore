@@ -36,3 +36,12 @@ customer_deliverables.zip
 
 # Vite cache
 .vite/
+
+# Local reference material (canonical copy: ../splunk-scope-reference/)
+CUSTOMERSIZING*.xlsx
+ORIGINAL Sizing Calculator*.xlsx
+scope_sizing_test_examples/
+deliverables/
+docs/archive/
+docs/screenshots/
+docs/source-sizing-research-template.xlsx

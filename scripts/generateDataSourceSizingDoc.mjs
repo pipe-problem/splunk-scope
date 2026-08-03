@@ -1,10 +1,11 @@
 /**
- * Generates docs/archive/DATA_SOURCE_SIZING_FIELDS.md from sources.json + sizingRates.json.
+ * Generates DATA_SOURCE_SIZING_FIELDS.md in ../splunk-scope-reference/docs/archive/
  * Run from repo root: node scripts/generateDataSourceSizingDoc.mjs
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { getReferenceDocsArchiveDir } from './lib/catalogUtils.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
@@ -147,7 +148,7 @@ function main() {
     lines.push('')
   }
 
-  const outPath = path.join(root, 'docs/archive/DATA_SOURCE_SIZING_FIELDS.md')
+  const outPath = path.join(getReferenceDocsArchiveDir(), 'DATA_SOURCE_SIZING_FIELDS.md')
   fs.writeFileSync(outPath, lines.join('\n'), 'utf8')
   console.log(`Wrote ${outPath} (${lines.length} lines)`)
 }

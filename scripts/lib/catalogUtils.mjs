@@ -9,6 +9,31 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export const REPO_ROOT = path.join(__dirname, '..', '..')
 export const SOURCES_PATH = path.join(REPO_ROOT, 'src', 'data', 'sources.json')
 
+/** Local-only artifacts live in ../splunk-scope-reference (override with REFERENCE_ROOT). */
+export function getReferenceRoot() {
+  return process.env.REFERENCE_ROOT
+    ? path.resolve(process.env.REFERENCE_ROOT)
+    : path.join(REPO_ROOT, '..', 'splunk-scope-reference')
+}
+
+export function getReferenceDocsArchiveDir() {
+  const dir = path.join(getReferenceRoot(), 'docs', 'archive')
+  fs.mkdirSync(dir, { recursive: true })
+  return dir
+}
+
+export function getReferenceDocsDir() {
+  const dir = path.join(getReferenceRoot(), 'docs')
+  fs.mkdirSync(dir, { recursive: true })
+  return dir
+}
+
+export function getReferenceScreenshotsDir() {
+  const dir = path.join(getReferenceRoot(), 'docs', 'screenshots')
+  fs.mkdirSync(dir, { recursive: true })
+  return dir
+}
+
 /** @returns {import('node:fs').PathLike} */
 export function loadSourcesJson() {
   return JSON.parse(fs.readFileSync(SOURCES_PATH, 'utf8'))

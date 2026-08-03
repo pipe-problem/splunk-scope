@@ -15,10 +15,11 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getReferenceScreenshotsDir } from './lib/catalogUtils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'docs', 'screenshots');
+const OUT_DIR = getReferenceScreenshotsDir();
 const STORAGE_KEY = 'splunk-scope-session';
 
 const VIEWPORT = { width: 1440, height: 900 };

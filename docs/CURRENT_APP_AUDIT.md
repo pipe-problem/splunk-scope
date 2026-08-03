@@ -27,4 +27,4 @@
 - **UI:** Interpretation **Suggested Splunk Products**; Report accordion uses same engine
 - **Guide:** `docs/APP_RECOMMENDATION_ENGINE.md`
 
-Historical detail: [`docs/archive/CURRENT_APP_AUDIT.md`](archive/CURRENT_APP_AUDIT.md)
+Historical detail: `../splunk-scope-reference/docs/archive/CURRENT_APP_AUDIT.md`

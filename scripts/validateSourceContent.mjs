@@ -13,6 +13,7 @@ import {
   catalogById,
   deriveUnitLabel,
   flattenCatalog,
+  getReferenceDocsArchiveDir,
   loadSourcesJson,
 } from './lib/catalogUtils.mjs';
 
@@ -232,7 +233,7 @@ async function main() {
     }
   }
 
-  const reportPath = path.join(REPO_ROOT, 'docs', 'archive', 'catalog-content-validation.json');
+  const reportPath = path.join(getReferenceDocsArchiveDir(), 'catalog-content-validation.json');
   const report = {
     generatedAt: new Date().toISOString(),
     sourceCount: flat.length,

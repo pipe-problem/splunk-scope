@@ -36,7 +36,7 @@
 | **Coverage** | Multi-use-case domain scoring with adjustable ingest buffer |
 | **Architecture paths** | Four phased paths (Crawl + Walk A/B + Run) in a Coverage-style carousel: readiness gauge, KPI strip, circular navigation; technical Sources \| Scoring accordion; explicit CTA to set report path |
 | **Report** | Overview (ingest donut chart), Sources, Startup Guide; **Export Customer Pack** (interactive HTML); estimate disclaimers |
-| **Sizing research** | `docs/source-sizing-research-template.xlsx` — fill researched GB/day and return to update `sizingRates.json` |
+| **Sizing research** | Run `npm run gen:research-sheet` → writes workbook to local `../splunk-scope-reference/docs/`; return researched values to update `sizingRates.json` |
 | **Session tools** | Export/import JSON, scenarios, compare |
 
 ---
@@ -65,7 +65,7 @@
 ## Related artifacts
 
 - [`README.md`](../README.md) — run and workflow
-- [`DOC_INDEX.md`](./DOC_INDEX.md) — full documentation map (includes sizing, Splunkbase, archive)
-- `docs/source-sizing-research-template.xlsx` — sizing research workbook
+- [`DOC_INDEX.md`](./DOC_INDEX.md) — full documentation map
+- Local reference folder `../splunk-scope-reference/` — sizing workbooks, archive, screenshots (not in git)
 - `src/data/premiumSplunkbaseIds.json` — Splunkbase ID map for premium apps
 - `src/data/sizingRates.json` — authoritative GB/day bands (updated from research sheet)

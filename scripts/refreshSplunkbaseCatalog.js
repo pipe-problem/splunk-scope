@@ -13,13 +13,15 @@ import {
   canonicalSplunkbaseUrl,
   parseAppIdFromUrl,
 } from './lib/splunkbaseValidator.mjs';
+import { getReferenceDocsArchiveDir } from './lib/catalogUtils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
+const REF_ARCHIVE = getReferenceDocsArchiveDir();
 const SEED_PATH = path.join(ROOT, 'src/data/splunkbaseCatalog.seed.json');
 const CATALOG_PATH = path.join(ROOT, 'src/data/splunkbaseCatalog.json');
-const REPORT_PATH = path.join(ROOT, 'docs/archive/SPLUNKBASE_CATALOG_REPORT.md');
-const VALIDATION_JSON_PATH = path.join(ROOT, 'docs/archive/splunkbase-catalog-validation.json');
+const REPORT_PATH = path.join(REF_ARCHIVE, 'SPLUNKBASE_CATALOG_REPORT.md');
+const VALIDATION_JSON_PATH = path.join(REF_ARCHIVE, 'splunkbase-catalog-validation.json');
 
 const DELAY_MS = 150;
 
