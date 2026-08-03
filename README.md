@@ -1,228 +1,102 @@
 # Splunk Scope
 
-**Local planning and architecture tool for Splunk Solutions Engineers.**
+**Plan Splunk deployments with your customer—in the room, on your laptop.**
 
-Splunk Scope runs entirely in your browser. It helps you structure post-discovery workshops: capture intake, interpret customer goals, configure data sources with honest sizing estimates, validate telemetry coverage, compare phased architecture paths (Crawl / Walk / Run), and produce customer-ready reports—all without sending session data to external services.
+Splunk Scope is a browser-based workshop tool for Solutions Engineers. Use it after discovery to capture customer context, size data sources with transparent estimates, check telemetry coverage, compare Crawl / Walk / Run architecture paths, and export customer-ready reports.
 
-> **Disclaimer:** Outputs are planning guidance, not capacity commitments or commercial quotes. Validate estimates with customer-specific measurements, retention goals, and deployment constraints before purchasing or staffing decisions.
+Everything runs locally in your browser. Customer session data never leaves your machine unless you choose to export it.
 
-**Version:** 2.0.0 · **Stack:** React 19 · Vite 8 · Tailwind CSS 4
+> **Planning guidance only.** GB/day totals, coverage scores, and priority labels are estimates—not capacity commitments, quotes, or purchase orders. Validate with PoV measurements, retention requirements, and deployment constraints before staffing or licensing decisions.
 
 ---
 
-## Quick start — get Scope running in 5 minutes
+## Install and open Scope
 
-### Prerequisites
+You need [Node.js 20+](https://nodejs.org/) and a modern browser (Chrome, Edge, or Firefox).
 
-| Requirement | Version |
-|-------------|---------|
-| [Node.js](https://nodejs.org/) | 20 LTS or newer |
-| npm | Comes with Node (or use pnpm/yarn with equivalent commands) |
-| Modern browser | Chrome, Edge, or Firefox |
-
-### Step 1 — Get the code
-
-**Option A — Clone from GitHub** (after you publish the repo):
+**Get the project**
 
 ```bash
-git clone https://github.com/YOUR_ORG/splunk-scope.git
+git clone https://github.com/pipe-problem/splunk-scope.git
 cd splunk-scope
-```
-
-**Option B — Download ZIP**
-
-1. Open the GitHub repository page
-2. Click **Code → Download ZIP**
-3. Unzip and `cd` into the project folder
-
-### Step 2 — Install dependencies
-
-```bash
 npm install
-```
-
-This installs React, Vite, Tailwind, and test tooling into `node_modules/` (not committed to git).
-
-### Step 3 — Start the dev server
-
-```bash
 npm run dev
 ```
 
-Open the URL shown in the terminal (typically **http://localhost:5173**).
+Open the URL shown in your terminal (usually **http://localhost:5173**).
 
-### Step 4 — Begin your first session
+Prefer a ZIP? On the GitHub repo page, choose **Code → Download ZIP**, unzip the folder, then run `npm install` and `npm run dev` inside it.
 
-1. On the **Home** page, click **Begin planning session**
-2. On **Intake**, click **Load Example** to try the fictional *Chuck Robbins retail* demo—or enter a real customer name, deployment type, use cases, and optional budget
-3. Walk the sidebar: **Analysis → Data Sources → Review → Architecture Paths → Report**
-4. On **Architecture Paths**, click **Select for report** on a path, then open **Report** and try **Export Customer Pack**
-
-### Step 5 — Save your work
-
-- Session data auto-saves in browser **localStorage**
-- Use sidebar **Tools → Export** to download a portable `.json` session file
-- Use **Import saved session** on Home to resume on another machine or browser
-
-### Production build (optional)
-
-Serve a static build without the dev server:
-
-```bash
-npm run build      # output → dist/
-npm run preview    # serve dist/ locally
-```
-
-Deploy `dist/` to any static host (S3, nginx, GitHub Pages, internal web server). Scope has no backend—all logic runs client-side.
+Scope does not require a Splunk login to run.
 
 ---
 
-## User guide
+## Your first planning session
 
-**Full walkthrough:** [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)
+1. On **Home**, click **Begin planning session**.
+2. On **Intake**, enter the customer name, deployment type (Cloud, on-prem, or hybrid), use cases, and optional budget—or click **Load Example** to explore the fictional *Chuck Robbins retail* demo.
+3. Follow the sidebar through the workshop:
+   - **Analysis** — review interpreted goals and suggested Splunk products
+   - **Data Sources** — set Current / Future / Skip, enter sizing, and note overlap warnings
+   - **Review** — confirm GB/day totals before architecture work
+   - **Architecture Paths** — compare Crawl, Walk, and Run; **Select for report** on the path you want to present
+   - **Report** — preview and **Export Customer Pack** (PDF, PPTX, or bundled files)
 
-That guide covers every workflow step in detail: Intake, Analysis, source configuration (including composite sizing panels for IaaS and M365), overlap annotations, Review, Coverage, Architecture Paths, Report exports, session tools, and workshop tips.
+**Save your work:** Scope auto-saves in your browser. Use **Tools → Export** in the sidebar for a portable `.json` file you can import later on another machine via **Import saved session** on Home.
 
-### Workflow at a glance
+---
+
+## Workshop flow
 
 ```
 Home → Intake → Analysis → Data Sources → Review → Architecture Paths → Report
-                              ↑
-                    Source Reference Library (SE sidebar)
-                    Coverage Analysis (SE sidebar, /#/coverage)
 ```
 
-| Step | What you do |
-|------|-------------|
+| Step | What you do here |
+|------|------------------|
 | **Intake** | Customer context, use cases, apps, goals, optional budget; Circuit import or Load Example |
 | **Analysis** | Customer-facing summary and Splunk product suggestions |
-| **Data Sources** | Set Current / Future / Skip; enter sizing; resolve overlap notes |
-| **Review** | Confirm GB/day totals and missing priorities |
-| **Paths** | Compare Crawl / Walk / Run; **Select for report** |
-| **Report** | Preview and export Customer Pack, PDF, or PPTX |
+| **Data Sources** | Configure sources, enter quantities, resolve overlap annotations |
+| **Review** | Sanity-check ingest totals and missing priorities |
+| **Architecture Paths** | Compare phased paths against budget; pick one for the report |
+| **Report** | Customer leave-behind exports |
 
-**SE power users:** Coverage is off the main stepper but available via the **Coverage (SE)** sidebar icon or `/#/coverage`. Overlap decisions are **annotate-only**—they flag potential double-counting without reducing ingest totals.
+**Sidebar extras**
 
----
+- **Source Reference Library** — lookup sizing notes and Splunkbase links while you configure sources
+- **Coverage (SE)** — optional deep-dive on telemetry coverage (`/#/coverage`); not on the main stepper
 
-## Documentation
-
-### For SEs and workshop facilitators
-
-| Document | Description |
-|----------|-------------|
-| [**User Guide**](docs/USER_GUIDE.md) | Step-by-step product usage |
-| [**Sizing Methodology**](docs/SIZING_METHODOLOGY.md) | GB/day bands, units, multipliers |
-| [**Circuit Import**](docs/CIRCUIT_IMPORT.md) | AI-assisted intake workflow |
-| [**Source Recommendation Rules**](docs/SOURCE_RECOMMENDATION_RULES.md) | Priority labels and scoring |
-| [**App Recommendation Engine**](docs/APP_RECOMMENDATION_ENGINE.md) | How Splunk products are suggested |
-| [**Product Principles**](docs/PRODUCT_PRINCIPLES.md) | Estimate honesty and UX guardrails |
-| [**Project Scope**](docs/PROJECT_SCOPE.md) | Mission, in/out of scope |
-
-### For developers and maintainers
-
-| Document | Description |
-|----------|-------------|
-| [**Architecture**](docs/ARCHITECTURE.md) | Code layout, engines, data flow, persistence |
-| [**Doc Index**](docs/DOC_INDEX.md) | Full documentation map |
-| [**Changelog**](CHANGELOG.md) | Release history |
-| [**Source Catalog QA**](docs/SOURCE_CATALOG_QA.md) | Catalog validation conventions |
-
-### How Scope is built (high level)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Browser (React SPA)                                        │
-│  ┌─────────────┐  ┌──────────────┐  ┌─────────────────────┐ │
-│  │ Pages       │  │ Components   │  │ AppContext          │ │
-│  │ (workflow)  │→ │ (UI)         │→ │ localStorage persist│ │
-│  └─────────────┘  └──────────────┘  └─────────────────────┘ │
-│         │                                                   │
-│         ▼                                                   │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │ Services (engines) — pure JS, no server             │  │
-│  │ sizing · coverage · plans · overlap · recommendations │  │
-│  └─────────────────────────────────────────────────────┘  │
-│         │                                                   │
-│         ▼                                                   │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │ JSON catalogs (src/data/)                           │  │
-│  │ sources · use cases · apps · sizing rates · rules   │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-```
-
-| Layer | Location | Role |
-|-------|----------|------|
-| **UI** | `src/pages/`, `src/components/` | Workflow screens and configure panels |
-| **State** | `src/context/AppContext.jsx` | Session reducer + `localStorage` |
-| **Engines** | `src/services/` | Sizing, coverage, plans, overlap, exports |
-| **Catalogs** | `src/data/*.json` | Sources, rates, use cases, recommendation rules |
-| **Tooling** | `scripts/` | Catalog validators, doc generators |
-| **Tests** | `src/**/*.test.js`, `e2e/` | Vitest unit tests + Playwright smoke |
-
-**Composite sizing:** Sources like IaaS, M365, CRM, and general SaaS use additive engines and dedicated configure panels wired through `src/components/sources/sizingPanelRegistry.js`.
-
-**No runtime API calls:** Splunk Scope does not phone home. Splunkbase and doc links open in the user’s browser on demand.
+Overlap notes are **annotate-only**: they flag possible double-counting between sources but do not automatically reduce your totals—you decide how to explain them in the workshop.
 
 ---
 
-## Development commands
+## Learn more
 
-```bash
-npm run dev                   # Dev server
-npm run build                 # Production bundle → dist/
-npm test                      # Vitest (600+ tests)
-npm run test:smoke            # Quick navigation smoke
-npm run test:e2e              # Playwright end-to-end (10 flows)
-npm run validate:catalog      # sources.json ↔ sizingRates.json
-npm run validate:measurement  # Measurement question coverage
-npm run lint                  # ESLint
-npm run gen:sizing-doc        # Regenerate sizing field matrix doc
-```
+| Guide | When to read it |
+|-------|-----------------|
+| [**User Guide**](docs/USER_GUIDE.md) | Full walkthrough of every screen and export |
+| [**Sizing Methodology**](docs/SIZING_METHODOLOGY.md) | How GB/day bands and units are calculated |
+| [**Circuit Import**](docs/CIRCUIT_IMPORT.md) | Paste discovery notes from Circuit or other LLM workflows |
+| [**Source Recommendation Rules**](docs/SOURCE_RECOMMENDATION_RULES.md) | How source priorities and labels are assigned |
+| [**App Recommendation Engine**](docs/APP_RECOMMENDATION_ENGINE.md) | How Splunk product suggestions are derived |
 
-CI (`.github/workflows/ci.yml`) runs validators, lint, tests, e2e, and build on push/PR.
+Additional reference material lives under [`docs/`](docs/). See [`docs/DOC_INDEX.md`](docs/DOC_INDEX.md) for the full list.
 
 ---
 
-## Publishing to GitHub
+## Privacy
 
-If this folder is not yet a git repository:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: Splunk Scope 2.0.0"
-```
-
-Create a new repository on GitHub (empty—no README), then:
-
-```bash
-git remote add origin https://github.com/YOUR_ORG/splunk-scope.git
-git branch -M main
-git push -u origin main
-```
-
-Replace `YOUR_ORG/splunk-scope` with your repository path.
+- Session data stays in **your browser** (`localStorage`) until you export it
+- Scope does not send customer data to external services at runtime
+- Circuit-assisted import is **copy/paste only**—you control what text enters the app
+- Splunkbase and documentation links open in your browser when you click them
 
 ---
 
-## Privacy and data handling
+## Questions and feedback
 
-- All customer session data stays in **your browser** unless you export it
-- No Splunk Cloud or third-party analytics SDK in the runtime
-- Circuit-assisted import is **copy/paste only**—you control what leaves Scope
+Open a [GitHub issue](https://github.com/pipe-problem/splunk-scope/issues) for bugs or enhancement ideas. Include steps to reproduce and, if possible, an exported session JSON (with sensitive customer details removed).
 
 ---
 
-## License
-
-Splunk Scope is provided for Splunk Solutions Engineering and partner use. See your organization’s policy before distributing outside Splunk or sharing customer session exports.
-
----
-
-## Support and feedback
-
-- **Bugs / enhancements:** Open a GitHub issue with steps to reproduce
-- **Catalog corrections:** Edit `src/data/sources.json` and `sizingRates.json`, then run `npm run validate:catalog`
-- **Historical audits:** `docs/archive/` (not current product truth)
+**Version 2.0.0** · For Splunk Solutions Engineering and authorized partner use
