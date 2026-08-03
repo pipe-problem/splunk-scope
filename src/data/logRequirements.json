@@ -1,0 +1,266 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-05",
+  "logCapabilities": {
+    "authentication_success": {
+      "id": "authentication_success",
+      "name": "Authentication Success Events",
+      "description": "Successful login/authentication events across identity providers",
+      "domain": "authentication",
+      "sources": ["active_directory_security", "okta_sso", "azure_ad", "vpn_logs", "linux_auth"],
+      "strengthBySource": {
+        "active_directory_security": "strong",
+        "okta_sso": "strong",
+        "azure_ad": "strong",
+        "vpn_logs": "partial",
+        "linux_auth": "strong"
+      }
+    },
+    "authentication_failure": {
+      "id": "authentication_failure",
+      "name": "Authentication Failure Events",
+      "description": "Failed login attempts, lockouts, brute-force indicators",
+      "domain": "authentication",
+      "sources": ["active_directory_security", "okta_sso", "azure_ad", "vpn_logs", "linux_auth"],
+      "strengthBySource": {
+        "active_directory_security": "strong",
+        "okta_sso": "strong",
+        "azure_ad": "strong",
+        "vpn_logs": "partial",
+        "linux_auth": "strong"
+      }
+    },
+    "privilege_escalation": {
+      "id": "privilege_escalation",
+      "name": "Privilege Escalation Events",
+      "description": "Elevation of privilege, admin access changes, role modifications",
+      "domain": "authentication",
+      "sources": ["active_directory_security", "azure_ad", "linux_auth", "edr_logs"],
+      "strengthBySource": {
+        "active_directory_security": "strong",
+        "azure_ad": "strong",
+        "linux_auth": "partial",
+        "edr_logs": "partial"
+      }
+    },
+    "privileged_user_activity": {
+      "id": "privileged_user_activity",
+      "name": "Privileged User Activity",
+      "description": "Admin/root user actions, service account usage, sudo events",
+      "domain": "identity_governance",
+      "sources": ["active_directory_security", "linux_auth", "azure_ad", "pam_logs"],
+      "strengthBySource": {
+        "active_directory_security": "strong",
+        "linux_auth": "partial",
+        "azure_ad": "strong",
+        "pam_logs": "strong"
+      }
+    },
+    "network_traffic_events": {
+      "id": "network_traffic_events",
+      "name": "Network Traffic Events",
+      "description": "Firewall allow/deny, connection logs, traffic flow records",
+      "domain": "network",
+      "sources": ["firewall_logs", "ids_ips_logs", "netflow_data", "proxy_web_gateway"],
+      "strengthBySource": {
+        "firewall_logs": "strong",
+        "ids_ips_logs": "partial",
+        "netflow_data": "strong",
+        "proxy_web_gateway": "partial"
+      }
+    },
+    "perimeter_control_events": {
+      "id": "perimeter_control_events",
+      "name": "Perimeter Control Events",
+      "description": "Firewall rule actions, IPS blocks, NAT translations",
+      "domain": "perimeter_control",
+      "sources": ["firewall_logs", "ids_ips_logs"],
+      "strengthBySource": {
+        "firewall_logs": "strong",
+        "ids_ips_logs": "strong"
+      }
+    },
+    "endpoint_process_events": {
+      "id": "endpoint_process_events",
+      "name": "Endpoint Process Events",
+      "description": "Process creation, execution, parent-child relationships",
+      "domain": "endpoint",
+      "sources": ["edr_logs", "sysmon_logs", "windows_security_event_log"],
+      "strengthBySource": {
+        "edr_logs": "strong",
+        "sysmon_logs": "strong",
+        "windows_security_event_log": "partial"
+      }
+    },
+    "endpoint_file_events": {
+      "id": "endpoint_file_events",
+      "name": "Endpoint File Events",
+      "description": "File creation, modification, deletion, access patterns",
+      "domain": "endpoint",
+      "sources": ["edr_logs", "sysmon_logs"],
+      "strengthBySource": {
+        "edr_logs": "strong",
+        "sysmon_logs": "strong"
+      }
+    },
+    "endpoint_network_events": {
+      "id": "endpoint_network_events",
+      "name": "Endpoint Network Events",
+      "description": "Outbound connections, DNS queries, network activity from endpoints",
+      "domain": "endpoint",
+      "sources": ["edr_logs", "sysmon_logs", "dns_logs"],
+      "strengthBySource": {
+        "edr_logs": "strong",
+        "sysmon_logs": "strong",
+        "dns_logs": "partial"
+      }
+    },
+    "threat_intelligence_match": {
+      "id": "threat_intelligence_match",
+      "name": "Threat Intelligence Matches",
+      "description": "IOC matches from threat feeds against observed activity",
+      "domain": "threat_enrichment",
+      "sources": ["threat_intel_feeds"],
+      "strengthBySource": {
+        "threat_intel_feeds": "strong"
+      }
+    },
+    "vulnerability_scan_results": {
+      "id": "vulnerability_scan_results",
+      "name": "Vulnerability Scan Results",
+      "description": "Vulnerability assessments, CVE findings, scan coverage",
+      "domain": "vulnerability_asset",
+      "sources": ["vulnerability_scanner", "cloud_security_posture"],
+      "strengthBySource": {
+        "vulnerability_scanner": "strong",
+        "cloud_security_posture": "partial"
+      }
+    },
+    "cloud_api_activity": {
+      "id": "cloud_api_activity",
+      "name": "Cloud API Activity",
+      "description": "Cloud control plane operations (AWS CloudTrail, Azure Activity, GCP Audit)",
+      "domain": "cloud_control_plane",
+      "sources": ["aws_cloudtrail", "azure_activity_logs", "gcp_audit_logs"],
+      "strengthBySource": {
+        "aws_cloudtrail": "strong",
+        "azure_activity_logs": "strong",
+        "gcp_audit_logs": "strong"
+      }
+    },
+    "email_security_events": {
+      "id": "email_security_events",
+      "name": "Email Security Events",
+      "description": "Phishing, spam, malware delivery, email DLP events",
+      "domain": "email_collaboration",
+      "sources": ["email_security_logs", "m365_audit_logs"],
+      "strengthBySource": {
+        "email_security_logs": "strong",
+        "m365_audit_logs": "partial"
+      }
+    },
+    "saas_user_activity": {
+      "id": "saas_user_activity",
+      "name": "SaaS User Activity",
+      "description": "User actions in SaaS platforms (M365, Google Workspace, Salesforce)",
+      "domain": "saas_activity",
+      "sources": ["m365_audit_logs", "google_workspace_logs", "saas_casb_logs"],
+      "strengthBySource": {
+        "m365_audit_logs": "strong",
+        "google_workspace_logs": "strong",
+        "saas_casb_logs": "strong"
+      }
+    },
+    "application_error_logs": {
+      "id": "application_error_logs",
+      "name": "Application Error Logs",
+      "description": "Application errors, exceptions, stack traces",
+      "domain": "application_logs",
+      "sources": ["application_logs", "apm_traces"],
+      "strengthBySource": {
+        "application_logs": "strong",
+        "apm_traces": "partial"
+      }
+    },
+    "distributed_traces": {
+      "id": "distributed_traces",
+      "name": "Distributed Traces",
+      "description": "Request traces across microservices, spans, service maps",
+      "domain": "application_traces",
+      "sources": ["apm_traces", "opentelemetry_data"],
+      "strengthBySource": {
+        "apm_traces": "strong",
+        "opentelemetry_data": "strong"
+      }
+    },
+    "infrastructure_metrics": {
+      "id": "infrastructure_metrics",
+      "name": "Infrastructure Metrics",
+      "description": "CPU, memory, disk, network metrics from servers and VMs",
+      "domain": "infrastructure_metrics",
+      "sources": ["server_metrics", "cloud_infrastructure_metrics", "kubernetes_metrics"],
+      "strengthBySource": {
+        "server_metrics": "strong",
+        "cloud_infrastructure_metrics": "strong",
+        "kubernetes_metrics": "partial"
+      }
+    },
+    "kubernetes_events": {
+      "id": "kubernetes_events",
+      "name": "Kubernetes Events",
+      "description": "Pod lifecycle, deployments, node status, cluster events",
+      "domain": "kubernetes_container",
+      "sources": ["kubernetes_logs", "kubernetes_metrics"],
+      "strengthBySource": {
+        "kubernetes_logs": "strong",
+        "kubernetes_metrics": "strong"
+      }
+    },
+    "database_audit_events": {
+      "id": "database_audit_events",
+      "name": "Database Audit Events",
+      "description": "Query logging, schema changes, user access, performance metrics",
+      "domain": "database_activity",
+      "sources": ["database_audit_logs", "database_performance_logs"],
+      "strengthBySource": {
+        "database_audit_logs": "strong",
+        "database_performance_logs": "partial"
+      }
+    },
+    "compliance_audit_trail": {
+      "id": "compliance_audit_trail",
+      "name": "Compliance Audit Trail",
+      "description": "Change management records, access reviews, policy compliance",
+      "domain": "audit_compliance",
+      "sources": ["active_directory_security", "azure_ad", "m365_audit_logs", "change_management_logs"],
+      "strengthBySource": {
+        "active_directory_security": "strong",
+        "azure_ad": "strong",
+        "m365_audit_logs": "partial",
+        "change_management_logs": "strong"
+      }
+    },
+    "ot_network_traffic": {
+      "id": "ot_network_traffic",
+      "name": "OT Network Traffic",
+      "description": "Industrial protocol traffic, IT/OT boundary communications",
+      "domain": "ot_network",
+      "sources": ["ot_network_monitor", "ot_firewall_logs"],
+      "strengthBySource": {
+        "ot_network_monitor": "strong",
+        "ot_firewall_logs": "partial"
+      }
+    },
+    "scada_control_events": {
+      "id": "scada_control_events",
+      "name": "SCADA Control Events",
+      "description": "PLC commands, HMI interactions, process control changes",
+      "domain": "scada_events",
+      "sources": ["scada_historian", "ot_network_monitor"],
+      "strengthBySource": {
+        "scada_historian": "strong",
+        "ot_network_monitor": "partial"
+      }
+    }
+  }
+}

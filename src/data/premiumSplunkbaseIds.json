@@ -1,0 +1,4 @@
+{
+  "_deprecated": "Replaced by src/data/splunkbaseCatalog.json. Use catalogId references in splunkApps.json and technicalAddons.json.",
+  "_migration": "Run npm run refresh:splunkbase to regenerate the catalog from src/data/splunkbaseCatalog.seed.json"
+}

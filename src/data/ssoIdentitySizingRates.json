@@ -1,0 +1,276 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "collectionProfiles": {
+    "audit_only": {
+      "label": "Audit only",
+      "description": "Admin/configuration audit events from the IdP tenant."
+    },
+    "authentication_security": {
+      "label": "Authentication security",
+      "description": "Audit plus authentication sign-in and MFA / conditional access / risk events."
+    },
+    "full_identity_activity": {
+      "label": "Full identity activity",
+      "description": "Authentication security plus application access and provisioning events."
+    }
+  },
+  "activityLevels": {
+    "light": { "label": "Light", "tier": "low" },
+    "normal": { "label": "Normal", "tier": "medium" },
+    "heavy": { "label": "Heavy", "tier": "high" }
+  },
+  "profileComponents": {
+    "audit_only": ["admin_config_audit"],
+    "authentication_security": ["admin_config_audit", "auth_sign_in", "mfa_risk"],
+    "full_identity_activity": ["admin_config_audit", "auth_sign_in", "mfa_risk", "app_provisioning"]
+  },
+  "vendors": {
+    "okta": {
+      "label": "Okta",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.000018,
+          "medium": 0.00018,
+          "high": 0.0018
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.0000008,
+          "medium": 0.0000032,
+          "high": 0.000012
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.0000006,
+          "medium": 0.0000024,
+          "high": 0.000009
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.00012,
+          "medium": 0.0024,
+          "high": 0.036
+        }
+      }
+    },
+    "entra_id": {
+      "label": "Microsoft Entra ID",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.00002,
+          "medium": 0.0002,
+          "high": 0.002
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.0000009,
+          "medium": 0.0000036,
+          "high": 0.000013
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.0000007,
+          "medium": 0.0000028,
+          "high": 0.00001
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.00014,
+          "medium": 0.0028,
+          "high": 0.042
+        }
+      }
+    },
+    "ping_identity": {
+      "label": "Ping Identity",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.000017,
+          "medium": 0.00017,
+          "high": 0.0017
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.00000075,
+          "medium": 0.000003,
+          "high": 0.000011
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.00000055,
+          "medium": 0.0000022,
+          "high": 0.0000085
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.00011,
+          "medium": 0.0022,
+          "high": 0.033
+        }
+      }
+    },
+    "duo": {
+      "label": "Duo",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.000016,
+          "medium": 0.00016,
+          "high": 0.0016
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.0000007,
+          "medium": 0.0000028,
+          "high": 0.00001
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.0000008,
+          "medium": 0.0000032,
+          "high": 0.000012
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.0001,
+          "medium": 0.002,
+          "high": 0.03
+        }
+      }
+    },
+    "onelogin": {
+      "label": "OneLogin",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.000017,
+          "medium": 0.00017,
+          "high": 0.0017
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.00000072,
+          "medium": 0.0000029,
+          "high": 0.000011
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.00000058,
+          "medium": 0.0000023,
+          "high": 0.0000088
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.000115,
+          "medium": 0.0023,
+          "high": 0.034
+        }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "IdP tenant / org",
+          "countField": "ssoTenantCount",
+          "low": 0.000018,
+          "medium": 0.00018,
+          "high": 0.0018
+        },
+        "auth_sign_in": {
+          "label": "Authentication / sign-in events",
+          "unit": "active identity user",
+          "unitLabel": "active identity user",
+          "countField": "ssoActiveUserCount",
+          "low": 0.00000078,
+          "medium": 0.0000031,
+          "high": 0.0000115
+        },
+        "mfa_risk": {
+          "label": "MFA / conditional access / risk events",
+          "unit": "MFA-protected user",
+          "unitLabel": "MFA-protected user",
+          "countField": "ssoMfaUserCount",
+          "low": 0.00000065,
+          "medium": 0.0000026,
+          "high": 0.0000095
+        },
+        "app_provisioning": {
+          "label": "Application access / provisioning events",
+          "unit": "SSO app / integration",
+          "unitLabel": "SSO app / integration",
+          "countField": "ssoAppIntegrationCount",
+          "low": 0.000125,
+          "medium": 0.0025,
+          "high": 0.037
+        }
+      }
+    }
+  },
+  "overlapSourceIds": ["saas_general", "saas_office", "active_directory"]
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Splunk Scope logo + wordmark lockup  static, PowerPoint-ready -->
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="48" viewBox="0 0 320 48" role="img" aria-label="Splunk Scope">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E954B7"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+    <linearGradient id="title-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F04E98"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <rect x="0" y="8" width="32" height="32" rx="7" fill="#1A1A1A"/>
+  <circle cx="16" cy="23" r="8" fill="none" stroke="url(#logo-grad)" stroke-width="2"/>
+  <circle cx="16" cy="23" r="2.5" fill="url(#logo-grad)"/>
+  <line x1="22" y1="29" x2="27" y2="34" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Title -->
+  <text x="42" y="28" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="url(#title-grad)" letter-spacing="-0.4">Splunk Scope</text>
+  <text x="42" y="44" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="9" font-weight="500" fill="#A3A3A3" letter-spacing="1.4">PLANNING &amp; ARCHITECTURE</text>
+</svg>

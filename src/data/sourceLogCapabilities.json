@@ -1,0 +1,1085 @@
+{
+  "schemaVersion": "1.7",
+  "lastUpdated": "2026-05-06",
+  "capabilities": {
+    "active_directory": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "privilege_escalation_events",
+        "account_management_events",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Domain Controller Security logs map well to Authentication and Change for privileged operations; replication and LDAP detail varies by collection method."
+    },
+    "apm": {
+      "produces": [
+        "application_traces",
+        "application_logs",
+        "performance_metrics",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Distributed traces are high cardinality; mapping spans to CIM-style DMs is often partial—many fields stay in APM-native models."
+    },
+    "app_servers": {
+      "produces": [
+        "application_logs",
+        "performance_metrics",
+        "authentication_success_events",
+        "authentication_failure_events",
+        "web_access_events"
+      ],
+      "dataModels": [
+        "Performance",
+        "Authentication",
+        "Web"
+      ],
+      "cimCompliant": false,
+      "notes": "JVM, .NET, and Node stacks differ; structured logging adoption drives parseability more than platform."
+    },
+    "app_servers_nonprod": {
+      "produces": [
+        "application_logs",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Non-production app tiers often have verbose debug logging enabled; parseability still varies by stack."
+    },
+    "application_event_log": {
+      "produces": [
+        "application_logs",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Performance",
+        "Endpoint"
+      ],
+      "cimCompliant": true,
+      "notes": "Third-party and .NET application providers register their own providers; without vendor-specific knowledge many events stay unparsed beyond raw message."
+    },
+    "asset_cmdb": {
+      "produces": [
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Change"
+      ],
+      "cimCompliant": false,
+      "notes": "CMDB snapshots and reconciliation jobs are batch or API pull dominated; treat as enrichment more than real-time security telemetry."
+    },
+    "business_txn": {
+      "produces": [
+        "business_transaction_events",
+        "application_logs",
+        "database_transaction_events",
+        "web_access_events"
+      ],
+      "dataModels": [
+        "Web",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Mainframes, ERP, and payment switches expose very different schemas; business identifiers (order ID, claim number) are rarely CIM-standard."
+    },
+    "casb": {
+      "produces": [
+        "cloud_api_events",
+        "saas_audit_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Authentication"
+      ],
+      "cimCompliant": false,
+      "notes": "API discovery and policy enforcement consoles emit vendor-specific scored events; correlation back to upstream SaaS IDs is the main integration effort."
+    },
+    "config_mgmt": {
+      "produces": [
+        "host_security_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Endpoint"
+      ],
+      "cimCompliant": false,
+      "notes": "Chef/Puppet/Ansible/SCCM drift and inventory deltas are change-centric; overlap with CMDB varies by enterprise automation maturity."
+    },
+    "cspm": {
+      "produces": [
+        "cloud_configuration_events",
+        "vulnerability_findings",
+        "cloud_api_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Vulnerabilities"
+      ],
+      "cimCompliant": false,
+      "notes": "Findings are often assessment-style records rather than streaming security logs; vendor-specific schemas rarely map 1:1 to Splunk CIM without custom extractions."
+    },
+    "cwpp": {
+      "produces": [
+        "endpoint_detection_events",
+        "vulnerability_findings",
+        "cloud_api_events",
+        "asset_inventory_events",
+        "file_access_events",
+        "process_creation_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Malware",
+        "Vulnerabilities"
+      ],
+      "cimCompliant": false,
+      "notes": "Workload agent telemetry overlaps EDR; compliance-oriented CWPP may emphasize misconfig and image vulnerability vs runtime process trees."
+    },
+    "database": {
+      "produces": [
+        "database_access_events",
+        "database_transaction_events",
+        "authentication_success_events",
+        "authentication_failure_events",
+        "application_logs",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Native audit vs agent-based interception vs gateway SQL logging varies widely; full text queries may be excluded for compliance."
+    },
+    "db_access": {
+      "produces": [
+        "database_access_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Gateway or native DB auditing of successful connections and object access; full SQL text capture is often excluded for compliance."
+    },
+    "db_transaction": {
+      "produces": [
+        "database_transaction_events"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Dedicated transaction/change-data feeds (CDC, redo/mining) are schema-heavy; many environments log only metadata or sampled statements."
+    },
+    "ddos": {
+      "produces": [
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Scrubbing center and CDN mitigation signals are often aggregated; volumetric details may arrive as flow summaries not full packets."
+    },
+    "deception": {
+      "produces": [
+        "endpoint_detection_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Intrusion_Detection",
+        "Network_Traffic"
+      ],
+      "cimCompliant": false,
+      "notes": "Decoys and breadcrumbs generate sparse but high-fidelity engagement signals; alerting semantics differ from IDS correlation."
+    },
+    "desktops": {
+      "produces": [
+        "endpoint_detection_events",
+        "process_creation_events",
+        "file_access_events",
+        "registry_modification_events",
+        "powershell_events",
+        "host_security_events",
+        "authentication_success_events",
+        "authentication_failure_events",
+        "application_logs",
+        "saas_audit_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Authentication",
+        "Malware"
+      ],
+      "cimCompliant": true,
+      "notes": "Laptop fleets without uniform EDR/Sysmon resemble sparse windows_servers telemetry; SaaS client auditing may be the only signal for some user actions."
+    },
+    "devops_cicd": {
+      "produces": [
+        "application_logs",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Pipeline run logs and SCM/Git audit events blend build telemetry with developer auth; secrets scanners add security-relevant findings."
+    },
+    "dhcp": {
+      "produces": [
+        "dhcp_events",
+        "network_traffic_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Network_Resolution"
+      ],
+      "cimCompliant": false,
+      "notes": "Microsoft DHCP vs ISC/BIND vs IPAM integrations differ; IP lease telemetry aids asset correlation but is not a substitute for endpoint identity."
+    },
+    "dhcp_server_logs": {
+      "produces": [
+        "dhcp_events"
+      ],
+      "dataModels": [
+        "Network_Resolution",
+        "Network_Traffic"
+      ],
+      "cimCompliant": false,
+      "notes": "Microsoft DHCP lease audit vs ISC logs; aids asset correlation but is not a substitute for endpoint or IdP identity."
+    },
+    "dlp": {
+      "produces": [
+        "file_access_events",
+        "email_activity_events",
+        "saas_audit_events",
+        "cloud_api_events",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Email",
+        "Change",
+        "Malware"
+      ],
+      "cimCompliant": false,
+      "notes": "Endpoint vs network vs cloud DLP consoles emit different evidence types; content inspection depth affects privacy and retention policy."
+    },
+    "dns": {
+      "produces": [
+        "dns_query_events",
+        "network_traffic_events",
+        "dhcp_events"
+      ],
+      "dataModels": [
+        "Network_Resolution",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Resolver and authoritative roles differ; passive DNS or logging from network sensors can dwarf managed name server syslog volume."
+    },
+    "dns_server_logs": {
+      "produces": [
+        "dns_query_events"
+      ],
+      "dataModels": [
+        "Network_Resolution"
+      ],
+      "cimCompliant": true,
+      "notes": "Microsoft DNS debug vs analytic logs differ in detail; passive DNS appliances may dwarf authoritative server syslog volume."
+    },
+    "dpi": {
+      "produces": [
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Network_Traffic"
+      ],
+      "cimCompliant": false,
+      "notes": "Deep packet inspection appliances provide metadata-rich flows; privacy and lawful intercept policies constrain retained fields."
+    },
+    "edr": {
+      "produces": [
+        "endpoint_detection_events",
+        "process_creation_events",
+        "file_access_events",
+        "registry_modification_events",
+        "network_traffic_events",
+        "dns_query_events",
+        "powershell_events",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Malware",
+        "Intrusion_Detection"
+      ],
+      "cimCompliant": true,
+      "notes": "Vendor JSON APIs often require proprietary TA field extractions before CIM; process and file telemetry dominates volume."
+    },
+    "email": {
+      "produces": [
+        "email_activity_events",
+        "saas_audit_events",
+        "authentication_success_events",
+        "authentication_failure_events"
+      ],
+      "dataModels": [
+        "Email",
+        "Authentication"
+      ],
+      "cimCompliant": true,
+      "notes": "M365/Google message tracking and security add-ons align with Email DM; gateway appliances vary in field normalization."
+    },
+    "firewalls": {
+      "produces": [
+        "firewall_allow_deny_events",
+        "network_traffic_events",
+        "vpn_events",
+        "ids_ips_events",
+        "certificate_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Intrusion_Detection",
+        "Web"
+      ],
+      "cimCompliant": true,
+      "notes": "Next-generation firewalls also emit threat/IPS-style events. CIM mapping is strong for major vendors when using supported Splunk add-ons; Syslog-only exports may require parsing work."
+    },
+    "forwarded_events": {
+      "produces": [
+        "host_security_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Authentication"
+      ],
+      "cimCompliant": true,
+      "notes": "Collector-forwarded Windows events inherit upstream channel mix; subscription filter gaps can silently drop Security-critical event IDs."
+    },
+    "fw_internal": {
+      "produces": [
+        "firewall_allow_deny_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "East-west segmentation focus—often allow-heavy with lateral movement hunts relying on anomaly more than explicit denies."
+    },
+    "fw_perimeter": {
+      "produces": [
+        "firewall_allow_deny_events",
+        "network_traffic_events",
+        "ids_ips_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Intrusion_Detection"
+      ],
+      "cimCompliant": true,
+      "notes": "Internet edge NGFW feeds emphasize deny/blocked flows and IPS alerts; NAT and carrier-grade logging can obscure internal origination."
+    },
+    "fw_waf": {
+      "produces": [
+        "web_access_events",
+        "firewall_allow_deny_events"
+      ],
+      "dataModels": [
+        "Web",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Layer-7 blocks and bot scores augment classic firewall DMs; TLS inspection and CDN offload change what the WAF actually sees."
+    },
+    "hypervisor": {
+      "produces": [
+        "infrastructure_metrics",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Performance",
+        "Endpoint"
+      ],
+      "cimCompliant": false,
+      "notes": "Hypervisor host logs and vMotion/cluster events are platform-specific; correlating guest VM identity to ESXi vs Hyper-V telemetry differs by stack."
+    },
+    "iaas": {
+      "produces": [
+        "cloud_api_events",
+        "cloud_configuration_events",
+        "infrastructure_metrics",
+        "asset_inventory_events",
+        "network_traffic_events",
+        "authentication_success_events",
+        "authentication_failure_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Performance",
+        "Network_Traffic",
+        "Authentication"
+      ],
+      "cimCompliant": true,
+      "notes": "CloudTrail and equivalents drive control-plane visibility; VPC flow and metric streams are separate pipelines with very different volume profiles."
+    },
+    "iaas_containers": {
+      "produces": [
+        "cloud_api_events",
+        "cloud_configuration_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Change",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "Kubernetes/EKS/AKS/GKE audit and container stdout/stderr; workload identity and admission control vary by distro. Strong TA coverage for major clouds but pod-level app logs are rarely CIM-complete without custom parsing."
+    },
+    "iaas_instances": {
+      "produces": [
+        "cloud_api_events",
+        "infrastructure_metrics",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Performance",
+        "Endpoint"
+      ],
+      "cimCompliant": true,
+      "notes": "Guest OS agents, serial console, and instance metadata APIs complement cloud control-plane logs; host telemetry quality depends on SSM/ARC-style agents vs pure API."
+    },
+    "iaas_storage": {
+      "produces": [
+        "cloud_api_events",
+        "file_access_events"
+      ],
+      "dataModels": [
+        "Change",
+        "Endpoint"
+      ],
+      "cimCompliant": true,
+      "notes": "Bucket/object-level access logging and data events are high volume when enabled; inventory and IAM policy changes map better to Change than file DM semantics."
+    },
+    "ics_scada": {
+      "produces": [
+        "ot_network_events",
+        "scada_events",
+        "network_traffic_events",
+        "host_security_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Intrusion_Detection"
+      ],
+      "cimCompliant": false,
+      "notes": "Protocol diversity (Modbus, DNP3, IEC-104, etc.) drives custom parsers; IT-style CIM models rarely cover PLC/HMI semantics without extension."
+    },
+    "ids_ips": {
+      "produces": [
+        "ids_ips_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Intrusion_Detection",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Signature alerts are CIM-friendly; full packet metadata or PCAP-adjacent exports may exceed typical IDS DM field sets."
+    },
+    "iis_logs": {
+      "produces": [
+        "web_access_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Web",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "W3C extended logs vs HTTP.sys; TLS offload and load balancer X-Forwarded-* headers affect client IP fidelity in Web DM extractions."
+    },
+    "linux_servers": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "host_security_events",
+        "process_creation_events",
+        "file_access_events",
+        "application_logs",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Endpoint",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "auditd and syslog produce stronger process and access telemetry than OS defaults alone; CIM parity varies vs Windows."
+    },
+    "linux_servers_nonprod": {
+      "produces": [
+        "host_security_events",
+        "authentication_success_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Endpoint",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "Lower retention and patch cadence than prod often mean thinner auditd/syslog configs; still useful for lateral movement between dev tiers."
+    },
+    "loadbalancer": {
+      "produces": [
+        "network_traffic_events",
+        "web_access_events",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Web",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "L4/L7 VIP access logs plus health check state; correlation to backend pools requires naming discipline across farm members."
+    },
+    "mainframe": {
+      "produces": [
+        "host_security_events",
+        "business_transaction_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "SMF, RACF, and CICS-style records are highly structured but mainframe-specific; CIM parity is usually custom or vendor-packaged."
+    },
+    "mdm": {
+      "produces": [
+        "endpoint_detection_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Vulnerabilities"
+      ],
+      "cimCompliant": true,
+      "notes": "Mobile device compliance and wipe/lock actions resemble endpoint DMs; app inventory feeds aid asset correlation more than classic malware telemetry."
+    },
+    "middleware": {
+      "produces": [
+        "application_logs",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "JMS, IBM MQ, Kafka brokers, and ESB consoles emit heterogeneous broker and queue depth metrics; unified CIM is rare without add-ons."
+    },
+    "middleware_nonprod": {
+      "produces": [
+        "application_logs",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Non-production brokers may emit test traffic and verbose trace logs; field parity with production is often incomplete."
+    },
+    "nac": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "802.1X, posture assessment, and guest onboarding mix RADIUS-like auth with switch metadata; vendor NAC consoles vary in syslog quality."
+    },
+    "ndr": {
+      "produces": [
+        "network_traffic_events",
+        "ids_ips_events",
+        "dns_query_events",
+        "vpn_events",
+        "asset_inventory_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Intrusion_Detection",
+        "Network_Resolution"
+      ],
+      "cimCompliant": false,
+      "notes": "Behavioral detections and encrypted traffic analytics often ship as vendor JSON; flow summaries vs IDS-style alerts mix in one product."
+    },
+    "netflow": {
+      "produces": [
+        "network_traffic_events",
+        "infrastructure_metrics",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "Flow records lack application payload; sampling ratios heavily affect detection sensitivity and SIEM license math."
+    },
+    "ot_security": {
+      "produces": [
+        "ot_network_events",
+        "ids_ips_events"
+      ],
+      "dataModels": [
+        "Intrusion_Detection",
+        "Network_Traffic"
+      ],
+      "cimCompliant": false,
+      "notes": "ICS-focused platforms ingest Modbus/OPC-adjacent anomalies; CIM models are typically extended rather than out-of-the-box."
+    },
+    "paas": {
+      "produces": [
+        "cloud_api_events",
+        "application_logs",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Change",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "Managed runtime and database services blend platform audit streams with app instrumentation; multi-tenant logging schemas differ sharply by vendor."
+    },
+    "performance_metrics": {
+      "produces": [
+        "performance_metrics",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "Perfmon, WMI, and agent-based metric taps are structured but high cardinality; poll intervals dominate license math more than message size."
+    },
+    "pki": {
+      "produces": [
+        "certificate_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Authentication"
+      ],
+      "cimCompliant": true,
+      "notes": "CA issuance, revocation, and OCSP-style logs map partially to cert-oriented use cases; enterprise PKI products vary in export formats."
+    },
+    "powershell_operational": {
+      "produces": [
+        "powershell_events",
+        "process_creation_events"
+      ],
+      "dataModels": [
+        "Endpoint"
+      ],
+      "cimCompliant": true,
+      "notes": "Script Block Logging and module events are endpoint-telemetry heavy; transcription policies materially change volume and privacy posture."
+    },
+    "proxy": {
+      "produces": [
+        "web_access_events",
+        "network_traffic_events",
+        "dns_query_events",
+        "certificate_events"
+      ],
+      "dataModels": [
+        "Web",
+        "Network_Traffic",
+        "Network_Resolution"
+      ],
+      "cimCompliant": true,
+      "notes": "Explicit proxy vs transparent DNS filtering changes which events appear; SSL inspection unlocks URL detail at privacy and volume cost."
+    },
+    "routers": {
+      "produces": [
+        "network_traffic_events",
+        "firewall_allow_deny_events",
+        "infrastructure_metrics",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "ACL deny logs and BGP telemetry vary by platform; WAN edge may consolidate VPN and firewall functions in one appliance family."
+    },
+    "saas_conferencing": {
+      "produces": [
+        "saas_audit_events"
+      ],
+      "dataModels": [
+        "Change"
+      ],
+      "cimCompliant": false,
+      "notes": "Meeting lifecycle and recording access are admin-audit oriented; end-user client telemetry is limited compared to productivity suite unified audits."
+    },
+    "saas_crm": {
+      "produces": [
+        "saas_audit_events",
+        "business_transaction_events"
+      ],
+      "dataModels": [
+        "Web",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Salesforce and peers expose object- and field-level audit APIs; business identifiers are product-native and rarely map cleanly to Splunk CIM without extraction work."
+    },
+    "saas_filesharing": {
+      "produces": [
+        "saas_audit_events",
+        "file_access_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Collaboration DLP-adjacent signals (share links, external collaborators) map partially to file access concepts; retention and privacy controls affect usable fields."
+    },
+    "saas_general": {
+      "produces": [
+        "saas_audit_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Generic SaaS admin audit trails; field normalization varies—major suites publish documented auditing APIs while long-tail SaaS remains CSV or proprietary JSON."
+    },
+    "saas_office": {
+      "produces": [
+        "saas_audit_events",
+        "email_activity_events",
+        "file_access_events"
+      ],
+      "dataModels": [
+        "Email",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "M365/Google Workspace unified audit logs align with Email and Change-style DMs when using supported add-ons; SharePoint/Drive detail may require secondary connectors."
+    },
+    "saas_sso": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "account_management_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "IdP sign-in, MFA, and user lifecycle events are CIM-friendly for Okta/Azure AD/Google with maintained TAs; session federation edge cases may need custom tags."
+    },
+    "sandbox": {
+      "produces": [
+        "endpoint_detection_events",
+        "file_access_events"
+      ],
+      "dataModels": [
+        "Malware",
+        "Endpoint"
+      ],
+      "cimCompliant": false,
+      "notes": "Detonation summaries and behavioral scores are product-native JSON; useful for verdict workflows less for raw CIM replay."
+    },
+    "sap": {
+      "produces": [
+        "business_transaction_events",
+        "authentication_success_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Performance",
+        "Web"
+      ],
+      "cimCompliant": false,
+      "notes": "SAP security audit, change docs, and RFC-style traces are application-native; integrating BASIS and security notes drives parser complexity."
+    },
+    "sase": {
+      "produces": [
+        "network_traffic_events",
+        "vpn_events",
+        "firewall_allow_deny_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Authentication"
+      ],
+      "cimCompliant": false,
+      "notes": "Converged SSE/SWG/ZTNA blends firewall, proxy, and VPN semantics in one pipeline; vendor JSON schemas often outpace CIM field coverage."
+    },
+    "security_event_log": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "privilege_escalation_events",
+        "account_management_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Windows Security channel maps well to Authentication and Change DMs with Splunk TAs; noise from auth and GPO volume requires filtering strategy."
+    },
+    "setup_event_log": {
+      "produces": [
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Installation and servicing events support integrity and change tracking; useful for patch verification alongside package management tools."
+    },
+    "sso_pam": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "privilege_escalation_events",
+        "account_management_events",
+        "saas_audit_events",
+        "vpn_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Change"
+      ],
+      "cimCompliant": true,
+      "notes": "Hybrid coverage: modern IdP JSON events vs legacy PAM session logs; MFA and step-up events depend on vendor schema."
+    },
+    "storage_prod": {
+      "produces": [
+        "infrastructure_metrics",
+        "file_access_events"
+      ],
+      "dataModels": [
+        "Performance",
+        "Endpoint"
+      ],
+      "cimCompliant": false,
+      "notes": "SAN/NAS array audit and quota events are vendor-specific; block storage rarely maps to intuitive file-access semantics without NAS head logging."
+    },
+    "switches": {
+      "produces": [
+        "network_traffic_events",
+        "infrastructure_metrics",
+        "performance_metrics"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Performance"
+      ],
+      "cimCompliant": false,
+      "notes": "Port security and 802.1X can add Authentication-like signals; most access switches contribute SNMP/telemetry more than per-flow security logs."
+    },
+    "sysmon": {
+      "produces": [
+        "process_creation_events",
+        "file_access_events",
+        "registry_modification_events",
+        "network_traffic_events"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Sysmon XML is well-supported for major Splunk configurations; Event ID mix and hash algorithms depend on sysmonconfig.xml tuning."
+    },
+    "system_event_log": {
+      "produces": [
+        "host_security_events",
+        "infrastructure_metrics"
+      ],
+      "dataModels": [
+        "Endpoint",
+        "Performance"
+      ],
+      "cimCompliant": true,
+      "notes": "System channel covers driver, service, and startup events; overlaps Performance DM when paired with perf counter forwarders."
+    },
+    "threat_intel": {
+      "produces": [
+        "ids_ips_events",
+        "vulnerability_findings",
+        "asset_inventory_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Intrusion_Detection",
+        "Vulnerabilities",
+        "Malware"
+      ],
+      "cimCompliant": false,
+      "notes": "Feeds are often reference or enrichment data; IOC match logs depend on where correlation runs (firewall, proxy, EDR, SIEM)."
+    },
+    "uba": {
+      "produces": [
+        "saas_audit_events",
+        "authentication_success_events",
+        "authentication_failure_events",
+        "application_logs",
+        "network_traffic_events",
+        "account_management_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Web",
+        "Network_Traffic",
+        "Change"
+      ],
+      "cimCompliant": false,
+      "notes": "UBA products ingest many upstream sources; native output is often scored anomalies or timelines rather than raw CIM-normalized events."
+    },
+    "vpn": {
+      "produces": [
+        "vpn_events",
+        "authentication_success_events",
+        "authentication_failure_events",
+        "network_traffic_events",
+        "account_management_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Network_Traffic"
+      ],
+      "cimCompliant": true,
+      "notes": "Remote access concentrators emphasize session auth; split tunneling limits visibility into user application traffic beyond tunnel metadata."
+    },
+    "vuln_mgmt": {
+      "produces": [
+        "vulnerability_findings",
+        "asset_inventory_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Vulnerabilities"
+      ],
+      "cimCompliant": true,
+      "notes": "Batch scan imports dominate; near-real-time agent assessments behave more like recurring events than classic SIEM logs."
+    },
+    "web_servers": {
+      "produces": [
+        "web_access_events",
+        "application_logs",
+        "certificate_events",
+        "authentication_success_events",
+        "authentication_failure_events"
+      ],
+      "dataModels": [
+        "Web",
+        "Authentication"
+      ],
+      "cimCompliant": true,
+      "notes": "Access logs vs error/application logs are usually separate sourcetypes; TLS termination elsewhere can strip client details from web tier."
+    },
+    "web_servers_nonprod": {
+      "produces": [
+        "web_access_events",
+        "application_logs"
+      ],
+      "dataModels": [
+        "Web"
+      ],
+      "cimCompliant": true,
+      "notes": "Non-production web tiers typically have lower request volume but may run with verbose error logging during testing."
+    },
+    "windows_defender": {
+      "produces": [
+        "endpoint_detection_events",
+        "host_security_events"
+      ],
+      "dataModels": [
+        "Malware",
+        "Endpoint"
+      ],
+      "cimCompliant": true,
+      "notes": "Microsoft Defender AV/EDR operational channels vary by OS generation; cloud-delivered protection events may require Microsoft-Graph-style enrichment."
+    },
+    "windows_servers": {
+      "produces": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "host_security_events",
+        "process_creation_events",
+        "file_access_events",
+        "registry_modification_events",
+        "powershell_events",
+        "application_logs",
+        "performance_metrics",
+        "web_access_events",
+        "dns_query_events",
+        "dhcp_events"
+      ],
+      "dataModels": [
+        "Authentication",
+        "Endpoint",
+        "Performance",
+        "Web",
+        "Network_Resolution"
+      ],
+      "cimCompliant": true,
+      "notes": "Coverage depends heavily on enabled channels (Security, Sysmon, PowerShell operational, IIS, DNS/DHCP roles). Without Sysmon, process and file lineage is much weaker."
+    },
+    "wireless": {
+      "produces": [
+        "network_traffic_events",
+        "authentication_success_events"
+      ],
+      "dataModels": [
+        "Network_Traffic",
+        "Authentication"
+      ],
+      "cimCompliant": false,
+      "notes": "WLAN controller architectures differ—centralized CAPWAP vs cloud-managed; client roaming events aid identity but lack full payload visibility."
+    }
+  }
+}

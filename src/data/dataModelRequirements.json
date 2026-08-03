@@ -1,0 +1,127 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-05",
+  "dataModels": {
+    "Authentication": {
+      "id": "Authentication",
+      "name": "Authentication",
+      "description": "Tracks authentication events including logins, logouts, and failures",
+      "cimCompliant": true,
+      "requiredByApps": ["splunk_enterprise_security", "splunk_uba"],
+      "keyFields": ["action", "app", "src", "dest", "user", "signature"],
+      "sourcetypes": ["WinEventLog:Security", "linux_secure", "okta:log", "azure:aad:signin"],
+      "logCapabilities": ["authentication_success", "authentication_failure", "privilege_escalation"],
+      "accelerationNotes": "Recommended for ES. Accelerated summaries enable fast correlation searches against authentication data."
+    },
+    "Network_Traffic": {
+      "id": "Network_Traffic",
+      "name": "Network Traffic",
+      "description": "Network connection and traffic flow data",
+      "cimCompliant": true,
+      "requiredByApps": ["splunk_enterprise_security"],
+      "keyFields": ["action", "src_ip", "dest_ip", "dest_port", "transport", "bytes_in", "bytes_out"],
+      "sourcetypes": ["pan:traffic", "cisco:asa", "fortigate_traffic"],
+      "logCapabilities": ["network_traffic_events", "perimeter_control_events"],
+      "accelerationNotes": "Critical for ES network correlation. High-volume data model; monitor acceleration storage carefully."
+    },
+    "Endpoint": {
+      "id": "Endpoint",
+      "name": "Endpoint",
+      "description": "Endpoint process, filesystem, and registry events",
+      "cimCompliant": true,
+      "requiredByApps": ["splunk_enterprise_security"],
+      "keyFields": ["action", "dest", "process_name", "process_path", "user", "parent_process"],
+      "sourcetypes": ["XmlWinEventLog:Microsoft-Windows-Sysmon/Operational", "crowdstrike:events:sensor"],
+      "logCapabilities": ["endpoint_process_events", "endpoint_file_events", "endpoint_network_events"],
+      "accelerationNotes": "Important for threat hunting and detection. Sysmon data can be high volume; consider filtering."
+    },
+    "Intrusion_Detection": {
+      "id": "Intrusion_Detection",
+      "name": "Intrusion Detection",
+      "description": "IDS/IPS alerts and threat signatures",
+      "cimCompliant": true,
+      "requiredByApps": ["splunk_enterprise_security"],
+      "keyFields": ["action", "category", "severity", "signature", "src", "dest"],
+      "sourcetypes": ["suricata", "snort", "pan:threat"],
+      "logCapabilities": ["perimeter_control_events", "threat_intelligence_match"],
+      "accelerationNotes": "Moderate volume. Acceleration provides fast alert correlation in ES."
+    },
+    "Change": {
+      "id": "Change",
+      "name": "Change Analysis",
+      "description": "Configuration and system changes",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["action", "change_type", "object", "user", "result"],
+      "sourcetypes": ["WinEventLog:Security", "aws:cloudtrail"],
+      "logCapabilities": ["compliance_audit_trail", "cloud_api_activity"],
+      "accelerationNotes": "Useful for change monitoring and compliance dashboards."
+    },
+    "Malware": {
+      "id": "Malware",
+      "name": "Malware",
+      "description": "Malware detection, quarantine, and remediation events",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["action", "file_name", "file_hash", "signature", "dest", "user"],
+      "sourcetypes": ["symantec:ep:risk:file", "crowdstrike:events:sensor"],
+      "logCapabilities": ["endpoint_file_events", "threat_intelligence_match"],
+      "accelerationNotes": "Moderate volume. Important for ES malware dashboards."
+    },
+    "Vulnerabilities": {
+      "id": "Vulnerabilities",
+      "name": "Vulnerabilities",
+      "description": "Vulnerability scan results and CVE findings",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["dest", "signature", "severity", "cve", "cvss"],
+      "sourcetypes": ["qualys:hostDetection", "tenable:io:vuln"],
+      "logCapabilities": ["vulnerability_scan_results"],
+      "accelerationNotes": "Low volume, batch import. Useful for risk-based alerting correlation."
+    },
+    "Web": {
+      "id": "Web",
+      "name": "Web",
+      "description": "Web proxy and HTTP traffic logs",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["action", "url", "http_method", "status", "src", "dest", "bytes"],
+      "sourcetypes": ["bluecoat:proxysg:access:syslog", "zscaler:web"],
+      "logCapabilities": ["network_traffic_events"],
+      "accelerationNotes": "Can be high volume depending on proxy deployment. Monitor acceleration costs."
+    },
+    "Email": {
+      "id": "Email",
+      "name": "Email",
+      "description": "Email delivery, filtering, and security events",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["action", "src_user", "recipient", "subject", "file_name"],
+      "sourcetypes": ["exchange:messagetracking", "o365:management:activity"],
+      "logCapabilities": ["email_security_events"],
+      "accelerationNotes": "Moderate volume. Important for phishing detection workflows."
+    },
+    "Network_Resolution": {
+      "id": "Network_Resolution",
+      "name": "Network Resolution (DNS)",
+      "description": "DNS query and response data",
+      "cimCompliant": true,
+      "requiredByApps": [],
+      "keyFields": ["query", "query_type", "answer", "src", "dest", "reply_code"],
+      "sourcetypes": ["stream:dns", "infoblox:dns:response"],
+      "logCapabilities": ["endpoint_network_events"],
+      "accelerationNotes": "Can be extremely high volume. Consider sampling or filtering in production."
+    },
+    "Performance": {
+      "id": "Performance",
+      "name": "Performance",
+      "description": "System and application performance metrics",
+      "cimCompliant": true,
+      "requiredByApps": ["itsi"],
+      "keyFields": ["dest", "cpu_load_percent", "mem_used", "storage_used_percent"],
+      "sourcetypes": ["Perfmon:CPU", "vmware:perf:cpu"],
+      "logCapabilities": ["infrastructure_metrics"],
+      "accelerationNotes": "Critical for ITSI KPI calculations. Acceleration required for efficient service monitoring."
+    }
+  }
+}

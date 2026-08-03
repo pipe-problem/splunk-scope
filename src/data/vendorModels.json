@@ -1,0 +1,206 @@
+{
+  "firewalls": {
+    "vendors": [
+      {
+        "id": "paloalto",
+        "name": "Palo Alto Networks",
+        "models": ["PA-220", "PA-440", "PA-460", "PA-3200", "PA-5200", "PA-7000", "VM-Series", "Prisma Access"]
+      },
+      {
+        "id": "fortinet",
+        "name": "Fortinet",
+        "models": ["FortiGate 40F", "FortiGate 60F", "FortiGate 100F", "FortiGate 200F", "FortiGate 600F", "FortiGate 3700D", "FortiGate VM", "FortiProxy VM"]
+      },
+      {
+        "id": "cisco",
+        "name": "Cisco",
+        "models": ["ASA 5506-X", "ASA 5516-X", "Firepower 1010", "Firepower 211NG", "Firepower 4120", "Firepower 9300", "Secure Firewall Threat Defense Virtual", "Meraki MX68"]
+      },
+      {
+        "id": "checkpoint",
+        "name": "Check Point",
+        "models": ["1530 Appliance", "1800 Appliance", "5800 Appliance", "6700 Appliance", "28000 Appliance", "Quantum Maestro", "CloudGuard IaaS", "VMware ESX Virtual Edition"]
+      },
+      {
+        "id": "juniper",
+        "name": "Juniper Networks",
+        "models": ["SRX300", "SRX380", "SRX1500", "SRX4100", "SRX4600", "SRX5800", "vSRX Virtual Firewall", "cSRX Container Firewall"]
+      },
+      {
+        "id": "sonicwall",
+        "name": "SonicWall",
+        "models": ["TZ270", "TZ370", "TZ470", "NSa 2700", "NSa 3700", "NSsp 12000", "NSv Virtual", "SMA 1000 Series"]
+      }
+    ]
+  },
+  "edr": {
+    "vendors": [
+      {
+        "id": "crowdstrike",
+        "name": "CrowdStrike",
+        "models": ["Falcon Prevent", "Falcon Insight XDR", "Falcon Discover", "Falcon Intelligence", "Falcon Firewall Management", "Falcon Fusion"]
+      },
+      {
+        "id": "microsoft",
+        "name": "Microsoft",
+        "models": ["Defender for Endpoint P1", "Defender for Endpoint P2", "Defender XDR", "Defender for Servers", "Defender for Business"]
+      },
+      {
+        "id": "sentinelone",
+        "name": "SentinelOne",
+        "models": ["Singularity Control", "Singularity Complete", "Singularity Ranger", "Singularity Identity", "Singularity DataLake"]
+      },
+      {
+        "id": "vmware_endgame",
+        "name": "VMware Carbon Black",
+        "models": ["Cloud Endpoint Standard", "Cloud Enterprise EDR", "App Control", "Carbon Black Managed Detection", "Watchlist"]
+      },
+      {
+        "id": "trendmicro",
+        "name": "Trend Micro",
+        "models": ["Apex One", "Vision One Endpoint Security", "Deep Security Agent", "Cloud One Workload Security", "XDR for Endpoint"]
+      },
+      {
+        "id": "sophos",
+        "name": "Sophos",
+        "models": ["Intercept X Advanced", "Intercept X Advanced with XDR", "Sophos MTR", "Sophos Central Server", "Sophos Linux Sensor"]
+      }
+    ]
+  },
+  "cloud": {
+    "vendors": [
+      {
+        "id": "aws",
+        "name": "Amazon Web Services",
+        "models": ["CloudTrail", "VPC Flow Logs", "GuardDuty", "Security Hub", "AWS Config", "Inspector"]
+      },
+      {
+        "id": "azure",
+        "name": "Microsoft Azure",
+        "models": ["Azure Monitor / Activity Log", "Microsoft Defender for Cloud", "Azure Firewall logs", "NSG Flow Logs", "Azure Policy", "Diagnostic settings"]
+      },
+      {
+        "id": "gcp",
+        "name": "Google Cloud Platform",
+        "models": ["Cloud Audit Logs", "VPC Flow Logs", "Security Command Center", "Cloud IDS", "Cloud Logging sinks", "Cloud Armor WAF"]
+      },
+      {
+        "id": "oracle",
+        "name": "Oracle Cloud Infrastructure",
+        "models": ["Audit Logs", "VCN Flow Logs", "Oracle Cloud Guard", "Object Storage access logs", "OCI Logging Analytics", "Oracle Data Safe"]
+      },
+      {
+        "id": "ibm",
+        "name": "IBM Cloud",
+        "models": ["Activity Tracker", "Flow Logs for VPC", "IBM Security Verify Insights", "Log Analysis with LogDNA", "Secrets Manager audit", "Hyper Protect Crypto audit"]
+      },
+      {
+        "id": "alibaba",
+        "name": "Alibaba Cloud",
+        "models": ["ActionTrail", "VPC Flow Logs", "Security Center", "Anti-DDoS logs", "Log Service (SLS)", "Resource Access Management audit"]
+      }
+    ]
+  },
+  "identity": {
+    "vendors": [
+      {
+        "id": "okta",
+        "name": "Okta",
+        "models": ["Okta Identity Engine", "Okta Access Gateway", "Advanced Server Access", "Okta Workflows", "Okta Privileged Access"]
+      },
+      {
+        "id": "microsoft_entra",
+        "name": "Microsoft Entra ID",
+        "models": ["Entra ID P1", "Entra ID P2", "Entra ID Governance", "Entra ID Protection", "Entra Privileged Identity Management", "Entra Domain Services"]
+      },
+      {
+        "id": "ping",
+        "name": "Ping Identity",
+        "models": ["PingOne", "PingFederate", "PingDirectory", "PingAccess", "PingID MFA", "PingCentral"]
+      },
+      {
+        "id": "cyberark",
+        "name": "CyberArk",
+        "models": ["Privileged Access Manager", "Endpoint Privilege Manager", "Session Manager", "Secrets Manager", "Identity Security Shared Services"]
+      },
+      {
+        "id": "sailpoint",
+        "name": "SailPoint",
+        "models": ["IdentityNow", "IdentityIQ", "Access Modeling", "Access Risk Management", "File Access Manager", "SaaS management"]
+      },
+      {
+        "id": "forgerock",
+        "name": "Ping (ForgeRock)",
+        "models": ["PingAM (Access Management)", "PingIDM (Identity Governance)", "PingDS (Directory)", "Autonomous Identity", "PingOne Advanced Services", "ForgeRock Identity Cloud"]
+      }
+    ]
+  },
+  "proxy": {
+    "vendors": [
+      {
+        "id": "zscaler",
+        "name": "Zscaler",
+        "models": ["ZIA (Internet Access)", "ZPA (Private Access)", "ZDX (Digital Experience)", "ZCC (Client Connector)", "Sandbox", "NSS log streaming"]
+      },
+      {
+        "id": "broadcom_symantec",
+        "name": "Broadcom (Symantec)",
+        "models": ["Secure Web Gateway (formerly ProxySG)", "Web Security Service (WSS)", "Cloud Secure Web Gateway", "Explicit Proxy agent", "SSL interception appliance", "AV filtering modules"]
+      },
+      {
+        "id": "cisco_wsav",
+        "name": "Cisco",
+        "models": ["Cisco Secure Web Appliance (WSA S680)", "Cisco Umbrella Secure Internet Gateway", "AsyncOS SWG", "Data Security", "Cognitive Threat Analytics", "Umbrella SIG"]
+      },
+      {
+        "id": "forcepoint",
+        "name": "Forcepoint",
+        "models": ["Forcepoint ONE SWG", "Forcepoint Cloud Security Gateway", "NGFW with explicit proxy", "DLP for Web", "Remote Browser Isolation", "Forcepoint CASB"]
+      },
+      {
+        "id": "netskope",
+        "name": "Netskope",
+        "models": ["Next Gen SWG", "SSE Platform", "NPA Private Access", "Cloud Firewall", "Remote Browser Isolation", "Skope Publisher"]
+      },
+      {
+        "id": "iboss",
+        "name": "iboss",
+        "models": ["Cloud Gateway SWG", "Zero Trust SSE", "Cloud Access Security Broker", "Containerized connector", "Digital Experience Monitoring", "Threat Defense"]
+      }
+    ]
+  },
+  "vpn": {
+    "vendors": [
+      {
+        "id": "cisco_anyconnect",
+        "name": "Cisco",
+        "models": ["ASA 5516 with AnyConnect", "Firepower Remote Access VPN", "ISE posture with AnyConnect", "Secure Client (AnyConnect 5)", "Duo SSO integration", "FXOS headend clusters"]
+      },
+      {
+        "id": "paloalto_gp",
+        "name": "Palo Alto Networks",
+        "models": ["GlobalProtect Gateway", "GlobalProtect Portal", "Prisma Access remote networks", "HIP profiles", "Clientless VPN", "Large scale VPN (LSVPN)"]
+      },
+      {
+        "id": "fortinet_sslvpn",
+        "name": "Fortinet",
+        "models": ["FortiOS SSL VPN", "FortiClient EMS", "IPsec dialup", "ZTNA connector", "FortiAuthenticator", "FortiToken MFA"]
+      },
+      {
+        "id": "ivanti_connect_secure",
+        "name": "Ivanti",
+        "models": ["Pulse Connect Secure (PCS)", "Pulse Policy Secure", "Ivanti Neurons for ZTA", "Virtual Appliance VA-5000", "Secure Access Client", "Zero Trust Access Service"]
+      },
+      {
+        "id": "citrix_adc",
+        "name": "Citrix",
+        "models": ["Citrix ADC VPX", "Citrix ADC MPX", "Gateway / AAA vServer", "Always-on VPN with EPA", "Citrix Secure Private Access", "ICA proxy logging"]
+      },
+      {
+        "id": "checkpoint_vpn",
+        "name": "Check Point",
+        "models": ["Remote Access VPN (Endpoint)", "Mobile Access", "IPsec Site-to-Site", "Quantum Spark appliances", "Telescope mobile security", "SSL Network Extender"]
+      }
+    ]
+  }
+}

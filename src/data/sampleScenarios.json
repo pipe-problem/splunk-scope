@@ -1,0 +1,148 @@
+[
+  {
+    "id": "robbins_retail_hybrid",
+    "name": "Chuck Robbins Inc.",
+    "label": "Chuck Robbins — Retail / Hybrid / Over-budget",
+    "selectedPlanIndex": null,
+    "suppressPathRecommendation": true,
+    "fictional": true,
+    "description": "Fictional regional retail & distribution (~1,200 users, hybrid AWS + on-prem). Many discovered sources vs $150K Splunk Cloud budget — Scope helps prioritize paths.",
+    "intake": {
+      "customerName": "Chuck Robbins Inc. — Regional Retail & Distribution",
+      "deploymentType": "cloud",
+      "opportunityBudgetUsd": "150000",
+      "pathBudgetPercentages": {
+        "crawl": 80,
+        "walk": 100,
+        "run": 110
+      },
+      "useCases": [
+        "Threat Detection and Investigation",
+        "Compliance and Audit",
+        "Cloud Security"
+      ],
+      "customUseCases": "PCI DSS 4.0 CDE logging and access evidence across stores and AWS payment microservices. Apply Splunk AI Toolkit (AITK) to baseline regional VPN authentication volume and firewall deny rates—not a standalone data-science program.",
+      "desiredApps": [
+        "enterprise_security",
+        "machine_learning_toolkit",
+        "app_pci_compliance",
+        "add_on_aws",
+        "add_on_microsoft_cloud_services",
+        "add_on_okta",
+        "add_on_palo_alto_networks",
+        "add_on_crowdstrike"
+      ],
+      "crawlGoal": "",
+      "walkGoal": "",
+      "runGoal": "",
+      "crawlGoalPresetId": "crawl_foundational_visibility",
+      "walkGoalPresetId": "walk_expand_correlation",
+      "runGoalPresetId": "run_optimize_and_mature",
+      "sourceHints": [],
+      "discoveryNotes": "Hybrid retail estate: ~1,200 users, 6 DCs, Palo Alto perimeter, CrowdStrike EDR, Zscaler proxy, AWS (6 accounts, 80 EC2, EKS, S3). PCI QSA flagged CDE logging gaps. Procurement cap ~$150K/year Splunk Cloud ingest — far less than “turn everything on.”",
+      "importedContext": null
+    },
+    "exampleProfile": {
+      "banner": "Fictional retail / hybrid demo — many sources, fixed budget, no pre-selected path.",
+      "customerSummary": "Regional retail & distribution with hybrid on-prem and AWS. Security, PCI DSS 4.0 evidence, and cloud control-plane visibility are all in scope — but ingest budget cannot cover every discovered source at once.",
+      "businessGoals": [
+        "Prioritize ~30 discovered sources against a $150K ingest cap without spreadsheet thrash",
+        "Show PCI-relevant identity, perimeter, and database audit coverage gaps before purchase",
+        "Phase cloud (IaaS, EC2, EKS, S3) without double-counting SaaS and endpoint telemetry",
+        "Leave Run-path headroom for threat intel, CASB/CSPM, and Splunk SOAR automation"
+      ],
+      "appInterests": [
+        "Splunk Enterprise Security",
+        "Splunk AI Toolkit",
+        "Splunk App for PCI Compliance"
+      ],
+      "demoNotes": "Flow: Sources (priority + overlap notes) → Review → Architecture Paths (3-card carousel; customer picks path) → Report deliverable preview + customer export zip.",
+      "budgetBreakdown": {
+        "annualUsd": 150000,
+        "deployment": "Splunk Cloud Platform",
+        "planningNote": "Planning estimate only — ~150 GB/day internal cap at cloud list planning rate."
+      },
+      "firstPhaseIngest": [
+        { "priority": 1, "source": "Active Directory", "id": "active_directory", "rationale": "Identity + PCI access evidence anchor" },
+        { "priority": 2, "source": "Perimeter Firewalls", "id": "firewalls", "rationale": "North-south threat and traffic context" },
+        { "priority": 3, "source": "CrowdStrike EDR", "id": "edr", "rationale": "Endpoint detection backbone" },
+        { "priority": 4, "source": "Okta / SSO", "id": "saas_sso", "rationale": "Federated sign-in for stores and corporate" },
+        { "priority": 5, "source": "Zscaler Proxy", "id": "proxy", "rationale": "SASE web policy and CASB-adjacent visibility" }
+      ],
+      "dataSourcesTable": [
+        { "name": "Active Directory", "vendor": "Microsoft", "status": "current", "phase": "Crawl" },
+        { "name": "Palo Alto NGFW", "vendor": "Palo Alto Networks", "status": "current", "phase": "Crawl" },
+        { "name": "CrowdStrike EDR", "vendor": "CrowdStrike", "status": "current", "phase": "Crawl" },
+        { "name": "Microsoft 365", "vendor": "Microsoft", "status": "current", "phase": "Walk" },
+        { "name": "AWS Control Plane", "vendor": "AWS", "status": "current", "phase": "Walk" },
+        { "name": "Threat Intelligence", "vendor": "Commercial feed", "status": "future", "phase": "Run" },
+        { "name": "NetFlow", "vendor": "NetOps", "status": "skip", "phase": "Deferred" }
+      ]
+    },
+    "overlapDecisions": {
+      "saas_general__saas_office": {
+        "selectedOption": {
+          "id": "separate",
+          "label": "M365 is sized separately from blended SaaS — note possible overlap in production",
+          "dedup": false
+        }
+      },
+      "edr__windows_servers": {
+        "selectedOption": {
+          "id": "separate",
+          "label": "EDR and Windows Security events may overlap — both remain in planning totals",
+          "dedup": false
+        }
+      }
+    },
+    "sources": {
+      "active_directory": { "status": "current", "number_of_dcs": 6, "number_of_users": 1200 },
+      "firewalls": { "status": "current", "number_of_systems": 8, "vendor": "Palo Alto Networks" },
+      "edr": { "status": "current", "number_of_endpoints": 900, "vendor": "CrowdStrike" },
+      "saas_sso": { "status": "current", "number_of_users": 1200, "vendor": "Okta" },
+      "proxy": { "status": "current", "number_of_systems": 2, "vendor": "Zscaler" },
+      "dns": { "status": "current", "number_of_servers": 2 },
+      "email": { "status": "current", "number_of_users": 4 },
+      "windows_servers": { "status": "current", "number_of_servers": 80 },
+      "vpn": { "status": "current", "number_of_users": 2, "vendor": "Cisco AnyConnect" },
+      "vuln_mgmt": { "status": "current", "number_of_assets": 2, "vendor": "Tenable" },
+      "asset_cmdb": { "status": "current", "number_of_assets": 1, "vendor": "ServiceNow" },
+      "iaas": { "status": "current", "iaasAccountCount": 6, "vendor": "AWS" },
+      "iaas_instances": { "status": "current", "cloudVmInstanceCount": 80, "vendor": "AWS EC2" },
+      "iaas_storage": { "status": "current", "cloudStorageAssetCount": 60, "vendor": "AWS S3" },
+      "iaas_containers": {
+        "status": "current",
+        "containerCounts": { "clusters": 4, "nodes": 60, "podsOrContainers": 1200 },
+        "vendor": "Amazon EKS"
+      },
+      "saas_office": { "status": "current", "officeActiveUserCount": 1200, "vendor": "Microsoft 365" },
+      "saas_crm": { "status": "current", "number_of_users": 350, "vendor": "Salesforce" },
+      "saas_general": { "status": "current", "number_of_users": 500, "vendor": "Average / Blended" },
+      "database": { "status": "current", "number_of_instances": 20, "vendor": "PostgreSQL" },
+      "app_servers": { "status": "current", "number_of_servers": 35 },
+      "dlp": { "status": "current", "number_of_users": 1200 },
+      "fw_waf": { "status": "current", "count": 3 },
+      "ids_ips": { "status": "current", "number_of_systems": 1 },
+      "threat_intel": { "status": "future", "vendor": "Commercial", "notes": "Run phase — enrich ES notables" },
+      "ndr": { "status": "future", "number_of_systems": 2, "notes": "Run phase — passive east-west" },
+      "casb": { "status": "future", "number_of_users": 1200, "notes": "Run — extend Zscaler CASB module" },
+      "cspm": { "status": "future", "number_of_accounts": 6, "notes": "Run — Wiz/Prisma posture findings" },
+      "web_servers": { "status": "future", "number_of_servers": 25, "notes": "E-comm tier — after core SOC" },
+      "config_mgmt": { "status": "future", "number_of_systems": 1, "notes": "PCI change evidence — Walk/Run" },
+      "devops_cicd": { "status": "future", "number_of_systems": 3, "notes": "Pipeline audit — Run" },
+      "sandbox": { "status": "future", "number_of_systems": 1, "notes": "Run — detonation forensics" },
+      "middleware": { "status": "future", "number_of_servers": 8, "notes": "Integration bus — Run" },
+      "desktops": { "status": "future", "number_of_endpoints": 900, "notes": "Deferred — EDR primary" },
+      "loadbalancer": { "status": "future", "number_of_systems": 4, "notes": "Store frontends — Run" },
+      "mdm": { "status": "future", "number_of_endpoints": 400, "notes": "Mobile fleet — Run" },
+      "netflow": { "status": "skip", "notes": "NetOps wants flow; SecOps will not fund ingest this cycle." },
+      "linux_servers": { "status": "skip", "notes": "Windows-first retail DCs — no Linux estate in scope." },
+      "ics_scada": { "status": "skip", "notes": "No OT / warehouse automation telemetry in this program." },
+      "ot_security": { "status": "skip", "notes": "No OT security sensors deployed." },
+      "mainframe": { "status": "skip", "notes": "Legacy ERP host — out of scope for this Splunk phase." },
+      "sap": { "status": "skip", "notes": "ERP logs owned by application team separately." },
+      "wireless": { "status": "skip", "notes": "Store Wi-Fi via Meraki — not a security priority this cycle." },
+      "routers": { "status": "skip", "notes": "Routing visibility deferred — firewall/proxy sufficient for now." }
+    }
+  }
+]

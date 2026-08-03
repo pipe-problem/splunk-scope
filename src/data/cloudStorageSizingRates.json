@@ -1,0 +1,262 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "vendors": {
+    "aws_s3": {
+      "label": "AWS S3",
+      "assetUnitLabel": "bucket",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "bucket",
+          "low": 0.00002,
+          "medium": 0.00027,
+          "high": 0.0045
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "bucket",
+          "low": 0.00037,
+          "medium": 0.037,
+          "high": 1.25
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "bucket",
+          "low": 0.00003,
+          "medium": 0.002,
+          "high": 0.076
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "bucket",
+          "low": 0.00008,
+          "medium": 0.00055,
+          "high": 0.0064
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0001, "medium": 0.0028, "high": 0.087 },
+        "full_storage_access_logs": { "low": 0.0005, "medium": 0.04, "high": 1.34 }
+      }
+    },
+    "azure_storage": {
+      "label": "Azure Storage",
+      "assetUnitLabel": "storage account",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "storage account",
+          "low": 0.00003,
+          "medium": 0.00032,
+          "high": 0.0049
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "storage account",
+          "low": 0.00068,
+          "medium": 0.078,
+          "high": 2.28
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "storage account",
+          "low": 0.00005,
+          "medium": 0.003,
+          "high": 0.096
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "storage account",
+          "low": 0.00015,
+          "medium": 0.0009,
+          "high": 0.0085
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0002, "medium": 0.0042, "high": 0.109 },
+        "full_storage_access_logs": { "low": 0.0009, "medium": 0.083, "high": 2.39 }
+      }
+    },
+    "google_cloud_storage": {
+      "label": "Google Cloud Storage",
+      "assetUnitLabel": "bucket",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "bucket",
+          "low": 0.00004,
+          "medium": 0.00044,
+          "high": 0.0062
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "bucket",
+          "low": 0.00078,
+          "medium": 0.088,
+          "high": 2.48
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "bucket",
+          "low": 0.00005,
+          "medium": 0.0022,
+          "high": 0.082
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "bucket",
+          "low": 0.00009,
+          "medium": 0.00086,
+          "high": 0.0096
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0002, "medium": 0.0035, "high": 0.097 },
+        "full_storage_access_logs": { "low": 0.001, "medium": 0.092, "high": 2.57 }
+      }
+    },
+    "netapp_cloud_volumes": {
+      "label": "NetApp Cloud Volumes",
+      "assetUnitLabel": "volume",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "volume",
+          "low": 0.00003,
+          "medium": 0.00032,
+          "high": 0.005
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "volume",
+          "low": 0.00039,
+          "medium": 0.05,
+          "high": 1.71
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "volume",
+          "low": 0.00003,
+          "medium": 0.002,
+          "high": 0.074
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "volume",
+          "low": 0.00008,
+          "medium": 0.00046,
+          "high": 0.0063
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0001, "medium": 0.0028, "high": 0.085 },
+        "full_storage_access_logs": { "low": 0.0005, "medium": 0.052, "high": 1.79 }
+      }
+    },
+    "dell_powerscale": {
+      "label": "Dell APEX / PowerScale",
+      "assetUnitLabel": "filesystem / access zone",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "filesystem / access zone",
+          "low": 0.00003,
+          "medium": 0.00032,
+          "high": 0.005
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "filesystem / access zone",
+          "low": 0.00035,
+          "medium": 0.045,
+          "high": 1.61
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "filesystem / access zone",
+          "low": 0.00003,
+          "medium": 0.002,
+          "high": 0.075
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "filesystem / access zone",
+          "low": 0.00008,
+          "medium": 0.00049,
+          "high": 0.0067
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0001, "medium": 0.0028, "high": 0.086 },
+        "full_storage_access_logs": { "low": 0.0005, "medium": 0.048, "high": 1.7 }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "assetUnitLabel": "storage asset",
+      "components": {
+        "management_audit": {
+          "label": "Management / configuration audit logs",
+          "unit": "storage asset",
+          "low": 0.00003,
+          "medium": 0.00033,
+          "high": 0.0051
+        },
+        "access_request": {
+          "label": "Object / file access request logs",
+          "unit": "storage asset",
+          "low": 0.00051,
+          "medium": 0.06,
+          "high": 1.87
+        },
+        "lifecycle_replication": {
+          "label": "Lifecycle / replication / tiering logs",
+          "unit": "storage asset",
+          "low": 0.00004,
+          "medium": 0.0024,
+          "high": 0.081
+        },
+        "performance_health": {
+          "label": "Performance / health / system logs",
+          "unit": "storage asset",
+          "low": 0.0001,
+          "medium": 0.00065,
+          "high": 0.0075
+        }
+      },
+      "profileRollups": {
+        "base_storage_telemetry": { "low": 0.0002, "medium": 0.0032, "high": 0.093 },
+        "full_storage_access_logs": { "low": 0.0007, "medium": 0.063, "high": 1.96 }
+      }
+    }
+  },
+  "collectionProfiles": {
+    "base_storage_telemetry": {
+      "label": "Base storage telemetry",
+      "description": "Management/configuration, lifecycle/replication, and health/performance logs."
+    },
+    "full_storage_access_logs": {
+      "label": "Full storage access logs",
+      "description": "Base storage telemetry plus object or file access request logs."
+    }
+  },
+  "overlapSourceIds": [
+    "iaas",
+    "app_servers",
+    "app_servers_nonprod",
+    "web_servers",
+    "web_servers_nonprod",
+    "database",
+    "dlp",
+    "casb"
+  ],
+  "accessOverlapSourceIds": [
+    "app_servers",
+    "app_servers_nonprod",
+    "web_servers",
+    "web_servers_nonprod",
+    "dlp",
+    "casb",
+    "iaas"
+  ]
+}

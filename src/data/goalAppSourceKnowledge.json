@@ -1,0 +1,431 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-01",
+  "goals": [
+    {
+      "id": "siem",
+      "name": "Security Operations / SIEM",
+      "shortExplanation": "Unified detection, investigation, and response across identity, endpoint, network, and cloud telemetry using Enterprise Security and SOC workflows.",
+      "appIds": [
+        "enterprise_security",
+        "mission_control",
+        "soar",
+        "security_essentials",
+        "infosec_app"
+      ],
+      "prioritySourceIds": [
+        "active_directory",
+        "firewalls",
+        "edr",
+        "email",
+        "iaas",
+        "proxy",
+        "threat_intel"
+      ]
+    },
+    {
+      "id": "rba",
+      "name": "Risk-Based Alerting",
+      "shortExplanation": "Prioritize SOC work using composite risk scores from identity, asset, vulnerability, and behavioral context instead of flat alert volume.",
+      "appIds": [
+        "enterprise_security",
+        "user_behavior_analytics",
+        "risk_based_alerting"
+      ],
+      "prioritySourceIds": [
+        "active_directory",
+        "edr",
+        "asset_cmdb",
+        "sso_pam",
+        "uba",
+        "vuln_mgmt",
+        "threat_intel"
+      ]
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance and Audit",
+      "shortExplanation": "Collect defensible audit evidence, map controls to telemetry, and produce attestation-ready reporting for regulatory and internal frameworks.",
+      "appIds": [
+        "pci_compliance",
+        "hipaa_healthcare_audit",
+        "sox_audit",
+        "audit_compliance_reporting",
+        "enterprise_security"
+      ],
+      "prioritySourceIds": [
+        "active_directory",
+        "windows_servers",
+        "linux_servers",
+        "asset_cmdb",
+        "database",
+        "sso_pam",
+        "config_mgmt"
+      ]
+    },
+    {
+      "id": "cloud_security",
+      "name": "Cloud Security",
+      "shortExplanation": "Monitor cloud control planes, workload activity, and federated identity across AWS, Azure, GCP, and SaaS with posture and runtime context.",
+      "appIds": [
+        "cloud_aws_apps",
+        "cloud_azure_apps",
+        "cloud_google_apps",
+        "cloud_microsoft_365_apps",
+        "enterprise_security"
+      ],
+      "prioritySourceIds": [
+        "iaas",
+        "cspm",
+        "cwpp",
+        "casb",
+        "active_directory",
+        "saas_general",
+        "sso_pam"
+      ]
+    },
+    {
+      "id": "platform_admin",
+      "name": "Platform Administration",
+      "shortExplanation": "Operate Splunk reliably — forwarder health, indexer capacity, ingest latency, license usage, and deployment governance.",
+      "appIds": [
+        "monitoring_console",
+        "enterprise",
+        "deployment_server",
+        "data_manager"
+      ],
+      "prioritySourceIds": [
+        "linux_servers",
+        "windows_servers",
+        "config_mgmt",
+        "asset_cmdb"
+      ]
+    },
+    {
+      "id": "ml_analytics",
+      "name": "Machine Learning and Predictive Analytics",
+      "shortExplanation": "Apply Splunk AI Toolkit (AITK) to operational telemetry for guided analytics, baselining, and anomaly detection — anchored to explicit ML or AI use cases, not generic assistants.",
+      "appIds": [
+        "machine_learning_toolkit",
+        "app_data_science_deep_learning"
+      ],
+      "prioritySourceIds": [
+        "linux_servers",
+        "apm",
+        "web_servers",
+        "database",
+        "business_txn"
+      ]
+    }
+  ],
+  "apps": [
+    {
+      "id": "enterprise_security",
+      "appType": "app",
+      "name": "Splunk Enterprise Security",
+      "splunkbaseCatalogId": "splunk_enterprise_security",
+      "goalIds": ["siem", "rba", "compliance", "cloud_security"],
+      "requiredSourceIds": ["active_directory", "firewalls", "edr"],
+      "recommendedSourceIds": ["email", "iaas", "proxy", "threat_intel", "dns", "vuln_mgmt"],
+      "customerValueOneLiner": "Single SOC workbench for hybrid detection, investigation, and response at enterprise scale."
+    },
+    {
+      "id": "mission_control",
+      "appType": "app",
+      "name": "Splunk Mission Control",
+      "splunkbaseCatalogId": "splunk_mission_control",
+      "goalIds": ["siem"],
+      "requiredSourceIds": ["active_directory", "firewalls"],
+      "recommendedSourceIds": ["edr", "threat_intel", "email"],
+      "customerValueOneLiner": "Unified security operations console across Splunk security products and analyst workflows."
+    },
+    {
+      "id": "soar",
+      "appType": "app",
+      "name": "Splunk SOAR",
+      "splunkbaseCatalogId": "splunk_soar",
+      "goalIds": ["siem"],
+      "requiredSourceIds": ["active_directory", "firewalls"],
+      "recommendedSourceIds": ["edr", "email", "threat_intel"],
+      "customerValueOneLiner": "Automate repetitive response steps and orchestrate playbooks across the security stack."
+    },
+    {
+      "id": "security_essentials",
+      "appType": "app",
+      "name": "Splunk Security Essentials",
+      "splunkbaseCatalogId": "security_essentials",
+      "goalIds": ["siem"],
+      "requiredSourceIds": ["active_directory", "firewalls"],
+      "recommendedSourceIds": ["windows_servers", "edr"],
+      "customerValueOneLiner": "Free prebuilt security searches and dashboards as a practical path before full SIEM investment."
+    },
+    {
+      "id": "infosec_app",
+      "appType": "app",
+      "name": "Splunk InfoSec App",
+      "splunkbaseCatalogId": "infosec_app",
+      "goalIds": ["siem"],
+      "requiredSourceIds": ["active_directory", "firewalls"],
+      "recommendedSourceIds": ["windows_servers", "vpn"],
+      "customerValueOneLiner": "Operational security dashboards for teams building visibility before Enterprise Security."
+    },
+    {
+      "id": "user_behavior_analytics",
+      "appType": "app",
+      "name": "Splunk User Behavior Analytics",
+      "splunkbaseCatalogId": "splunk_uba",
+      "goalIds": ["rba"],
+      "requiredSourceIds": ["active_directory", "edr"],
+      "recommendedSourceIds": ["sso_pam", "asset_cmdb", "uba", "email"],
+      "customerValueOneLiner": "Detect insider threats and anomalous user or entity behavior with peer baselines."
+    },
+    {
+      "id": "risk_based_alerting",
+      "appType": "app",
+      "name": "Risk-Based Alerting",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["rba"],
+      "requiredSourceIds": ["active_directory", "asset_cmdb"],
+      "recommendedSourceIds": ["edr", "vuln_mgmt", "threat_intel"],
+      "customerValueOneLiner": "Route analyst attention to highest-risk intersections instead of every discrete alert."
+    },
+    {
+      "id": "pci_compliance",
+      "appType": "app",
+      "name": "Splunk App for PCI Compliance",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["compliance"],
+      "requiredSourceIds": ["active_directory", "windows_servers", "firewalls"],
+      "recommendedSourceIds": ["database", "asset_cmdb", "config_mgmt"],
+      "customerValueOneLiner": "Map PCI DSS control evidence to searchable authentication, access, and perimeter telemetry."
+    },
+    {
+      "id": "hipaa_healthcare_audit",
+      "appType": "app",
+      "name": "HIPAA Healthcare Audit",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["compliance"],
+      "requiredSourceIds": ["active_directory", "windows_servers"],
+      "recommendedSourceIds": ["database", "asset_cmdb", "email"],
+      "customerValueOneLiner": "Support HIPAA audit trails with access and system activity evidence tied to regulated systems."
+    },
+    {
+      "id": "sox_audit",
+      "appType": "app",
+      "name": "SOX Audit",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["compliance"],
+      "requiredSourceIds": ["active_directory", "windows_servers"],
+      "recommendedSourceIds": ["database", "config_mgmt", "asset_cmdb"],
+      "customerValueOneLiner": "Produce SOX-relevant change and access evidence for financial reporting systems."
+    },
+    {
+      "id": "audit_compliance_reporting",
+      "appType": "app",
+      "name": "Audit and Compliance Reporting",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["compliance"],
+      "requiredSourceIds": ["active_directory", "asset_cmdb"],
+      "recommendedSourceIds": ["windows_servers", "linux_servers", "sso_pam"],
+      "customerValueOneLiner": "Scheduled compliance reports and attestation views across heterogeneous control frameworks."
+    },
+    {
+      "id": "cloud_aws_apps",
+      "appType": "app",
+      "name": "AWS Apps and Add-ons",
+      "splunkbaseCatalogId": "ta_aws",
+      "goalIds": ["cloud_security"],
+      "requiredSourceIds": ["iaas"],
+      "recommendedSourceIds": ["cspm", "active_directory", "casb"],
+      "customerValueOneLiner": "Ingest and analyze AWS control-plane and workload telemetry for cloud security operations."
+    },
+    {
+      "id": "cloud_azure_apps",
+      "appType": "app",
+      "name": "Azure Apps and Add-ons",
+      "splunkbaseCatalogId": "ta_azure",
+      "goalIds": ["cloud_security"],
+      "requiredSourceIds": ["iaas"],
+      "recommendedSourceIds": ["cspm", "sso_pam", "active_directory"],
+      "customerValueOneLiner": "Monitor Azure activity, platform logs, and identity signals for hybrid cloud security."
+    },
+    {
+      "id": "cloud_google_apps",
+      "appType": "app",
+      "name": "Google Cloud Apps and Add-ons",
+      "splunkbaseCatalogId": "ta_gcp",
+      "goalIds": ["cloud_security"],
+      "requiredSourceIds": ["iaas"],
+      "recommendedSourceIds": ["cspm", "active_directory"],
+      "customerValueOneLiner": "Visibility into GCP audit, security command center, and VPC flow telemetry."
+    },
+    {
+      "id": "cloud_microsoft_365_apps",
+      "appType": "app",
+      "name": "Microsoft 365 Apps and Add-ons",
+      "splunkbaseCatalogId": "ta_office_365",
+      "goalIds": ["cloud_security"],
+      "requiredSourceIds": ["saas_general"],
+      "recommendedSourceIds": ["email", "sso_pam", "active_directory"],
+      "customerValueOneLiner": "SaaS security monitoring for Microsoft 365 collaboration and identity activity."
+    },
+    {
+      "id": "monitoring_console",
+      "appType": "app",
+      "name": "Splunk Monitoring Console",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["platform_admin"],
+      "requiredSourceIds": ["linux_servers"],
+      "recommendedSourceIds": ["windows_servers", "config_mgmt"],
+      "customerValueOneLiner": "Fleet health, resource usage, and distributed deployment visibility for Splunk administrators."
+    },
+    {
+      "id": "enterprise",
+      "appType": "app",
+      "name": "Splunk Enterprise",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["platform_admin"],
+      "requiredSourceIds": ["linux_servers"],
+      "recommendedSourceIds": ["windows_servers", "config_mgmt"],
+      "customerValueOneLiner": "Core platform for indexing, search, and role-based access across the deployment."
+    },
+    {
+      "id": "deployment_server",
+      "appType": "app",
+      "name": "Splunk Deployment Server",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["platform_admin"],
+      "requiredSourceIds": ["linux_servers"],
+      "recommendedSourceIds": ["config_mgmt", "asset_cmdb"],
+      "customerValueOneLiner": "Centralized configuration management and phone-home health for forwarders and nodes."
+    },
+    {
+      "id": "data_manager",
+      "appType": "app",
+      "name": "Splunk Data Manager",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["platform_admin"],
+      "requiredSourceIds": ["iaas"],
+      "recommendedSourceIds": ["config_mgmt"],
+      "customerValueOneLiner": "Guided cloud data onboarding and routing for Splunk Cloud administrators."
+    },
+    {
+      "id": "machine_learning_toolkit",
+      "appType": "app",
+      "name": "Splunk AI Toolkit",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["ml_analytics"],
+      "requiredSourceIds": ["linux_servers"],
+      "recommendedSourceIds": ["apm", "web_servers", "database"],
+      "customerValueOneLiner": "Build and operationalize forecasting, clustering, and anomaly models on Splunk data."
+    },
+    {
+      "id": "app_data_science_deep_learning",
+      "appType": "app",
+      "name": "Splunk App for Data Science and Deep Learning",
+      "splunkbaseCatalogId": null,
+      "goalIds": ["ml_analytics"],
+      "requiredSourceIds": ["linux_servers", "apm"],
+      "recommendedSourceIds": ["business_txn", "database", "web_servers"],
+      "customerValueOneLiner": "Advanced data-science and deep-learning workflows integrated with Splunk datasets."
+    }
+  ],
+  "addons": [
+    {
+      "id": "ta_windows",
+      "technicalAddonId": "ta_windows",
+      "name": "Splunk Add-on for Microsoft Windows",
+      "sourceIds": ["windows_servers", "active_directory"],
+      "collectionMethods": ["splunk_forwarder", "wineventlog"],
+      "docsUrl": "https://splunkbase.splunk.com/app/742"
+    },
+    {
+      "id": "ta_unix_linux",
+      "technicalAddonId": "ta_unix_linux",
+      "name": "Splunk Add-on for Unix and Linux",
+      "sourceIds": ["linux_servers"],
+      "collectionMethods": ["splunk_forwarder", "syslog"],
+      "docsUrl": "https://splunkbase.splunk.com/app/833"
+    },
+    {
+      "id": "ta_aws",
+      "technicalAddonId": "ta_aws",
+      "name": "Splunk Add-on for Amazon Web Services (AWS)",
+      "sourceIds": ["iaas", "cspm"],
+      "collectionMethods": ["modular_input", "api_polling", "sqs"],
+      "docsUrl": "https://splunkbase.splunk.com/app/1876"
+    },
+    {
+      "id": "ta_azure",
+      "technicalAddonId": "ta_azure",
+      "name": "Splunk Add-on for Microsoft Azure",
+      "sourceIds": ["iaas", "cspm"],
+      "collectionMethods": ["modular_input", "api_polling", "event_hub"],
+      "docsUrl": "https://splunkbase.splunk.com/app/3112"
+    },
+    {
+      "id": "ta_gcp",
+      "technicalAddonId": "ta_gcp",
+      "name": "Splunk Add-on for Google Cloud Platform",
+      "sourceIds": ["iaas", "cspm"],
+      "collectionMethods": ["modular_input", "api_polling", "pubsub"],
+      "docsUrl": "https://splunkbase.splunk.com/app/3088"
+    },
+    {
+      "id": "ta_microsoft_cloud_services",
+      "technicalAddonId": "ta_microsoft_cloud_services",
+      "name": "Splunk Add-on for Microsoft Cloud Services",
+      "sourceIds": ["iaas", "saas_general", "sso_pam"],
+      "collectionMethods": ["modular_input", "api_polling"],
+      "docsUrl": "https://splunkbase.splunk.com/app/3110"
+    },
+    {
+      "id": "ta_office_365",
+      "technicalAddonId": "ta_office_365",
+      "name": "Splunk Add-on for Microsoft Office 365",
+      "sourceIds": ["saas_general", "email"],
+      "collectionMethods": ["modular_input", "api_polling"],
+      "docsUrl": "https://splunkbase.splunk.com/app/3786"
+    },
+    {
+      "id": "ta_okta",
+      "technicalAddonId": "ta_okta",
+      "name": "Splunk Add-on for Okta Identity Cloud",
+      "sourceIds": ["sso_pam"],
+      "collectionMethods": ["modular_input", "api_polling", "hec"],
+      "docsUrl": "https://splunkbase.splunk.com/app/4092"
+    },
+    {
+      "id": "ta_palo_alto",
+      "technicalAddonId": "ta_palo_alto",
+      "name": "Palo Alto Networks Add-on for Splunk",
+      "sourceIds": ["firewalls"],
+      "collectionMethods": ["syslog", "splunk_forwarder"],
+      "docsUrl": "https://splunkbase.splunk.com/app/2757"
+    },
+    {
+      "id": "ta_cisco_asa",
+      "technicalAddonId": "ta_cisco_asa",
+      "name": "Splunk Add-on for Cisco ASA",
+      "sourceIds": ["firewalls", "vpn"],
+      "collectionMethods": ["syslog", "splunk_forwarder"],
+      "docsUrl": "https://splunkbase.splunk.com/app/1620"
+    },
+    {
+      "id": "ta_crowdstrike",
+      "technicalAddonId": "ta_crowdstrike",
+      "name": "Splunk Add-on for CrowdStrike FDR",
+      "sourceIds": ["edr"],
+      "collectionMethods": ["hec", "api_polling", "streaming_api"],
+      "docsUrl": "https://splunkbase.splunk.com/app/5080"
+    },
+    {
+      "id": "ta_kubernetes",
+      "technicalAddonId": "ta_kubernetes",
+      "name": "Splunk OpenTelemetry Collector for Kubernetes",
+      "sourceIds": ["iaas", "paas"],
+      "collectionMethods": ["otel_collector", "hec"],
+      "docsUrl": "https://splunkbase.splunk.com/app/6666"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "version": "1.1.0",
+  "aliases": [
+    { "terms": ["firewall traffic", "firewall logs", "perimeter logs", "ngfw"], "sourceIds": ["firewalls"] },
+    { "terms": ["login logs", "auth logs", "sign-in", "sign in"], "sourceIds": ["active_directory", "saas_sso", "sso_pam"] },
+    { "terms": ["okta", "sso", "idp", "identity provider", "authentication", "entra", "azure ad", "aad"], "sourceIds": ["saas_sso", "sso_pam", "active_directory"] },
+    { "terms": ["asa", "firewall", "ftd", "palo alto", "fortinet", "perimeter", "checkpoint"], "sourceIds": ["firewalls", "vpn"] },
+    { "terms": ["m365", "office 365", "microsoft 365", "exchange", "sharepoint", "teams", "o365"], "sourceIds": ["saas_office", "saas_sso"] },
+    { "terms": ["crowdstrike", "falcon", "edr", "sentinelone", "carbon black", "defender endpoint", "microsoft defender"], "sourceIds": ["edr"] },
+    { "terms": ["vpn", "anyconnect", "globalprotect", "remote access"], "sourceIds": ["vpn"] },
+    { "terms": ["ad", "active directory", "domain controller", "dc logs", "ldap"], "sourceIds": ["active_directory"] },
+    { "terms": ["dns", "dhcp", "resolver", "bind"], "sourceIds": ["dns", "dhcp"] },
+    { "terms": ["email", "proofpoint", "mimecast", "phishing", "secure email"], "sourceIds": ["email"] },
+    { "terms": ["cisco", "switch", "router", "network device", "syslog"], "sourceIds": ["switches", "routers", "firewalls"] },
+    { "terms": ["aws", "azure", "gcp", "google cloud", "cloud control", "control plane"], "sourceIds": ["iaas", "cspm", "cwpp", "casb"] },
+    { "terms": ["cloudtrail", "cloud trail", "aws audit", "azure activity", "activity log"], "sourceIds": ["iaas"] },
+    { "terms": ["s3", "blob storage", "object storage", "cloud storage", "gcs bucket"], "sourceIds": ["iaas_storage"] },
+    { "terms": ["vulnerability", "tenable", "qualys", "rapid7", "nessus"], "sourceIds": ["vuln_mgmt"] },
+    { "terms": ["cmdb", "servicenow", "asset inventory", "asset register"], "sourceIds": ["asset_cmdb"] },
+    { "terms": ["windows", "endpoint", "workstation", "server logs", "win event"], "sourceIds": ["windows_servers", "desktops"] },
+    { "terms": ["netflow", "flow", "ndr", "packet", "sflow", "ipfix"], "sourceIds": ["netflow", "ndr", "stream"] },
+    { "terms": ["proxy", "web gateway", "zscaler", "sase", "casb", "secure web gateway"], "sourceIds": ["proxy", "sase", "casb"] },
+    { "terms": ["ids", "ips", "intrusion", "snort"], "sourceIds": ["ids_ips", "firewalls"] },
+    { "terms": ["salesforce", "crm", "dynamics"], "sourceIds": ["saas_crm"] },
+    { "terms": ["kubernetes", "k8s", "eks", "aks", "gke", "container"], "sourceIds": ["iaas_containers"] },
+    { "terms": ["ec2", "vm", "virtual machine", "cloud vm", "instance"], "sourceIds": ["iaas_instances"] }
+  ]
+}

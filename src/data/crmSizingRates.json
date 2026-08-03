@@ -1,0 +1,361 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "collectionProfiles": {
+    "audit_only": {
+      "label": "Audit only",
+      "description": "Admin/configuration audit plus login and access security events."
+    },
+    "standard_crm_activity": {
+      "label": "Standard CRM activity",
+      "description": "Audit only plus CRM record, case, ticket, lead, opportunity, or contact activity."
+    },
+    "full_crm_activity": {
+      "label": "Full CRM activity",
+      "description": "Standard CRM activity plus API, integration, sync, import, export, or connected app events."
+    }
+  },
+  "activityLevels": {
+    "light": { "label": "Light", "tier": "low" },
+    "normal": { "label": "Normal", "tier": "medium" },
+    "heavy": { "label": "Heavy", "tier": "high" }
+  },
+  "profileComponents": {
+    "audit_only": ["admin_config_audit", "login_access_security"],
+    "standard_crm_activity": ["admin_config_audit", "login_access_security", "crm_record_activity"],
+    "full_crm_activity": [
+      "admin_config_audit",
+      "login_access_security",
+      "crm_record_activity",
+      "api_integration_events"
+    ]
+  },
+  "vendors": {
+    "salesforce": {
+      "label": "Salesforce",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.000017436,
+          "medium": 0.00017437,
+          "high": 0.001744116,
+          "avgBytesMedium": 178.73
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.0000007,
+          "medium": 0.0000028,
+          "high": 0.0000105,
+          "avgBytesMedium": 358.81
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.000004016,
+          "medium": 0.000030142,
+          "high": 0.000216641,
+          "avgBytesMedium": 770.63
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.00018099,
+          "medium": 0.003617525,
+          "high": 0.051075295,
+          "avgBytesMedium": 742.84
+        }
+      }
+    },
+    "dynamics_365": {
+      "label": "Microsoft Dynamics 365",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.000020591,
+          "medium": 0.000205947,
+          "high": 0.002058342,
+          "avgBytesMedium": 211.01
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000000781,
+          "medium": 0.00000312,
+          "high": 0.000011709,
+          "avgBytesMedium": 399.36
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.000004676,
+          "medium": 0.000035063,
+          "high": 0.000247506,
+          "avgBytesMedium": 897.66
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.000204532,
+          "medium": 0.004090391,
+          "high": 0.051242299,
+          "avgBytesMedium": 838.66
+        }
+      }
+    },
+    "hubspot": {
+      "label": "HubSpot",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.00001718,
+          "medium": 0.000171873,
+          "high": 0.001717623,
+          "avgBytesMedium": 176.11
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000000702,
+          "medium": 0.000002807,
+          "high": 0.000010536,
+          "avgBytesMedium": 359.69
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.000003436,
+          "medium": 0.000025758,
+          "high": 0.000179828,
+          "avgBytesMedium": 659.4
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.000194499,
+          "medium": 0.003889654,
+          "high": 0.046256632,
+          "avgBytesMedium": 799.23
+        }
+      }
+    },
+    "zendesk": {
+      "label": "Zendesk",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.000017608,
+          "medium": 0.00017606,
+          "high": 0.001760522,
+          "avgBytesMedium": 180.51
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.00000068,
+          "medium": 0.000002721,
+          "high": 0.000010197,
+          "avgBytesMedium": 348.67
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.00000335,
+          "medium": 0.00002513,
+          "high": 0.000181181,
+          "avgBytesMedium": 643.33
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.000170352,
+          "medium": 0.003408618,
+          "high": 0.041523576,
+          "avgBytesMedium": 699.69
+        }
+      }
+    },
+    "servicenow_csm": {
+      "label": "ServiceNow CSM",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.000020123,
+          "medium": 0.000201289,
+          "high": 0.002012713,
+          "avgBytesMedium": 205.92
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000000713,
+          "medium": 0.000002863,
+          "high": 0.000010719,
+          "avgBytesMedium": 365.89
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.000003983,
+          "medium": 0.000029866,
+          "high": 0.000195725,
+          "avgBytesMedium": 763.42
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.000173681,
+          "medium": 0.003474135,
+          "high": 0.044306107,
+          "avgBytesMedium": 711.48
+        }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "components": {
+        "admin_config_audit": {
+          "label": "Admin / configuration audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org / instance",
+          "countField": "crmTenantCount",
+          "dailyEventField": "dailyAdminAuditEvents",
+          "toggleKey": "includeAdminConfigAudit",
+          "low": 0.000018588,
+          "medium": 0.000185908,
+          "high": 0.001858663,
+          "avgBytesMedium": 190.29
+        },
+        "login_access_security": {
+          "label": "Login / access security events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyLoginAccessEvents",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000000715,
+          "medium": 0.000002862,
+          "high": 0.000010732,
+          "avgBytesMedium": 366.02
+        },
+        "crm_record_activity": {
+          "label": "CRM record / case / ticket activity events",
+          "unit": "active CRM user",
+          "unitLabel": "active CRM user",
+          "countField": "crmActiveUserCount",
+          "dailyEventField": "dailyCrmRecordEvents",
+          "toggleKey": "includeCrmRecordActivity",
+          "low": 0.000003892,
+          "medium": 0.000029192,
+          "high": 0.000204176,
+          "avgBytesMedium": 746.89
+        },
+        "api_integration_events": {
+          "label": "API / integration events",
+          "unit": "integration",
+          "unitLabel": "integration / API client",
+          "countField": "crmIntegrationCount",
+          "dailyEventField": "dailyApiIntegrationEvents",
+          "toggleKey": "includeApiIntegrationEvents",
+          "low": 0.000184811,
+          "medium": 0.003696065,
+          "high": 0.046880782,
+          "avgBytesMedium": 757.58
+        }
+      }
+    }
+  },
+  "overlapSourceIds": [
+    "saas_general",
+    "saas_office",
+    "saas_sso",
+    "api_gateway",
+    "integration_platform",
+    "app_servers",
+    "web_servers"
+  ]
+}

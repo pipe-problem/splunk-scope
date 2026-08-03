@@ -1,0 +1,443 @@
+[
+  {
+    "id": "foundational_security",
+    "name": "Foundational Security / InfoSec",
+    "description": "Establish baseline security visibility across identity, endpoints, and core network paths for detection and investigation readiness.",
+    "category": "Security",
+    "requiredDomains": ["authentication", "endpoint", "network"],
+    "recommendedDomains": ["perimeter_control", "threat_enrichment"],
+    "relevantSourceFamilies": ["Networking", "End-User Support", "Security & Compliance", "Server"],
+    "splunkApps": ["Splunk InfoSec App", "Splunk Security Essentials"],
+    "technicalAddons": ["Splunk Add-on for Unix and Linux", "Splunk Forwarder", "Palo Alto Networks Add-on for Splunk"],
+    "minimumSources": ["active_directory", "firewalls", "windows_servers"],
+    "suggestedSources": ["active_directory", "firewalls", "windows_servers", "edr", "proxy", "dns", "vpn", "linux_servers", "ids_ips"],
+    "crawlDescription": "Onboard AD, Windows security, and firewall or proxy logs with time sync and retention baselines; ship to a single index tier and publish perimeter-and-identity executive views.",
+    "walkDescription": "Normalize to the Common Information Model, add EDR and DNS, tune volume caps, and stand up analyst queues with assignment and status for daily triage.",
+    "runDescription": "Layer threat intelligence, correlation searches, risk scoring, and SOAR playbooks while running continuous content review and purple-team-driven tuning.",
+    "validationRules": [
+      "Identity coverage must include strong authentication or directory-equivalent logs for interactive and privileged accounts.",
+      "At least one perimeter or east-west network telemetry source must be present with defined parsing and ownership."
+    ],
+    "valueProposition": "You see who is accessing systems, what endpoints report, and what crosses defended network segments—enough to detect common attacks and start credible investigations. This profile pairs rapid time-to-value with a path to full SIEM maturity without boiling the ocean on day one."
+  },
+  {
+    "id": "enterprise_security",
+    "name": "Enterprise Security / SIEM",
+    "description": "End-to-end security operations spanning hybrid identity, multi-channel telemetry, cloud control planes, and enriched detection at enterprise scale.",
+    "category": "Security",
+    "requiredDomains": ["authentication", "endpoint", "network", "perimeter_control", "threat_enrichment"],
+    "recommendedDomains": ["identity_governance", "vulnerability_asset", "email_collaboration", "cloud_control_plane"],
+    "relevantSourceFamilies": ["Networking", "Security & Compliance", "Cloud/SaaS Services", "Server", "Application"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk SOAR", "Splunk Add-on for Microsoft Office 365", "Splunk App for AWS"],
+    "technicalAddons": ["Splunk Add-on for Microsoft Cloud Services", "CrowdStrike Falcon Event Streams Add-on", "Splunk DB Connect"],
+    "minimumSources": ["active_directory", "firewalls", "edr", "iaas", "email"],
+    "suggestedSources": ["active_directory", "firewalls", "edr", "iaas", "email", "proxy", "threat_intel", "saas_general", "casb", "ndr", "vuln_mgmt"],
+    "crawlDescription": "Unify tier-1 on-prem and cloud ingress with ES workbench, standard fields across AD, perimeter, and EDR, and a single operational runbook library.",
+    "walkDescription": "Bring in vulnerability, email, and cloud audit streams; align notables to MITRE, enrich with intel feeds, and integrate ticketing plus basic automation.",
+    "runDescription": "Operate continuous detection engineering, automated containment options, risk-based prioritization, and executive SLA metrics across regions and business units.",
+    "validationRules": [
+      "All five required domains must reach strong coverage with named data owners and parsing SLAs.",
+      "Threat enrichment must include at least one commercial or curated open-source feed with revocation and false-positive review."
+    ],
+    "valueProposition": "Security leadership gains a single pane for hybrid incidents, not siloed alerts per tool. Analysts spend less time pivoting across consoles while executives see measurable reduction in dwell time and repeatable response."
+  },
+  {
+    "id": "threat_detection",
+    "name": "Threat Detection and Investigation",
+    "description": "Deep detection engineering and hunt-ready telemetry emphasizing endpoint, network, identity correlation, and intelligence-led investigation.",
+    "category": "Security",
+    "requiredDomains": ["endpoint", "network", "threat_enrichment", "authentication"],
+    "recommendedDomains": ["cloud_control_plane", "identity_governance"],
+    "relevantSourceFamilies": ["Security & Compliance", "Networking", "Server", "Cloud/SaaS Services"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk Attack Analyzer", "Mission Control for Splunk", "Zeek Add-on for Splunk"],
+    "technicalAddons": ["Splunk Add-on for Stream", "Splunk OT Security Add-on", "Splunk Add-on for CrowdStrike FDR"],
+    "minimumSources": ["edr", "firewalls", "active_directory", "threat_intel"],
+    "suggestedSources": ["edr", "firewalls", "active_directory", "threat_intel", "netflow", "dns", "proxy", "ndr", "sandbox", "iaas"],
+    "crawlDescription": "Land high-fidelity EDR, DNS or resolver logs, and perimeter deny events with entity extraction (user, host, IP) for chained investigations.",
+    "walkDescription": "Add NetFlow or NDR, cloudtrail-class signals, and stored hunt queries with evidence tagging; wire ATT&CK Technique views to data sources.",
+    "runDescription": "Run purple-team cadence, automated hunt packages, detection-as-code promotion, and mean-time-to-detect dashboards with feedback to content owners.",
+    "validationRules": [
+      "Endpoint telemetry must retain process and network-connection class fields needed for lateral movement analytics.",
+      "Intel feeds must be freshness-checked and scoped so production alerts do not rely on stale indicators alone."
+    ],
+    "valueProposition": "Teams move from noisy alerts to explainable detection narratives that stand up in peer review. The same data supports both scheduled hunts and rapid incident reconstruction when minutes matter."
+  },
+  {
+    "id": "risk_based_alerting",
+    "name": "Risk-Based Alerting",
+    "description": "Prioritize response using identity risk, asset context, and behavioral signals rather than flat alert volumes across the estate.",
+    "category": "Security",
+    "requiredDomains": ["authentication", "endpoint", "identity_governance", "asset_inventory"],
+    "recommendedDomains": ["vulnerability_asset", "threat_enrichment"],
+    "relevantSourceFamilies": ["Security & Compliance", "End-User Support", "Server", "Application"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk User Behavior Analytics", "Splunk Add-on for ServiceNow"],
+    "technicalAddons": ["Splunk DB Connect", "Splunk Add-on for Microsoft Windows", "Asset and Identity integrations via KV Store or CMDB lookup"],
+    "minimumSources": ["active_directory", "edr", "asset_cmdb", "sso_pam"],
+    "suggestedSources": ["active_directory", "edr", "asset_cmdb", "sso_pam", "uba", "vuln_mgmt", "threat_intel", "saas_general", "email"],
+    "crawlDescription": "Join identity logs with a CMDB or asset feed and EDR heartbeats to score users and hosts into risk tiers with conservative thresholds.",
+    "walkDescription": "Add SSO and privileged-access logs, vulnerability context, and peer baselines before routing only escalated composite risk to tier-two analysts.",
+    "runDescription": "Automate dynamic watchlists, adaptive response actions for extreme scores, and monthly model governance with false-positive budgets.",
+    "validationRules": [
+      "Asset inventory integration must refresh often enough that risk scores do not rely on stale ownership or classification.",
+      "Identity governance signals must cover both interactive sign-in and non-interactive application or service principals where applicable."
+    ],
+    "valueProposition": "SOC queues shrink while severity alignment improves because analysts work highest-risk intersections first. Risk transparency helps IAM and infrastructure teams agree on remediation trade-offs."
+  },
+  {
+    "id": "compliance_audit",
+    "name": "Compliance and Audit",
+    "description": "Evidence collection, access review, and reporting aligned to regulatory or internal control frameworks with defensible retention.",
+    "category": "Compliance",
+    "requiredDomains": ["authentication", "audit_compliance", "asset_inventory"],
+    "recommendedDomains": ["database_activity", "identity_governance", "endpoint"],
+    "relevantSourceFamilies": ["Security & Compliance", "Server", "Database", "Application"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk App for PCI Compliance", "Splunk Add-on for Microsoft Windows", "DB Connect"],
+    "technicalAddons": ["Splunk Add-on for Microsoft Office 365", "Splunk Add-on for Unix and Linux", "Splunk Enterprise Security Assets and Identities"],
+    "minimumSources": ["active_directory", "windows_servers", "asset_cmdb"],
+    "suggestedSources": ["active_directory", "windows_servers", "asset_cmdb", "database", "linux_servers", "sso_pam", "email", "web_servers", "config_mgmt"],
+    "crawlDescription": "Centralize authentication and OS audit logs with immutable storage policy, time synchronization, and control-to-saved-search mapping for a pilot system.",
+    "walkDescription": "Expand to databases and collaboration with RBAC aligned to control owners, scheduled evidence exports, and exception workflows.",
+    "runDescription": "Operate continuous control monitoring with anomaly baselines, segregation-of-duties analytics, and audit-ready attestation packets per quarter.",
+    "validationRules": [
+      "Audit evidence domains must be backed by WORM or legal-hold-capable indices where policy requires non-repudiation.",
+      "Asset context must tie users and systems to data scope so assessors can trace samples to populations."
+    ],
+    "valueProposition": "Auditors receive repeatable evidence instead of one-off spreadsheet pulls. Internal teams cut prep time while reducing finding recurrence through earlier drift detection."
+  },
+  {
+    "id": "identity_access",
+    "name": "Identity and Access Monitoring",
+    "description": "Continuous visibility into sign-ins, federation, SaaS administration, and privileged pathways across hybrid identity.",
+    "category": "Security",
+    "requiredDomains": ["authentication", "identity_governance", "saas_activity"],
+    "recommendedDomains": ["remote_access", "cloud_control_plane"],
+    "relevantSourceFamilies": ["Cloud/SaaS Services", "Security & Compliance", "End-User Support", "Networking"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk Add-on for Microsoft Office 365", "Splunk Add-on for Google Workspace", "Splunk Add-on for Okta"],
+    "technicalAddons": ["Splunk Add-on for Microsoft Azure", "Splunk Add-on for Microsoft Cloud Services", "Palo Alto Networks Add-on for Splunk"],
+    "minimumSources": ["active_directory", "saas_general", "sso_pam"],
+    "suggestedSources": ["active_directory", "saas_general", "sso_pam", "vpn", "iaas", "email", "mdm", "proxy", "casb"],
+    "crawlDescription": "Ingest IdP sign-in and directory change logs with geo and device attributes, plus SaaS admin audit trails for priority applications.",
+    "walkDescription": "Add VPN or ZTNA equivalents, cloud IAM API activity, and privileged session telemetry with lifecycle dashboards for dormant and over-privileged accounts.",
+    "runDescription": "Deploy automated access certification support searches, impossible-travel class analytics, and integrated access revocation playbooks with ITSM.",
+    "validationRules": [
+      "Authentication logs must attribute events to a stable user principal and application identifier across IdP and SaaS.",
+      "SaaS administrative actions must be retained for the period required by policy, not only end-user activity."
+    ],
+    "valueProposition": "Identity teams detect account takeover and policy drift before spreadsheet reviews. Security operations gains a single timeline spanning on-prem AD, cloud IdP, and critical SaaS admin moves."
+  },
+  {
+    "id": "endpoint_security",
+    "name": "Endpoint Security",
+    "description": "Endpoint-centric prevention, detection, and response with rich process, file, and network telemetry from managed devices.",
+    "category": "Security",
+    "requiredDomains": ["endpoint"],
+    "recommendedDomains": ["authentication", "threat_enrichment", "vulnerability_asset"],
+    "relevantSourceFamilies": ["Security & Compliance", "End-User Support", "Server"],
+    "splunkApps": ["Splunk Enterprise Security", "Splunk Add-on for CrowdStrike", "Splunk Add-on for Microsoft Sysmon", "Cybereason Add-on for Splunk"],
+    "technicalAddons": ["Splunk Add-on for Microsoft Windows", "Splunk Universal Forwarder", "TA-microsoft-windefender"],
+    "minimumSources": ["edr", "windows_servers"],
+    "suggestedSources": ["edr", "windows_servers", "linux_servers", "desktops", "vuln_mgmt", "active_directory", "threat_intel", "mdm"],
+    "crawlDescription": "Deploy EDR or Sysmon-class feeds into normalized endpoint models with device class tags and basic prevalence dashboards.",
+    "walkDescription": "Correlate endpoint events with threat intelligence and vulnerability severity; introduce response runbooks for containment and host isolation hooks.",
+    "runDescription": "Mature with full incident reconstruction, automated ban lists, and fleet health scoring tied to patch and configuration compliance.",
+    "validationRules": [
+      "Endpoint telemetry must include process lineage or an equivalent substitute for your EDR family to support root-cause analysis.",
+      "Coverage percentage by business unit must be tracked so blind spots are explicit, not assumed."
+    ],
+    "valueProposition": "You close the gap where malware and hands-on-keyboard activity actually execute. Pairing EDR with identity and intel turns isolated alerts into decisive containment decisions."
+  },
+  {
+    "id": "cloud_security",
+    "name": "Cloud Security",
+    "description": "Security monitoring for public and hybrid cloud control planes, workloads, and federated access with posture context.",
+    "category": "Security",
+    "requiredDomains": ["cloud_control_plane", "cloud_infrastructure", "authentication"],
+    "recommendedDomains": ["kubernetes_container", "saas_activity", "identity_governance"],
+    "relevantSourceFamilies": ["Cloud/SaaS Services", "Security & Compliance", "Networking", "Server"],
+    "splunkApps": ["Splunk App for AWS", "Splunk Add-on for Microsoft Cloud Services", "Splunk Add-on for Google Cloud Platform", "Splunk Enterprise Security"],
+    "technicalAddons": ["Splunk Add-on for Kubernetes", "Splunk Add-on for Wiz", "Splunk Add-on for CrowdStrike Falcon Horizon"],
+    "minimumSources": ["iaas", "cspm", "active_directory"],
+    "suggestedSources": ["iaas", "cspm", "active_directory", "cwpp", "casb", "paas", "devops_cicd", "saas_general", "sase", "linux_servers"],
+    "crawlDescription": "Land cloud audit and admin activity for each primary provider with account baselines, risky API monitoring, and identity linkage to corporate directories.",
+    "walkDescription": "Add CSPM or CNAPP findings, workload agents, and Kubernetes audit where applicable; map to cloud MITRE tactics with composite notables.",
+    "runDescription": "Automate misconfiguration detection pipelines, drift analytics, and cross-cloud incident timelines integrated with on-prem SOC queues.",
+    "validationRules": [
+      "Cloud control-plane logs must include all production administrative partitions with tamper-aware delivery paths.",
+      "Authentication mapping must tie human and workload identities to enterprise identifiers for accountable response."
+    ],
+    "valueProposition": "Cloud growth does not outpace visibility: the same SOC tackles IAM misuse, data exposure, and lateral movement in IaaS and PaaS. Posture and runtime signals together explain why an alert matters."
+  },
+  {
+    "id": "ot_ics_security",
+    "name": "OT / ICS Security",
+    "description": "Passive and safe monitoring of industrial networks, controllers, and operational events aligned to plant safety and availability.",
+    "category": "OT",
+    "requiredDomains": ["ot_network", "scada_events"],
+    "recommendedDomains": ["historian_data", "industrial_assets", "network"],
+    "relevantSourceFamilies": ["Security & Compliance", "Networking", "Application", "Server"],
+    "splunkApps": ["Splunk Industrial Asset Intelligence", "Splunk OT Security Add-on", "Splunk Add-on for Modbus", "Splunk Enterprise Security"],
+    "technicalAddons": ["Splunk Add-on for OPC UA", "Splunk Connect for BACnet", "Splunk Stream for passive PCAP-derived metadata"],
+    "minimumSources": ["ics_scada", "ot_security"],
+    "suggestedSources": ["ics_scada", "ot_security", "netflow", "firewalls", "dpi", "wireless", "routers", "switches"],
+    "crawlDescription": "Mirror read-only OT zone traffic or historian exports with asset inventory and first-seen-device alerting without inline enforcement on day one.",
+    "walkDescription": "Parse industrial protocols, align Purdue levels in tagging, and bring correlated IT VPN or jump-host logs for maintenance windows.",
+    "runDescription": "Run IEC 62443-aligned use cases, fused IT-OT investigation timelines, and maintenance-change correlation with anomaly suppression during approved outages.",
+    "validationRules": [
+      "OT collection architecture must be reviewed for fail-safe behavior so monitoring never jeopardizes process availability.",
+      "Industrial assets must be classified with owner and safety impact so alerts tier appropriately."
+    ],
+    "valueProposition": "Plants gain modern detection without ripping out brownfield controllers. Engineers and security share a common asset truth that respects uptime constraints while closing blind spots attackers exploit."
+  },
+  {
+    "id": "it_operations",
+    "name": "IT Operations Monitoring",
+    "description": "Service-centric IT operations combining logs, health signals, and transactional clues to restore and improve digital services.",
+    "category": "IT Operations",
+    "requiredDomains": ["infrastructure_metrics", "application_logs", "service_health"],
+    "recommendedDomains": ["network_performance", "database_activity", "platform_health"],
+    "relevantSourceFamilies": ["Server", "Application", "Networking", "Database"],
+    "splunkApps": ["Splunk IT Service Intelligence", "Splunk Observability Cloud", "Splunk App for Infrastructure", "Splunk Add-on for Unix and Linux"],
+    "technicalAddons": ["Splunk DB Connect", "Splunk Add-on for Microsoft Windows", "Splunk Connect for SNMP"],
+    "minimumSources": ["linux_servers", "web_servers", "apm"],
+    "suggestedSources": ["linux_servers", "web_servers", "apm", "windows_servers", "database", "loadbalancer", "middleware", "netflow", "config_mgmt", "devops_cicd"],
+    "crawlDescription": "Onboard OS and middle-tier logs with entity tagging and simple availability searches plus paging to the operations bridge.",
+    "walkDescription": "Model business services in ITSI or equivalents, bind KPIs to golden signals, and integrate change records for faster correlation.",
+    "runDescription": "Predictive alerting, automated remediation hooks, and executive reliability dashboards with error budgets and blameless review metrics.",
+    "validationRules": [
+      "Service health definitions must map to customer-visible components, not only individual hosts.",
+      "Critical paths require agreed SLO sources of truth so alert storms align with business impact."
+    ],
+    "valueProposition": "Operators stop swiveling between siloed tools when outages strike. Leadership sees whether investments in reliability actually shorten incidents and prevent repeat failures."
+  },
+  {
+    "id": "infrastructure_monitoring",
+    "name": "Infrastructure Monitoring",
+    "description": "Capacity, utilization, and fault visibility for compute, storage, virtualization, and cloud substrate across the data center edge.",
+    "category": "IT Operations",
+    "requiredDomains": ["infrastructure_metrics"],
+    "recommendedDomains": ["storage_performance", "network_performance", "cloud_infrastructure"],
+    "relevantSourceFamilies": ["Server", "Networking", "Cloud/SaaS Services", "Application"],
+    "splunkApps": ["Splunk App for Infrastructure", "Splunk Observability Cloud", "Splunk Add-on for VMware", "Splunk Connect for SNMP"],
+    "technicalAddons": ["Splunk Add-on for Unix and Linux", "Splunk Add-on for AWS", "Splunk Add-on for Nutanix"],
+    "minimumSources": ["linux_servers", "hypervisor"],
+    "suggestedSources": ["linux_servers", "hypervisor", "iaas", "storage_prod", "netflow", "windows_servers", "loadbalancer", "mainframe"],
+    "crawlDescription": "Collect host metrics and hypervisor events with topology tags and baseline charts for CPU, memory, and disk saturation.",
+    "walkDescription": "Add storage arrays and network device performance, align thresholds by environment class, and integrate CMDB ownership for paging.",
+    "runDescription": "Capacity forecasting, automated right-sizing reports, and integrated FinOps views tying utilization to committed spend.",
+    "validationRules": [
+      "Metrics granularity must support the shortest SLO window you promise internally (often one to five minutes) without destructive sampling bias.",
+      "Cloud and on-prem constructs must share a naming convention so composite dashboards stay trustworthy."
+    ],
+    "valueProposition": "Infrastructure teams detect creeping saturation before tickets flood the queue. Finance and engineering use the same utilization narrative to plan refreshes and cloud migrations."
+  },
+  {
+    "id": "application_monitoring",
+    "name": "Application Monitoring",
+    "description": "Log- and trace-driven insight into application errors, latency contributors, and dependency health for engineering and SRE teams.",
+    "category": "Observability",
+    "requiredDomains": ["application_logs", "application_traces"],
+    "recommendedDomains": ["infrastructure_metrics", "service_health", "database_activity"],
+    "relevantSourceFamilies": ["Application", "Server", "Database"],
+    "splunkApps": ["Splunk Observability Cloud", "Splunk IT Service Intelligence", "Splunk Add-on for Java Management Extensions", "DB Connect"],
+    "technicalAddons": ["Splunk OpenTelemetry Collector", "Splunk Add-on for Microsoft IIS", "Splunk Add-on for NGINX"],
+    "minimumSources": ["apm", "web_servers"],
+    "suggestedSources": ["apm", "web_servers", "app_servers", "middleware", "database", "linux_servers", "paas", "business_txn"],
+    "crawlDescription": "Instrument one critical service with structured logs and distributed traces, plus error budget panels for owners.",
+    "walkDescription": "Link traces to infra metrics and DB slow queries, add deployment markers, and tune alert noise with SLO-based routing.",
+    "runDescription": "Full application topology service maps, automated regression detection on releases, and integrated chaos experiment observability.",
+    "validationRules": [
+      "Trace sampling must preserve enough headroom to debug tail-latency incidents without drowning storage.",
+      "Application logs must carry a stable service and version dimension for release comparison."
+    ],
+    "valueProposition": "Engineers resolve customer-impacting defects faster because logs and traces tell a single story. Product and reliability leaders trust quantitative error and latency trends tied to releases."
+  },
+  {
+    "id": "observability_apm",
+    "name": "Observability / APM",
+    "description": "Full-stack observability with traces, metrics, logs, and experience telemetry to manage modern distributed systems.",
+    "category": "Observability",
+    "requiredDomains": ["application_traces", "application_logs", "infrastructure_metrics"],
+    "recommendedDomains": ["real_user_monitoring", "synthetic_monitoring", "service_health"],
+    "relevantSourceFamilies": ["Application", "Cloud/SaaS Services", "Server", "Networking"],
+    "splunkApps": ["Splunk Observability Cloud", "Splunk Real User Monitoring", "Splunk Synthetic Monitoring", "Splunk APM"],
+    "technicalAddons": ["Splunk OpenTelemetry Collector", "Splunk Infrastructure Monitoring", "Splunk Log Observer Connect"],
+    "minimumSources": ["apm", "linux_servers", "web_servers"],
+    "suggestedSources": ["apm", "linux_servers", "web_servers", "middleware", "database", "loadbalancer", "paas", "business_txn", "sase"],
+    "crawlDescription": "Stand up OpenTelemetry or vendor APM agents with unified service naming, RED metrics, and log correlation IDs.",
+    "walkDescription": "Add RUM and synthetic checks for critical journeys, wire service maps to ownership in ITSM, and alert on burn-rate policies.",
+    "runDescription": "Operate unified SLOs across browser, service, and data tiers with adaptive sampling budgets and continuous profiling in guard-railed production.",
+    "validationRules": [
+      "Each golden signal must have an owner on-call rotation; orphaned metrics are removed to prevent dashboard debt.",
+      "Client-side and server-side telemetry must reconcile on session or trace identifiers for end-to-end investigations."
+    ],
+    "valueProposition": "Teams see user pain and backend root cause together, cutting war-room time. Observability spend stays defensible because signal ties directly to revenue paths and engineering commitments."
+  },
+  {
+    "id": "kubernetes_container",
+    "name": "Kubernetes / Container Monitoring",
+    "description": "Cluster health, workload telemetry, security-relevant audit events, and application visibility across containerized platforms.",
+    "category": "Observability",
+    "requiredDomains": ["kubernetes_container", "infrastructure_metrics", "application_logs"],
+    "recommendedDomains": ["application_traces", "service_health"],
+    "relevantSourceFamilies": ["Cloud/SaaS Services", "Application", "Server", "Security & Compliance"],
+    "splunkApps": ["Splunk Infrastructure Monitoring", "Splunk Observability Cloud", "Splunk Add-on for Kubernetes", "Splunk Enterprise Security"],
+    "technicalAddons": ["Splunk OpenTelemetry Collector", "Splunk Connect for Prometheus", "Splunk App for AWS EKS"],
+    "minimumSources": ["iaas", "linux_servers", "apm"],
+    "suggestedSources": ["iaas", "linux_servers", "apm", "paas", "devops_cicd", "web_servers", "middleware", "config_mgmt", "proxy"],
+    "crawlDescription": "Collect kube-apiserver audit, node and container metrics, and stdout logs with namespace and workload labels for chargeback tagging.",
+    "walkDescription": "Integrate Prometheus endpoints, HPA events, and deployment pipelines; add trace propagation from ingress to pods.",
+    "runDescription": "Advanced scheduling anomaly detection, image provenance correlation, and security policy violation analytics with GitOps change linkage.",
+    "validationRules": [
+      "RBAC must restrict who can read production audit streams while still enabling SRE break-glass paths.",
+      "Label strategy must be enforced at admission so cost and team dashboards do not fragment."
+    ],
+    "valueProposition": "Platform and product teams share live cluster truth instead of bespoke kubectl forensics. Incidents shorten when control-plane, node, and app layers align on one timeline."
+  },
+  {
+    "id": "network_operations",
+    "name": "Network Operations",
+    "description": "Network performance, path validation, and fault isolation spanning LAN, WAN, and data-center fabrics.",
+    "category": "IT Operations",
+    "requiredDomains": ["network_performance", "infrastructure_metrics"],
+    "recommendedDomains": ["network", "storage_performance"],
+    "relevantSourceFamilies": ["Networking", "Server", "Security & Compliance"],
+    "splunkApps": ["Splunk Stream", "Cisco Networks Add-on for Splunk", "Splunk Add-on for SNMP Modular Input", "Splunk IT Service Intelligence"],
+    "technicalAddons": ["Splunk Add-on for F5 BIG-IP", "Splunk Connect for NetFlow", "Splunk Add-on for Juniper"],
+    "minimumSources": ["switches", "netflow"],
+    "suggestedSources": ["switches", "netflow", "routers", "firewalls", "loadbalancer", "wireless", "storage_prod", "linux_servers", "dpi"],
+    "crawlDescription": "Baseline device health and interface utilization with syslog plus NetFlow from core aggregation points.",
+    "walkDescription": "Add overlay path analytics, Wi-Fi controller telemetry, and storage network visibility with topology-aware dashboards.",
+    "runDescription": "Predictive capacity models, automated root-cause suggestions for multipath faults, and executive summaries on WAN spend efficiency.",
+    "validationRules": [
+      "Flow coverage must represent both north-south and critical east-west segments or document explicit blind spots.",
+      "Device configuration backup correlation should exist for change-after-outage investigations."
+    ],
+    "valueProposition": "NetOps stops guessing whether slowness is the app or the path. CFO-friendly views tie circuit utilization to renewals and cloud egress decisions."
+  },
+  {
+    "id": "database_monitoring",
+    "name": "Database Monitoring",
+    "description": "Database performance, query patterns, replication health, and audit activity across relational and operational stores.",
+    "category": "IT Operations",
+    "requiredDomains": ["database_activity", "infrastructure_metrics"],
+    "recommendedDomains": ["application_logs", "service_health"],
+    "relevantSourceFamilies": ["Database", "Server", "Application"],
+    "splunkApps": ["DB Connect", "Splunk Add-on for Microsoft SQL Server", "Splunk Add-on for Oracle", "Splunk App for Infrastructure"],
+    "technicalAddons": ["Splunk Add-on for Oracle", "Splunk DB Connect", "Splunk Add-on for PostgreSQL"],
+    "minimumSources": ["database", "linux_servers"],
+    "suggestedSources": ["database", "linux_servers", "apm", "windows_servers", "middleware", "storage_prod", "business_txn", "web_servers"],
+    "crawlDescription": "Enable slow-query and connection telemetry with host resource correlation for tier-one OLTP systems.",
+    "walkDescription": "Layer application request IDs, replication lag alerts, and backup job outcomes into unified DB owner dashboards.",
+    "runDescription": "Automated anomaly detection on query plans, chargeback reporting by schema, and proactive index hygiene recommendations.",
+    "validationRules": [
+      "Sensitive fields in database audit logs must be masked or tokenized per data-classification policy.",
+      "Sampling of high-volume queries must not hide worst-case tail latencies from monitoring."
+    ],
+    "valueProposition": "DBAs and developers trust shared telemetry before escalating incidents. Capacity planning moves from seat-of-pants to measured growth in reads, writes, and storage."
+  },
+  {
+    "id": "business_analytics",
+    "name": "Business Analytics",
+    "description": "Line-of-business KPIs and operational analytics combining transactional systems with digital experience signals.",
+    "category": "Business",
+    "requiredDomains": ["business_transactions", "user_experience"],
+    "recommendedDomains": ["application_logs", "service_health"],
+    "relevantSourceFamilies": ["Application", "Database", "Cloud/SaaS Services"],
+    "splunkApps": ["Splunk Enterprise", "Splunk IT Service Intelligence", "DB Connect", "Splunk Machine Learning Toolkit"],
+    "technicalAddons": ["Splunk DB Connect", "Splunk Add-on for JDBC", "Splunk Add-on for Kafka"],
+    "minimumSources": ["business_txn", "web_servers"],
+    "suggestedSources": ["business_txn", "web_servers", "app_servers", "database", "saas_general", "apm", "middleware"],
+    "crawlDescription": "Land PoS, order, or ERP extracts alongside web conversion funnels with daily refreshed dashboards for operations leaders.",
+    "walkDescription": "Introduce near-real-time joins between transactions and latency or error metrics with alerts on KPI bands.",
+    "runDescription": "Trusted data models, lineage documentation, and embedded analytics in enterprise portals with governed RBAC.",
+    "validationRules": [
+      "Business metrics require defined owners and refresh SLAs so executives do not act on stale numbers.",
+      "PII in transactional feeds must comply with aggregation and retention policies before broad search access."
+    ],
+    "valueProposition": "Finance and operations see the business pulse without waiting for overnight warehouse jobs. Splunk becomes a governed adjunct to the data lake for tactical decisions."
+  },
+  {
+    "id": "digital_experience",
+    "name": "Customer Experience / Digital Experience",
+    "description": "Measure and improve user journeys with real-user monitoring, logs synthesizing front-end friction, and backend correlation.",
+    "category": "Business",
+    "requiredDomains": ["real_user_monitoring", "user_experience", "application_logs"],
+    "recommendedDomains": ["synthetic_monitoring", "service_health", "application_traces"],
+    "relevantSourceFamilies": ["Application", "Cloud/SaaS Services", "Networking", "End-User Support"],
+    "splunkApps": ["Splunk Real User Monitoring", "Splunk Synthetic Monitoring", "Splunk Observability Cloud", "Splunk IT Service Intelligence"],
+    "technicalAddons": ["Splunk OpenTelemetry Collector", "Browser RUM agent (Splunk Observability)", "Log Observer Connect"],
+    "minimumSources": ["apm", "web_servers", "loadbalancer"],
+    "suggestedSources": ["apm", "web_servers", "loadbalancer", "middleware", "proxy", "database", "business_txn", "sase", "dns"],
+    "crawlDescription": "Capture browser Core Web Vitals or mobile SDK events with geographic dimension and tie to synthetic uptime checks.",
+    "walkDescription": "Expand journey funnels with session replay metadata where policy allows and correlate to service traces for failing pages.",
+    "runDescription": "Experience SLOs drive release gates, marketing and engineering share cohort dashboards, and proactive fixes rank by revenue impact.",
+    "validationRules": [
+      "Client telemetry must honor consent and regional privacy requirements before organization-wide rollout.",
+      "Synthetic scripts must mirror critical revenue paths and be version-controlled like application code."
+    ],
+    "valueProposition": "Product teams prioritize fixes users actually feel, not only backend green dashboards. Support volume drops when digital friction surfaces before complaints flood the contact center."
+  },
+  {
+    "id": "ai_ml_analytics",
+    "name": "AI / ML / Predictive Analytics",
+    "description": "Operational data science on Splunk for forecasting, anomaly detection, and model-driven insights atop IT and business telemetry.",
+    "category": "AI/ML",
+    "requiredDomains": ["infrastructure_metrics", "application_logs"],
+    "recommendedDomains": ["business_transactions", "service_health", "database_activity"],
+    "relevantSourceFamilies": ["Application", "Server", "Database", "Cloud/SaaS Services"],
+    "splunkApps": ["Splunk Machine Learning Toolkit", "Splunk App for Data Science and Deep Learning", "Splunk Observability Cloud", "Splunk Enterprise"],
+    "technicalAddons": ["Splunk Connect for Kafka", "Splunk DB Connect", "Python for Scientific Computing (Splunk)"],
+    "minimumSources": ["linux_servers", "apm"],
+    "suggestedSources": ["linux_servers", "apm", "business_txn", "database", "web_servers", "paas", "devops_cicd", "middleware", "iaas"],
+    "crawlDescription": "Prepare curated feature datasets from metrics and logs with documented time zones, units, and entity keys for pilot models.",
+    "walkDescription": "Deploy anomaly detection or forecasting on critical KPIs with human review queues before automated actions.",
+    "runDescription": "Model registry discipline, drift monitoring, feedback capture, and integration with MLOps pipelines for retraining governance.",
+    "validationRules": [
+      "Training data scope must be approved to avoid sensitive leakage into broadly shared Splunk roles.",
+      "Every production model needs rollback criteria and an owner responsible for false-positive cost."
+    ],
+    "valueProposition": "Organizations graduate from static thresholds to adaptive analytics without standing up a separate science platform overnight. Business and IT leaders consume the same predictive signals with audit-friendly history."
+  },
+  {
+    "id": "platform_admin",
+    "name": "Platform Administration / Splunk Health",
+    "description": "Splunk platform reliability, indexer and search performance, ingest pipeline health, and capacity governance.",
+    "category": "Platform",
+    "requiredDomains": ["platform_health", "ingest_pipeline_health"],
+    "recommendedDomains": ["infrastructure_metrics", "asset_inventory"],
+    "relevantSourceFamilies": ["Server", "Application", "Security & Compliance"],
+    "splunkApps": ["Splunk Monitoring Console", "Splunk Enterprise Security", "Splunk App for Infrastructure", "Splunk Forwarder Management"],
+    "technicalAddons": ["Splunk Diagnostic Toolkit", "_internal monitoring best practices", "HTTP Event Collector health probes"],
+    "minimumSources": ["linux_servers", "config_mgmt"],
+    "suggestedSources": ["linux_servers", "config_mgmt", "windows_servers", "asset_cmdb", "devops_cicd", "middleware", "storage_prod"],
+    "crawlDescription": "Enable internal indexes, MC dashboards, forwarder phone-home health, and license usage tracking with ownership for nightly review.",
+    "walkDescription": "Add data-quality checks, ingest latency SLOs, CMDB-enriched asset views, and automated ticket opening on WARN thresholds.",
+    "runDescription": "Multi-site failover drill telemetry, indexer autosizing analytics, and FinOps-grade chargeback by index and BU with executive transparency.",
+    "validationRules": [
+      "Platform administrators must have separate duties from security content owners where policy mandates separation.",
+      "Critical alert paths for search tier saturation must page 24x7 with written escalation trees."
+    ],
+    "valueProposition": "Splunk administrators prevent user-facing outages and surprise license overages through foresight, not heroics. Stakeholders trust the observability estate because the platform itself is monitored like a product."
+  },
+  {
+    "id": "custom_other",
+    "name": "Custom / Other",
+    "description": "Placeholder profile for bespoke programs, proofs of concept, or emerging domains not yet standardized in the catalog.",
+    "category": "Other",
+    "requiredDomains": [],
+    "recommendedDomains": [],
+    "relevantSourceFamilies": ["Application", "Server", "Security & Compliance", "Cloud/SaaS Services"],
+    "splunkApps": ["Splunk Enterprise", "Splunkbase community add-ons as approved"],
+    "technicalAddons": ["Custom TA development", "Splunk Connect for Kafka", "HTTP Event Collector"],
+    "minimumSources": [],
+    "suggestedSources": ["web_servers", "linux_servers", "saas_general", "business_txn", "devops_cicd"],
+    "crawlDescription": "Document objectives, data contracts, and stakeholder owners before ingest; start with a narrow event set and explicit success metrics.",
+    "walkDescription": "Iterate parsing and field standards weekly with users; promote only fields that survive peer review and privacy checklist.",
+    "runDescription": "If the program stabilizes, graduate requirements into a named profile with required domains and minimum sources for ongoing governance.",
+    "validationRules": [
+      "Custom programs still require executive sponsor and data-governance sign-off even when domain lists are empty.",
+      "Retention, encryption, and access controls must match the most sensitive projected data class before scale-up."
+    ],
+    "valueProposition": "Teams can explore new ideas without forcing a poor fit into rigid templates. Clear guardrails keep experiments safe while preserving a path to operational maturity once value is proven."
+  }
+]

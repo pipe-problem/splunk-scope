@@ -1,0 +1,61 @@
+vendor,component,activity_profile,sample_count,avg_bytes_per_event
+Salesforce,Admin / configuration audit events,light,2500,608.6876
+Salesforce,Admin / configuration audit events,normal,2500,609.5676
+Salesforce,Admin / configuration audit events,heavy,2500,608.5464
+Salesforce,Authentication / access security events,light,2500,556.4852
+Salesforce,Authentication / access security events,normal,2500,557.3372
+Salesforce,Authentication / access security events,heavy,2500,556.44
+Salesforce,User activity / object/content events,light,2500,513.248
+Salesforce,User activity / object/content events,normal,2500,586.2828
+Salesforce,User activity / object/content events,heavy,2500,675.5096
+Salesforce,API / integration events,light,2500,603.0572
+Salesforce,API / integration events,normal,2500,604.0024
+Salesforce,API / integration events,heavy,2500,605.6764
+ServiceNow,Admin / configuration audit events,light,2500,590.1392
+ServiceNow,Admin / configuration audit events,normal,2500,590.956
+ServiceNow,Admin / configuration audit events,heavy,2500,590.156
+ServiceNow,Authentication / access security events,light,2500,578.3236
+ServiceNow,Authentication / access security events,normal,2500,579.3144
+ServiceNow,Authentication / access security events,heavy,2500,578.3272
+ServiceNow,User activity / object/content events,light,2500,486.2224
+ServiceNow,User activity / object/content events,normal,2500,558.6164
+ServiceNow,User activity / object/content events,heavy,2500,647.3852
+ServiceNow,API / integration events,light,2500,594.5956
+ServiceNow,API / integration events,normal,2500,595.6492
+ServiceNow,API / integration events,heavy,2500,595.834
+Workday,Admin / configuration audit events,light,2500,589.4132
+Workday,Admin / configuration audit events,normal,2500,590.3692
+Workday,Admin / configuration audit events,heavy,2500,589.6824
+Workday,Authentication / access security events,light,2500,555.878
+Workday,Authentication / access security events,normal,2500,556.876
+Workday,Authentication / access security events,heavy,2500,555.7944
+Workday,User activity / object/content events,light,2500,497.3608
+Workday,User activity / object/content events,normal,2500,569.508
+Workday,User activity / object/content events,heavy,2500,657.6128
+Workday,API / integration events,light,2500,607.6308
+Workday,API / integration events,normal,2500,608.6736
+Workday,API / integration events,heavy,2500,608.8564
+Box,Admin / configuration audit events,light,2500,527.4908
+Box,Admin / configuration audit events,normal,2500,528.614
+Box,Admin / configuration audit events,heavy,2500,527.5024
+Box,Authentication / access security events,light,2500,562.5296
+Box,Authentication / access security events,normal,2500,563.6552
+Box,Authentication / access security events,heavy,2500,562.5708
+Box,User activity / object/content events,light,2500,503.63
+Box,User activity / object/content events,normal,2500,575.378
+Box,User activity / object/content events,heavy,2500,664.7012
+Box,API / integration events,light,2500,568.4496
+Box,API / integration events,normal,2500,569.4532
+Box,API / integration events,heavy,2500,569.86
+Atlassian Cloud,Admin / configuration audit events,light,2500,557.1884
+Atlassian Cloud,Admin / configuration audit events,normal,2500,558.1824
+Atlassian Cloud,Admin / configuration audit events,heavy,2500,557.2236
+Atlassian Cloud,Authentication / access security events,light,2500,580.5032
+Atlassian Cloud,Authentication / access security events,normal,2500,581.5828
+Atlassian Cloud,Authentication / access security events,heavy,2500,580.5984
+Atlassian Cloud,User activity / object/content events,light,2500,518.78
+Atlassian Cloud,User activity / object/content events,normal,2500,591.0252
+Atlassian Cloud,User activity / object/content events,heavy,2500,679.2788
+Atlassian Cloud,API / integration events,light,2500,592.6068
+Atlassian Cloud,API / integration events,normal,2500,593.5596
+Atlassian Cloud,API / integration events,heavy,2500,593.8968

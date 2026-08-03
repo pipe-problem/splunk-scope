@@ -1,0 +1,147 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-05",
+  "apps": {
+    "splunk_enterprise_security": {
+      "id": "splunk_enterprise_security",
+      "name": "Splunk Enterprise Security (ES)",
+      "requiredLogCapabilities": [
+        "authentication_success",
+        "authentication_failure",
+        "network_traffic_events",
+        "endpoint_process_events"
+      ],
+      "recommendedLogCapabilities": [
+        "privilege_escalation",
+        "privileged_user_activity",
+        "perimeter_control_events",
+        "endpoint_file_events",
+        "endpoint_network_events",
+        "threat_intelligence_match",
+        "vulnerability_scan_results",
+        "email_security_events",
+        "cloud_api_activity"
+      ],
+      "optionalLogCapabilities": [
+        "saas_user_activity",
+        "database_audit_events",
+        "compliance_audit_trail"
+      ],
+      "requiredDataModels": [
+        "Authentication",
+        "Network_Traffic",
+        "Endpoint",
+        "Intrusion_Detection"
+      ],
+      "recommendedDataModels": [
+        "Change",
+        "Malware",
+        "Vulnerabilities",
+        "Web",
+        "Email",
+        "Network_Resolution"
+      ],
+      "cimRequired": true,
+      "accelerationRecommended": true,
+      "implementationFootprintNotes": "ES requires data model acceleration for efficient correlation searches. Plan for additional storage overhead of 10-30% for accelerated data models. Requires dedicated search head or search head cluster for production workloads.",
+      "storageConsiderations": "Accelerated data models consume additional disk. Budget 15-25% overhead on top of raw indexed data for ES-accelerated models.",
+      "cloudVsOnPremNotes": "Splunk Cloud ES deployments are managed by Splunk. Customer-managed deployments require dedicated ES search head infrastructure and careful capacity planning for concurrent correlation searches."
+    },
+    "splunk_soar": {
+      "id": "splunk_soar",
+      "name": "Splunk SOAR",
+      "requiredLogCapabilities": [],
+      "recommendedLogCapabilities": [
+        "authentication_failure",
+        "endpoint_process_events",
+        "threat_intelligence_match",
+        "email_security_events"
+      ],
+      "optionalLogCapabilities": [],
+      "requiredDataModels": [],
+      "recommendedDataModels": [],
+      "cimRequired": false,
+      "accelerationRecommended": false,
+      "implementationFootprintNotes": "SOAR primarily consumes notable events from ES. Direct data ingest is minimal. Focus is on playbook actions and external integrations.",
+      "storageConsiderations": "Minimal additional storage. SOAR stores playbook execution logs and case data.",
+      "cloudVsOnPremNotes": "Splunk SOAR Cloud is SaaS-managed. On-prem SOAR requires its own server infrastructure separate from Splunk platform."
+    },
+    "itsi": {
+      "id": "itsi",
+      "name": "Splunk IT Service Intelligence (ITSI)",
+      "requiredLogCapabilities": [
+        "infrastructure_metrics",
+        "application_error_logs"
+      ],
+      "recommendedLogCapabilities": [
+        "distributed_traces",
+        "kubernetes_events",
+        "database_audit_events"
+      ],
+      "optionalLogCapabilities": [
+        "network_traffic_events",
+        "cloud_api_activity"
+      ],
+      "requiredDataModels": [],
+      "recommendedDataModels": [
+        "Performance"
+      ],
+      "cimRequired": false,
+      "accelerationRecommended": true,
+      "implementationFootprintNotes": "ITSI uses KPI searches and glass tables. Service definitions drive correlation. Plan for search capacity to support KPI base searches running at frequent intervals.",
+      "storageConsiderations": "ITSI creates summary indexes for KPI data. Budget 5-10% additional storage for KPI summaries.",
+      "cloudVsOnPremNotes": "ITSI is available on Splunk Cloud with managed infrastructure. On-prem requires dedicated search head capacity for KPI calculations."
+    },
+    "splunk_observability": {
+      "id": "splunk_observability",
+      "name": "Splunk Observability Cloud",
+      "requiredLogCapabilities": [
+        "infrastructure_metrics",
+        "distributed_traces"
+      ],
+      "recommendedLogCapabilities": [
+        "application_error_logs",
+        "kubernetes_events"
+      ],
+      "optionalLogCapabilities": [],
+      "requiredDataModels": [],
+      "recommendedDataModels": [],
+      "cimRequired": false,
+      "accelerationRecommended": false,
+      "implementationFootprintNotes": "Observability Cloud is a separate SaaS platform. Data is sent via OTEL collectors, not through Splunk indexers. Integration with Splunk platform is via log observer connect.",
+      "storageConsiderations": "Metrics and traces are stored in Observability Cloud, not in Splunk indexes. Log data can be sent to both platforms.",
+      "cloudVsOnPremNotes": "Observability Cloud is SaaS-only. On-prem customers use OTEL collectors to send data to the cloud service."
+    },
+    "splunk_uba": {
+      "id": "splunk_uba",
+      "name": "Splunk User Behavior Analytics (UBA)",
+      "requiredLogCapabilities": [
+        "authentication_success",
+        "authentication_failure",
+        "privileged_user_activity"
+      ],
+      "recommendedLogCapabilities": [
+        "endpoint_process_events",
+        "network_traffic_events",
+        "cloud_api_activity",
+        "saas_user_activity"
+      ],
+      "optionalLogCapabilities": [
+        "email_security_events",
+        "database_audit_events"
+      ],
+      "requiredDataModels": [
+        "Authentication"
+      ],
+      "recommendedDataModels": [
+        "Network_Traffic",
+        "Endpoint"
+      ],
+      "cimRequired": true,
+      "accelerationRecommended": true,
+      "implementationFootprintNotes": "UBA runs ML models on user behavior data. Requires sufficient history (30+ days) for baselining. Typically deployed as a separate instance that reads from Splunk indexes.",
+      "storageConsiderations": "UBA creates its own data store for ML models and anomaly data. Plan for additional storage on the UBA server.",
+      "cloudVsOnPremNotes": "UBA is available as an add-on. Splunk Cloud customers may have specific deployment requirements."
+    }
+  }
+}

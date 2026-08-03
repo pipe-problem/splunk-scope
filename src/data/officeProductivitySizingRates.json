@@ -1,0 +1,374 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "collectionProfiles": {
+    "audit_only": {
+      "label": "Audit only",
+      "description": "Tenant/admin audit plus basic access/security activity where applicable."
+    },
+    "standard_activity": {
+      "label": "Standard activity",
+      "description": "Audit plus the primary workload activity for the selected product."
+    },
+    "full_activity": {
+      "label": "Full activity",
+      "description": "Standard activity plus collaboration, sync, or extended workload activity where applicable."
+    }
+  },
+  "products": {
+    "microsoft_365": {
+      "label": "Microsoft 365",
+      "fieldVisibility": {
+        "officeActiveUserCount": true,
+        "officeActiveMailboxCount": true,
+        "officeActiveFileUserCount": true,
+        "officeActiveCollaborationUserCount": true
+      },
+      "profileComponents": {
+        "audit_only": ["tenant_admin_audit"],
+        "standard_activity": ["tenant_admin_audit", "exchange_mail", "sharepoint_file"],
+        "full_activity": ["tenant_admin_audit", "exchange_mail", "sharepoint_file", "teams_chat_meeting"]
+      },
+      "components": {
+        "tenant_admin_audit": {
+          "label": "Tenant/admin audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000091853,
+          "medium": 0.000948238,
+          "high": 0.013137
+        },
+        "exchange_mail": {
+          "label": "Exchange/mail audit and message events",
+          "unit": "mailbox",
+          "unitLabel": "active mailbox",
+          "countField": "officeActiveMailboxCount",
+          "toggleKey": "includeEmailMessageActivity",
+          "low": 0.000008804,
+          "medium": 0.000045308,
+          "high": 0.0002536
+        },
+        "sharepoint_file": {
+          "label": "SharePoint/OneDrive file activity",
+          "unit": "file user",
+          "unitLabel": "active file user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.000004985,
+          "medium": 0.000030678,
+          "high": 0.000208047
+        },
+        "teams_chat_meeting": {
+          "label": "Teams chat/meeting activity",
+          "unit": "Teams user",
+          "unitLabel": "active Teams user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000004564,
+          "medium": 0.000023465,
+          "high": 0.000130624
+        }
+      }
+    },
+    "google_workspace": {
+      "label": "Google Workspace",
+      "fieldVisibility": {
+        "officeActiveUserCount": true,
+        "officeActiveMailboxCount": true,
+        "officeActiveFileUserCount": true,
+        "officeActiveCollaborationUserCount": true
+      },
+      "profileComponents": {
+        "audit_only": ["admin_audit", "login_access"],
+        "standard_activity": ["admin_audit", "login_access", "gmail_email", "drive_file"],
+        "full_activity": ["admin_audit", "login_access", "gmail_email", "drive_file", "meet_chat"]
+      },
+      "components": {
+        "admin_audit": {
+          "label": "Admin/audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000056133,
+          "medium": 0.000561274,
+          "high": 0.009191
+        },
+        "login_access": {
+          "label": "Login/access/security events",
+          "unit": "active user",
+          "unitLabel": "active user",
+          "countField": "officeActiveUserCount",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000001114,
+          "medium": 0.000004457,
+          "high": 0.000027446
+        },
+        "gmail_email": {
+          "label": "Gmail/email activity events",
+          "unit": "mailbox",
+          "unitLabel": "active mailbox",
+          "countField": "officeActiveMailboxCount",
+          "toggleKey": "includeEmailMessageActivity",
+          "low": 0.000007013,
+          "medium": 0.000035057,
+          "high": 0.000211751
+        },
+        "drive_file": {
+          "label": "Drive file activity events",
+          "unit": "Drive user",
+          "unitLabel": "active Drive user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.000003463,
+          "medium": 0.000020761,
+          "high": 0.000157511
+        },
+        "meet_chat": {
+          "label": "Meet/Chat collaboration events",
+          "unit": "collaboration user",
+          "unitLabel": "active collaboration user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000001302,
+          "medium": 0.000009763,
+          "high": 0.00007565
+        }
+      }
+    },
+    "exchange_online": {
+      "label": "Exchange Online",
+      "fieldVisibility": {
+        "officeActiveUserCount": false,
+        "officeActiveMailboxCount": true,
+        "officeActiveFileUserCount": false,
+        "officeActiveCollaborationUserCount": false
+      },
+      "profileComponents": {
+        "audit_only": ["exchange_admin_audit", "mailbox_item"],
+        "standard_activity": ["exchange_admin_audit", "mailbox_item", "message_trace"],
+        "full_activity": ["exchange_admin_audit", "mailbox_item", "message_trace"]
+      },
+      "components": {
+        "exchange_admin_audit": {
+          "label": "Exchange admin/mailbox audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000088507,
+          "medium": 0.000910645,
+          "high": 0.012749
+        },
+        "message_trace": {
+          "label": "Message trace / mail flow events",
+          "unit": "mailbox",
+          "unitLabel": "active mailbox",
+          "countField": "officeActiveMailboxCount",
+          "toggleKey": "includeEmailMessageActivity",
+          "low": 0.000011333,
+          "medium": 0.000086894,
+          "high": 0.000456761
+        },
+        "mailbox_item": {
+          "label": "Mailbox item activity events",
+          "unit": "mailbox",
+          "unitLabel": "active mailbox",
+          "countField": "officeActiveMailboxCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000001764,
+          "medium": 0.000009071,
+          "high": 0.000063548
+        }
+      }
+    },
+    "sharepoint_online": {
+      "label": "SharePoint Online",
+      "fieldVisibility": {
+        "officeActiveUserCount": false,
+        "officeActiveMailboxCount": false,
+        "officeActiveFileUserCount": true,
+        "officeActiveCollaborationUserCount": false
+      },
+      "profileComponents": {
+        "audit_only": ["sp_admin_audit", "sharing_permission"],
+        "standard_activity": ["sp_admin_audit", "sharing_permission", "file_view_edit"],
+        "full_activity": ["sp_admin_audit", "sharing_permission", "file_view_edit", "onedrive_sync"]
+      },
+      "components": {
+        "sp_admin_audit": {
+          "label": "SharePoint admin audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000100383,
+          "medium": 0.00103,
+          "high": 0.013938
+        },
+        "file_view_edit": {
+          "label": "File view/edit/download activity",
+          "unit": "file user",
+          "unitLabel": "active file user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.000004986,
+          "medium": 0.000030686,
+          "high": 0.000207966
+        },
+        "sharing_permission": {
+          "label": "Sharing/permission activity",
+          "unit": "file user",
+          "unitLabel": "active file user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.000001003,
+          "medium": 0.000005137,
+          "high": 0.000034874
+        },
+        "onedrive_sync": {
+          "label": "OneDrive/sync client activity",
+          "unit": "file user",
+          "unitLabel": "active file user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.000002013,
+          "medium": 0.000020644,
+          "high": 0.000139702
+        }
+      }
+    },
+    "teams": {
+      "label": "Teams",
+      "fieldVisibility": {
+        "officeActiveUserCount": false,
+        "officeActiveMailboxCount": false,
+        "officeActiveFileUserCount": false,
+        "officeActiveCollaborationUserCount": true
+      },
+      "profileComponents": {
+        "audit_only": ["teams_admin_audit", "membership_app"],
+        "standard_activity": ["teams_admin_audit", "membership_app", "chat_channel", "meeting_call"],
+        "full_activity": ["teams_admin_audit", "membership_app", "chat_channel", "meeting_call"]
+      },
+      "components": {
+        "teams_admin_audit": {
+          "label": "Teams admin/policy audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000045928,
+          "medium": 0.000471852,
+          "high": 0.006562
+        },
+        "chat_channel": {
+          "label": "Chat/channel/team activity",
+          "unit": "Teams user",
+          "unitLabel": "active Teams user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000004562,
+          "medium": 0.000023436,
+          "high": 0.000130632
+        },
+        "meeting_call": {
+          "label": "Meeting/call activity",
+          "unit": "Teams user",
+          "unitLabel": "active Teams user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000000911,
+          "medium": 0.000004682,
+          "high": 0.000026107
+        },
+        "membership_app": {
+          "label": "Team membership/app activity",
+          "unit": "Teams user",
+          "unitLabel": "active Teams user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000000454,
+          "medium": 0.000001869,
+          "high": 0.00001303
+        }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "fieldVisibility": {
+        "officeActiveUserCount": true,
+        "officeActiveMailboxCount": true,
+        "officeActiveFileUserCount": true,
+        "officeActiveCollaborationUserCount": true
+      },
+      "profileComponents": {
+        "audit_only": ["tenant_admin_audit", "login_access"],
+        "standard_activity": ["tenant_admin_audit", "login_access", "email_message", "file_collab"],
+        "full_activity": ["tenant_admin_audit", "login_access", "email_message", "file_collab", "chat_meeting"]
+      },
+      "components": {
+        "tenant_admin_audit": {
+          "label": "Tenant/admin audit events",
+          "unit": "tenant",
+          "unitLabel": "tenant / org",
+          "countField": "officeTenantCount",
+          "toggleKey": "includeTenantAdminAudit",
+          "low": 0.000076561,
+          "medium": 0.000784392,
+          "high": 0.011115
+        },
+        "login_access": {
+          "label": "Login/access security events",
+          "unit": "active user",
+          "unitLabel": "active user",
+          "countField": "officeActiveUserCount",
+          "toggleKey": "includeLoginAccessSecurity",
+          "low": 0.000001114,
+          "medium": 0.000004457,
+          "high": 0.000027446
+        },
+        "email_message": {
+          "label": "Email/message activity events",
+          "unit": "mailbox",
+          "unitLabel": "active mailbox",
+          "countField": "officeActiveMailboxCount",
+          "toggleKey": "includeEmailMessageActivity",
+          "low": 0.000007228,
+          "medium": 0.000044083,
+          "high": 0.000246415
+        },
+        "file_collab": {
+          "label": "File/collaboration activity events",
+          "unit": "file user",
+          "unitLabel": "active file user",
+          "countField": "officeActiveFileUserCount",
+          "toggleKey": "includeFileActivity",
+          "low": 0.00000329,
+          "medium": 0.000021581,
+          "high": 0.00014962
+        },
+        "chat_meeting": {
+          "label": "Chat/meeting collaboration events",
+          "unit": "collaboration user",
+          "unitLabel": "active collaboration user",
+          "countField": "officeActiveCollaborationUserCount",
+          "toggleKey": "includeChatMeetingActivity",
+          "low": 0.000002358,
+          "medium": 0.000012643,
+          "high": 0.000075209
+        }
+      }
+    }
+  },
+  "overlapSourceIds": [
+    "saas_general",
+    "saas_sso",
+    "email",
+    "saas_filesharing",
+    "casb",
+    "dlp",
+    "saas_crm"
+  ]
+}

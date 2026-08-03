@@ -1,0 +1,199 @@
+{
+  "generatedAt": "2026-06-03T20:33:57.891Z",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "baseUrl": "http://localhost:4173",
+  "sampleScenario": "robbins_retail_hybrid",
+  "captures": [
+    {
+      "theme": "dark",
+      "file": "01-home.png",
+      "url": "http://localhost:4173/#/",
+      "waitMs": 1200,
+      "note": "Intro / hero + CTAs",
+      "path": "docs/screenshots/dark/01-home.png"
+    },
+    {
+      "theme": "dark",
+      "file": "02-intake.png",
+      "url": "http://localhost:4173/#/intake",
+      "waitMs": 900,
+      "note": "Customer Intake with Chuck Robbins retail example",
+      "path": "docs/screenshots/dark/02-intake.png"
+    },
+    {
+      "theme": "dark",
+      "file": "03-analysis.png",
+      "url": "http://localhost:4173/#/analysis",
+      "waitMs": 1500,
+      "note": "AI interpretation results",
+      "path": "docs/screenshots/dark/03-analysis.png"
+    },
+    {
+      "theme": "dark",
+      "file": "04-sources.png",
+      "url": "http://localhost:4173/#/sources",
+      "waitMs": 1200,
+      "note": "Data Sources grid + filters",
+      "path": "docs/screenshots/dark/04-sources.png"
+    },
+    {
+      "theme": "dark",
+      "file": "05-review.png",
+      "url": "http://localhost:4173/#/review",
+      "waitMs": 1000,
+      "note": "Source review table + totals",
+      "path": "docs/screenshots/dark/05-review.png"
+    },
+    {
+      "theme": "dark",
+      "file": "06-coverage.png",
+      "url": "http://localhost:4173/#/coverage",
+      "waitMs": 1200,
+      "note": "Coverage gauge + domain matrix",
+      "path": "docs/screenshots/dark/06-coverage.png"
+    },
+    {
+      "theme": "dark",
+      "file": "07-paths.png",
+      "url": "http://localhost:4173/#/paths",
+      "waitMs": 1200,
+      "note": "Architecture paths — compact compare + detail",
+      "measureScroll": true,
+      "path": "docs/screenshots/dark/07-paths.png"
+    },
+    {
+      "theme": "dark",
+      "file": "08-report-overview.png",
+      "url": "http://localhost:4173/#/report",
+      "waitMs": 1500,
+      "note": "Report — Overview tab",
+      "fullPage": true,
+      "path": "docs/screenshots/dark/08-report-overview.png"
+    },
+    {
+      "theme": "dark",
+      "file": "09-reference-library.png",
+      "url": "http://localhost:4173/#/reference",
+      "waitMs": 1000,
+      "note": "SE source reference library",
+      "path": "docs/screenshots/dark/09-reference-library.png"
+    },
+    {
+      "theme": "dark",
+      "file": "10-scenario-compare.png",
+      "url": "http://localhost:4173/#/compare",
+      "waitMs": 1000,
+      "note": "Scenario comparison (2 saved scenarios)",
+      "path": "docs/screenshots/dark/10-scenario-compare.png"
+    },
+    {
+      "theme": "dark",
+      "file": "08b-report-sources.png",
+      "note": "Report — Sources tab",
+      "path": "docs/screenshots/dark/08b-report-sources.png"
+    },
+    {
+      "theme": "dark",
+      "file": "08c-report-startup-guide.png",
+      "note": "Report — Startup Guide tab",
+      "path": "docs/screenshots/dark/08c-report-startup-guide.png"
+    },
+    {
+      "theme": "light",
+      "file": "01-home.png",
+      "url": "http://localhost:4173/#/",
+      "waitMs": 1200,
+      "note": "Intro / hero + CTAs",
+      "path": "docs/screenshots/light/01-home.png"
+    },
+    {
+      "theme": "light",
+      "file": "02-intake.png",
+      "url": "http://localhost:4173/#/intake",
+      "waitMs": 900,
+      "note": "Customer Intake with Chuck Robbins retail example",
+      "path": "docs/screenshots/light/02-intake.png"
+    },
+    {
+      "theme": "light",
+      "file": "03-analysis.png",
+      "url": "http://localhost:4173/#/analysis",
+      "waitMs": 1500,
+      "note": "AI interpretation results",
+      "path": "docs/screenshots/light/03-analysis.png"
+    },
+    {
+      "theme": "light",
+      "file": "04-sources.png",
+      "url": "http://localhost:4173/#/sources",
+      "waitMs": 1200,
+      "note": "Data Sources grid + filters",
+      "path": "docs/screenshots/light/04-sources.png"
+    },
+    {
+      "theme": "light",
+      "file": "05-review.png",
+      "url": "http://localhost:4173/#/review",
+      "waitMs": 1000,
+      "note": "Source review table + totals",
+      "path": "docs/screenshots/light/05-review.png"
+    },
+    {
+      "theme": "light",
+      "file": "06-coverage.png",
+      "url": "http://localhost:4173/#/coverage",
+      "waitMs": 1200,
+      "note": "Coverage gauge + domain matrix",
+      "path": "docs/screenshots/light/06-coverage.png"
+    },
+    {
+      "theme": "light",
+      "file": "07-paths.png",
+      "url": "http://localhost:4173/#/paths",
+      "waitMs": 1200,
+      "note": "Architecture paths — compact compare + detail",
+      "measureScroll": true,
+      "path": "docs/screenshots/light/07-paths.png"
+    },
+    {
+      "theme": "light",
+      "file": "08-report-overview.png",
+      "url": "http://localhost:4173/#/report",
+      "waitMs": 1500,
+      "note": "Report — Overview tab",
+      "fullPage": true,
+      "path": "docs/screenshots/light/08-report-overview.png"
+    },
+    {
+      "theme": "light",
+      "file": "09-reference-library.png",
+      "url": "http://localhost:4173/#/reference",
+      "waitMs": 1000,
+      "note": "SE source reference library",
+      "path": "docs/screenshots/light/09-reference-library.png"
+    },
+    {
+      "theme": "light",
+      "file": "10-scenario-compare.png",
+      "url": "http://localhost:4173/#/compare",
+      "waitMs": 1000,
+      "note": "Scenario comparison (2 saved scenarios)",
+      "path": "docs/screenshots/light/10-scenario-compare.png"
+    },
+    {
+      "theme": "light",
+      "file": "08b-report-sources.png",
+      "note": "Report — Sources tab",
+      "path": "docs/screenshots/light/08b-report-sources.png"
+    },
+    {
+      "theme": "light",
+      "file": "08c-report-startup-guide.png",
+      "note": "Report — Startup Guide tab",
+      "path": "docs/screenshots/light/08c-report-startup-guide.png"
+    }
+  ]
+}

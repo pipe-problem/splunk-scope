@@ -1,0 +1,115 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "providers": {
+    "aws_ec2": {
+      "label": "AWS EC2",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.000492, "medium": 0.007387, "high": 0.085953 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.000253, "medium": 0.002531, "high": 0.039319 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.00016, "medium": 0.001601, "high": 0.018959 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.003143, "medium": 0.062865, "high": 1.461192 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.000905, "medium": 0.011519, "high": 0.14423 },
+        "full_vm_logs": { "low": 0.004048, "medium": 0.074383, "high": 1.605422 }
+      }
+    },
+    "azure_vms": {
+      "label": "Azure VMs",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.000785, "medium": 0.011764, "high": 0.120996 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.000399, "medium": 0.003989, "high": 0.056849 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.000248, "medium": 0.002477, "high": 0.027725 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.004604, "medium": 0.09205, "high": 1.679776 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.001431, "medium": 0.01823, "high": 0.20557 },
+        "full_vm_logs": { "low": 0.006035, "medium": 0.11028, "high": 1.885346 }
+      }
+    },
+    "gcp_compute": {
+      "label": "Google Compute Engine",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.00053, "medium": 0.007955, "high": 0.090468 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.00027, "medium": 0.002701, "high": 0.041358 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.00017, "medium": 0.0017, "high": 0.019951 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.003322, "medium": 0.066413, "high": 1.484838 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.00097, "medium": 0.012355, "high": 0.151777 },
+        "full_vm_logs": { "low": 0.004293, "medium": 0.078768, "high": 1.636615 }
+      }
+    },
+    "vmware_cloud": {
+      "label": "VMware Cloud",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.000176, "medium": 0.002637, "high": 0.021138 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.000092, "medium": 0.00092, "high": 0.011061 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.000055, "medium": 0.000554, "high": 0.00555 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.002989, "medium": 0.059782, "high": 1.445041 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.000323, "medium": 0.004111, "high": 0.037748 },
+        "full_vm_logs": { "low": 0.003312, "medium": 0.063892, "high": 1.482789 }
+      }
+    },
+    "oci_compute": {
+      "label": "Oracle Cloud Compute",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.000555, "medium": 0.008328, "high": 0.093482 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.000283, "medium": 0.002824, "high": 0.042849 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.000178, "medium": 0.001775, "high": 0.020711 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.003447, "medium": 0.068933, "high": 1.511567 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.001015, "medium": 0.012928, "high": 0.157043 },
+        "full_vm_logs": { "low": 0.004462, "medium": 0.081861, "high": 1.66861 }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "components": {
+        "os_system": { "label": "OS / system logs", "unit": "instance", "low": 0.000508, "medium": 0.007614, "high": 0.082407 },
+        "auth_security": { "label": "Auth / security logs", "unit": "instance", "low": 0.000259, "medium": 0.002593, "high": 0.038287 },
+        "agent_platform": { "label": "Agent / platform logs", "unit": "instance", "low": 0.000162, "medium": 0.001621, "high": 0.018579 },
+        "application_service": { "label": "Application / service logs", "unit": "instance", "low": 0.003501, "medium": 0.070008, "high": 1.516483 }
+      },
+      "profileRollups": {
+        "base_vm_telemetry": { "low": 0.000929, "medium": 0.011828, "high": 0.139274 },
+        "full_vm_logs": { "low": 0.00443, "medium": 0.081837, "high": 1.655757 }
+      }
+    }
+  },
+  "collectionProfiles": {
+    "minimal_vm_telemetry": {
+      "label": "Minimal OS/agent telemetry",
+      "description": "Low-volume OS, auth, and platform agent logs only."
+    },
+    "base_vm_telemetry": {
+      "label": "Minimal OS/agent telemetry",
+      "description": "Low-volume OS, auth, and platform agent logs only."
+    },
+    "standard_vm_logs": {
+      "label": "Standard VM logs",
+      "description": "Standard Windows/Linux VM logging aligned to original sizing sheet planning rates."
+    },
+    "full_vm_logs": {
+      "label": "Full VM/application logs",
+      "description": "Standard VM logs plus application or service log files collected by the VM agent."
+    }
+  },
+  "overlapSourceIds": [
+    "linux_servers",
+    "linux_servers_nonprod",
+    "windows_servers",
+    "app_servers",
+    "app_servers_nonprod",
+    "web_servers",
+    "web_servers_nonprod",
+    "iaas_containers",
+    "edr",
+    "apm",
+    "iaas"
+  ],
+  "appOverlapSourceIds": ["app_servers", "app_servers_nonprod", "web_servers", "web_servers_nonprod"]
+}

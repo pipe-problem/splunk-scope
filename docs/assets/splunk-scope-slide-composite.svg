@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Full home-page hero block for slides  logo, title, radar graphic on dark bg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="320" viewBox="0 0 400 320" role="img" aria-label="Splunk Scope planning and architecture">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E954B7"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+    <linearGradient id="title-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F04E98"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+    <linearGradient id="radar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E954B7"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+    <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E954B7" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#E954B7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="320" fill="#050505"/>
+  <!-- Lockup centered -->
+  <g transform="translate(84, 24)">
+    <rect x="0" y="0" width="32" height="32" rx="7" fill="#1A1A1A"/>
+    <circle cx="16" cy="15" r="8" fill="none" stroke="url(#logo-grad)" stroke-width="2"/>
+    <circle cx="16" cy="15" r="2.5" fill="url(#logo-grad)"/>
+    <line x1="22" y1="21" x2="27" y2="26" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round"/>
+    <text x="42" y="20" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="url(#title-grad)" letter-spacing="-0.4">Splunk Scope</text>
+    <text x="42" y="36" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="9" font-weight="500" fill="#A3A3A3" letter-spacing="1.4">PLANNING &amp; ARCHITECTURE</text>
+  </g>
+  <!-- Radar graphic centered -->
+  <g transform="translate(100, 72)">
+    <circle cx="100" cy="100" r="100" fill="url(#radar-glow)"/>
+    <circle cx="100" cy="100" r="35" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.36"/>
+    <circle cx="100" cy="100" r="55" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.28"/>
+    <circle cx="100" cy="100" r="75" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.20"/>
+    <circle cx="100" cy="100" r="95" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.12"/>
+    <circle cx="100" cy="100" r="50" fill="none" stroke="url(#radar-grad)" stroke-width="1.5" opacity="0.45"/>
+    <line x1="100" y1="100" x2="100" y2="2" stroke="url(#radar-grad)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+    <line x1="100" y1="28" x2="158" y2="62" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="100" y1="28" x2="42" y2="78" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="158" y1="62" x2="172" y2="128" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="42" y1="78" x2="28" y2="142" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="172" y1="128" x2="100" y2="172" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="28" y1="142" x2="100" y2="172" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="100" y1="28" x2="138" y2="38" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <line x1="42" y1="78" x2="62" y2="158" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+    <circle cx="100" cy="28" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="158" cy="62" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="42" cy="78" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="172" cy="128" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="28" cy="142" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="100" cy="172" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="138" cy="38" r="2" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="62" cy="158" r="2" fill="url(#radar-grad)" opacity="0.85"/>
+    <circle cx="100" cy="100" r="5" fill="url(#radar-grad)"/>
+  </g>
+</svg>

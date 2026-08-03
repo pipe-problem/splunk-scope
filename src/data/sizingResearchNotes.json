@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "1.7",
+  "lastUpdated": "2026-05-06",
+  "notes": [
+    {
+      "sourceId": "firewalls",
+      "status": "needs_validation",
+      "researchSources": [
+        "Vendor hardening and logging guides (Palo Alto, Fortinet, Cisco, Check Point)",
+        "NIST SP 800-41 (firewall guidance)"
+      ],
+      "assumptions": [
+        "Traffic and threat logs are enabled at a typical enterprise retention-oriented verbosity",
+        "Log export is Syslog or cloud SIEM integration, not interactive UI-only"
+      ],
+      "knownLimitations": [
+        "East-west coverage depends on architecture; default-permit internal segments reduce detectability",
+        "Encrypted traffic without inspection yields incomplete URL and payload indicators"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "edr",
+      "status": "needs_validation",
+      "researchSources": [
+        "EDR vendor sizing worksheets (CrowdStrike, SentinelOne, Microsoft Defender, etc.)",
+        "MITRE ATT&CK telemetry mapping by vendor"
+      ],
+      "assumptions": [
+        "Full telemetry policy (process, file, network, script blocks) rather than minimal compliance mode",
+        "Average endpoint mix comparable to a general enterprise (Windows-heavy with some macOS/Linux)"
+      ],
+      "knownLimitations": [
+        "Kernel or platform restrictions can suppress some event classes on certain OS versions",
+        "Agent gaps on OT, legacy, or unmanaged devices are common"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "active_directory",
+      "status": "needs_validation",
+      "researchSources": [
+        "Microsoft Advanced auditing recommendations for Domain Controllers",
+        "AD troubleshooting and security audit policy references"
+      ],
+      "assumptions": [
+        "Security channel and advanced audit policies are configured beyond Windows defaults",
+        "Domain Controllers are centralized and consistently forward logs"
+      ],
+      "knownLimitations": [
+        "Volume spikes during password sprays and replication storms",
+        "Azure AD Connect and hybrid identity changes correlation requirements"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "windows_servers",
+      "status": "needs_validation",
+      "researchSources": [
+        "Microsoft Windows security auditing documentation",
+        "Sysmon operational guidance (SwiftOnSecurity and similar baseline references)"
+      ],
+      "assumptions": [
+        "Mix of infrastructure roles; some hosts run IIS, DNS, or DHCP",
+        "Sysmon deployment rate and configuration are customer-specific"
+      ],
+      "knownLimitations": [
+        "Without universal Sysmon, process lineage gaps compared with EDR",
+        "Printed-object Security events can be extremely noisy in misconfigured environments"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "linux_servers",
+      "status": "needs_validation",
+      "researchSources": [
+        "Red Hat / SUSE / Ubuntu audit and logging guides",
+        "Linux auditd reference documentation"
+      ],
+      "assumptions": [
+        "ssh and sudo authentication events are captured",
+        "auditd rules exist where file integrity or command monitoring is required"
+      ],
+      "knownLimitations": [
+        "Containerized workloads may bypass traditional host auditing unless nodes are instrumented",
+        "Diverse distributions fragment parsing and field normalization"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "sso_pam",
+      "status": "needs_validation",
+      "researchSources": [
+        "Okta, Azure AD, Ping, CyberArk, and similar admin and system log references",
+        "OIDC/SAML troubleshooting literature (for understanding event gaps)"
+      ],
+      "assumptions": [
+        "SSO and privileged access products are separated in some enterprises while merged in others",
+        "Session and MFA detail is available from the IdP API or event stream"
+      ],
+      "knownLimitations": [
+        "Federation blind spots when relying parties log poorly",
+        "Legacy apps using Kerberos-only paths may not appear in SaaS IdP logs"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "email",
+      "status": "needs_validation",
+      "researchSources": [
+        "Microsoft 365 audit log schema references",
+        "Google Workspace Admin SDK reporting documentation",
+        "Secure email gateway vendor sizing notes"
+      ],
+      "assumptions": [
+        "Message tracking or equivalent delivery logs are retained",
+        "Advanced threat protection add-ons are present for phishing analytics"
+      ],
+      "knownLimitations": [
+        "License tier changes which admin events exist",
+        "Encrypted or redirected mail flows can reduce content visibility at the gateway"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "iaas",
+      "status": "needs_validation",
+      "researchSources": [
+        "AWS CloudTrail, Azure Activity Log, and GCP Cloud Audit Log documentation",
+        "CIS cloud foundation benchmarks (logging sections)"
+      ],
+      "assumptions": [
+        "Organization-level audit trails are enabled across member accounts or subscriptions",
+        "Optional high-volume streams (VPC flow, LB access) are accounted for separately when relevant"
+      ],
+      "knownLimitations": [
+        "Data events (S3 object-level, KMS decrypt) are opt-in and often underestimated",
+        "Multi-cloud and shadow accounts distort simple per-account sizing"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "cspm",
+      "status": "needs_validation",
+      "researchSources": [
+        "Prisma Cloud, Wiz, Orca, and similar CSPM documentation",
+        "CNCF and cloud vendor security posture service descriptions"
+      ],
+      "assumptions": [
+        "Continuous assessment rather than annual spreadsheet exports",
+        "Multiple cloud providers may be scanned from one console"
+      ],
+      "knownLimitations": [
+        "Findings volume scales with misconfiguration debt, not just resource count",
+        "Agentless vs API-only scans change event shapes and latency"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "cwpp",
+      "status": "needs_validation",
+      "researchSources": [
+        "Workload protection vendor architecture guides",
+        "CIS Kubernetes and container benchmarks (runtime sections)"
+      ],
+      "assumptions": [
+        "Agents or eBPF collectors cover a meaningful share of VM and container estate",
+        "Registry and CI image scanning may be bundled with runtime vendors"
+      ],
+      "knownLimitations": [
+        "DaemonSet coverage on ephemeral nodes fluctuates with autoscaling",
+        "Overlap with EDR in Windows/Linux server estates double-counts if not de-duplicated in modeling"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "vuln_mgmt",
+      "status": "needs_validation",
+      "researchSources": [
+        "Qualys, Tenable, Rapid7 deployment and API rate documentation",
+        "Industry scan frequency guidance (internal policy, not universal standard)"
+      ],
+      "assumptions": [
+        "Weekly or monthly authenticated scanning for servers",
+        "Agent-based assessments supplement network scanning where required"
+      ],
+      "knownLimitations": [
+        "Scan windows and credential availability skew completeness",
+        "Cloud-native asset churn makes host-based counts unstable month to month"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "ids_ips",
+      "status": "needs_validation",
+      "researchSources": [
+        "Suricata and Snort rule management references",
+        "Commercial NGIPS vendor admin guides"
+      ],
+      "assumptions": [
+        "Balanced ruleset between coverage and false positives",
+        "Alerts are exported, not only viewed on appliance dashboards"
+      ],
+      "knownLimitations": [
+        "Encrypted traffic limits signature efficacy without TLS inspection",
+        "Inline vs tap deployment changes whether drops vs alerts dominate"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "ndr",
+      "status": "needs_validation",
+      "researchSources": [
+        "Darktrace, Vectra, ExtraHop, Corelight (Zeek) technical overviews",
+        "Enterprise architecture patterns for network visibility (SPAN, TAP, cloud mirroring)"
+      ],
+      "assumptions": [
+        "Sensors cover core data center east-west paths or cloud egress in scope",
+        "Some encrypted traffic analytics features are enabled"
+      ],
+      "knownLimitations": [
+        "Blind spots behind unmonitored switch ports or peered clouds",
+        "Behavioral alerts require tuning baseline window per environment"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "proxy",
+      "status": "needs_validation",
+      "researchSources": [
+        "Zscaler, Netskope, Cloudflare, and traditional proxy admin references",
+        "SASE architecture primers"
+      ],
+      "assumptions": [
+        "User web traffic is channeled through the proxy architecture (not fully split tunneled around it)",
+        "SSL inspection policy is explicitly modeled where used"
+      ],
+      "knownLimitations": [
+        "Direct-to-internet applications bypass legacy explicit proxies",
+        "Full URL logging impacts privacy reviews and storage"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "vpn",
+      "status": "needs_validation",
+      "researchSources": [
+        "Major VPN concentrator vendors (Citrix, Pulse, Cisco AnyConnect, Ivanti) logging references",
+        "Zero-trust remote access alternatives (ZTA) impact studies (qualitative)"
+      ],
+      "assumptions": [
+        "Concurrent user counts and session duration align with hybrid workforce assumptions",
+        "Split tunnel prevalence is captured in customer intake"
+      ],
+      "knownLimitations": [
+        "VPN logs rarely expose inner application payloads",
+        "Migration from VPN to ZTNA changes event types and volume materially"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "dns",
+      "status": "needs_validation",
+      "researchSources": [
+        "Infoblox, BIND, Windows DNS diagnostic references",
+        "DNS security (resolver filtering) vendor notes"
+      ],
+      "assumptions": [
+        "Recursive resolver logging is enabled with acceptable performance",
+        "Sampling is not applied unless customer confirms"
+      ],
+      "knownLimitations": [
+        "DNS can be one of the highest EPS sources in large enterprises",
+        "Privacy regulations may restrict full query logging in some jurisdictions"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "dhcp",
+      "status": "needs_validation",
+      "researchSources": [
+        "Microsoft DHCP audit logging",
+        "ISC Kea and ISC DHCP operational notes"
+      ],
+      "assumptions": [
+        "Lease events are forwarded to SIEM when correlation to endpoints matters",
+        "Short lease times in guest or IoT VLANs increase event rate"
+      ],
+      "knownLimitations": [
+        "DHCP alone does not authenticate users",
+        "Relayed DHCP may collapse visibility without per-relay source configuration"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "netflow",
+      "status": "needs_validation",
+      "researchSources": [
+        "Cisco NetFlow and IPFIX configuration guides",
+        "Cloud VPC flow log documentation"
+      ],
+      "assumptions": [
+        "Typical sampling ratio for hardware NetFlow (if any) is stated by customer",
+        "Flow retention aligns with security vs capacity monitoring use case"
+      ],
+      "knownLimitations": [
+        "Sampled flows under-represent short attacks",
+        "Bidirectional flow stitching complexity across asymmetric routing"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "database",
+      "status": "needs_validation",
+      "researchSources": [
+        "Oracle, SQL Server, PostgreSQL auditing documentation",
+        "Database activity monitoring vendor architecture papers"
+      ],
+      "assumptions": [
+        "Audit policies capture logon and privileged DML at minimum",
+        "High-transaction OLTP environments are called out separately when needed"
+      ],
+      "knownLimitations": [
+        "Native auditing performance impact leads to partial coverage in practice",
+        "Cloud managed databases shift logging to control-plane APIs with different latency"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "web_servers",
+      "status": "needs_validation",
+      "researchSources": [
+        "IIS, Apache, NGINX logging module references",
+        "OWASP logging cheat sheet"
+      ],
+      "assumptions": [
+        "Access and error logs are both collected where security reviews require",
+        "Load balancers may terminate TLS, affecting what the origin server logs"
+      ],
+      "knownLimitations": [
+        "Static and burst traffic patterns (marketing events) dominate outliers",
+        "Customer PII in URLs may force redaction or exclusion rules"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "app_servers",
+      "status": "needs_validation",
+      "researchSources": [
+        "Framework-specific logging guidance (Spring, .NET, Node)",
+        "Twelve-factor app logging practices"
+      ],
+      "assumptions": [
+        "Applications emit structured or semi-structured logs in production",
+        "Log levels are not left at TRACE in production without filtering"
+      ],
+      "knownLimitations": [
+        "Poor developer hygiene yields inconsistent formats",
+        "Microservice fan-out multiplies volume per user request"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "apm",
+      "status": "needs_validation",
+      "researchSources": [
+        "OpenTelemetry sampling and cardinality guides",
+        "Datadog, New Relic, Dynatrace ingestion billing documentation (high level)"
+      ],
+      "assumptions": [
+        "Head-based or tail-based sampling is documented when traces are high volume",
+        "APM is used for both custom apps and packaged apps with agents"
+      ],
+      "knownLimitations": [
+        "Trace volume scales with request rate and span depth more than host count",
+        "APM costs often dominate budgets before SIEM storage does"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "desktops",
+      "status": "needs_validation",
+      "researchSources": [
+        "Windows enterprise telemetry and update management documentation",
+        "Enterprise EPP vs EDR coexistence notes"
+      ],
+      "assumptions": [
+        "A meaningful fraction of desktops have security agents comparable to servers",
+        "User behavior produces more authentication and web proxy noise than servers"
+      ],
+      "knownLimitations": [
+        "Remote and offshore contractor machines may be off-domain",
+        "BYOD frequently lacks equivalent telemetry"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "threat_intel",
+      "status": "placeholder",
+      "researchSources": [
+        "Commercial TI feed vendor technical FAQs",
+        "FIRST TAXII/STIX community references"
+      ],
+      "assumptions": [
+        "Feeds include a mix of IOC, actor reporting, and vulnerability intelligence depending on subscription",
+        "Enrichment happens inside SIEM or at the perimeter controls"
+      ],
+      "knownLimitations": [
+        "Raw feed volume is often tiny compared to match events generated downstream",
+        "Stale or low-fidelity IOCs inflate false positives when automated blocking is enabled"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "dlp",
+      "status": "needs_validation",
+      "researchSources": [
+        "Endpoint and network DLP vendor admin training materials",
+        "Cloud access security documentation where DLP aligns with CASB"
+      ],
+      "assumptions": [
+        "Policies differentiate monitoring vs blocking vs user prompt workflows",
+        "Optical character recognition or image inspection adds spiky volume when enabled"
+      ],
+      "knownLimitations": [
+        "Content inspection depth drives CPU and storage differently than traditional logs",
+        "Legal holds alter retention and redaction behavior by design"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "uba",
+      "status": "needs_validation",
+      "researchSources": [
+        "Splunk UBA and similar product sizing primers",
+        "Peer-reviewed anomaly detection limitations (for expectation setting)"
+      ],
+      "assumptions": [
+        "UBA ingests normalized identity and network data already modeled elsewhere",
+        "Baseline period is at least several weeks in stable organizations"
+      ],
+      "knownLimitations": [
+        "Seasonal businesses (retail, tax) violate stationary assumptions",
+        "Small populations produce statistically weak peer groups"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "switches",
+      "status": "needs_validation",
+      "researchSources": [
+        "Cisco, Arista, Juniper telemetry and NetFlow-lite references",
+        "SNMP polling rate impact studies (vendor-specific)"
+      ],
+      "assumptions": [
+        "Most access-layer switches contribute SNMP or streaming telemetry, not full packet logs",
+        "802.1X or NAC integrations supply authentication adjunct data separately"
+      ],
+      "knownLimitations": [
+        "Per-port features vary enormously by hardware generation",
+        "Stacked vs fabric architectures change export points"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "routers",
+      "status": "needs_validation",
+      "researchSources": [
+        "WAN router and SD-WAN vendor logging guides",
+        "BGP monitoring best practices (operator communities)"
+      ],
+      "assumptions": [
+        "BGP and tunnel state logs are enabled where SD-WAN overlays exist",
+        "ACL deny logging is selective to prevent overwhelm"
+      ],
+      "knownLimitations": [
+        "Carrier-managed CPE may not expose logs to the enterprise SIEM",
+        "High churn in SD-WAN policy objects creates episodic spikes"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "ics_scada",
+      "status": "placeholder",
+      "researchSources": [
+        "ISA/IEC 62443 family (high-level orientation)",
+        "ICS-CERT and vendor-specific OT monitoring references"
+      ],
+      "assumptions": [
+        "OT monitoring is air-gapped or heavily segmented from IT tooling",
+        "Protocol support list from the customer drives feasibility"
+      ],
+      "knownLimitations": [
+        "Safety and availability constraints limit deep packet inspection",
+        "Legacy RS-232 and serial converters may never emit network-native logs"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "business_txn",
+      "status": "placeholder",
+      "researchSources": [
+        "ERP and mainframe observability vendor documentation (customer-specific)",
+        "Payment industry public guidance (high level only)"
+      ],
+      "assumptions": [
+        "Business event extraction happens via application logs, message queues, or dedicated mainframe forwarders",
+        "Identifiers in logs are pseudonymized where compliance requires"
+      ],
+      "knownLimitations": [
+        "Vendor package differences dominate; little cross-industry normalization",
+        "Peak season transaction bursts are orders of magnitude above steady-state"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "paas",
+      "status": "needs_validation",
+      "researchSources": [
+        "AWS/Azure/GCP managed service audit and diagnostic logging pages",
+        "Serverless observability primers"
+      ],
+      "assumptions": [
+        "Functions, queues, and managed databases each emit distinct administratively interesting streams",
+        "Customer enables platform logs beyond default minimal settings"
+      ],
+      "knownLimitations": [
+        "Ephemeral compute makes static host-based sizing misleading",
+        "Managed service log detail varies sharply by SKU tier"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "saas_general",
+      "status": "needs_validation",
+      "researchSources": [
+        "SCIM and SCIM event availability by SaaS vendor",
+        "Salesforce, ServiceNow, Workday event monitoring documentation"
+      ],
+      "assumptions": [
+        "At least admin, authentication, and data export adjacent events are subscribed",
+        "API rate limits for backfill are understood"
+      ],
+      "knownLimitations": [
+        "Each SaaS schema is bespoke; generic EPS heuristics are weak",
+        "Tiered licensing hides security-relevant fields behind paid SKUs"
+      ],
+      "lastReviewed": "2026-05-06"
+    },
+    {
+      "sourceId": "casb",
+      "status": "needs_validation",
+      "researchSources": [
+        "SSE and CASB vendor references (Netskope, Skyhigh, Palo Alto Prisma Access, etc.)",
+        "SASE service chaining architecture overviews"
+      ],
+      "assumptions": [
+        "Inline proxy mode is used for sanctioned SaaS controls where required",
+        "API scanning complements inline where available"
+      ],
+      "knownLimitations": [
+        "API-only discovery misses real-time user actions until job runs",
+        "Decrypting enterprise SaaS traffic has legal and architectural prerequisites"
+      ],
+      "lastReviewed": "2026-05-06"
+    }
+  ]
+}

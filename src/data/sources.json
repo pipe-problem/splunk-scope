@@ -1,0 +1,3623 @@
+[
+  {
+    "id": "iaas",
+    "name": "IaaS (Cloud Infrastructure)",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Infrastructure",
+    "description": "IaaS includes cloud provider infrastructure logs such as audit activity, VM events, flow logs, storage access logs, Kubernetes control-plane logs, and configuration/inventory changes.",
+    "whyItMatters": "Cloud infrastructure logs are foundational for detecting unauthorized access, misconfigurations, and lateral movement in cloud environments. Without these, you have no visibility into your cloud control plane.",
+    "configuredItemLabel": "# of cloud accounts",
+    "sizingUnit": "per_account",
+    "sizingRate": 0.3,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 3,
+    "exampleVendors": [
+      "AWS",
+      "Azure",
+      "GCP",
+      "Oracle Cloud",
+      "IBM Cloud"
+    ],
+    "mitreId": "DS0025",
+    "telemetryDomains": {
+      "cloud_control_plane": "strong",
+      "cloud_infrastructure": "strong",
+      "authentication": "partial",
+      "network": "partial"
+    },
+    "splunkApps": [
+      "Splunk App for AWS",
+      "Splunk Add-on for Microsoft Cloud Services",
+      "Splunk Add-on for Google Cloud Platform"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for AWS",
+      "Splunk Add-on for Microsoft Cloud Services",
+      "Splunk Add-on for GCP"
+    ],
+    "aiOpportunities": [
+      "Anomalous API call detection",
+      "Unusual resource provisioning patterns",
+      "Cloud posture drift detection"
+    ],
+    "children": [
+      {
+        "id": "iaas_containers",
+        "name": "Containers / Pods / Clusters",
+        "configuredItemLabel": "# of container clusters",
+        "sizingUnit": "additive",
+        "sizingRate": 0.004,
+        "sizingRateLow": 0.000318,
+        "sizingRateHigh": 1.06,
+        "exampleVendors": [
+          "Microsoft AKS",
+          "Google GKE",
+          "AWS EKS",
+          "Red Hat OpenShift"
+        ],
+        "mitreId": "DS0032",
+        "description": "Containers / Pods / Clusters includes Kubernetes and container platform logs such as control-plane activity, audit events, node/runtime logs, and application logs written by containers.",
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "containerCounts.clusters",
+          "strategy": "container_additive"
+        },
+        "whyItMatters": "Kubernetes and container control-plane logs reveal cluster admin abuse, risky workloads, and runtime events that complement cloud audit trails."
+      },
+      {
+        "id": "iaas_instances",
+        "name": "Cloud Instances / VMs",
+        "configuredItemLabel": "# of VMs or cloud servers",
+        "sizingUnit": "additive",
+        "sizingRate": 0.011828,
+        "sizingRateLow": 0.000929,
+        "sizingRateHigh": 0.139274,
+        "exampleVendors": [
+          "AWS EC2",
+          "Azure VMs",
+          "GCP Compute Engine",
+          "VMware Cloud",
+          "Oracle Cloud Compute"
+        ],
+        "mitreId": "DS0032",
+        "description": "Cloud Instances / VMs includes logs collected from cloud virtual machines through provider agents or VM log forwarding, such as OS events, authentication/security activity, agent health, and optionally application/service logs.",
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "cloudVmInstanceCount",
+          "strategy": "cloud_vm_additive"
+        },
+        "whyItMatters": "Cloud VM logs extend visibility into guest OS and agent telemetry for workloads that may not yet send logs through a central forwarder."
+      },
+      {
+        "id": "iaas_storage",
+        "name": "Cloud Storage",
+        "configuredItemLabel": "# of storage assets",
+        "sizingUnit": "additive",
+        "sizingRate": 0.0032,
+        "sizingRateLow": 0.0002,
+        "sizingRateHigh": 0.093,
+        "exampleVendors": [
+          "Amazon S3",
+          "Azure Blob Storage",
+          "GCP Cloud Storage",
+          "NetApp Cloud Volumes",
+          "Dell APEX / PowerScale"
+        ],
+        "mitreId": "DS0010",
+        "description": "Cloud Storage includes logs from cloud object storage and cloud file storage platforms, such as management activity, object/file access requests, lifecycle or replication events, and storage health telemetry.",
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "cloudStorageAssetCount",
+          "strategy": "cloud_storage_additive"
+        },
+        "whyItMatters": "Object and file storage access logs detect public exposure, ransomware staging, and unauthorized data access in cloud buckets and shares."
+      }
+    ],
+    "input_fields": [],
+    "sizing_formula": {
+      "primary_input": "iaasAccountCount",
+      "strategy": "iaas_cloud"
+    }
+  },
+  {
+    "id": "paas",
+    "name": "PaaS (Platform Services)",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Platform",
+    "description": "Platform-as-a-Service logs including managed databases, serverless functions, messaging queues, and application hosting platforms.",
+    "whyItMatters": "PaaS services often contain the richest telemetry for detecting application-layer attacks, data exfiltration via managed services, and privilege escalation through service roles.",
+    "configuredItemLabel": "# of managed cloud platform services",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.08,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "AWS CloudTrail",
+      "Azure Monitor",
+      "GCP Cloud Logging",
+      "AWS Config",
+      "Amazon Inspector"
+    ],
+    "mitreId": "DS0025",
+    "telemetryDomains": {
+      "cloud_control_plane": "strong",
+      "application_logs": "partial",
+      "cloud_infrastructure": "partial"
+    },
+    "splunkApps": [
+      "Splunk App for AWS",
+      "Splunk Add-on for Microsoft Cloud Services"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for AWS",
+      "Splunk Add-on for Microsoft Cloud Services",
+      "Splunk Add-on for GCP"
+    ],
+    "aiOpportunities": [
+      "Service misconfiguration detection",
+      "Anomalous serverless invocations"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_applications",
+        "label": "Number of PaaS applications",
+        "type": "number",
+        "helper": "App Services, Lambda functions, Cloud Functions, etc."
+      },
+      {
+        "key": "number_of_instances",
+        "label": "Number of running instances",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Platform",
+        "type": "select",
+        "options": [
+          "AWS Lambda/ECS/EKS",
+          "Azure App Service/Functions",
+          "GCP Cloud Run/Functions",
+          "Heroku",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_applications",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "saas_general",
+    "name": "SaaS (General)",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "SaaS",
+    "description": "SaaS platform audit and activity logs: admin/configuration changes, authentication and access security, user/object activity, and API/integration events. Sized by tenant count, active users, and integrations — not per-1,000 users.",
+    "whyItMatters": "SaaS platforms are primary vectors for business email compromise, data exfiltration, and account takeover. Visibility into user activity is critical for detecting insider threats and compromised accounts.",
+    "configuredItemLabel": "SaaS tenants, active users, and integrations",
+    "sizingUnit": "additive",
+    "sizingRate": 0.01338,
+    "sizingRateLow": 0.00182,
+    "sizingRateHigh": 0.1295,
+    "exampleVendors": [
+      "Salesforce",
+      "ServiceNow",
+      "Workday",
+      "Box",
+      "Atlassian Cloud"
+    ],
+    "mitreId": "DS0025",
+    "telemetryDomains": {
+      "saas_activity": "strong",
+      "authentication": "partial",
+      "identity_governance": "partial",
+      "email_collaboration": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Microsoft Office 365",
+      "Splunk Add-on for Google Workspace"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft Office 365",
+      "Splunk Add-on for Google Workspace"
+    ],
+    "aiOpportunities": [
+      "Impossible travel detection",
+      "Unusual data download patterns",
+      "BEC detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of SaaS users",
+        "type": "number",
+        "helper": "Licensed or active users across all SaaS platforms"
+      },
+      {
+        "key": "number_of_platforms",
+        "label": "Number of SaaS platforms",
+        "type": "number",
+        "helper": "Distinct SaaS apps sending logs (M365, Salesforce, etc.)"
+      },
+      {
+        "key": "audit_level",
+        "label": "Audit logging level",
+        "type": "select",
+        "options": [
+          "Basic sign-in only",
+          "Sign-in + admin activity",
+          "Full audit (all user activity)",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.002
+    },
+    "children": [
+      {
+        "id": "saas_office",
+        "name": "Office Productivity (M365/Google)",
+        "configuredItemLabel": "Office tenants, users, and workloads",
+        "sizingUnit": "additive",
+        "sizingRate": 0.01338,
+        "sizingRateLow": 0.00182,
+        "sizingRateHigh": 0.1295,
+        "exampleVendors": [
+          "Microsoft 365",
+          "Google Workspace",
+          "Exchange Online",
+          "SharePoint Online",
+          "Microsoft Teams"
+        ],
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "officeActiveUserCount",
+          "strategy": "office_productivity_additive"
+        },
+        "description": "Microsoft 365 and Google Workspace audit and activity telemetry: sign-in and admin audit, Exchange/SharePoint/Teams activity, and security/compliance signals routed to Splunk.",
+        "whyItMatters": "Office productivity clouds are the top vector for account takeover and data exfiltration. Centralizing M365/Google audit logs enables BEC detection, DLP correlation, and insider-threat investigations."
+      },
+      {
+        "id": "saas_crm",
+        "name": "CRM",
+        "configuredItemLabel": "CRM tenants, users, and integrations",
+        "sizingUnit": "additive",
+        "sizingRate": 0.02668,
+        "sizingRateLow": 0.000998,
+        "sizingRateHigh": 0.0805,
+        "exampleVendors": [
+          "Salesforce",
+          "Microsoft Dynamics 365",
+          "HubSpot",
+          "Zendesk",
+          "ServiceNow CSM"
+        ],
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "crmActiveUserCount",
+          "strategy": "crm_additive"
+        },
+        "description": "CRM platform audit and API activity (Salesforce, Dynamics, HubSpot, ServiceNow CSM, Zendesk): logins, object changes, integrations, and security events.",
+        "whyItMatters": "CRM systems hold customer PII and revenue data. Audit visibility supports fraud detection, privileged access monitoring, and compliance for sales and service operations."
+      },
+      {
+        "id": "saas_sso",
+        "name": "SSO / Identity Provider",
+        "configuredItemLabel": "# of users enrolled in SSO or MFA",
+        "sizingUnit": "per_user",
+        "sizingRate": 0.005,
+        "sizingRateLow": 0.003,
+        "sizingRateHigh": 0.008,
+        "exampleVendors": [
+          "Okta",
+          "Duo",
+          "Microsoft Entra ID",
+          "Ping Identity"
+        ],
+        "input_fields": [],
+        "sizing_formula": {
+          "primary_input": "ssoActiveUserCount",
+          "strategy": "sso_identity_additive"
+        },
+        "description": "Identity-provider and SSO/MFA logs (Okta, Entra ID, Ping, Duo): authentication, MFA challenges, admin changes, and federation events.",
+        "whyItMatters": "SSO is the front door to SaaS and VPN. IdP logs are essential for detecting credential theft, MFA fatigue, and unauthorized app assignments."
+      },
+      {
+        "id": "saas_conferencing",
+        "name": "Web Conferencing",
+        "configuredItemLabel": "# of users with conferencing accounts",
+        "sizingUnit": "per_user",
+        "sizingRate": 0.005,
+        "sizingRateLow": 0.002,
+        "sizingRateHigh": 0.008,
+        "exampleVendors": [
+          "Zoom",
+          "Microsoft Teams",
+          "Slack",
+          "Webex"
+        ],
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of users with conferencing accounts",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_user",
+          "rate_per_unit": 0.005
+        },
+        "description": "Web conferencing audit logs (Zoom, Teams, Webex, Slack huddles): meetings, recordings, admin settings, and sign-in activity forwarded to Splunk.",
+        "whyItMatters": "Conferencing platforms expose meeting content and guest access paths. Audit logs help detect hijacking, data leakage via recordings, and shadow IT conferencing."
+      },
+      {
+        "id": "saas_filesharing",
+        "name": "File Sharing / Collaboration",
+        "configuredItemLabel": "# of users in Box, Dropbox, or OneDrive",
+        "sizingUnit": "per_user",
+        "sizingRate": 0.005,
+        "sizingRateLow": 0.002,
+        "sizingRateHigh": 0.01,
+        "exampleVendors": [
+          "Box",
+          "Dropbox",
+          "Google Drive",
+          "SharePoint",
+          "OneDrive"
+        ],
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of users in Box, Dropbox, or OneDrive",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_user",
+          "rate_per_unit": 0.005
+        },
+        "description": "Enterprise file-sharing audit logs (Box, Dropbox, OneDrive standalone tenants): file access, sharing links, admin actions, and DLP-related events.",
+        "whyItMatters": "File shares are a common exfiltration path. File-sharing audit trails underpin insider-threat and data-loss investigations."
+      }
+    ]
+  },
+  {
+    "id": "cspm",
+    "name": "Cloud Security Posture Management (CSPM)",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Cloud Security",
+    "description": "CSPM tools continuously monitor cloud infrastructure for misconfigurations, compliance violations, and security risks.",
+    "whyItMatters": "CSPM findings provide critical context for security operations — revealing attack surface, misconfigurations, and drift that could be exploited before an attacker does.",
+    "configuredItemLabel": "# of cloud accounts covered",
+    "sizingUnit": "per_account",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "Wiz",
+      "Aqua CSPM",
+      "Prisma Cloud",
+      "CloudSploit",
+      "Orca Security"
+    ],
+    "telemetryDomains": {
+      "cloud_control_plane": "strong",
+      "vulnerability_asset": "partial",
+      "cloud_infrastructure": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Wiz",
+      "Splunk Add-on for Prisma Cloud"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Prisma Cloud"
+    ],
+    "aiOpportunities": [
+      "Risk scoring based on exposure and exploitability"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_accounts",
+        "label": "Number of cloud accounts monitored",
+        "type": "number"
+      },
+      {
+        "key": "number_of_resources",
+        "label": "Estimated cloud resources",
+        "type": "number",
+        "helper": "Total resources scanned for compliance"
+      },
+      {
+        "key": "vendor",
+        "label": "CSPM vendor",
+        "type": "select",
+        "options": [
+          "Prisma Cloud",
+          "Wiz",
+          "Orca",
+          "Native (AWS Config/Azure Policy)",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_accounts",
+      "strategy": "per_item",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "cwpp",
+    "name": "Cloud Workload Protection Platform (CWPP)",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Cloud Security",
+    "description": "Runtime protection for cloud workloads including VMs, containers, and serverless functions.",
+    "whyItMatters": "CWPP provides runtime visibility into cloud workloads that cloud-native logging cannot — detecting malware, vulnerability exploitation, and anomalous process execution.",
+    "configuredItemLabel": "# of servers or containers covered",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "Lacework",
+      "Cisco Tetration",
+      "Prisma Cloud",
+      "Aqua Security"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "cloud_infrastructure": "partial",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Container runtime anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_instances",
+        "label": "Number of protected workloads",
+        "type": "number",
+        "helper": "VMs, containers, or serverless functions monitored"
+      },
+      {
+        "key": "vendor",
+        "label": "CWPP vendor",
+        "type": "select",
+        "options": [
+          "CrowdStrike",
+          "Prisma Cloud",
+          "Aqua",
+          "Lacework",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_instances",
+      "strategy": "per_item",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "casb",
+    "name": "Cloud Access Security Broker (CASB)",
+    "overlap_group": "saas_identity",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Cloud Security",
+    "description": "CASB provides visibility into cloud application usage, enforces data security policies, and detects shadow IT.",
+    "whyItMatters": "CASB logs reveal shadow IT, unsanctioned data sharing, and policy violations across cloud services — key for insider threat and data loss investigations.",
+    "configuredItemLabel": "# of users covered",
+    "sizingUnit": "per_user",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.08,
+    "exampleVendors": [
+      "Zscaler",
+      "Cisco Cloudlock",
+      "Forcepoint",
+      "Netskope",
+      "Microsoft Defender for Cloud Apps"
+    ],
+    "telemetryDomains": {
+      "saas_activity": "strong",
+      "identity_governance": "partial",
+      "cloud_control_plane": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [
+      "Splunk Add-on for Zscaler"
+    ],
+    "aiOpportunities": [
+      "Shadow IT detection",
+      "Anomalous cloud app usage"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of users monitored",
+        "type": "number"
+      },
+      {
+        "key": "number_of_platforms",
+        "label": "Number of cloud apps monitored",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "sase",
+    "name": "Secure Access Service Edge (SASE)",
+    "overlap_group": "network_security_controls",
+    "category": "Cloud/SaaS Services",
+    "subcategory": "Cloud Security",
+    "description": "SASE converges networking and security functions in the cloud — SD-WAN, CASB, FWaaS, and ZTNA in a unified service.",
+    "whyItMatters": "SASE logs provide unified visibility into remote user traffic, policy enforcement, and threat detection at the network edge — critical for hybrid/remote workforce security.",
+    "configuredItemLabel": "# of users routed through SASE",
+    "sizingUnit": "per_user",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "Zscaler",
+      "Netskope",
+      "Palo Alto Prisma Access",
+      "Cisco Umbrella"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "remote_access": "strong",
+      "perimeter_control": "partial",
+      "saas_activity": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Zscaler"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Zscaler"
+    ],
+    "aiOpportunities": [
+      "Anomalous remote access patterns"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of users",
+        "type": "number",
+        "helper": "Remote and hybrid users routing through SASE"
+      },
+      {
+        "key": "number_of_sites",
+        "label": "Number of sites/locations",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "windows_servers",
+    "name": "Windows Servers",
+    "category": "Server",
+    "subcategory": "Windows",
+    "description": "Windows Event Logs from physical and virtual servers. Select which log channels to collect below.",
+    "whyItMatters": "Windows Security logs are the backbone of on-premises detection — authentication events, privilege usage, process creation, and policy changes are all captured here.",
+    "configuredItemLabel": "# of total Windows servers (physical + virtual)",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.18,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.35,
+    "overlap_group": "endpoint_security",
+    "exampleVendors": [
+      "Microsoft Windows Server"
+    ],
+    "telemetryDomains": {
+      "endpoint": "strong",
+      "authentication": "strong",
+      "application_logs": "partial",
+      "infrastructure_metrics": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Microsoft Windows",
+      "IT Essentials Work",
+      "Windows Infrastructure"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft Windows",
+      "Splunk Add-on for Microsoft Sysmon"
+    ],
+    "aiOpportunities": [
+      "Lateral movement detection",
+      "Anomalous logon patterns",
+      "Process execution anomalies"
+    ],
+    "log_options": [
+      {
+        "id": "security_event_log",
+        "name": "Security Event Log",
+        "group": "basic",
+        "default": true,
+        "gb_per_unit": 0.08,
+        "telemetryDomains": {
+          "authentication": "strong",
+          "endpoint": "strong",
+          "audit_compliance": "partial"
+        },
+        "warning_if_disabled": "Security Event Log is critical for authentication and endpoint detection use cases."
+      },
+      {
+        "id": "system_event_log",
+        "name": "System Event Log",
+        "group": "basic",
+        "default": true,
+        "gb_per_unit": 0.04,
+        "telemetryDomains": {
+          "infrastructure_metrics": "partial"
+        }
+      },
+      {
+        "id": "application_event_log",
+        "name": "Application Event Log",
+        "group": "basic",
+        "default": true,
+        "gb_per_unit": 0.06,
+        "telemetryDomains": {
+          "application_logs": "partial"
+        }
+      },
+      {
+        "id": "setup_event_log",
+        "name": "Setup Event Log",
+        "group": "basic",
+        "default": false,
+        "gb_per_unit": 0.01,
+        "telemetryDomains": {}
+      },
+      {
+        "id": "forwarded_events",
+        "name": "Forwarded Events",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.08,
+        "telemetryDomains": {
+          "authentication": "partial",
+          "endpoint": "partial"
+        }
+      },
+      {
+        "id": "powershell_operational",
+        "name": "PowerShell Operational Logs",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.05,
+        "telemetryDomains": {
+          "endpoint": "strong"
+        },
+        "warning_if_disabled": "PowerShell logs are important for detecting script-based attacks and living-off-the-land techniques."
+      },
+      {
+        "id": "sysmon",
+        "name": "Sysmon Events",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.15,
+        "telemetryDomains": {
+          "endpoint": "strong"
+        },
+        "warning_if_disabled": "Sysmon provides deep endpoint visibility for process, network, and file activity."
+      },
+      {
+        "id": "windows_defender",
+        "name": "Windows Defender / Security Center",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.03,
+        "telemetryDomains": {
+          "endpoint": "partial"
+        }
+      },
+      {
+        "id": "performance_metrics",
+        "name": "Performance Metrics",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.025,
+        "telemetryDomains": {
+          "infrastructure_metrics": "strong"
+        },
+        "warning_if_disabled": "Performance Metrics are important for IT Ops and infrastructure monitoring use cases."
+      },
+      {
+        "id": "iis_logs",
+        "name": "IIS Logs (web server role)",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.1,
+        "telemetryDomains": {
+          "application_logs": "partial"
+        }
+      },
+      {
+        "id": "dns_server_logs",
+        "name": "DNS Server Logs (DNS role)",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.05,
+        "telemetryDomains": {
+          "network": "partial"
+        }
+      },
+      {
+        "id": "dhcp_server_logs",
+        "name": "DHCP Server Logs (DHCP role)",
+        "group": "advanced",
+        "default": false,
+        "gb_per_unit": 0.02,
+        "telemetryDomains": {
+          "network": "minimal"
+        }
+      }
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of Windows servers",
+        "type": "number",
+        "helper": "All Windows servers with event log forwarding enabled"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.18
+    }
+  },
+  {
+    "id": "linux_servers",
+    "name": "Linux / Unix Servers (Production)",
+    "category": "Server",
+    "subcategory": "Linux",
+    "description": "System logs from production Linux/Unix servers including syslog, auth logs, performance metrics, and security events.",
+    "whyItMatters": "Linux servers often host critical applications and databases. Auth logs, process execution, and network connections are essential for detecting compromises in *nix environments.",
+    "configuredItemLabel": "# of production Linux/Unix servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.08,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Red Hat",
+      "Ubuntu",
+      "CentOS",
+      "SUSE",
+      "AIX",
+      "Solaris"
+    ],
+    "telemetryDomains": {
+      "endpoint": "strong",
+      "authentication": "partial",
+      "application_logs": "partial",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [
+      "Splunk App for Unix and Linux",
+      "IT Essentials Work",
+      "InfoSec"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Unix and Linux"
+    ],
+    "aiOpportunities": [
+      "Anomalous process execution",
+      "Privilege escalation detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of Linux servers",
+        "type": "number",
+        "helper": "Production Linux/Unix servers with log collection"
+      },
+      {
+        "key": "logging_scope",
+        "label": "Collection scope",
+        "type": "select",
+        "options": [
+          "Auth/secure only",
+          "Auth + syslog",
+          "Full system + application",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "linux_servers_nonprod",
+    "name": "Linux / Unix Servers (Non-Production)",
+    "category": "Server",
+    "subcategory": "Linux",
+    "description": "System logs from development, test, and staging Linux/Unix environments.",
+    "whyItMatters": "Non-production environments are often less secured and can serve as pivot points for attackers. They also contain valuable data for application troubleshooting.",
+    "configuredItemLabel": "# of non-prod Linux/Unix servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.25,
+    "exampleVendors": [
+      "Red Hat",
+      "Ubuntu",
+      "CentOS"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "application_logs": "partial",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [
+      "Splunk App for Unix and Linux"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Unix and Linux"
+    ],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of non-prod Linux servers",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "mainframe",
+    "name": "Mainframe",
+    "category": "Server",
+    "subcategory": "Legacy",
+    "description": "Mainframe system logs including SMF records, RACF security events, and system activity.",
+    "whyItMatters": "Mainframes process the majority of financial transactions globally. Security events from RACF/ACF2/TopSecret are critical for compliance and detecting privileged access abuse.",
+    "configuredItemLabel": "# of mainframe systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.15,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "IBM z/OS",
+      "IBM z/VM"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "authentication": "partial",
+      "application_logs": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for IBM z/OS"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for IBM z/OS"
+    ],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of mainframe LPARs",
+        "type": "number"
+      },
+      {
+        "key": "manual_gb_day",
+        "label": "Manual estimate (GB/day)",
+        "type": "number",
+        "helper": "Mainframe volumes vary widely — manual estimate recommended"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "hypervisor",
+    "name": "Virtual Infrastructure (Hypervisor)",
+    "category": "Server",
+    "subcategory": "Virtualization",
+    "description": "Hypervisor and virtual infrastructure management logs from VMware vCenter, ESXi hosts, Hyper-V, and other platforms.",
+    "whyItMatters": "Hypervisor compromise gives an attacker access to all hosted VMs. Monitoring vMotion, snapshot operations, and admin changes is critical for detecting VM escape and infrastructure manipulation.",
+    "configuredItemLabel": "# of virtualization hosts",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.15,
+    "exampleVendors": [
+      "VMware ESXi",
+      "VMware vCenter",
+      "Microsoft Hyper-V",
+      "Citrix XenServer",
+      "Linux KVM"
+    ],
+    "mitreId": "DS0030",
+    "telemetryDomains": {
+      "infrastructure_metrics": "strong",
+      "endpoint": "partial",
+      "cloud_infrastructure": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for VMware",
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for VMware",
+      "Splunk Add-on for Microsoft Hyper-V"
+    ],
+    "aiOpportunities": [
+      "Unusual VM lifecycle events"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of hypervisor hosts",
+        "type": "number",
+        "helper": "ESXi hosts, Hyper-V hosts, etc."
+      },
+      {
+        "key": "number_of_vms",
+        "label": "Number of VMs (optional)",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Hypervisor vendor",
+        "type": "select",
+        "options": [
+          "VMware vSphere",
+          "Microsoft Hyper-V",
+          "KVM/Proxmox",
+          "Nutanix",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "database",
+    "name": "Database Instances",
+    "category": "Database",
+    "subcategory": "RDBMS",
+    "description": "Database audit logs, transaction logs, access logs, and error logs from relational and NoSQL database systems.",
+    "whyItMatters": "Databases contain your crown jewels. Audit logs reveal unauthorized queries, privilege escalation, and data exfiltration attempts. Transaction logs support forensic investigation of data breaches.",
+    "configuredItemLabel": "# of database instances",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.08,
+    "sizingRateHigh": 0.35,
+    "exampleVendors": [
+      "Oracle",
+      "Microsoft SQL Server",
+      "MySQL",
+      "PostgreSQL",
+      "MongoDB",
+      "MariaDB"
+    ],
+    "telemetryDomains": {
+      "database_activity": "strong",
+      "application_logs": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Microsoft SQL Server",
+      "Splunk DB Connect"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft SQL Server",
+      "Splunk Add-on for Oracle Database"
+    ],
+    "aiOpportunities": [
+      "Anomalous query patterns",
+      "Data exfiltration detection",
+      "Privilege abuse"
+    ],
+    "children": [
+      {
+        "id": "db_transaction",
+        "name": "Transaction Logs",
+        "configuredItemLabel": "# of instances for transaction logs",
+        "sizingUnit": "per_item",
+        "sizingRate": 0.1,
+        "sizingRateLow": 0.05,
+        "sizingRateHigh": 0.2,
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of instances for transaction logs",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_item",
+          "rate_per_unit": 0.1
+        },
+        "description": "Database transaction or SQL audit streams capturing DML/DDL activity, sensitive table access, and application database calls.",
+        "whyItMatters": "Transaction-level database telemetry supports fraud detection, data integrity monitoring, and forensic reconstructions after data tampering."
+      },
+      {
+        "id": "db_access",
+        "name": "Access / Audit Logs",
+        "configuredItemLabel": "# of instances for access logs",
+        "sizingUnit": "per_item",
+        "sizingRate": 0.05,
+        "sizingRateLow": 0.02,
+        "sizingRateHigh": 0.15,
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of instances for access logs",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_item",
+          "rate_per_unit": 0.05
+        },
+        "description": "Database access and authentication audit logs (DBA actions, failed logins, privilege use) from enterprise RDBMS platforms.",
+        "whyItMatters": "Database access logs reveal credential abuse, excessive privilege use, and suspicious query patterns that raw transaction logs may not contextualize."
+      }
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_instances",
+        "label": "Number of database instances",
+        "type": "number",
+        "helper": "Individual DB instances (not schemas)"
+      },
+      {
+        "key": "vendor",
+        "label": "Database engine",
+        "type": "select",
+        "options": [
+          "Oracle",
+          "SQL Server",
+          "PostgreSQL",
+          "MySQL/MariaDB",
+          "MongoDB",
+          "Other"
+        ]
+      },
+      {
+        "key": "audit_level",
+        "label": "Audit logging level",
+        "type": "select",
+        "options": [
+          "Connection/auth only",
+          "DDL + DML",
+          "Full query audit",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_instances",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "web_servers",
+    "name": "Web Servers (Production)",
+    "category": "Application",
+    "subcategory": "Web Tier",
+    "description": "Web server access logs, error logs, and performance metrics from HTTP/HTTPS serving infrastructure.",
+    "whyItMatters": "Web servers are the front door to your applications. Access logs reveal attack patterns (SQLi, XSS, path traversal), while error logs expose application vulnerabilities being probed.",
+    "configuredItemLabel": "# of production web servers hosting applications",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Apache",
+      "Nginx",
+      "Microsoft IIS",
+      "Caddy"
+    ],
+    "telemetryDomains": {
+      "application_logs": "strong",
+      "network": "partial",
+      "service_health": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Apache Web Server",
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Apache Web Server",
+      "Splunk Add-on for Microsoft IIS"
+    ],
+    "aiOpportunities": [
+      "Web attack detection",
+      "Bot detection",
+      "Anomalous request patterns"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of production web servers",
+        "type": "number"
+      },
+      {
+        "key": "requests_per_day",
+        "label": "Estimated requests/day (millions)",
+        "type": "number",
+        "helper": "Affects access log volume significantly"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "web_servers_nonprod",
+    "name": "Web Servers (Non-Production)",
+    "category": "Application",
+    "subcategory": "Web Tier",
+    "description": "Web server access logs, error logs, and performance metrics from dev, test, and staging HTTP/HTTPS environments.",
+    "whyItMatters": "Non-production web tiers are frequently targeted during reconnaissance and often run with weaker hardening. They still generate valuable access and error telemetry for troubleshooting and threat detection.",
+    "configuredItemLabel": "# of non-prod web servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.06,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Apache",
+      "Nginx",
+      "Microsoft IIS",
+      "Caddy"
+    ],
+    "telemetryDomains": {
+      "application_logs": "partial",
+      "network": "partial",
+      "service_health": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Apache Web Server",
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Apache Web Server",
+      "Splunk Add-on for Microsoft IIS"
+    ],
+    "aiOpportunities": [
+      "Web attack detection",
+      "Anomalous request patterns"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of non-prod web servers",
+        "type": "number"
+      },
+      {
+        "key": "requests_per_day",
+        "label": "Estimated requests/day (millions)",
+        "type": "number",
+        "helper": "Lower traffic than production; still affects access log volume"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "app_servers",
+    "name": "Application Servers (Production)",
+    "category": "Application",
+    "subcategory": "App Tier",
+    "description": "Application server logs including J2EE containers, .NET runtime, and middleware platforms.",
+    "whyItMatters": "Application server logs reveal business logic attacks, session manipulation, and application-layer vulnerabilities that network devices cannot detect.",
+    "configuredItemLabel": "# of production application servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Apache Tomcat",
+      "IBM WebSphere",
+      "Oracle WebLogic",
+      "JBoss/WildFly",
+      "Microsoft .NET"
+    ],
+    "mitreId": "DS0015",
+    "telemetryDomains": {
+      "application_logs": "strong",
+      "application_traces": "partial",
+      "service_health": "partial"
+    },
+    "splunkApps": [
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Application error anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of production application servers",
+        "type": "number"
+      },
+      {
+        "key": "number_of_applications",
+        "label": "Number of distinct applications",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "app_servers_nonprod",
+    "name": "Application Servers (Non-Production)",
+    "category": "Application",
+    "subcategory": "App Tier",
+    "description": "Application server logs from development, test, and staging J2EE, .NET, and middleware runtimes.",
+    "whyItMatters": "Non-production app tiers often hold production-like data and credentials. Application logs help detect misconfigurations, credential reuse, and lateral movement between lower environments.",
+    "configuredItemLabel": "# of non-prod application servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.06,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Apache Tomcat",
+      "IBM WebSphere",
+      "Oracle WebLogic",
+      "JBoss/WildFly",
+      "Microsoft .NET"
+    ],
+    "telemetryDomains": {
+      "application_logs": "partial",
+      "application_traces": "minimal",
+      "service_health": "partial"
+    },
+    "splunkApps": [
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Application error anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of non-prod application servers",
+        "type": "number"
+      },
+      {
+        "key": "number_of_applications",
+        "label": "Number of distinct applications",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "middleware",
+    "name": "Middleware Services (Production)",
+    "category": "Application",
+    "subcategory": "Middleware",
+    "description": "Message queuing, ESB, and integration platform logs.",
+    "whyItMatters": "Middleware is the connective tissue between applications. Monitoring message flows reveals data integrity issues, unauthorized integrations, and service disruption attempts.",
+    "configuredItemLabel": "# of production middleware systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.4,
+    "exampleVendors": [
+      "IBM MQ",
+      "TIBCO",
+      "RabbitMQ",
+      "Apache Kafka",
+      "Software AG"
+    ],
+    "telemetryDomains": {
+      "middleware_messaging": "strong",
+      "application_logs": "partial",
+      "service_health": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of production middleware systems",
+        "type": "number",
+        "helper": "Message queues, ESBs, API gateways"
+      },
+      {
+        "key": "vendor",
+        "label": "Platform",
+        "type": "select",
+        "options": [
+          "MuleSoft",
+          "IBM MQ",
+          "RabbitMQ",
+          "Kafka",
+          "Apache Camel",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "middleware_nonprod",
+    "name": "Middleware Services (Non-Production)",
+    "category": "Application",
+    "subcategory": "Middleware",
+    "description": "Message queuing, ESB, and integration platform logs from dev, test, and staging environments.",
+    "whyItMatters": "Non-production middleware often connects to shared services and test data sets. Monitoring message flows reveals integration failures, unauthorized test traffic, and environment bleed-over.",
+    "configuredItemLabel": "# of non-prod middleware systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.06,
+    "sizingRateHigh": 0.24,
+    "exampleVendors": [
+      "IBM MQ",
+      "TIBCO",
+      "RabbitMQ",
+      "Apache Kafka",
+      "Software AG"
+    ],
+    "telemetryDomains": {
+      "middleware_messaging": "partial",
+      "application_logs": "partial",
+      "service_health": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of non-prod middleware systems",
+        "type": "number",
+        "helper": "Dev/test/stage message queues, ESBs, API gateways"
+      },
+      {
+        "key": "vendor",
+        "label": "Platform",
+        "type": "select",
+        "options": [
+          "MuleSoft",
+          "IBM MQ",
+          "RabbitMQ",
+          "Kafka",
+          "Apache Camel",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "apm",
+    "name": "APM (Application Performance Monitoring)",
+    "category": "Application",
+    "subcategory": "Monitoring",
+    "description": "Application performance metrics, traces, and error tracking from APM platforms.",
+    "whyItMatters": "APM data enriches security investigations with application context — understanding which services were impacted, response time anomalies that indicate compromise, and error patterns from exploitation attempts.",
+    "configuredItemLabel": "# of APM-monitored applications",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.25,
+    "exampleVendors": [
+      "New Relic",
+      "AppDynamics",
+      "Dynatrace",
+      "Datadog APM",
+      "Splunk APM"
+    ],
+    "telemetryDomains": {
+      "application_traces": "strong",
+      "service_health": "strong",
+      "infrastructure_metrics": "partial",
+      "application_logs": "partial"
+    },
+    "splunkApps": [
+      "Splunk APM"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Performance anomaly correlation with security events"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_applications",
+        "label": "Number of instrumented applications",
+        "type": "number",
+        "helper": "Apps with APM agents or OpenTelemetry"
+      },
+      {
+        "key": "number_of_instances",
+        "label": "Number of service instances",
+        "type": "number"
+      },
+      {
+        "key": "traces_per_day",
+        "label": "Estimated traces/day (millions)",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_applications",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  },
+  {
+    "id": "pki",
+    "name": "Public Key Infrastructure (PKI)",
+    "category": "Application",
+    "subcategory": "Security Infrastructure",
+    "description": "Certificate lifecycle logs including issuance, revocation, renewal, and enrollment events.",
+    "whyItMatters": "PKI logs are critical for detecting unauthorized certificate issuance, expired certificates causing outages, and certificate-based attacks like golden certificates in AD CS.",
+    "configuredItemLabel": "# of PKI / CA servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.005,
+    "sizingRateLow": 0.001,
+    "sizingRateHigh": 0.01,
+    "exampleVendors": [
+      "Microsoft AD CS",
+      "DigiCert",
+      "Let's Encrypt",
+      "HashiCorp Vault"
+    ],
+    "mitreId": "DS0037",
+    "telemetryDomains": {
+      "identity_governance": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Unauthorized certificate issuance detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of PKI/CA systems",
+        "type": "number"
+      },
+      {
+        "key": "number_of_certificates",
+        "label": "Active certificates managed",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.005
+    }
+  },
+  {
+    "id": "sap",
+    "name": "SAP",
+    "category": "Application",
+    "subcategory": "Enterprise Apps",
+    "description": "SAP application logs including security audit logs, change documents, and transaction logs.",
+    "whyItMatters": "SAP systems contain highly sensitive business data. Monitoring SAP security logs detects unauthorized access to financial data, payroll manipulation, and fraudulent transactions.",
+    "configuredItemLabel": "# of SAP systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "SAP NetWeaver",
+      "SAP S/4HANA",
+      "SAP HANA"
+    ],
+    "telemetryDomains": {
+      "application_logs": "strong",
+      "business_transactions": "strong",
+      "audit_compliance": "partial",
+      "identity_governance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for SAP"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for SAP"
+    ],
+    "aiOpportunities": [
+      "Fraudulent transaction detection",
+      "Privilege abuse in SAP"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of SAP systems",
+        "type": "number",
+        "helper": "Production SAP instances (ECC, S/4HANA, etc.)"
+      },
+      {
+        "key": "number_of_users",
+        "label": "Number of SAP users",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "desktops",
+    "name": "Desktops / Workstations",
+    "category": "End-User Support",
+    "subcategory": "Endpoints",
+    "description": "Windows Event Logs, macOS unified logs, and Linux desktop logs from end-user workstations.",
+    "whyItMatters": "Endpoints are the initial compromise point for most attacks. Workstation logs provide process execution, network connection, and authentication data critical for detecting phishing, malware, and lateral movement.",
+    "configuredItemLabel": "# of managed end-user devices",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.004,
+    "sizingRateLow": 0.002,
+    "sizingRateHigh": 0.012,
+    "exampleVendors": [
+      "Microsoft Windows",
+      "Apple macOS",
+      "Linux"
+    ],
+    "telemetryDomains": {
+      "endpoint": "strong",
+      "authentication": "partial",
+      "user_experience": "partial"
+    },
+    "splunkApps": [
+      "IT Essentials Work",
+      "InfoSec"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft Windows",
+      "Splunk Add-on for Unix and Linux"
+    ],
+    "aiOpportunities": [
+      "Anomalous process execution",
+      "Unusual network connections from endpoints"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_endpoints",
+        "label": "Number of desktops/laptops",
+        "type": "number",
+        "helper": "User endpoints with log collection agents"
+      },
+      {
+        "key": "logging_scope",
+        "label": "Collection scope",
+        "type": "select",
+        "options": [
+          "Logon/security events only",
+          "Security + application crash",
+          "Full endpoint telemetry",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_endpoints",
+      "strategy": "per_item",
+      "rate_per_unit": 0.004
+    }
+  },
+  {
+    "id": "sso_pam",
+    "name": "User Authentication (SSO / PAM / IAM)",
+    "category": "End-User Support",
+    "subcategory": "Identity",
+    "description": "Identity and access management logs from SSO, PAM, and IAM platforms including authentication events, privilege usage, and session management.",
+    "whyItMatters": "Identity is the new perimeter. SSO/PAM logs are the single most valuable source for detecting credential theft, privilege escalation, and unauthorized access across the entire environment.",
+    "configuredItemLabel": "# of identity management platforms",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.001,
+    "sizingRateLow": 0.0004,
+    "sizingRateHigh": 0.004,
+    "exampleVendors": [
+      "CyberArk",
+      "BeyondTrust",
+      "Okta",
+      "Ping Identity",
+      "SailPoint"
+    ],
+    "telemetryDomains": {
+      "authentication": "strong",
+      "identity_governance": "strong",
+      "remote_access": "partial",
+      "audit_compliance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for CyberArk",
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for CyberArk",
+      "Splunk Add-on for Okta"
+    ],
+    "aiOpportunities": [
+      "Impossible travel detection",
+      "Credential stuffing detection",
+      "Privilege escalation anomalies"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of SSO/PAM users",
+        "type": "number",
+        "helper": "Users authenticating through SSO or PAM"
+      },
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Okta",
+          "Azure AD/Entra",
+          "Ping Identity",
+          "CyberArk",
+          "BeyondTrust",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.001
+    }
+  },
+  {
+    "id": "active_directory",
+    "name": "Active Directory / Domain Controllers",
+    "category": "End-User Support",
+    "subcategory": "Identity",
+    "description": "Windows Security Event Logs from Domain Controllers capturing all authentication, group policy changes, and directory modifications.",
+    "whyItMatters": "Active Directory is the identity backbone of most enterprises. DC logs capture every authentication, group membership change, and Kerberos ticket event — essential for detecting Pass-the-Hash, Golden Ticket, and DCSync attacks.",
+    "configuredItemLabel": "# of AD domain controllers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.15,
+    "sizingRateHigh": 0.75,
+    "exampleVendors": [
+      "Microsoft Active Directory"
+    ],
+    "mitreId": "DS0026",
+    "telemetryDomains": {
+      "authentication": "strong",
+      "identity_governance": "strong",
+      "audit_compliance": "partial",
+      "asset_inventory": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Microsoft Windows",
+      "Enterprise Security",
+      "SA-ldapsearch"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft Windows",
+      "Splunk Add-on for Microsoft Active Directory"
+    ],
+    "aiOpportunities": [
+      "Kerberoasting detection",
+      "Golden Ticket detection",
+      "Anomalous group membership changes"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of AD users",
+        "type": "number",
+        "helper": "Active user accounts in the directory"
+      },
+      {
+        "key": "number_of_dcs",
+        "label": "Number of domain controllers",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_dcs",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "email",
+    "name": "Email Servers / Email Gateways",
+    "category": "End-User Support",
+    "subcategory": "Communication",
+    "description": "Email server logs and secure email gateway logs including message tracking, threat detection, and DLP events.",
+    "whyItMatters": "Email is the #1 attack vector. Gateway and server logs reveal phishing attempts, malicious attachments, BEC patterns, and data exfiltration via email.",
+    "configuredItemLabel": "# of mail servers or gateways",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Microsoft Exchange",
+      "Proofpoint",
+      "Mimecast",
+      "Barracuda",
+      "Cisco Email Security"
+    ],
+    "telemetryDomains": {
+      "email_collaboration": "strong",
+      "threat_enrichment": "partial",
+      "saas_activity": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Microsoft Exchange"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Microsoft Exchange",
+      "Splunk Add-on for Proofpoint"
+    ],
+    "aiOpportunities": [
+      "Phishing detection",
+      "BEC anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of email users",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Email platform",
+        "type": "select",
+        "options": [
+          "Microsoft 365/Exchange Online",
+          "Google Workspace",
+          "On-prem Exchange",
+          "Other"
+        ]
+      },
+      {
+        "key": "logging_scope",
+        "label": "Log types",
+        "type": "select",
+        "options": [
+          "Message trace only",
+          "Message trace + DLP",
+          "Full audit + content inspection",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "mdm",
+    "name": "Mobile Device Management (MDM)",
+    "category": "End-User Support",
+    "subcategory": "Mobile",
+    "description": "MDM platform logs including device compliance, app deployment, and security policy enforcement.",
+    "whyItMatters": "Mobile devices access corporate data but operate outside traditional network controls. MDM logs reveal jailbroken devices, policy violations, and unauthorized app installations.",
+    "configuredItemLabel": "# of managed mobile devices",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.5,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.75,
+    "exampleVendors": [
+      "JAMF Pro",
+      "Microsoft Intune",
+      "VMware Workspace ONE",
+      "Scalefusion"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "asset_inventory": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Device compliance anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_devices",
+        "label": "Number of managed devices",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "MDM vendor",
+        "type": "select",
+        "options": [
+          "Intune",
+          "Jamf",
+          "VMware Workspace ONE",
+          "MobileIron",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_devices",
+      "strategy": "per_item",
+      "rate_per_unit": 0.5
+    }
+  },
+  {
+    "id": "vuln_mgmt",
+    "name": "Vulnerability Management",
+    "category": "Security & Compliance",
+    "subcategory": "Vulnerability",
+    "description": "Vulnerability scanner results, compliance scan data, and asset discovery information.",
+    "whyItMatters": "Vulnerability data provides critical risk context for security operations — correlating active exploits with known vulnerabilities dramatically improves alert prioritization and incident response.",
+    "configuredItemLabel": "# of scanning appliances or managers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.0001,
+    "sizingRateLow": 0.00005,
+    "sizingRateHigh": 0.0003,
+    "exampleVendors": [
+      "Tenable Nessus",
+      "Qualys",
+      "Rapid7 InsightVM",
+      "Tripwire IP360",
+      "OpenVAS"
+    ],
+    "telemetryDomains": {
+      "vulnerability_asset": "strong",
+      "asset_inventory": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Tenable",
+      "Splunk Add-on for Qualys"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Tenable",
+      "Splunk Add-on for Qualys"
+    ],
+    "aiOpportunities": [
+      "Risk-based alert prioritization",
+      "Exploit prediction"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_assets",
+        "label": "Number of scanned assets",
+        "type": "number",
+        "helper": "Hosts/IPs scanned for vulnerabilities"
+      },
+      {
+        "key": "scan_frequency",
+        "label": "Scan frequency",
+        "type": "select",
+        "options": [
+          "Daily",
+          "Weekly",
+          "Monthly",
+          "Continuous"
+        ]
+      },
+      {
+        "key": "vendor",
+        "label": "Scanner",
+        "type": "select",
+        "options": [
+          "Tenable/Nessus",
+          "Qualys",
+          "Rapid7",
+          "CrowdStrike",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_assets",
+      "strategy": "per_item",
+      "rate_per_unit": 0.0001
+    }
+  },
+  {
+    "id": "netflow",
+    "name": "Network Traffic Analysis / NetFlow",
+    "category": "Security & Compliance",
+    "subcategory": "Network Security",
+    "description": "Network flow records (NetFlow, sFlow, IPFIX) providing metadata about all network communications without full packet capture.",
+    "whyItMatters": "NetFlow provides the 'who talked to whom, when, and how much' view of your network. Essential for detecting C2 beacons, lateral movement, data exfiltration, and network reconnaissance.",
+    "configuredItemLabel": "# of devices exporting NetFlow data",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.5,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 2,
+    "exampleVendors": [
+      "Cisco NetFlow",
+      "sFlow",
+      "IPFIX",
+      "Splunk Stream"
+    ],
+    "mitreId": "DS0029",
+    "telemetryDomains": {
+      "network": "strong",
+      "network_performance": "strong"
+    },
+    "splunkApps": [
+      "Splunk Stream",
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Stream"
+    ],
+    "aiOpportunities": [
+      "C2 beacon detection",
+      "Data exfiltration patterns",
+      "Lateral movement detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_devices",
+        "label": "Number of flow-exporting devices",
+        "type": "number",
+        "helper": "Routers/switches/firewalls exporting NetFlow/IPFIX"
+      },
+      {
+        "key": "sampling_rate",
+        "label": "Sampling rate",
+        "type": "select",
+        "options": [
+          "1:1 (full)",
+          "1:100",
+          "1:1000",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_devices",
+      "strategy": "per_item",
+      "rate_per_unit": 0.5
+    }
+  },
+  {
+    "id": "ids_ips",
+    "name": "Intrusion Prevention/Detection Systems (IPS/IDS)",
+    "overlap_group": "network_security_controls",
+    "category": "Security & Compliance",
+    "subcategory": "Network Security",
+    "description": "Alert and event logs from network-based intrusion detection and prevention systems.",
+    "whyItMatters": "IDS/IPS provides signature-based and anomaly-based detection of known attack patterns. While not sufficient alone, these alerts are valuable for correlation with other data sources.",
+    "configuredItemLabel": "# of IDS/IPS sensors",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.4,
+    "exampleVendors": [
+      "Snort",
+      "Suricata",
+      "Cisco Firepower",
+      "TippingPoint",
+      "McAfee IPS"
+    ],
+    "telemetryDomains": {
+      "network": "strong",
+      "threat_enrichment": "partial"
+    },
+    "splunkApps": [
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Cisco Firepower"
+    ],
+    "aiOpportunities": [
+      "Alert fatigue reduction",
+      "False positive tuning"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of IDS/IPS sensors",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Snort/Suricata",
+          "Cisco",
+          "Palo Alto",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "threat_intel",
+    "name": "Threat Intelligence Feeds",
+    "category": "Security & Compliance",
+    "subcategory": "Threat Intelligence",
+    "description": "Threat intelligence indicators (IOCs), threat actor profiles, and campaign information from commercial and open-source feeds.",
+    "whyItMatters": "Threat intel transforms reactive detection into proactive hunting. Correlating IOCs against your logs reveals compromises that signature-based tools miss.",
+    "configuredItemLabel": "# of threat intel feeds",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.01,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "CrowdStrike",
+      "Mandiant",
+      "Anomali",
+      "Recorded Future",
+      "MISP",
+      "AlienVault OTX"
+    ],
+    "mitreId": "DS0004",
+    "telemetryDomains": {
+      "threat_enrichment": "strong"
+    },
+    "splunkApps": [
+      "Enterprise Security",
+      "Splunk Add-on for Anomali"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Anomali",
+      "Splunk Add-on for Recorded Future"
+    ],
+    "aiOpportunities": [
+      "Automated IOC correlation",
+      "Threat actor attribution"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_feeds",
+        "label": "Number of threat intel feeds",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Primary TI source",
+        "type": "select",
+        "options": [
+          "MISP",
+          "Anomali",
+          "Recorded Future",
+          "CrowdStrike Intel",
+          "Open source",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_feeds",
+      "strategy": "per_item",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "sandbox",
+    "name": "Automated Malware Analysis (Sandbox)",
+    "category": "Security & Compliance",
+    "subcategory": "Threat Intelligence",
+    "description": "Sandbox detonation results including behavioral analysis, IOC extraction, and verdict information.",
+    "whyItMatters": "Sandbox results provide ground truth for malware classification and IOC generation. Integrating these feeds enriches alert triage and enables proactive blocking of related indicators.",
+    "configuredItemLabel": "# of sandbox systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Cisco AMP",
+      "Palo Alto WildFire",
+      "Check Point SandBlast",
+      "CrowdStrike Falcon Sandbox",
+      "Cuckoo"
+    ],
+    "telemetryDomains": {
+      "threat_enrichment": "strong",
+      "endpoint": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Automated malware classification"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of sandbox systems",
+        "type": "number"
+      },
+      {
+        "key": "submissions_per_day",
+        "label": "Estimated submissions/day",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "edr",
+    "name": "EDR (Endpoint Detection & Response)",
+    "overlap_group": "endpoint_security",
+    "category": "Security & Compliance",
+    "subcategory": "Endpoint Security",
+    "description": "Endpoint telemetry including process creation, file modifications, registry changes, network connections, and detection alerts.",
+    "whyItMatters": "EDR provides the deepest endpoint visibility available — process trees, command-line arguments, file modifications, and network connections. This is essential for detecting advanced threats that evade traditional AV.",
+    "configuredItemLabel": "# of endpoints covered by EDR",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.015,
+    "sizingRateLow": 0.005,
+    "sizingRateHigh": 0.04,
+    "exampleVendors": [
+      "CrowdStrike Falcon",
+      "Microsoft Defender for Endpoint",
+      "SentinelOne",
+      "Carbon Black",
+      "Tanium"
+    ],
+    "exampleLog": "timestamp=2026-07-06T21:49:45Z host=workstation-042 user=DOMAIN\\jsmith vendor_product=\"CrowdStrike Falcon\" event_type=process process_name=powershell.exe parent_process=winword.exe command_line=\"powershell.exe -enc <encoded_command>\" file_hash=SHA256:a1b2c3d4e5 severity=high action=blocked src_ip=10.0.1.42 dest_ip=198.51.100.25",
+    "telemetryDomains": {
+      "endpoint": "strong",
+      "threat_enrichment": "partial"
+    },
+    "splunkApps": [
+      "Enterprise Security",
+      "Splunk AI Toolkit"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for CrowdStrike Falcon",
+      "Splunk Add-on for Carbon Black"
+    ],
+    "aiOpportunities": [
+      "Process execution anomaly detection",
+      "Living-off-the-land detection",
+      "Behavioral threat detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_endpoints",
+        "label": "Number of endpoints with EDR",
+        "type": "number",
+        "helper": "Workstations and servers with EDR agent"
+      },
+      {
+        "key": "number_of_servers",
+        "label": "Number of servers included",
+        "type": "number",
+        "helper": "Servers typically generate more EDR telemetry than workstations"
+      },
+      {
+        "key": "vendor",
+        "label": "EDR vendor",
+        "type": "select",
+        "options": [
+          "CrowdStrike Falcon",
+          "Microsoft Defender for Endpoint",
+          "SentinelOne",
+          "Carbon Black",
+          "Cortex XDR",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_endpoints",
+      "strategy": "per_item",
+      "rate_per_unit": 0.015
+    }
+  },
+  {
+    "id": "ndr",
+    "name": "NDR (Network Detection & Response)",
+    "overlap_group": "network_security_controls",
+    "category": "Security & Compliance",
+    "subcategory": "Network Security",
+    "description": "Network-based detection and response platform logs including lateral movement alerts, encrypted traffic analysis, and behavioral anomalies.",
+    "whyItMatters": "NDR provides network-layer behavioral detection that catches threats invisible to endpoint tools — particularly encrypted C2, lateral movement, and data staging prior to exfiltration.",
+    "configuredItemLabel": "# of NDR network sensors",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.4,
+    "exampleVendors": [
+      "Vectra AI",
+      "Darktrace",
+      "ExtraHop Reveal(x)",
+      "Cisco Stealthwatch"
+    ],
+    "telemetryDomains": {
+      "network": "strong",
+      "threat_enrichment": "partial",
+      "network_performance": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [
+      "Splunk Add-on for Vectra"
+    ],
+    "aiOpportunities": [
+      "Encrypted traffic anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_sensors",
+        "label": "Number of NDR sensors",
+        "type": "number"
+      },
+      {
+        "key": "bandwidth_gbps",
+        "label": "Monitored bandwidth (Gbps)",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "NDR vendor",
+        "type": "select",
+        "options": [
+          "Vectra",
+          "Darktrace",
+          "ExtraHop",
+          "Corelight/Zeek",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_sensors",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "dlp",
+    "name": "Data Loss/Leakage Prevention (DLP)",
+    "category": "Security & Compliance",
+    "subcategory": "Data Security",
+    "description": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems.",
+    "whyItMatters": "DLP logs are essential for detecting and investigating data exfiltration — both malicious insiders and external attackers staging data for theft.",
+    "configuredItemLabel": "# of endpoints covered by DLP",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "Microsoft Purview",
+      "Digital Guardian",
+      "Symantec DLP",
+      "Forcepoint"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "saas_activity": "partial",
+      "email_collaboration": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Insider threat scoring",
+      "Data exfiltration pattern detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of monitored users",
+        "type": "number",
+        "helper": "Users covered by DLP policies across email, web, endpoint, and cloud channels"
+      },
+      {
+        "key": "number_of_channels",
+        "label": "DLP products/channels monitored",
+        "type": "number",
+        "helper": "Count of DLP products or channels (email, web, endpoint, cloud) — planning floor ~0.05 GB/day per channel"
+      },
+      {
+        "key": "dlpSizingProfile",
+        "label": "DLP sizing profile",
+        "type": "select",
+        "options": [
+          "User and channel monitoring",
+          "Channel/products only",
+          "Lookup/context only"
+        ],
+        "helper": "User monitoring requires monitored users; channel-only uses product/channel floor rates"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "uba",
+    "name": "User Behavior Analytics (UBA/UEBA)",
+    "category": "Security & Compliance",
+    "subcategory": "Analytics",
+    "description": "User and entity behavior analytics output including risk scores, anomaly detections, and threat indicators.",
+    "whyItMatters": "UBA/UEBA provides ML-driven detection of insider threats and compromised accounts by establishing behavioral baselines and detecting deviations that rule-based systems miss.",
+    "configuredItemLabel": "# of users analyzed",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.25,
+    "exampleVendors": [
+      "Splunk UBA",
+      "Exabeam",
+      "Microsoft Sentinel UEBA"
+    ],
+    "telemetryDomains": {
+      "identity_governance": "strong",
+      "threat_enrichment": "partial",
+      "authentication": "partial"
+    },
+    "splunkApps": [
+      "Splunk UBA"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Behavioral baseline building",
+      "Peer group analysis"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of monitored users/entities",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "asset_cmdb",
+    "name": "Asset & Identity Lists (CMDB / AD / LDAP)",
+    "category": "Security & Compliance",
+    "subcategory": "Asset Management",
+    "description": "Asset inventory, identity directory, and CMDB data used for enrichment and context in security operations.",
+    "whyItMatters": "Asset and identity context transforms raw alerts into actionable intelligence — knowing the criticality, owner, and classification of impacted assets dramatically improves response prioritization.",
+    "configuredItemLabel": "# of asset or identity data sources",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.025,
+    "sizingRateLow": 0.01,
+    "sizingRateHigh": 0.05,
+    "exampleVendors": [
+      "ServiceNow",
+      "BMC Helix",
+      "Ivanti",
+      "Microsoft AD",
+      "LDAP"
+    ],
+    "telemetryDomains": {
+      "asset_inventory": "strong",
+      "vulnerability_asset": "partial",
+      "identity_governance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for ServiceNow",
+      "SA-ldapsearch"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for ServiceNow"
+    ],
+    "aiOpportunities": [
+      "Automated asset criticality scoring"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_assets",
+        "label": "Number of asset/identity data sources",
+        "type": "number",
+        "helper": "CMDB exports, LDAP/AD sync sources, or identity list feeds"
+      },
+      {
+        "key": "assetExportProfile",
+        "label": "Ingest profile",
+        "type": "select",
+        "options": [
+          "Lookup/context only",
+          "Periodic CMDB/identity exports",
+          "Full asset/identity synchronization"
+        ],
+        "helper": "Lookup/context sources are enrichment only; periodic/full exports use ~0.025 GB/day per source"
+      },
+      {
+        "key": "vendor",
+        "label": "CMDB platform",
+        "type": "select",
+        "options": [
+          "ServiceNow",
+          "BMC",
+          "Flexera",
+          "Custom",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_assets",
+      "strategy": "per_item",
+      "rate_per_unit": 0.025
+    }
+  },
+  {
+    "id": "deception",
+    "name": "Deception Technology",
+    "category": "Security & Compliance",
+    "subcategory": "Advanced Detection",
+    "description": "Honeypot, honeytoken, and deception platform alerts indicating interaction with decoy systems or credentials.",
+    "whyItMatters": "Deception alerts are extremely high-fidelity — any interaction with a decoy is almost certainly malicious. These provide early warning of lateral movement and credential theft.",
+    "configuredItemLabel": "# of deception/honeypot systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.015,
+    "sizingRateLow": 0.005,
+    "sizingRateHigh": 0.03,
+    "exampleVendors": [
+      "Thinkst Canary",
+      "Attivo Networks",
+      "Illusive Networks",
+      "CyberTrap"
+    ],
+    "telemetryDomains": {
+      "endpoint": "partial",
+      "network": "partial",
+      "threat_enrichment": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "High-fidelity alert correlation"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of deception assets",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Attivo",
+          "Illusive",
+          "TrapX",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.015
+    }
+  },
+  {
+    "id": "firewalls",
+    "name": "Firewalls (Next-Gen Firewalls)",
+    "category": "Networking",
+    "subcategory": "Perimeter",
+    "overlap_group": "network_security_controls",
+    "description": "Firewall traffic logs including allow/deny decisions, URL filtering, threat prevention, application identification, and user-ID mapping.",
+    "whyItMatters": "Firewalls are the single highest-volume and often highest-value security data source. They provide comprehensive network visibility — who connected where, what was blocked, and which applications traversed the network.",
+    "configuredItemLabel": "# of firewall devices total",
+    "sizingUnit": "per_item",
+    "sizingRate": 1,
+    "sizingRateLow": 0.5,
+    "sizingRateHigh": 2.5,
+    "exampleVendors": [
+      "Palo Alto Networks",
+      "Cisco ASA/Firepower",
+      "Check Point",
+      "Fortinet FortiGate",
+      "Juniper SRX"
+    ],
+    "mitreId": "DS0018",
+    "telemetryDomains": {
+      "network": "strong",
+      "perimeter_control": "strong",
+      "authentication": "partial",
+      "network_performance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for Palo Alto Networks",
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Palo Alto Networks",
+      "Splunk Add-on for Cisco ASA",
+      "Splunk Add-on for Check Point"
+    ],
+    "aiOpportunities": [
+      "Anomalous traffic pattern detection",
+      "C2 beacon detection",
+      "DNS tunneling detection"
+    ],
+    "overlapNotes": "If using SASE, there may be overlap with cloud-delivered firewall logs. Coordinate to avoid double-counting.",
+    "children": [
+      {
+        "id": "fw_perimeter",
+        "name": "Perimeter Firewalls",
+        "configuredItemLabel": "# of internet-facing firewalls",
+        "sizingUnit": "per_item",
+        "sizingRate": 0.55,
+        "sizingRateLow": 0.2,
+        "sizingRateHigh": 1.5750000000000002,
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of internet-facing firewalls",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_item",
+          "rate_per_unit": 0.55
+        },
+        "description": "Internet-facing next-generation firewall traffic, threat, and VPN logs from perimeter appliances and virtual firewalls.",
+        "whyItMatters": "Perimeter firewalls see north-south attacks first. These logs anchor network detection, threat hunting, and compliance evidence for external exposure."
+      },
+      {
+        "id": "fw_internal",
+        "name": "Internal Segmentation Firewalls",
+        "configuredItemLabel": "# of internal firewalls",
+        "sizingUnit": "per_item",
+        "sizingRate": 0.375,
+        "sizingRateLow": 0.13999999999999999,
+        "sizingRateHigh": 1.275,
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of internal firewalls",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_item",
+          "rate_per_unit": 0.375
+        },
+        "description": "Internal segmentation firewall logs for east-west traffic between zones, data centers, and sensitive VLANs.",
+        "whyItMatters": "Lateral movement often crosses internal segments. Segmentation firewall logs help validate Zero Trust boundaries and detect east-west C2."
+      },
+      {
+        "id": "fw_waf",
+        "name": "Web Application Firewall (WAF)",
+        "configuredItemLabel": "# of WAF instances",
+        "sizingUnit": "per_item",
+        "sizingRate": 0.425,
+        "sizingRateLow": 0.15000000000000002,
+        "sizingRateHigh": 1.35,
+        "exampleVendors": [
+          "Imperva",
+          "F5",
+          "Barracuda",
+          "Cloudflare WAF",
+          "AWS WAF"
+        ],
+        "input_fields": [
+          {
+            "key": "count",
+            "label": "# of WAF instances",
+            "type": "number"
+          }
+        ],
+        "sizing_formula": {
+          "primary_input": "count",
+          "strategy": "per_item",
+          "rate_per_unit": 0.425
+        },
+        "description": "Web application firewall logs including HTTP/S requests, blocked attacks, bot scores, and OWASP rule hits.",
+        "whyItMatters": "WAF telemetry exposes application-layer attacks before they reach origin servers — critical for protecting customer-facing and API workloads."
+      }
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of users protected",
+        "type": "number",
+        "helper": "Firewall ingest correlates more with protected user population than device count"
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of firewall devices",
+        "type": "number",
+        "helper": "Physical/virtual firewall instances — used for confidence scoring"
+      },
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Palo Alto Networks",
+          "Fortinet",
+          "Cisco ASA/FTD",
+          "Check Point",
+          "Juniper SRX",
+          "Other"
+        ]
+      },
+      {
+        "key": "logging_scope",
+        "label": "Logging scope",
+        "type": "select",
+        "options": [
+          "Basic traffic only",
+          "Traffic + threat prevention",
+          "Full verbose (all sessions)",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 1
+    }
+  },
+  {
+    "id": "switches",
+    "name": "Network Switches",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "Switch logs including port security, VLAN changes, spanning tree events, and MAC address table changes.",
+    "whyItMatters": "Switch logs reveal unauthorized devices connecting to the network, VLAN hopping attempts, and physical security violations at the network access layer.",
+    "configuredItemLabel": "# of managed switches",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Cisco Catalyst",
+      "Arista",
+      "Juniper EX",
+      "HP/Aruba"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "network_performance": "partial",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [
+      "IT Essentials Work"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Cisco Networks"
+    ],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of switches",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "routers",
+    "name": "Routers",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "Router logs including routing table changes, BGP events, ACL hits, and interface state changes.",
+    "whyItMatters": "Routers control traffic flow between network segments. Monitoring routing changes and ACL violations detects network manipulation and unauthorized path changes.",
+    "configuredItemLabel": "# of routers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Cisco IOS",
+      "Juniper MX",
+      "Arista"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "network_performance": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [
+      "Splunk Add-on for Cisco Networks"
+    ],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of routers",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "vpn",
+    "name": "VPN Gateways",
+    "overlap_group": "remote_access",
+    "category": "Networking",
+    "subcategory": "Remote Access",
+    "description": "VPN connection logs including user authentication, tunnel establishment, traffic volumes, and disconnection events.",
+    "whyItMatters": "VPN logs are critical for monitoring remote access — detecting compromised credentials, unusual connection times/locations, and data exfiltration over encrypted tunnels.",
+    "configuredItemLabel": "# of VPN gateway devices",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.001,
+    "sizingRateLow": 0.0004,
+    "sizingRateHigh": 0.003,
+    "exampleVendors": [
+      "Cisco AnyConnect",
+      "Palo Alto GlobalProtect",
+      "Fortinet FortiClient",
+      "Citrix NetScaler"
+    ],
+    "telemetryDomains": {
+      "remote_access": "strong",
+      "authentication": "partial",
+      "network": "partial"
+    },
+    "splunkApps": [
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Cisco ASA"
+    ],
+    "aiOpportunities": [
+      "Impossible travel via VPN",
+      "Anomalous VPN session patterns"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of VPN users",
+        "type": "number",
+        "helper": "Concurrent or licensed VPN users"
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of VPN concentrators",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "VPN vendor",
+        "type": "select",
+        "options": [
+          "Cisco AnyConnect",
+          "Palo Alto GlobalProtect",
+          "Zscaler",
+          "Fortinet",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_users",
+      "strategy": "per_user",
+      "rate_per_unit": 0.001
+    }
+  },
+  {
+    "id": "proxy",
+    "name": "Web Proxy / Secure Web Gateway",
+    "overlap_group": "network_security_controls",
+    "category": "Networking",
+    "subcategory": "Perimeter",
+    "description": "Web proxy logs including URL categorization, content inspection results, and user attribution for web traffic.",
+    "whyItMatters": "Proxy logs provide URL-level visibility into all web traffic — essential for detecting C2 communications, drive-by downloads, and data exfiltration over HTTP/HTTPS.",
+    "configuredItemLabel": "# of web proxy devices",
+    "sizingUnit": "per_item",
+    "sizingRate": 1,
+    "sizingRateLow": 0.5,
+    "sizingRateHigh": 2,
+    "exampleVendors": [
+      "Zscaler",
+      "Symantec/Broadcom ProxySG",
+      "Forcepoint",
+      "McAfee Web Gateway"
+    ],
+    "telemetryDomains": {
+      "network": "strong",
+      "perimeter_control": "strong",
+      "saas_activity": "partial"
+    },
+    "splunkApps": [
+      "Enterprise Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Blue Coat ProxySG",
+      "Splunk Add-on for Zscaler"
+    ],
+    "aiOpportunities": [
+      "Malicious URL detection",
+      "C2 beacon pattern recognition"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of users",
+        "type": "number",
+        "helper": "Users routing through the proxy"
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of proxy appliances",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Proxy vendor",
+        "type": "select",
+        "options": [
+          "Zscaler",
+          "Broadcom/Symantec",
+          "McAfee Web Gateway",
+          "Squid",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 1
+    }
+  },
+  {
+    "id": "nac",
+    "name": "Network Access Control (NAC)",
+    "category": "Networking",
+    "subcategory": "Access Control",
+    "description": "NAC platform logs including device posture assessment, network admission decisions, and quarantine events.",
+    "whyItMatters": "NAC logs show which devices were allowed or denied network access and why — critical for detecting rogue devices and ensuring compliance enforcement at the access layer.",
+    "configuredItemLabel": "# of NAC servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Cisco ISE",
+      "Aruba ClearPass",
+      "Forescout"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "authentication": "partial",
+      "asset_inventory": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [
+      "Splunk Add-on for Cisco ISE"
+    ],
+    "aiOpportunities": [
+      "Rogue device detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_devices",
+        "label": "Number of NAC-controlled devices",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "NAC vendor",
+        "type": "select",
+        "options": [
+          "Cisco ISE",
+          "Aruba ClearPass",
+          "FortiNAC",
+          "Portnox",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_devices",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "dns",
+    "name": "DNS",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "DNS query and response logs from internal resolvers and authoritative servers.",
+    "whyItMatters": "DNS is used in nearly every cyberattack — from initial payload delivery to C2 communication to data exfiltration. DNS logs are one of the most underutilized yet valuable data sources for threat detection.",
+    "configuredItemLabel": "# of DNS servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.002,
+    "sizingRateLow": 0.001,
+    "sizingRateHigh": 0.008,
+    "exampleVendors": [
+      "Microsoft DNS",
+      "BIND",
+      "Infoblox",
+      "PowerDNS",
+      "Cloudflare"
+    ],
+    "mitreId": "DS0038",
+    "telemetryDomains": {
+      "network": "strong",
+      "threat_enrichment": "partial",
+      "network_performance": "partial"
+    },
+    "splunkApps": [
+      "Splunk Stream",
+      "DNS Insights"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for Infoblox"
+    ],
+    "aiOpportunities": [
+      "DNS tunneling detection",
+      "DGA domain detection",
+      "DNS-based threat hunting"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_users",
+        "label": "Number of users generating DNS queries",
+        "type": "number"
+      },
+      {
+        "key": "number_of_servers",
+        "label": "Number of DNS servers",
+        "type": "number"
+      },
+      {
+        "key": "query_logging",
+        "label": "Query logging enabled",
+        "type": "select",
+        "options": [
+          "Yes - all queries",
+          "Response only",
+          "No query logging",
+          "Unknown"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.002
+    }
+  },
+  {
+    "id": "dhcp",
+    "name": "DHCP",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "DHCP lease logs mapping IP addresses to MAC addresses and hostnames over time.",
+    "whyItMatters": "DHCP logs are essential for attribution — they map ephemeral IP addresses to devices at specific points in time, enabling accurate forensic investigation and alert triage.",
+    "configuredItemLabel": "# of DHCP servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.03,
+    "sizingRateHigh": 0.2,
+    "exampleVendors": [
+      "Microsoft DHCP",
+      "ISC DHCP",
+      "Infoblox",
+      "Cisco"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "asset_inventory": "partial"
+    },
+    "splunkApps": [
+      "DHCP Insights"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_servers",
+        "label": "Number of DHCP servers",
+        "type": "number"
+      },
+      {
+        "key": "number_of_leases",
+        "label": "Approximate active leases",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_servers",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  },
+  {
+    "id": "loadbalancer",
+    "name": "Load Balancers",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "Load balancer logs including traffic distribution, health checks, SSL termination events, and connection metadata.",
+    "whyItMatters": "Load balancer logs provide visibility into application delivery and can reveal DDoS patterns, application-layer attacks, and service degradation.",
+    "configuredItemLabel": "# of load balancer devices",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.25,
+    "exampleVendors": [
+      "F5 BIG-IP",
+      "Citrix NetScaler",
+      "Nginx",
+      "HAProxy",
+      "AWS ALB/NLB"
+    ],
+    "telemetryDomains": {
+      "network_performance": "partial",
+      "service_health": "partial",
+      "application_logs": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [
+      "Splunk Add-on for F5 BIG-IP",
+      "Splunk Add-on for Citrix NetScaler"
+    ],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of load balancers",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "F5 BIG-IP",
+          "Citrix ADC",
+          "AWS ALB/NLB",
+          "Azure LB",
+          "HAProxy",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  },
+  {
+    "id": "ddos",
+    "name": "DDoS Protection",
+    "category": "Networking",
+    "subcategory": "Perimeter",
+    "description": "DDoS mitigation platform logs including attack detection, traffic scrubbing, and rate limiting events.",
+    "whyItMatters": "DDoS logs provide visibility into volumetric attacks, application-layer floods, and the effectiveness of mitigation responses.",
+    "configuredItemLabel": "# of DDoS protection services",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Akamai",
+      "Cloudflare",
+      "Arbor/Netscout",
+      "A10 Networks"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "perimeter_control": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of DDoS mitigation points",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "wireless",
+    "name": "Wireless Access Points",
+    "category": "Networking",
+    "subcategory": "Infrastructure",
+    "description": "Wireless controller and access point logs including client associations, rogue AP detection, and authentication events.",
+    "whyItMatters": "Wireless logs reveal rogue access points, unauthorized device connections, and provide location context for security investigations.",
+    "configuredItemLabel": "# of wireless access points",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.02,
+    "sizingRateHigh": 0.1,
+    "exampleVendors": [
+      "Cisco Meraki",
+      "Aruba",
+      "Ruckus",
+      "Ubiquiti"
+    ],
+    "telemetryDomains": {
+      "network": "partial",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of wireless controllers/APs",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.05
+    }
+  },
+  {
+    "id": "dpi",
+    "name": "Deep Packet Inspection / Full PCAP",
+    "category": "Networking",
+    "subcategory": "Network Security",
+    "description": "Full packet capture and deep packet inspection data providing complete network transaction visibility.",
+    "whyItMatters": "DPI/PCAP provides the ultimate network forensic capability — reconstructing exact conversations, extracting files, and validating alerts with packet-level evidence.",
+    "configuredItemLabel": "# of DPI systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Splunk Stream",
+      "Zeek (Bro)",
+      "Moloch/Arkime",
+      "PCAP"
+    ],
+    "telemetryDomains": {
+      "network": "strong",
+      "network_performance": "strong"
+    },
+    "splunkApps": [
+      "Splunk Stream"
+    ],
+    "technicalAddons": [
+      "Splunk Stream"
+    ],
+    "aiOpportunities": [
+      "Protocol anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of DPI sensors",
+        "type": "number"
+      },
+      {
+        "key": "bandwidth_gbps",
+        "label": "Monitored bandwidth (Gbps)",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  },
+  {
+    "id": "storage_prod",
+    "name": "Production Storage Arrays",
+    "category": "Storage",
+    "subcategory": "Production",
+    "description": "Storage array logs including access patterns, performance metrics, and administrative changes for production data stores.",
+    "whyItMatters": "Storage logs detect unauthorized data access, unusual I/O patterns that indicate data staging, and administrative changes that could compromise data availability.",
+    "configuredItemLabel": "# of production storage arrays",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.4,
+    "exampleVendors": [
+      "Dell EMC",
+      "NetApp",
+      "Pure Storage",
+      "HPE"
+    ],
+    "mitreId": "DS0034",
+    "telemetryDomains": {
+      "storage_performance": "strong",
+      "infrastructure_metrics": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of storage systems",
+        "type": "number",
+        "helper": "SAN, NAS, or object storage arrays"
+      },
+      {
+        "key": "manual_gb_day",
+        "label": "Manual estimate (GB/day)",
+        "type": "number",
+        "helper": "Storage log volumes vary widely"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "ics_scada",
+    "name": "ICS / SCADA Systems",
+    "category": "OT/ICS",
+    "subcategory": "Control Systems",
+    "description": "Industrial control system logs including SCADA events, PLC state changes, and process variable anomalies.",
+    "whyItMatters": "OT/ICS systems control physical processes — unauthorized changes can cause safety incidents, environmental damage, or production disruption. Visibility into these systems is critical for detecting targeted attacks.",
+    "configuredItemLabel": "# of industrial control or SCADA systems",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Honeywell Experion",
+      "Siemens WinCC",
+      "Wonderware",
+      "ClearSCADA",
+      "Ignition"
+    ],
+    "telemetryDomains": {
+      "ot_network": "strong",
+      "scada_events": "strong",
+      "industrial_assets": "partial"
+    },
+    "splunkApps": [
+      "Splunk Add-on for OT Security"
+    ],
+    "technicalAddons": [
+      "Splunk Add-on for OT Security"
+    ],
+    "aiOpportunities": [
+      "Process variable anomaly detection",
+      "OT protocol anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of OT/SCADA systems",
+        "type": "number",
+        "helper": "PLCs, HMIs, RTUs, historians"
+      },
+      {
+        "key": "number_of_sensors",
+        "label": "Number of network sensors",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "OT platform",
+        "type": "select",
+        "options": [
+          "Siemens",
+          "Rockwell/Allen-Bradley",
+          "Schneider Electric",
+          "Honeywell",
+          "ABB",
+          "Other"
+        ]
+      },
+      {
+        "key": "manual_gb_day",
+        "label": "Manual estimate (GB/day)",
+        "type": "number",
+        "helper": "OT environments vary significantly"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "ot_security",
+    "name": "OT Security Solutions (OT IDS)",
+    "category": "OT/ICS",
+    "subcategory": "OT Security",
+    "description": "OT-specific intrusion detection and asset discovery platform logs.",
+    "whyItMatters": "OT IDS platforms provide passive network monitoring purpose-built for industrial protocols — detecting threats without impacting sensitive control systems.",
+    "configuredItemLabel": "# of OT network security sensors",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.3,
+    "exampleVendors": [
+      "Dragos",
+      "Nozomi Networks",
+      "Claroty",
+      "Armis"
+    ],
+    "telemetryDomains": {
+      "ot_network": "strong",
+      "scada_events": "partial",
+      "network": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "OT protocol anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of OT security monitoring points",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "OT security vendor",
+        "type": "select",
+        "options": [
+          "Nozomi Networks",
+          "Claroty",
+          "Dragos",
+          "Fortinet OT",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.15
+    }
+  },
+  {
+    "id": "devops_cicd",
+    "name": "CI/CD and Build Systems",
+    "category": "Application Development",
+    "subcategory": "DevOps",
+    "description": "Build system, deployment pipeline, and CI/CD platform logs including build results, deployments, and artifact management.",
+    "whyItMatters": "CI/CD pipelines are high-value targets — compromising the build pipeline enables supply chain attacks. Monitoring pipeline activity detects unauthorized deployments, credential theft, and code injection.",
+    "configuredItemLabel": "# of build/CI servers",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.1,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Jenkins",
+      "GitHub Actions",
+      "GitLab CI",
+      "Azure DevOps",
+      "CircleCI"
+    ],
+    "telemetryDomains": {
+      "application_logs": "partial",
+      "audit_compliance": "partial",
+      "ingest_pipeline_health": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Anomalous deployment detection",
+      "Supply chain attack indicators"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_pipelines",
+        "label": "Number of CI/CD pipelines",
+        "type": "number"
+      },
+      {
+        "key": "number_of_builds_per_day",
+        "label": "Builds per day",
+        "type": "number"
+      },
+      {
+        "key": "vendor",
+        "label": "CI/CD platform",
+        "type": "select",
+        "options": [
+          "GitHub Actions",
+          "GitLab CI",
+          "Jenkins",
+          "Azure DevOps",
+          "CircleCI",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_pipelines",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    }
+  },
+  {
+    "id": "config_mgmt",
+    "name": "Configuration Management / Deployment Tools",
+    "category": "Application Development",
+    "subcategory": "DevOps",
+    "description": "Configuration management platform logs including state changes, compliance drift, and deployment activities.",
+    "whyItMatters": "Configuration changes are a common attack vector. Monitoring ensures unauthorized changes are detected quickly and provides audit trail for compliance.",
+    "configuredItemLabel": "# of servers running config management",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.2,
+    "exampleVendors": [
+      "Ansible",
+      "Puppet",
+      "Chef",
+      "Terraform",
+      "Salt Stack"
+    ],
+    "telemetryDomains": {
+      "audit_compliance": "partial",
+      "infrastructure_metrics": "partial",
+      "application_logs": "partial"
+    },
+    "splunkApps": [
+      "Puppet Add-On"
+    ],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Configuration drift detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_systems",
+        "label": "Number of managed systems",
+        "type": "number",
+        "helper": "Nodes managed by Ansible, Puppet, Chef, etc."
+      },
+      {
+        "key": "vendor",
+        "label": "Tool",
+        "type": "select",
+        "options": [
+          "Ansible",
+          "Puppet",
+          "Chef",
+          "Terraform",
+          "SaltStack",
+          "Other"
+        ]
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  },
+  {
+    "id": "business_txn",
+    "name": "Business Transaction Logs",
+    "category": "Business Services",
+    "subcategory": "Transactions",
+    "description": "Application-level business transaction logs including order processing, payment systems, and ERP activity.",
+    "whyItMatters": "Business transaction logs enable detection of fraud, revenue leakage, and application abuse that security-only tools cannot identify.",
+    "configuredItemLabel": "# of business applications instrumented",
+    "sizingUnit": "per_item",
+    "sizingRate": 0.1,
+    "sizingRateLow": 0.05,
+    "sizingRateHigh": 0.5,
+    "exampleVendors": [
+      "Oracle Apps",
+      "SAP",
+      "Salesforce",
+      "Custom Applications"
+    ],
+    "telemetryDomains": {
+      "business_transactions": "strong",
+      "application_logs": "partial",
+      "user_experience": "partial"
+    },
+    "splunkApps": [],
+    "technicalAddons": [],
+    "aiOpportunities": [
+      "Fraud detection",
+      "Revenue anomaly detection"
+    ],
+    "input_fields": [
+      {
+        "key": "number_of_applications",
+        "label": "Number of business applications",
+        "type": "number"
+      },
+      {
+        "key": "transactions_per_day",
+        "label": "Estimated transactions/day (thousands)",
+        "type": "number"
+      }
+    ],
+    "sizing_formula": {
+      "primary_input": "number_of_applications",
+      "strategy": "per_item",
+      "rate_per_unit": 0.1
+    }
+  }
+]

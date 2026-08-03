@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "1.0",
+  "sourceWorkbook": "ORIGINAL Sizing Calculator.xlsx",
+  "sourceSheet": "DSA (with Calculations)",
+  "lastUpdated": "2026-07-01",
+  "questions": {
+    "iaas": {
+      "sourceId": "iaas",
+      "question": "How many cloud accounts or subscriptions will feed control-plane and security logs? (Use advanced sizing if they can provide VM, flow log, storage, or Kubernetes counts.)",
+      "primaryInputField": "iaasAccountCount",
+      "unitLabel": "cloud accounts",
+      "exampleQuantity": 3,
+      "helperText": "Standard mode: count AWS accounts, Azure subscriptions, GCP projects, OCI tenancies, or IBM accounts. Advanced mode: enter scope-specific counts when the customer knows VM, storage, flow log, or Kubernetes details."
+    },
+    "iaas_containers": {
+      "sourceId": "iaas_containers",
+      "question": "How many clusters, nodes, and active pods/containers forward platform and application logs?",
+      "primaryInputField": "containerCounts.clusters",
+      "unitLabel": "container clusters",
+      "exampleQuantity": 10,
+      "helperText": "Enter cluster count (control-plane and audit), node count (kubelet/runtime/infrastructure logs), and active pods or containers emitting stdout. Use pod count as an approximation if container count is unknown."
+    },
+    "iaas_instances": {
+      "sourceId": "iaas_instances",
+      "question": "How many cloud VMs or instances will send logs, and what is the agent collection profile?",
+      "primaryInputField": "cloudVmInstanceCount",
+      "unitLabel": "vms or cloud servers",
+      "exampleQuantity": 400,
+      "helperText": "Enter the number of cloud VMs or instances sending logs via cloud-native agents (CloudWatch, Azure Monitor, Ops Agent, etc.) or VM log forwarding. Choose base telemetry or full VM logs based on what the agent collects."
+    },
+    "iaas_storage": {
+      "sourceId": "iaas_storage",
+      "question": "How many storage assets will send logs, and is object/file access logging enabled?",
+      "primaryInputField": "cloudStorageAssetCount",
+      "unitLabel": "storage assets",
+      "exampleQuantity": 25,
+      "helperText": "For AWS and Google, count buckets. For Azure, count storage accounts. For NetApp, count volumes. For Dell PowerScale, count filesystems or access zones. Choose base telemetry or full access logs based on what is collected."
+    },
+    "paas": {
+      "sourceId": "paas",
+      "question": "How many managed cloud platform services emit logs you will centralize?",
+      "primaryInputField": "number_of_applications",
+      "unitLabel": "managed cloud platform services",
+      "exampleQuantity": 10,
+      "helperText": "Count distinct managed platform services (function apps, managed DBs, queues) with diagnostic logging on--not every HTTP call."
+    },
+    "saas_general": {
+      "sourceId": "saas_general",
+      "question": "How many SaaS tenants, active users, and integrations send logs to Splunk, and what activity profile is collected?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "saas tenants, active users, and integrations",
+      "exampleQuantity": 8500,
+      "helperText": "Enter actual active users (not per-1,000). Count tenants/orgs/instances and integrations or connected apps separately. Choose audit-only, standard activity, or full activity (including API/integration logs)."
+    },
+    "saas_office": {
+      "sourceId": "saas_office",
+      "question": "How many tenants, mailboxes, file users, and Teams users send productivity audit logs to Splunk?",
+      "primaryInputField": "officeActiveUserCount",
+      "unitLabel": "active productivity users",
+      "exampleQuantity": 12000,
+      "helperText": "Enter tenant count, active users, mailboxes, file users, and collaboration users separately. Choose Microsoft 365, Google Workspace, or individual workloads (Exchange, SharePoint, Teams)."
+    },
+    "saas_crm": {
+      "sourceId": "saas_crm",
+      "question": "How many CRM tenants, active users, and integrations send audit and activity logs to Splunk?",
+      "primaryInputField": "crmActiveUserCount",
+      "unitLabel": "active crm users",
+      "exampleQuantity": 450,
+      "helperText": "Enter CRM tenant count, active users, and integrations separately. Choose vendor, collection profile (audit, standard, or full), and activity level."
+    },
+    "saas_sso": {
+      "sourceId": "saas_sso",
+      "question": "How many users authenticate through the IdP whose SaaS SSO logs you centralize?",
+      "primaryInputField": "ssoActiveUserCount",
+      "unitLabel": "sso-enrolled users",
+      "exampleQuantity": 8000,
+      "helperText": "Users authenticating via IdP that exports sign-in logs feeding this bucket."
+    },
+    "saas_conferencing": {
+      "sourceId": "saas_conferencing",
+      "question": "How many users are in scope for conferencing SaaS audit logs?",
+      "primaryInputField": "count",
+      "unitLabel": "licensed conferencing users",
+      "exampleQuantity": 100,
+      "helperText": "Users with Zoom/Teams Webinar licenses etc. covered by audit exports (use admin portal active user count)."
+    },
+    "saas_filesharing": {
+      "sourceId": "saas_filesharing",
+      "question": "How many file-sharing users are monitored?",
+      "primaryInputField": "count",
+      "unitLabel": "collaboration users",
+      "exampleQuantity": 100,
+      "helperText": "Users covered by Box/Dropbox/OneDrive audit logging to SIEM."
+    },
+    "cspm": {
+      "sourceId": "cspm",
+      "question": "How many cloud accounts or subscriptions does your CSPM continuously assess?",
+      "primaryInputField": "number_of_accounts",
+      "unitLabel": "cloud accounts under assessment",
+      "exampleQuantity": 12,
+      "helperText": "Count AWS accounts, Azure subscriptions, GCP projects (or folders if one export), OCI tenancies--match the CSPM product's billing boundary."
+    },
+    "cwpp": {
+      "sourceId": "cwpp",
+      "question": "How many OS instances or nodes run the cloud workload protection agent?",
+      "primaryInputField": "number_of_instances",
+      "unitLabel": "protected workloads",
+      "exampleQuantity": 120,
+      "helperText": "Count servers, VMs, and Kubernetes worker nodes (or pods if licensed per pod) covered by the workload protection product."
+    },
+    "casb": {
+      "sourceId": "casb",
+      "question": "How many users are covered by your CASB / SSE cloud policies?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "active users",
+      "exampleQuantity": 6000,
+      "helperText": "Use workforce (or entitled) user count covered by the CASB policy set--same basis as licensing where possible."
+    },
+    "sase": {
+      "sourceId": "sase",
+      "question": "How many users traverse your SASE service daily?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "active users",
+      "exampleQuantity": 5000,
+      "helperText": "Concurrent or provisioned users sending traffic via SASE/SSE fabric--match vendor sizing docs."
+    },
+    "windows_servers": {
+      "sourceId": "windows_servers",
+      "question": "How many Windows servers centralize event logs?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "total windows servers",
+      "exampleQuantity": 120,
+      "helperText": "All physical and virtual Windows Server OS instances with forwarders or WEC in scope."
+    },
+    "linux_servers": {
+      "sourceId": "linux_servers",
+      "question": "How many production Linux servers forward auth and system logs?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "production linux/unix servers",
+      "exampleQuantity": 10,
+      "helperText": "Count production servers with syslog/auditd/agent forwarding enabled."
+    },
+    "mainframe": {
+      "sourceId": "mainframe",
+      "question": "How many mainframe systems or LPARs export security and operations logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "mainframe systems",
+      "exampleQuantity": 10,
+      "helperText": "Count logical partitions or systems emitting SMF/RACF/ syslog forwards--confirm with mainframe ops."
+    },
+    "linux_servers_nonprod": {
+      "sourceId": "linux_servers_nonprod",
+      "question": "How many non-prod Linux servers are in log scope?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "non-prod linux/unix servers",
+      "exampleQuantity": 10,
+      "helperText": "Same as production Linux count but scoped to lower environments that still ship logs to Splunk."
+    },
+    "hypervisor": {
+      "sourceId": "hypervisor",
+      "question": "How many hypervisor hosts forward host-level audit and task events?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "virtualization hosts",
+      "exampleQuantity": 10,
+      "helperText": "Count ESXi hosts, Hyper-V nodes, KVM hosts, etc., that export hypervisor management/audit logs--not every guest VM."
+    },
+    "database": {
+      "sourceId": "database",
+      "question": "How many database instances will forward audit or diagnostic logs?",
+      "primaryInputField": "number_of_instances",
+      "unitLabel": "database instances",
+      "exampleQuantity": 10,
+      "helperText": "Count RDBMS/NoSQL instances (one per SID/database service). For Always On clusters, count each replica that independently emits audit logs if forwarded separately."
+    },
+    "db_transaction": {
+      "sourceId": "db_transaction",
+      "question": "How many databases produce high-volume transactional or redo-class logs you plan to index?",
+      "primaryInputField": "count",
+      "unitLabel": "instances for transaction logs",
+      "exampleQuantity": 10,
+      "helperText": "Count instances emitting redo/binlog/transaction telemetry or verbose statement logs; align with DBA guidance on who runs txn log shipping to the SIEM."
+    },
+    "db_access": {
+      "sourceId": "db_access",
+      "question": "For how many database instances will you collect access or unified audit trails?",
+      "primaryInputField": "count",
+      "unitLabel": "instances for access logs",
+      "exampleQuantity": 10,
+      "helperText": "Count only database instances where access auditing (logins, object access) is enabled and forwarded--not total enterprise DB inventory."
+    },
+    "web_servers": {
+      "sourceId": "web_servers",
+      "question": "How many web servers forward access/error logs?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "production web servers hosting applications",
+      "exampleQuantity": 10,
+      "helperText": "Count HTTP/S servers (Apache, nginx, IIS where categorized here) emitting access logs."
+    },
+    "app_servers": {
+      "sourceId": "app_servers",
+      "question": "How many dedicated application server hosts generate logs you plan to index?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "production application servers",
+      "exampleQuantity": 10,
+      "helperText": "Count OS instances whose primary role is hosting middleware or business application runtimes (Java/.NET/app servers), whether VMs or bare metal."
+    },
+    "middleware": {
+      "sourceId": "middleware",
+      "question": "How many middleware nodes forward application/integration logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "production middleware systems",
+      "exampleQuantity": 10,
+      "helperText": "Count hosts running brokers (IBM MQ, Kafka, Rabbit), app servers, or ESB nodes that emit dedicated middleware logs."
+    },
+    "business_txn": {
+      "sourceId": "business_txn",
+      "question": "How many core business applications produce transaction-level logs you will onboard?",
+      "primaryInputField": "number_of_applications",
+      "unitLabel": "business applications instrumented",
+      "exampleQuantity": 10,
+      "helperText": "Count applications emitting business or payment transaction logs (order, claims, wire, etc.), not every microservice unless each emits txn records."
+    },
+    "apm": {
+      "sourceId": "apm",
+      "question": "How many application services are instrumented in your APM (per golden 'service' name)?",
+      "primaryInputField": "number_of_applications",
+      "unitLabel": "apm-monitored applications",
+      "exampleQuantity": 10,
+      "helperText": "Use the number of distinct services or application names under APM management (one per instrumented app), not every JVM/process replica."
+    },
+    "pki": {
+      "sourceId": "pki",
+      "question": "How many PKI servers forward certificate lifecycle logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "pki / ca servers",
+      "exampleQuantity": 10,
+      "helperText": "Count issuing CA servers, online responders, and HSM-attached log sources exporting issuance and OCSP events."
+    },
+    "sap": {
+      "sourceId": "sap",
+      "question": "How many SAP systems forward security audit (SM20/SUIM-class) events?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "sap systems",
+      "exampleQuantity": 10,
+      "helperText": "Count SAP application instances or central instances per SID that forward security/audit logs."
+    },
+    "desktops": {
+      "sourceId": "desktops",
+      "question": "How many employee workstations forward Windows/Linux/macOS security logs?",
+      "primaryInputField": "number_of_endpoints",
+      "unitLabel": "managed end-user devices",
+      "exampleQuantity": 5000,
+      "helperText": "Count laptops/desktops with forwarders or agents shipping endpoint logs (physical plus persistent VDI golden images × concurrent if licensing differs)."
+    },
+    "sso_pam": {
+      "sourceId": "sso_pam",
+      "question": "How many users authenticate through your SSO and privileged access tooling that forwards audit events?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "identity management platforms",
+      "exampleQuantity": 3500,
+      "helperText": "Count unique human identities covered by SSO sign-in and privileged-access logging. Use workforce or contractor identities that authenticate through the in-scope IdP/PAM, not device or mailbox counts."
+    },
+    "active_directory": {
+      "sourceId": "active_directory",
+      "question": "How many AD domain controllers send Directory Service / Security Channel events to the SIEM?",
+      "primaryInputField": "number_of_dcs",
+      "unitLabel": "ad domain controllers",
+      "exampleQuantity": 4,
+      "helperText": "Count physical and virtual domain controllers that forward security (Directory Service) events to Splunk. Exclude member servers unless they run AD DS."
+    },
+    "email": {
+      "sourceId": "email",
+      "question": "How many mail security hops or Exchange systems forward message tracking and filtering logs?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "mail servers or gateways",
+      "exampleQuantity": 12,
+      "helperText": "Count SMTP gateways, hybrid Exchange nodes, or logical mail-hygiene services exporting message logs. Use mailbox/user count as secondary for SaaS."
+    },
+    "mdm": {
+      "sourceId": "mdm",
+      "question": "How many mobile devices are under MDM management in scope?",
+      "primaryInputField": "number_of_devices",
+      "unitLabel": "managed mobile devices",
+      "exampleQuantity": 10,
+      "helperText": "Count smartphones/tablets enrolled in MDM/UEM with compliance and inventory logs flowing to SIEM."
+    },
+    "vuln_mgmt": {
+      "sourceId": "vuln_mgmt",
+      "question": "How many assets are actively assessed by your vulnerability management platform?",
+      "primaryInputField": "number_of_assets",
+      "unitLabel": "scanning appliances or managers",
+      "exampleQuantity": 10,
+      "helperText": "Use VM product's managed asset count (servers + network devices + optional workstations)."
+    },
+    "netflow": {
+      "sourceId": "netflow",
+      "question": "How many devices export NetFlow or IPFIX records?",
+      "primaryInputField": "number_of_devices",
+      "unitLabel": "devices exporting netflow data",
+      "exampleQuantity": 10,
+      "helperText": "Count routers, switches, or firewalls sending NetFlow/IPFIX/sFlow to collectors feeding Splunk."
+    },
+    "ids_ips": {
+      "sourceId": "ids_ips",
+      "question": "How many IDS/IPS sensors generate alert logs to the SIEM?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "ids/ips sensors",
+      "exampleQuantity": 10,
+      "helperText": "Count inline IPS appliances, virtual sensors, or NGFW blades dedicated to IDS/IPS event export."
+    },
+    "threat_intel": {
+      "sourceId": "threat_intel",
+      "question": "How many threat intelligence feeds or TIP integrations stream into Splunk?",
+      "primaryInputField": "number_of_feeds",
+      "unitLabel": "threat intel feeds",
+      "exampleQuantity": 10,
+      "helperText": "Count distinct commercial/open feeds or TIP connectors publishing into Splunk (not raw IoC rows)."
+    },
+    "sandbox": {
+      "sourceId": "sandbox",
+      "question": "How many sandbox systems or services export analysis reports?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "sandbox systems",
+      "exampleQuantity": 10,
+      "helperText": "Count malware analysis clusters (physical or cloud) emitting result logs."
+    },
+    "dlp": {
+      "sourceId": "dlp",
+      "question": "How many users or endpoints are actively enforced by DLP policies feeding the SIEM?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "endpoints covered by dlp",
+      "exampleQuantity": 8000,
+      "helperText": "Prefer the DLP console's covered-endpoint or covered-user metric; align with policy enforcement scope."
+    },
+    "edr": {
+      "sourceId": "edr",
+      "question": "How many endpoints report into your EDR platform daily?",
+      "primaryInputField": "number_of_endpoints",
+      "unitLabel": "endpoints covered by edr",
+      "exampleQuantity": 5000,
+      "helperText": "Count all devices with the EDR agent enrolled (workstations + servers). Use the vendor console's active-sensor count where available."
+    },
+    "ndr": {
+      "sourceId": "ndr",
+      "question": "How many NDR sensors cover your monitored network segments?",
+      "primaryInputField": "number_of_sensors",
+      "unitLabel": "ndr network sensors",
+      "exampleQuantity": 10,
+      "helperText": "Count deployed network sensors/collectors (physical or virtual). Use monitored Gbps as secondary sizing when required."
+    },
+    "deception": {
+      "sourceId": "deception",
+      "question": "How many deception assets actively generate telemetry to the SIEM?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "deception/honeypot systems",
+      "exampleQuantity": 10,
+      "helperText": "Count deception agents, honeypot VMs, or appliance-managed decoys that generate security events--exclude production workloads."
+    },
+    "web_servers_nonprod": {
+      "sourceId": "web_servers_nonprod",
+      "question": "How many non-prod web servers are in log scope?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "non-prod web servers",
+      "exampleQuantity": 10,
+      "helperText": "Count HTTP/S servers in dev, test, and staging that forward access and error logs."
+    },
+    "app_servers_nonprod": {
+      "sourceId": "app_servers_nonprod",
+      "question": "How many non-prod application server hosts are in log scope?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "non-prod application servers",
+      "exampleQuantity": 10,
+      "helperText": "Same as production application servers but scoped to dev, test, and staging tiers that forward logs to Splunk."
+    },
+    "middleware_nonprod": {
+      "sourceId": "middleware_nonprod",
+      "question": "How many non-prod middleware nodes are in log scope?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "non-prod middleware systems",
+      "exampleQuantity": 10,
+      "helperText": "Same as production middleware but scoped to lower environments that still ship broker and integration logs to Splunk."
+    },
+    "config_mgmt": {
+      "sourceId": "config_mgmt",
+      "question": "How many endpoints are managed by your configuration or desired-state automation platform?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "servers running config management",
+      "exampleQuantity": 10,
+      "helperText": "Count servers, VMs, or instances managed by Ansible Tower, Puppet, Chef, Salt, etc., that emit run reports or change events."
+    },
+    "devops_cicd": {
+      "sourceId": "devops_cicd",
+      "question": "How many CI/CD systems export build, deploy, and audit events you will ingest?",
+      "primaryInputField": "number_of_pipelines",
+      "unitLabel": "build/ci servers",
+      "exampleQuantity": 10,
+      "helperText": "Count self-hosted controllers (Jenkins masters, GitLab runners managers) or, for SaaS, count distinct orgs/projects only if each exports separately. Prefer counting systems that emit build audit streams."
+    },
+    "switches": {
+      "sourceId": "switches",
+      "question": "How many switches export security-relevant syslog?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "managed switches",
+      "exampleQuantity": 10,
+      "helperText": "Count network switches forwarding syslog/traps to SIEM (stack members may count per member if separate streams)."
+    },
+    "routers": {
+      "sourceId": "routers",
+      "question": "How many routers send configuration and security syslog?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "routers",
+      "exampleQuantity": 10,
+      "helperText": "Count managed routers exporting syslog/traps relevant to security--not passive optical gear."
+    },
+    "firewalls": {
+      "sourceId": "firewalls",
+      "question": "How many firewall devices or separately logged virtual instances send traffic/threat logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "firewall devices total",
+      "exampleQuantity": 12,
+      "helperText": "Each physical appliance, logical HA member (if separately logged), and distinct vFW instance counts as one; cloud FWaaS often per region/policy bundle per vendor guidance."
+    },
+    "fw_perimeter": {
+      "sourceId": "fw_perimeter",
+      "question": "How many perimeter firewalls export north-south traffic logs?",
+      "primaryInputField": "count",
+      "unitLabel": "internet-facing firewalls",
+      "exampleQuantity": 10,
+      "helperText": "Count only border firewalls or cloud edge instances directly handling north-south traffic with logging enabled."
+    },
+    "fw_internal": {
+      "sourceId": "fw_internal",
+      "question": "How many internal segmentation firewalls forward logs?",
+      "primaryInputField": "count",
+      "unitLabel": "internal firewalls",
+      "exampleQuantity": 10,
+      "helperText": "Subset of total firewalls enforcing east-west policies; count each logged instance separately from perimeter."
+    },
+    "fw_waf": {
+      "sourceId": "fw_waf",
+      "question": "How many WAF instances or logical services generate logs you will onboard?",
+      "primaryInputField": "count",
+      "unitLabel": "waf instances",
+      "exampleQuantity": 10,
+      "helperText": "Count deployed WAF appliances, cloud WAF instances, or ADC-integrated WAF modules that emit security/access logs per vendor unit of scale."
+    },
+    "ddos": {
+      "sourceId": "ddos",
+      "question": "How many DDoS protection services or scrubbing endpoints feed logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "ddos protection services",
+      "exampleQuantity": 10,
+      "helperText": "Count contracted DDoS protection services or on-prem appliances that export attack/mitigation logs per site or per service."
+    },
+    "vpn": {
+      "sourceId": "vpn",
+      "question": "How many VPN gateways send authentication and tunnel logs?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "vpn gateway devices",
+      "exampleQuantity": 8,
+      "helperText": "Count head-end VPN concentrators (physical/virtual) exporting session logs; use peak concurrent users as secondary driver."
+    },
+    "proxy": {
+      "sourceId": "proxy",
+      "question": "How many proxy systems or SWG connectors export web access logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "web proxy devices",
+      "exampleQuantity": 6,
+      "helperText": "Count explicit proxies, secure web gateways, or cloud SWG connectors with access logs--use protected user count when appliance count is abstracted."
+    },
+    "nac": {
+      "sourceId": "nac",
+      "question": "How many NAC policy servers or clusters export RADIUS/posture logs?",
+      "primaryInputField": "number_of_devices",
+      "unitLabel": "nac servers",
+      "exampleQuantity": 10,
+      "helperText": "Count Cisco ISE PSNs, Aruba ClearPass nodes, or equivalent policy servers exporting authentication and posture events."
+    },
+    "wireless": {
+      "sourceId": "wireless",
+      "question": "How many access points or controllers forward wireless security logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "wireless access points",
+      "exampleQuantity": 10,
+      "helperText": "Count APs (or controller clusters if logs are per-WLC) exporting client/session security events."
+    },
+    "dns": {
+      "sourceId": "dns",
+      "question": "How many DNS systems export query or security logs (not just SNMP)?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "dns servers",
+      "exampleQuantity": 8,
+      "helperText": "Count servers or appliances answering internal DNS that export queries or rpz hits; add resolver clusters as one unit per HA pair if logs are merged."
+    },
+    "dpi": {
+      "sourceId": "dpi",
+      "question": "How many DPI systems or taps export events, and what aggregate inspected throughput?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "dpi systems",
+      "exampleQuantity": 10,
+      "helperText": "Count inline DPI systems or modules generating metadata/PCAP-derived events; use monitored bandwidth as secondary scaling input."
+    },
+    "dhcp": {
+      "sourceId": "dhcp",
+      "question": "How many DHCP servers send lease and conflict events to Splunk?",
+      "primaryInputField": "number_of_servers",
+      "unitLabel": "dhcp servers",
+      "exampleQuantity": 10,
+      "helperText": "Count DHCP server appliances or OS roles that serve leases and forward DHCP logs."
+    },
+    "loadbalancer": {
+      "sourceId": "loadbalancer",
+      "question": "How many load balancers send access and health check logs?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "load balancer devices",
+      "exampleQuantity": 10,
+      "helperText": "Count ADC/LB appliances or managed LBs (per active unit) exporting access and health logs."
+    },
+    "storage_prod": {
+      "sourceId": "storage_prod",
+      "question": "How many production storage systems forward management and security events?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "production storage arrays",
+      "exampleQuantity": 10,
+      "helperText": "Count physical arrays or unified management clusters exporting EMS or audit events, using each vendor's definition of one storage system."
+    },
+    "ics_scada": {
+      "sourceId": "ics_scada",
+      "question": "How many SCADA or OT systems (or monitored segments) forward security-relevant events?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "industrial control or scada systems",
+      "exampleQuantity": 10,
+      "helperText": "Count HMI/SCADA servers, historians, or OT security monitors representing a plant line or cell--not every physical sensor unless each exports logs."
+    },
+    "asset_cmdb": {
+      "sourceId": "asset_cmdb",
+      "question": "How many systems of record regularly push asset or identity snapshots into Splunk?",
+      "primaryInputField": "number_of_assets",
+      "unitLabel": "asset or identity data sources",
+      "exampleQuantity": 10,
+      "helperText": "Count distinct CMDB exports, LDAP/AD 'golden' identity lists, or automated inventory integrations that feed Splunk (one pipeline per upstream system)."
+    },
+    "ot_security": {
+      "sourceId": "ot_security",
+      "question": "How many OT-specific security sensors forward alerts?",
+      "primaryInputField": "number_of_systems",
+      "unitLabel": "ot network security sensors",
+      "exampleQuantity": 10,
+      "helperText": "Count dedicated OT IDS/visibility appliances (often passive) separate from general IT NDR if split in architecture."
+    },
+    "uba": {
+      "sourceId": "uba",
+      "question": "How many users does your UEBA baseline and analyze?",
+      "primaryInputField": "number_of_users",
+      "unitLabel": "analyzed human users",
+      "exampleQuantity": 5000,
+      "helperText": "Interactable workforce identities monitored by UEBA product (usually matches HR-active users)."
+    }
+  }
+}

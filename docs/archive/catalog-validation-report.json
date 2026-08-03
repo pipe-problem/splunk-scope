@@ -1,0 +1,2259 @@
+{
+  "generatedAt": "2026-08-03",
+  "catalogVersion": {
+    "appVersion": "1.8.0",
+    "sourceCatalogVersion": "1.8",
+    "sizingRatesVersion": "1.8",
+    "useCaseMappingVersion": "1.8",
+    "lastUpdated": "2026-05-07",
+    "changeSummary": [
+      "Expanded low/average/high sizing rates for all sources",
+      "Added vendor/model-specific sizing framework",
+      "Added source counting methodology for every source",
+      "Added source-to-use-case mappings",
+      "Expanded log capability mappings",
+      "Wired up startup guide validation checkpoints",
+      "Fixed future module import paths",
+      "Expanded SOURCE_GUIDANCE coverage in startup guide engine",
+      "Added ReviewPage to workflow stepper",
+      "Added source filtering UX improvements",
+      "Improved print/export for all report tabs"
+    ]
+  },
+  "loadedFiles": {
+    "sources": "src/data/sources.json",
+    "sizingRates": "src/data/sizingRates.json",
+    "sourceCountingMethods": "src/data/sourceCountingMethods.json",
+    "sourceUseCaseMappings": "src/data/sourceUseCaseMappings.json",
+    "sourceLogCapabilities": "src/data/sourceLogCapabilities.json",
+    "sizingResearchNotes": "src/data/sizingResearchNotes.json",
+    "vendorModelRates": "src/data/vendorModelRates.json",
+    "technicalAddons": "src/data/technicalAddons.json",
+    "splunkApps": "src/data/splunkApps.json",
+    "catalogVersionFile": "src/data/catalogVersion.json"
+  },
+  "rateAliases": {
+    "firewalls": "firewall_logs",
+    "edr": "edr_logs",
+    "active_directory": "active_directory_security",
+    "vpn": "vpn_logs",
+    "proxy": "proxy_web_gateway",
+    "dns": "dns_logs",
+    "netflow": "netflow_data",
+    "vuln_mgmt": "vulnerability_scanner",
+    "saas_office": "m365_audit_logs",
+    "saas_sso": "okta_sso"
+  },
+  "summary": {
+    "totalSources": 81,
+    "completeMetadata": 58,
+    "partialMetadata": 23,
+    "needsReview": 0,
+    "byCategory": {
+      "Cloud/SaaS Services": {
+        "total": 15,
+        "complete": 14,
+        "partial": 1,
+        "needsReview": 0
+      },
+      "Server": {
+        "total": 17,
+        "complete": 14,
+        "partial": 3,
+        "needsReview": 0
+      },
+      "Database": {
+        "total": 3,
+        "complete": 3,
+        "partial": 0,
+        "needsReview": 0
+      },
+      "Application": {
+        "total": 9,
+        "complete": 3,
+        "partial": 6,
+        "needsReview": 0
+      },
+      "End-User Support": {
+        "total": 5,
+        "complete": 4,
+        "partial": 1,
+        "needsReview": 0
+      },
+      "Security & Compliance": {
+        "total": 11,
+        "complete": 8,
+        "partial": 3,
+        "needsReview": 0
+      },
+      "Networking": {
+        "total": 15,
+        "complete": 10,
+        "partial": 5,
+        "needsReview": 0
+      },
+      "Storage": {
+        "total": 1,
+        "complete": 0,
+        "partial": 1,
+        "needsReview": 0
+      },
+      "OT/ICS": {
+        "total": 2,
+        "complete": 1,
+        "partial": 1,
+        "needsReview": 0
+      },
+      "Application Development": {
+        "total": 2,
+        "complete": 0,
+        "partial": 2,
+        "needsReview": 0
+      },
+      "Business Services": {
+        "total": 1,
+        "complete": 1,
+        "partial": 0,
+        "needsReview": 0
+      }
+    },
+    "criticalGaps": []
+  },
+  "legacyRateKeys": {
+    "count": 16,
+    "keys": [
+      "firewall_logs",
+      "edr_logs",
+      "windows_security_event_log",
+      "sysmon_logs",
+      "active_directory_security",
+      "okta_sso",
+      "m365_audit_logs",
+      "aws_cloudtrail",
+      "vpn_logs",
+      "proxy_web_gateway",
+      "dns_logs",
+      "linux_auth",
+      "netflow_data",
+      "vulnerability_scanner",
+      "application_logs",
+      "kubernetes_logs"
+    ],
+    "aliasCanonicalTargets": [
+      "firewall_logs",
+      "edr_logs",
+      "active_directory_security",
+      "vpn_logs",
+      "proxy_web_gateway",
+      "dns_logs",
+      "netflow_data",
+      "vulnerability_scanner",
+      "m365_audit_logs",
+      "okta_sso"
+    ],
+    "analysis": {
+      "fromAliasCanon": [
+        "firewall_logs",
+        "edr_logs",
+        "active_directory_security",
+        "okta_sso",
+        "m365_audit_logs",
+        "vpn_logs",
+        "proxy_web_gateway",
+        "dns_logs",
+        "netflow_data",
+        "vulnerability_scanner"
+      ],
+      "additionalGranular": [
+        "windows_security_event_log",
+        "sysmon_logs",
+        "aws_cloudtrail",
+        "linux_auth",
+        "application_logs",
+        "kubernetes_logs"
+      ],
+      "note": "Keys in sizingRates.json that are not top-level rows in sources.json include: (1) canonical rate IDs paired with legacy catalog IDs via RATE_ALIASES, (2) channel- or platform-specific rates (e.g. windows_security_event_log, kubernetes_logs) used when additive or alternate sizing paths are documented in sizingRates."
+    }
+  },
+  "technicalAddons": {
+    "addonCount": 24,
+    "supportedSourceReferenceCount": 69
+  },
+  "splunkApps": {
+    "loaded": true,
+    "categoryCount": 8
+  },
+  "sources": [
+    {
+      "id": "iaas",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "iaas",
+        "countingMethod": "iaas",
+        "useCaseMapping": "iaas",
+        "logCapability": "iaas",
+        "logCapabilityVia": null,
+        "vendorModel": "iaas"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "iaas_containers",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "iaas_containers",
+        "countingMethod": "iaas_containers",
+        "useCaseMapping": "iaas_containers",
+        "logCapability": "iaas_containers",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "iaas_instances",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "iaas_instances",
+        "countingMethod": "iaas_instances",
+        "useCaseMapping": "iaas_instances",
+        "logCapability": "iaas_instances",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "iaas_storage",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "iaas_storage",
+        "countingMethod": "iaas_storage",
+        "useCaseMapping": "iaas_storage",
+        "logCapability": "iaas_storage",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "paas",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "paas",
+        "countingMethod": "paas",
+        "useCaseMapping": "paas",
+        "logCapability": "paas",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_general",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_general",
+        "countingMethod": "saas_general",
+        "useCaseMapping": "saas_general",
+        "logCapability": "saas_general",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_office",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_office",
+        "countingMethod": "saas_office",
+        "useCaseMapping": "saas_office",
+        "logCapability": "saas_office",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_crm",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_crm",
+        "countingMethod": "saas_crm",
+        "useCaseMapping": "saas_crm",
+        "logCapability": "saas_crm",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_sso",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_sso",
+        "countingMethod": "saas_sso",
+        "useCaseMapping": "saas_sso",
+        "logCapability": "saas_sso",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_conferencing",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_conferencing",
+        "countingMethod": "saas_conferencing",
+        "useCaseMapping": "saas_conferencing",
+        "logCapability": "saas_conferencing",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "saas_filesharing",
+      "category": "Cloud/SaaS Services",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "saas_filesharing",
+        "countingMethod": "saas_filesharing",
+        "useCaseMapping": "saas_filesharing",
+        "logCapability": "saas_filesharing",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "cspm",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "cspm",
+        "countingMethod": "cspm",
+        "useCaseMapping": "cspm",
+        "logCapability": "cspm",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "cwpp",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "cwpp",
+        "countingMethod": "cwpp",
+        "useCaseMapping": "cwpp",
+        "logCapability": "cwpp",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "casb",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "casb",
+        "countingMethod": "casb",
+        "useCaseMapping": "casb",
+        "logCapability": "casb",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "sase",
+      "category": "Cloud/SaaS Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "sase",
+        "countingMethod": "sase",
+        "useCaseMapping": "sase",
+        "logCapability": "sase",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "windows_servers",
+      "category": "Server",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "windows_servers",
+        "countingMethod": "windows_servers",
+        "useCaseMapping": "windows_servers",
+        "logCapability": "windows_servers",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "security_event_log",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "security_event_log",
+        "countingMethod": "security_event_log",
+        "useCaseMapping": "security_event_log",
+        "logCapability": "security_event_log",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "system_event_log",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "system_event_log",
+        "countingMethod": "system_event_log",
+        "useCaseMapping": "system_event_log",
+        "logCapability": "system_event_log",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "application_event_log",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "application_event_log",
+        "countingMethod": "application_event_log",
+        "useCaseMapping": "application_event_log",
+        "logCapability": "application_event_log",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "setup_event_log",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "setup_event_log",
+        "countingMethod": "setup_event_log",
+        "useCaseMapping": "setup_event_log",
+        "logCapability": "setup_event_log",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "forwarded_events",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "forwarded_events",
+        "countingMethod": "forwarded_events",
+        "useCaseMapping": "forwarded_events",
+        "logCapability": "forwarded_events",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "powershell_operational",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "powershell_operational",
+        "countingMethod": "powershell_operational",
+        "useCaseMapping": "powershell_operational",
+        "logCapability": "powershell_operational",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "sysmon",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "sysmon",
+        "countingMethod": "sysmon",
+        "useCaseMapping": "sysmon",
+        "logCapability": "sysmon",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "windows_defender",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "windows_defender",
+        "countingMethod": "windows_defender",
+        "useCaseMapping": "windows_defender",
+        "logCapability": "windows_defender",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "performance_metrics",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "performance_metrics",
+        "countingMethod": "performance_metrics",
+        "useCaseMapping": "performance_metrics",
+        "logCapability": "performance_metrics",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "iis_logs",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "iis_logs",
+        "countingMethod": "iis_logs",
+        "useCaseMapping": "iis_logs",
+        "logCapability": "iis_logs",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "dns_server_logs",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "dns_server_logs",
+        "countingMethod": "dns_server_logs",
+        "useCaseMapping": "dns_server_logs",
+        "logCapability": "dns_server_logs",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "dhcp_server_logs",
+      "category": "Server",
+      "isChild": true,
+      "isLogOption": true,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "dhcp_server_logs",
+        "countingMethod": "dhcp_server_logs",
+        "useCaseMapping": "dhcp_server_logs",
+        "logCapability": "dhcp_server_logs",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "linux_servers",
+      "category": "Server",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "linux_servers",
+        "countingMethod": "linux_servers",
+        "useCaseMapping": "linux_servers",
+        "logCapability": "linux_servers",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "linux_servers_nonprod",
+      "category": "Server",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "linux_servers_nonprod",
+        "countingMethod": "linux_servers_nonprod",
+        "useCaseMapping": "linux_servers_nonprod",
+        "logCapability": "linux_servers_nonprod",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "mainframe",
+      "category": "Server",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "mainframe",
+        "countingMethod": "mainframe",
+        "useCaseMapping": "mainframe",
+        "logCapability": "mainframe",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "hypervisor",
+      "category": "Server",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "hypervisor",
+        "countingMethod": "hypervisor",
+        "useCaseMapping": "hypervisor",
+        "logCapability": "hypervisor",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "database",
+      "category": "Database",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "database",
+        "countingMethod": "database",
+        "useCaseMapping": "database",
+        "logCapability": "database",
+        "logCapabilityVia": null,
+        "vendorModel": "database"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "db_transaction",
+      "category": "Database",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "db_transaction",
+        "countingMethod": "db_transaction",
+        "useCaseMapping": "db_transaction",
+        "logCapability": "db_transaction",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "db_access",
+      "category": "Database",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "db_access",
+        "countingMethod": "db_access",
+        "useCaseMapping": "db_access",
+        "logCapability": "db_access",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "web_servers",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "web_servers",
+        "countingMethod": "web_servers",
+        "useCaseMapping": "web_servers",
+        "logCapability": "web_servers",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "web_servers_nonprod",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "web_servers_nonprod",
+        "countingMethod": "web_servers_nonprod",
+        "useCaseMapping": "web_servers_nonprod",
+        "logCapability": "web_servers_nonprod",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "app_servers",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "app_servers",
+        "countingMethod": "app_servers",
+        "useCaseMapping": "app_servers",
+        "logCapability": "app_servers",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "app_servers_nonprod",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "app_servers_nonprod",
+        "countingMethod": "app_servers_nonprod",
+        "useCaseMapping": "app_servers_nonprod",
+        "logCapability": "app_servers_nonprod",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "middleware",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "middleware",
+        "countingMethod": "middleware",
+        "useCaseMapping": "middleware",
+        "logCapability": "middleware",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "middleware_nonprod",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "middleware_nonprod",
+        "countingMethod": "middleware_nonprod",
+        "useCaseMapping": "middleware_nonprod",
+        "logCapability": "middleware_nonprod",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "apm",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "apm",
+        "countingMethod": "apm",
+        "useCaseMapping": "apm",
+        "logCapability": "apm",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "pki",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "pki",
+        "countingMethod": "pki",
+        "useCaseMapping": "pki",
+        "logCapability": "pki",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "sap",
+      "category": "Application",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "sap",
+        "countingMethod": "sap",
+        "useCaseMapping": "sap",
+        "logCapability": "sap",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "desktops",
+      "category": "End-User Support",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "desktops",
+        "countingMethod": "desktops",
+        "useCaseMapping": "desktops",
+        "logCapability": "desktops",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "sso_pam",
+      "category": "End-User Support",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "sso_pam",
+        "countingMethod": "sso_pam",
+        "useCaseMapping": "sso_pam",
+        "logCapability": "sso_pam",
+        "logCapabilityVia": null,
+        "vendorModel": "sso_pam"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "active_directory",
+      "category": "End-User Support",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "active_directory",
+        "countingMethod": "active_directory",
+        "useCaseMapping": "active_directory",
+        "logCapability": "active_directory",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "email",
+      "category": "End-User Support",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "email",
+        "countingMethod": "email",
+        "useCaseMapping": "email",
+        "logCapability": "email",
+        "logCapabilityVia": null,
+        "vendorModel": "email"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "mdm",
+      "category": "End-User Support",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "mdm",
+        "countingMethod": "mdm",
+        "useCaseMapping": "mdm",
+        "logCapability": "mdm",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "vuln_mgmt",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "vuln_mgmt",
+        "countingMethod": "vuln_mgmt",
+        "useCaseMapping": "vuln_mgmt",
+        "logCapability": "vuln_mgmt",
+        "logCapabilityVia": null,
+        "vendorModel": "vuln_mgmt"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "netflow",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "netflow",
+        "countingMethod": "netflow",
+        "useCaseMapping": "netflow",
+        "logCapability": "netflow",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "ids_ips",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "ids_ips",
+        "countingMethod": "ids_ips",
+        "useCaseMapping": "ids_ips",
+        "logCapability": "ids_ips",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "threat_intel",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "threat_intel",
+        "countingMethod": "threat_intel",
+        "useCaseMapping": "threat_intel",
+        "logCapability": "threat_intel",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "sandbox",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "sandbox",
+        "countingMethod": "sandbox",
+        "useCaseMapping": "sandbox",
+        "logCapability": "sandbox",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "edr",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "edr",
+        "countingMethod": "edr",
+        "useCaseMapping": "edr",
+        "logCapability": "edr",
+        "logCapabilityVia": null,
+        "vendorModel": "edr"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "ndr",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "ndr",
+        "countingMethod": "ndr",
+        "useCaseMapping": "ndr",
+        "logCapability": "ndr",
+        "logCapabilityVia": null,
+        "vendorModel": "ndr"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "dlp",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "dlp",
+        "countingMethod": "dlp",
+        "useCaseMapping": "dlp",
+        "logCapability": "dlp",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "uba",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "uba",
+        "countingMethod": "uba",
+        "useCaseMapping": "uba",
+        "logCapability": "uba",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "asset_cmdb",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "asset_cmdb",
+        "countingMethod": "asset_cmdb",
+        "useCaseMapping": "asset_cmdb",
+        "logCapability": "asset_cmdb",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "deception",
+      "category": "Security & Compliance",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "deception",
+        "countingMethod": "deception",
+        "useCaseMapping": "deception",
+        "logCapability": "deception",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "firewalls",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "firewalls",
+        "countingMethod": "firewalls",
+        "useCaseMapping": "firewalls",
+        "logCapability": "firewalls",
+        "logCapabilityVia": null,
+        "vendorModel": "firewalls"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "fw_perimeter",
+      "category": "Networking",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "fw_perimeter",
+        "countingMethod": "fw_perimeter",
+        "useCaseMapping": "fw_perimeter",
+        "logCapability": "fw_perimeter",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "fw_internal",
+      "category": "Networking",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "fw_internal",
+        "countingMethod": "fw_internal",
+        "useCaseMapping": "fw_internal",
+        "logCapability": "fw_internal",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "fw_waf",
+      "category": "Networking",
+      "isChild": true,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "fw_waf",
+        "countingMethod": "fw_waf",
+        "useCaseMapping": "fw_waf",
+        "logCapability": "fw_waf",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "switches",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "switches",
+        "countingMethod": "switches",
+        "useCaseMapping": "switches",
+        "logCapability": "switches",
+        "logCapabilityVia": null,
+        "vendorModel": "switches"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "routers",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "routers",
+        "countingMethod": "routers",
+        "useCaseMapping": "routers",
+        "logCapability": "routers",
+        "logCapabilityVia": null,
+        "vendorModel": "routers"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "vpn",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "vpn",
+        "countingMethod": "vpn",
+        "useCaseMapping": "vpn",
+        "logCapability": "vpn",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "proxy",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "proxy",
+        "countingMethod": "proxy",
+        "useCaseMapping": "proxy",
+        "logCapability": "proxy",
+        "logCapabilityVia": null,
+        "vendorModel": "proxy"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "nac",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "nac",
+        "countingMethod": "nac",
+        "useCaseMapping": "nac",
+        "logCapability": "nac",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "dns",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "dns",
+        "countingMethod": "dns",
+        "useCaseMapping": "dns",
+        "logCapability": "dns",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "dhcp",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "dhcp",
+        "countingMethod": "dhcp",
+        "useCaseMapping": "dhcp",
+        "logCapability": "dhcp",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "loadbalancer",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "loadbalancer",
+        "countingMethod": "loadbalancer",
+        "useCaseMapping": "loadbalancer",
+        "logCapability": "loadbalancer",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "ddos",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "ddos",
+        "countingMethod": "ddos",
+        "useCaseMapping": "ddos",
+        "logCapability": "ddos",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "wireless",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "wireless",
+        "countingMethod": "wireless",
+        "useCaseMapping": "wireless",
+        "logCapability": "wireless",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "dpi",
+      "category": "Networking",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "dpi",
+        "countingMethod": "dpi",
+        "useCaseMapping": "dpi",
+        "logCapability": "dpi",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "storage_prod",
+      "category": "Storage",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "storage_prod",
+        "countingMethod": "storage_prod",
+        "useCaseMapping": "storage_prod",
+        "logCapability": "storage_prod",
+        "logCapabilityVia": null,
+        "vendorModel": "storage_prod"
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "ics_scada",
+      "category": "OT/ICS",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": true,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "ics_scada",
+        "countingMethod": "ics_scada",
+        "useCaseMapping": "ics_scada",
+        "logCapability": "ics_scada",
+        "logCapabilityVia": null,
+        "vendorModel": "ics_scada"
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    },
+    {
+      "id": "ot_security",
+      "category": "OT/ICS",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "ot_security",
+        "countingMethod": "ot_security",
+        "useCaseMapping": "ot_security",
+        "logCapability": "ot_security",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "devops_cicd",
+      "category": "Application Development",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "devops_cicd",
+        "countingMethod": "devops_cicd",
+        "useCaseMapping": "devops_cicd",
+        "logCapability": "devops_cicd",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "config_mgmt",
+      "category": "Application Development",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": false
+      },
+      "resolvedKeys": {
+        "sizingRate": "config_mgmt",
+        "countingMethod": "config_mgmt",
+        "useCaseMapping": "config_mgmt",
+        "logCapability": "config_mgmt",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [
+        "researchNote"
+      ],
+      "metadataComplete": false
+    },
+    {
+      "id": "business_txn",
+      "category": "Business Services",
+      "isChild": false,
+      "isLogOption": false,
+      "checks": {
+        "sizing": true,
+        "counting": true,
+        "useCase": true,
+        "logCapability": true,
+        "vendorModel": false,
+        "research": true
+      },
+      "resolvedKeys": {
+        "sizingRate": "business_txn",
+        "countingMethod": "business_txn",
+        "useCaseMapping": "business_txn",
+        "logCapability": "business_txn",
+        "logCapabilityVia": null,
+        "vendorModel": null
+      },
+      "needsReview": false,
+      "missingFields": [],
+      "metadataComplete": true
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Component,Light events/unit/day,Normal events/unit/day,Heavy events/unit/day
+Admin / configuration audit events,100,1000,10000
+Authentication / access security events,2,8,30
+User activity / object/content events,5,40,200
+API / integration events,250,5000,50000

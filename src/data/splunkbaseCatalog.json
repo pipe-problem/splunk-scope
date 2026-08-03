@@ -1,0 +1,1324 @@
+{
+  "version": "1.0.0",
+  "lastRefreshed": "2026-06-02",
+  "description": "Canonical Splunkbase URL catalog for Splunk Scope. URLs marked verified were checked via HTTP.",
+  "entries": [
+    {
+      "id": "splunk_enterprise_security",
+      "name": "Splunk Enterprise Security",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "263",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Enterprise Security",
+        "Splunk ES",
+        "ES"
+      ],
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "edr",
+        "active_directory",
+        "saas_sso"
+      ],
+      "notes": "Premium SIEM app.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/263",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "splunk_es_content_update",
+      "name": "Splunk ES Content Update",
+      "type": "content_pack",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3449",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "ESCU / security content updates for Enterprise Security.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3449",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "splunk_cim",
+      "name": "Splunk Common Information Model (CIM)",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1621",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance",
+        "IT Operations"
+      ],
+      "relatedSourceIds": [],
+      "notes": "Required for CIM-normalized analytics.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1621",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "sa_investigator_es",
+      "name": "SA-Investigator for Enterprise Security",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3749",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3749",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ot_security_addon",
+      "name": "OT Security Add-on for Splunk",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5151",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "OT / ICS",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5151",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ocsf_cim_addon",
+      "name": "OCSF-CIM Add-On for Splunk",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "6841",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/6841",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "splunk_itsi",
+      "name": "Splunk IT Service Intelligence",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1841",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "ITSI",
+        "IT Service Intelligence"
+      ],
+      "sourceFamilies": [
+        "IT Operations",
+        "Observability"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1841",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cisco_appdynamics_addon",
+      "name": "Cisco Splunk Add-on for AppDynamics",
+      "type": "addon",
+      "vendor": "Cisco Systems, Inc.",
+      "splunkbaseAppId": "3471",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Application",
+        "Observability"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3471",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "infra_monitoring_addon",
+      "name": "Splunk Infrastructure Monitoring Add-on",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5247",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Observability",
+        "IT Operations"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5247",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "scom_addon",
+      "name": "Splunk Add-on for Microsoft System Center Operations Manager",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "2729",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "IT Operations",
+        "Server"
+      ],
+      "relatedSourceIds": [
+        "windows_servers"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2729",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_windows",
+      "name": "Splunk Add-on for Microsoft Windows",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "742",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Server",
+        "End-User Support"
+      ],
+      "relatedSourceIds": [
+        "windows_servers",
+        "desktops",
+        "active_directory",
+        "dns"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/742",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_unix_linux",
+      "name": "Splunk Add-on for Unix and Linux",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "833",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Server"
+      ],
+      "relatedSourceIds": [
+        "linux_servers"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/833",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_sysmon",
+      "name": "Sysmon App for Splunk",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3544",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Microsoft Sysmon",
+        "Sysmon"
+      ],
+      "sourceFamilies": [
+        "End-User Support",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "desktops",
+        "windows_servers",
+        "edr"
+      ],
+      "notes": "Splunkbase listing title is Sysmon App for Splunk.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3544",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_aws",
+      "name": "Splunk Add-on for Amazon Web Services (AWS)",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1876",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for AWS"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "iaas",
+        "iaas_storage",
+        "iaas_instances"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1876",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "aws_security_dashboards",
+      "name": "Splunk App for AWS Security Dashboards",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "6311",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Cloud/SaaS Services",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "iaas"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/6311",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "aws_security_hub",
+      "name": "Splunk Add-on for AWS Security Hub",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "8642",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Cloud/SaaS Services",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "iaas",
+        "cspm"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/8642",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_microsoft_cloud_services",
+      "name": "Splunk Add-on for Microsoft Cloud Services",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3110",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "saas_sso",
+        "saas_office"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3110",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_azure",
+      "name": "Splunk Add on for Microsoft Azure",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3757",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Microsoft Azure"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "iaas"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3757",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "azure_app",
+      "name": "Microsoft Azure App for Splunk",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "4882",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "iaas"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4882",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_office_365",
+      "name": "Splunk Add-on for Microsoft Office 365",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "4055",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Microsoft 365",
+        "M365"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services",
+        "End-User Support"
+      ],
+      "relatedSourceIds": [
+        "saas_office",
+        "email",
+        "saas_filesharing"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4055",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_gcp",
+      "name": "Splunk Add-on for Google Cloud Platform",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3088",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "GCP",
+        "Google Cloud"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "iaas",
+        "iaas_storage",
+        "iaas_instances"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3088",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cisco_security_cloud",
+      "name": "Cisco Security Cloud",
+      "type": "app",
+      "vendor": "Cisco Systems, Inc.",
+      "splunkbaseAppId": "7404",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance",
+        "Cloud/SaaS Services",
+        "End-User Support"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "vpn",
+        "switches",
+        "routers",
+        "saas_sso"
+      ],
+      "notes": "Replacement target for deprecated Duo Splunk Connector.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/7404",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_cisco_asa",
+      "name": "Splunk Add-on for Cisco ASA",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1620",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Cisco Security",
+        "Cisco ASA"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "fw_perimeter",
+        "vpn"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1620",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_cisco_ise",
+      "name": "Splunk Add-on for Cisco Identity Services",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1915",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Cisco ISE",
+        "Splunk Add-on for Cisco Identity Services Engine"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "switches",
+        "routers"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1915",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "app_cisco_network_data",
+      "name": "App for Cisco Network Data",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1352",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Cisco Networks App for Splunk",
+        "Splunk App for Cisco Networks"
+      ],
+      "sourceFamilies": [
+        "Networking"
+      ],
+      "relatedSourceIds": [
+        "switches",
+        "routers",
+        "netflow"
+      ],
+      "notes": "Current Cisco network analytics app; replaces deprecated Add-on for Cisco Network Data (1467).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1352",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "deprecated_cisco_network_data",
+      "name": "DEPRECATED Add-on for Cisco Network Data",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1467",
+      "status": "deprecated",
+      "replacementId": "app_cisco_network_data",
+      "sourceFamilies": [
+        "Networking"
+      ],
+      "relatedSourceIds": [
+        "switches",
+        "routers"
+      ],
+      "notes": "Deprecated listing — do not recommend for new deployments.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1467",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cisco_suite",
+      "name": "Cisco Suite for Splunk",
+      "type": "app",
+      "vendor": "Cisco Systems, Inc.",
+      "splunkbaseAppId": "5743",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "switches",
+        "routers",
+        "vpn"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5743",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cisco_secure_firewall",
+      "name": "Cisco Secure Firewall",
+      "type": "app",
+      "vendor": "Cisco Systems, Inc.",
+      "splunkbaseAppId": "7745",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance",
+        "Networking"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "ids_ips"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/7745",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cisco_firepower",
+      "name": "Cisco Firepower",
+      "type": "app",
+      "vendor": "Cisco Systems, Inc.",
+      "splunkbaseAppId": "5995",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance",
+        "Networking"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "ids_ips"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5995",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ccx_cisco_firepower",
+      "name": "CCX Unified Add-on for Cisco Firepower",
+      "type": "addon",
+      "vendor": "CyberCX",
+      "splunkbaseAppId": "5543",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance",
+        "Networking"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "ids_ips"
+      ],
+      "notes": "Partner-supported TA.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5543",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "duo_splunk_connector",
+      "name": "Duo Splunk Connector",
+      "type": "app",
+      "vendor": "Duo Security",
+      "splunkbaseAppId": "3504",
+      "status": "replacementPreferred",
+      "replacementId": "cisco_security_cloud",
+      "sourceFamilies": [
+        "Security & Compliance",
+        "End-User Support"
+      ],
+      "relatedSourceIds": [
+        "saas_sso"
+      ],
+      "notes": "Deprecated 31-May-2026 — Splunkbase directs migration to Cisco Security Cloud (7404).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3504",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_f5",
+      "name": "Splunk Add-on for F5 BIG-IP",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "2680",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Application"
+      ],
+      "relatedSourceIds": [
+        "loadbalancer",
+        "fw_waf"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2680",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_oracle_db",
+      "name": "Splunk Add-on for Oracle Database",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1910",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Database"
+      ],
+      "relatedSourceIds": [
+        "database",
+        "db_transaction",
+        "db_access"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1910",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_jmx",
+      "name": "Splunk Add-on for Java Management Extensions",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "2647",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Application",
+        "Server"
+      ],
+      "relatedSourceIds": [
+        "application_logs"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2647",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_vmware",
+      "name": "Splunk Add-on for VMware Extractions",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5641",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Virtualization",
+        "Server"
+      ],
+      "relatedSourceIds": [
+        "vmware"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5641",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "content_pack_snmp_netflow",
+      "name": "Content Pack for SNMP and NetFlow",
+      "type": "content_pack",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "7712",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Observability"
+      ],
+      "relatedSourceIds": [
+        "netflow",
+        "snmp"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/7712",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cato_cim_addon",
+      "name": "Cato Networks CIM Add-on for Splunk",
+      "type": "addon",
+      "vendor": "Cato Networks",
+      "splunkbaseAppId": "8563",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "sase",
+        "proxy"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/8563",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "nessus_vuln_mapper",
+      "name": "Nessus Vulnerability CIM Mapper",
+      "type": "addon",
+      "vendor": "Community",
+      "splunkbaseAppId": "7968",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance",
+        "Vulnerability"
+      ],
+      "relatedSourceIds": [
+        "vuln_mgmt"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/7968",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "infosec_app",
+      "name": "Splunk InfoSec App",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "4240",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4240",
+      "lastVerified": "2026-06-09"
+    },
+    {
+      "id": "security_essentials",
+      "name": "Splunk Security Essentials",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "3435",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3435",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "splunk_ai_toolkit",
+      "name": "Splunk AI Toolkit",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "2890",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Machine Learning Toolkit",
+        "MLTK",
+        "Machine Learning Toolkit"
+      ],
+      "sourceFamilies": [
+        "Security & Compliance",
+        "IT Operations"
+      ],
+      "relatedSourceIds": [],
+      "notes": "Splunkbase listing title is Splunk AI Toolkit (successor branding for MLTK).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2890",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_okta_identity_cloud",
+      "name": "Splunk Add-on for Okta Identity Cloud",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "6553",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Okta",
+        "Okta",
+        "Okta Identity Cloud"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "saas_sso",
+        "sso_pam"
+      ],
+      "notes": "Official Splunk-built Okta TA; replaces community Okta Identity Cloud Add-on (3682).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/6553",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "okta_identity_cloud_community",
+      "name": "Okta Identity Cloud Add-on for Splunk",
+      "type": "addon",
+      "vendor": "Community",
+      "splunkbaseAppId": "3682",
+      "status": "verified",
+      "replacementId": "ta_okta_identity_cloud",
+      "sourceFamilies": [
+        "Cloud/SaaS Services",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "saas_sso",
+        "sso_pam"
+      ],
+      "notes": "Community TA — prefer Splunk Add-on for Okta Identity Cloud (6553).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3682",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "okta_soar_connector",
+      "name": "Okta",
+      "type": "connector",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5921",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "saas_sso"
+      ],
+      "notes": "Splunk SOAR connector — not an Enterprise TA.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5921",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_fortinet",
+      "name": "Fortinet FortiGate Add-On for Splunk",
+      "type": "addon",
+      "vendor": "Fortinet, Inc.",
+      "splunkbaseAppId": "2846",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Fortinet FortiGate",
+        "FortiGate"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "vpn"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2846",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "fortinet_app",
+      "name": "Fortinet FortiGate App for Splunk",
+      "type": "app",
+      "vendor": "Fortinet, Inc.",
+      "splunkbaseAppId": "2800",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls"
+      ],
+      "notes": "Visualization app — pair with Fortinet FortiGate Add-On (2846).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2800",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_palo_alto",
+      "name": "Palo Alto Networks Add-on for Splunk",
+      "type": "addon",
+      "vendor": "Palo Alto Networks",
+      "splunkbaseAppId": "2757",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Palo Alto Networks"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls",
+        "vpn"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/2757",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_crowdstrike",
+      "name": "Splunk Add-on for CrowdStrike FDR",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5579",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for CrowdStrike",
+        "CrowdStrike Falcon"
+      ],
+      "sourceFamilies": [
+        "End-User Support",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "edr"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5579",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_zscaler",
+      "name": "Zscaler Technical Add-On for Splunk",
+      "type": "addon",
+      "vendor": "Zscaler",
+      "splunkbaseAppId": "3865",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Zscaler"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "proxy",
+        "sase",
+        "casb"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3865",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_proofpoint_on_demand",
+      "name": "Proofpoint On Demand Email Security Add-on",
+      "type": "addon",
+      "vendor": "Proofpoint Splunk Integrations",
+      "splunkbaseAppId": "4327",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Proofpoint on Demand",
+        "Proofpoint"
+      ],
+      "sourceFamilies": [
+        "Email Security",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "email"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4327",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_proofpoint_syslog",
+      "name": "Proofpoint Email Security Add-On using Remote Syslog",
+      "type": "addon",
+      "vendor": "Proofpoint Splunk Integrations",
+      "splunkbaseAppId": "3080",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Email Security"
+      ],
+      "relatedSourceIds": [
+        "email"
+      ],
+      "notes": "On-premises Proofpoint Protection Server syslog path.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/3080",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_servicenow",
+      "name": "Splunk Add-on for ServiceNow",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1928",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "IT Operations",
+        "Business Analytics"
+      ],
+      "relatedSourceIds": [
+        "asset_cmdb"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1928",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_tenable",
+      "name": "Tenable Add-On for Splunk",
+      "type": "addon",
+      "vendor": "Tenable, Inc.",
+      "splunkbaseAppId": "4060",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Tenable"
+      ],
+      "sourceFamilies": [
+        "Vulnerability",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "vuln_mgmt"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4060",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "checkpoint_app",
+      "name": "Check Point App for Splunk",
+      "type": "app",
+      "vendor": "Check Point",
+      "splunkbaseAppId": "4293",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Check Point Log Exporter Add-on for Splunk"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "firewalls"
+      ],
+      "notes": "Uses Check Point Log Exporter for syslog ingestion.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4293",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "app_stream",
+      "name": "Splunk App for Stream",
+      "type": "app",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1809",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Observability"
+      ],
+      "relatedSourceIds": [
+        "netflow"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1809",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "splunk_soar",
+      "name": "Splunk SOAR",
+      "type": "unknown",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": null,
+      "status": "needsReview",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "No verified Splunk Enterprise Splunkbase listing ID — SOAR uses separate on-prem/cloud app packaging.",
+      "splunkbaseUrl": null,
+      "lastVerified": null
+    },
+    {
+      "id": "splunk_uba",
+      "name": "Splunk User Behavior Analytics",
+      "type": "unknown",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": null,
+      "status": "needsReview",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "Prior Splunkbase ID 4502 no longer resolves to UBA — verify current packaging with Splunk account team.",
+      "splunkbaseUrl": null,
+      "lastVerified": null
+    },
+    {
+      "id": "splunk_mission_control",
+      "name": "Splunk Mission Control",
+      "type": "unknown",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": null,
+      "status": "needsReview",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [],
+      "notes": "Prior Splunkbase ID 5703 no longer resolves to Mission Control — verify current packaging.",
+      "splunkbaseUrl": null,
+      "lastVerified": null
+    },
+    {
+      "id": "ta_snmp",
+      "name": "Splunk Connect for SNMP",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "6266",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for SNMP Modular Input",
+        "SNMP Modular Input"
+      ],
+      "sourceFamilies": [
+        "Networking",
+        "IT Operations"
+      ],
+      "relatedSourceIds": [
+        "snmp"
+      ],
+      "notes": "Splunk-supported successor to legacy SNMP modular input listings (4094 recycled).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/6266",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_google_workspace",
+      "name": "Splunk Add-on for Google Workspace",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5556",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "saas_office"
+      ],
+      "notes": "",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5556",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "cloudflare_app",
+      "name": "Cloudflare App for Splunk",
+      "type": "app",
+      "vendor": "Cloudflare, Inc.",
+      "splunkbaseAppId": "4501",
+      "status": "verified",
+      "replacementId": null,
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "proxy"
+      ],
+      "notes": "Dashboards for Cloudflare Logpush/HEC data; pair with Logpush to Splunk HEC.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/4501",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_cloudflare",
+      "name": "Splunk Add-on for Cloudflare",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": null,
+      "status": "replacementPreferred",
+      "replacementId": "cloudflare_app",
+      "sourceFamilies": [
+        "Networking",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "proxy"
+      ],
+      "notes": "Prior Splunkbase ID 4912 recycled — no official Splunk TA listing. Use Cloudflare App (4501) with Logpush to HEC.",
+      "splunkbaseUrl": null,
+      "lastVerified": null
+    },
+    {
+      "id": "ta_sophos",
+      "name": "Splunk Add-on for Sophos",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "1854",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Sophos Endpoint Protection"
+      ],
+      "sourceFamilies": [
+        "End-User Support",
+        "Security & Compliance"
+      ],
+      "relatedSourceIds": [
+        "edr",
+        "av_edr_legacy"
+      ],
+      "notes": "Legacy on-prem endpoint events; for Sophos Central API use Sophos Central (6186) separately.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/1854",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_kubernetes",
+      "name": "Splunk OpenTelemetry Collector for Kubernetes",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "6264",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Connect for Kubernetes"
+      ],
+      "sourceFamilies": [
+        "Containers",
+        "Observability"
+      ],
+      "relatedSourceIds": [
+        "kubernetes"
+      ],
+      "notes": "Splunk-supported successor to legacy Splunk Connect for Kubernetes (3740 recycled).",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/6264",
+      "lastVerified": "2026-06-02"
+    },
+    {
+      "id": "ta_oracle_cloud",
+      "name": "Splunk Addon for Oracle Cloud Infrastructure (OCI)",
+      "type": "addon",
+      "vendor": "Splunk LLC",
+      "splunkbaseAppId": "5222",
+      "status": "verified",
+      "replacementId": null,
+      "aliases": [
+        "Splunk Add-on for Oracle Cloud Infrastructure"
+      ],
+      "sourceFamilies": [
+        "Cloud/SaaS Services"
+      ],
+      "relatedSourceIds": [
+        "iaas"
+      ],
+      "notes": "Pull-based OCI Logging/Streaming ingestion; prior ID 4782 returned 404.",
+      "splunkbaseUrl": "https://splunkbase.splunk.com/app/5222",
+      "lastVerified": "2026-06-02"
+    }
+  ]
+}

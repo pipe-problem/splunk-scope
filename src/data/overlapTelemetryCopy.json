@@ -1,0 +1,447 @@
+{
+  "pairs": {
+    "firewalls__ids_ips": {
+      "summary": "Perimeter firewall and standalone IDS/IPS often record the same attacks from different collection points.",
+      "sharedTelemetry": [
+        {
+          "label": "Intrusion alerts",
+          "example": "Snort/Suricata signatures mirrored in firewall threat logs"
+        },
+        {
+          "label": "Flow records",
+          "example": "NetFlow or IPFIX exported by both appliances"
+        },
+        {
+          "label": "Blocked connection events",
+          "example": "Deny actions logged twice when IPS is inline on the firewall"
+        }
+      ]
+    },
+    "firewalls__ndr": {
+      "summary": "Firewall flow logs and NDR behavioral analytics may describe the same sessions.",
+      "sharedTelemetry": [
+        {
+          "label": "Flow records",
+          "example": "East-west and north-south sessions seen in both pipelines"
+        },
+        {
+          "label": "Lateral movement alerts",
+          "example": "Beaconing or rare-port activity flagged by NDR and firewall UTM"
+        },
+        {
+          "label": "Metadata enrichments",
+          "example": "User, app, or threat labels attached to the same five-tuple"
+        }
+      ]
+    },
+    "firewalls__proxy": {
+      "summary": "Next-gen firewalls with explicit proxy or SWG modules can duplicate dedicated proxy appliance logs.",
+      "sharedTelemetry": [
+        {
+          "label": "Web access logs",
+          "example": "URL, category, and action for the same user sessions"
+        },
+        {
+          "label": "SSL inspection events",
+          "example": "Decrypt policy outcomes on HTTPS traffic"
+        },
+        {
+          "label": "Threat blocks",
+          "example": "Malware or C2 blocks on outbound web sessions"
+        }
+      ]
+    },
+    "firewalls__sase": {
+      "summary": "On-prem firewalls and cloud SASE may overlap when remote users hairpin through both.",
+      "sharedTelemetry": [
+        {
+          "label": "VPN or ZTNA sessions",
+          "example": "Connect/disconnect and policy results"
+        },
+        {
+          "label": "Flow records",
+          "example": "Same user traffic logged at perimeter and SASE edge"
+        },
+        {
+          "label": "Threat blocks",
+          "example": "Malware or C2 blocks reported by both control planes"
+        }
+      ]
+    },
+    "ids_ips__ndr": {
+      "summary": "Standalone IDS/IPS and NDR platforms may both alert on the same network sessions.",
+      "sharedTelemetry": [
+        {
+          "label": "Signature alerts",
+          "example": "Snort/Suricata or vendor IPS events on identical flows"
+        },
+        {
+          "label": "Anomaly detections",
+          "example": "Beaconing, port scan, or C2 patterns flagged twice"
+        },
+        {
+          "label": "Packet or flow metadata",
+          "example": "Five-tuple and byte counts from TAP vs. span collection"
+        }
+      ]
+    },
+    "ids_ips__sase": {
+      "summary": "Cloud SASE with inline IPS may reproduce alerts already collected from on-prem IDS.",
+      "sharedTelemetry": [
+        {
+          "label": "Threat prevention logs",
+          "example": "IPS signature hits on remote-user traffic"
+        },
+        {
+          "label": "SSL-decrypted sessions",
+          "example": "Same HTTPS flows inspected at SASE edge and data-center IDS"
+        }
+      ]
+    },
+    "ndr__netflow": {
+      "summary": "NDR sensors and NetFlow collectors often summarize the same network conversations.",
+      "sharedTelemetry": [
+        {
+          "label": "Flow records",
+          "example": "NetFlow, IPFIX, or sFlow exported to both pipelines"
+        },
+        {
+          "label": "Session volume metrics",
+          "example": "Bytes and packets per five-tuple used for baselines"
+        },
+        {
+          "label": "Rare-port or beaconing flags",
+          "example": "Behavioral analytics derived from the same flow feed"
+        }
+      ]
+    },
+    "proxy__sase": {
+      "summary": "Traditional web proxy and SASE platforms can both emit web access and SSL inspection logs.",
+      "sharedTelemetry": [
+        {
+          "label": "Web access logs",
+          "example": "URL, category, and action for the same user sessions"
+        },
+        {
+          "label": "SSL decryption events",
+          "example": "Policy allow/deny on HTTPS traffic"
+        },
+        {
+          "label": "Sign-in events",
+          "example": "Identity context when SASE brokered the session"
+        }
+      ]
+    },
+    "casb__proxy": {
+      "summary": "Dedicated proxy/SWG and CASB may both log sanctioned and unsanctioned cloud app usage.",
+      "sharedTelemetry": [
+        {
+          "label": "Cloud app discovery",
+          "example": "Shadow IT or OAuth grant events"
+        },
+        {
+          "label": "Web access logs",
+          "example": "SaaS URLs and categories from SWG and CASB inline"
+        },
+        {
+          "label": "DLP policy hits",
+          "example": "Sensitive data upload blocks on the same sessions"
+        }
+      ]
+    },
+    "casb__sase": {
+      "summary": "SSE platforms often bundle CASB and SWG, producing overlapping cloud governance telemetry.",
+      "sharedTelemetry": [
+        {
+          "label": "Cloud app governance",
+          "example": "Sanctioned/unsanctioned SaaS usage"
+        },
+        {
+          "label": "Identity-aware web logs",
+          "example": "User-to-app sessions brokered by SASE"
+        },
+        {
+          "label": "Compliance or DLP alerts",
+          "example": "Policy violations on cloud storage or messaging"
+        }
+      ]
+    },
+    "casb__saas_office": {
+      "summary": "CASB inline policies and native M365 audit streams may describe the same user activity.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Entra ID sign-ins seen in CASB and Unified Audit Log"
+        },
+        {
+          "label": "File sharing activity",
+          "example": "SharePoint/OneDrive access logged by CASB and M365 audit"
+        },
+        {
+          "label": "Admin or compliance alerts",
+          "example": "Defender or compliance signals in both pipelines"
+        }
+      ]
+    },
+    "casb__saas_general": {
+      "summary": "General SaaS sizing rows may already include CASB-covered app audit volume.",
+      "sharedTelemetry": [
+        {
+          "label": "SaaS audit logs",
+          "example": "OAuth, admin, and user activity across cloud apps"
+        },
+        {
+          "label": "Sign-in events",
+          "example": "IdP or app-specific authentication records"
+        }
+      ]
+    },
+    "firewalls__vpn": {
+      "summary": "VPN appliances integrated on firewalls often duplicate connect and session telemetry.",
+      "sharedTelemetry": [
+        {
+          "label": "VPN session logs",
+          "example": "User connect, disconnect, and assigned IP"
+        },
+        {
+          "label": "Authentication events",
+          "example": "RADIUS or SAML outcomes logged twice"
+        },
+        {
+          "label": "Flow records",
+          "example": "Encrypted tunnel traffic summarized in firewall flows"
+        }
+      ]
+    },
+    "sase__vpn": {
+      "summary": "Legacy VPN concentrators and SASE ZTNA may both log remote-access sessions during migration.",
+      "sharedTelemetry": [
+        {
+          "label": "Remote access sessions",
+          "example": "Connect, disconnect, and posture check results"
+        },
+        {
+          "label": "Authentication events",
+          "example": "SAML or MFA outcomes for the same users"
+        },
+        {
+          "label": "Tunnel or agent telemetry",
+          "example": "Client health and routing decisions"
+        }
+      ]
+    },
+    "cspm__cwpp": {
+      "summary": "Cloud posture and workload protection from one vendor can emit overlapping control-plane and runtime findings.",
+      "sharedTelemetry": [
+        {
+          "label": "Misconfiguration alerts",
+          "example": "Public bucket or open security group flagged by both products"
+        },
+        {
+          "label": "Compliance findings",
+          "example": "CIS benchmark failures on the same cloud account"
+        },
+        {
+          "label": "Runtime detections",
+          "example": "Suspicious process or container activity"
+        }
+      ]
+    },
+    "cspm__iaas": {
+      "summary": "CSPM posture findings and raw IaaS control-plane logs (CloudTrail, Activity Log, Admin Activity) often describe the same cloud accounts and configuration changes.",
+      "sharedTelemetry": [
+        {
+          "label": "Configuration change events",
+          "example": "Security group, IAM, or storage policy updates"
+        },
+        {
+          "label": "Compliance posture",
+          "example": "Misconfiguration alerts vs. native audit records"
+        },
+        {
+          "label": "Account-level inventory",
+          "example": "Same AWS accounts or Azure subscriptions in both pipelines"
+        }
+      ]
+    },
+    "casb__cspm": {
+      "summary": "CASB SaaS policy logs and CSPM cloud posture may overlap when the same cloud tenant is monitored by both SSE and posture tools.",
+      "sharedTelemetry": [
+        {
+          "label": "Cloud app governance",
+          "example": "Sanctioned/unsanctioned cloud services"
+        },
+        {
+          "label": "Identity context",
+          "example": "User-to-cloud-resource access patterns"
+        }
+      ]
+    },
+    "cwpp__iaas": {
+      "summary": "CWPP runtime telemetry and IaaS control-plane logs may reference the same cloud accounts and workloads.",
+      "sharedTelemetry": [
+        {
+          "label": "Workload inventory",
+          "example": "VM, container, or serverless assets in the same accounts"
+        },
+        {
+          "label": "Runtime detections",
+          "example": "Process or container alerts tied to cloud instance IDs"
+        },
+        {
+          "label": "Configuration drift",
+          "example": "Image or deployment changes visible in audit and CWPP"
+        }
+      ]
+    },
+    "cwpp__edr": {
+      "summary": "CWPP on VMs and EDR on the same hosts can double-count process and file activity.",
+      "sharedTelemetry": [
+        {
+          "label": "Process execution",
+          "example": "Container or host process trees logged by both agents"
+        },
+        {
+          "label": "File integrity events",
+          "example": "Malware or tampering alerts on the same binaries"
+        },
+        {
+          "label": "Runtime threat detections",
+          "example": "Suspicious script or lateral movement on workloads"
+        }
+      ]
+    },
+    "edr__windows_servers": {
+      "summary": "EDR streaming and native Windows Security events can double-count the same host activity.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Event ID 4624/4625 collected by agent and WinEvent forwarder"
+        },
+        {
+          "label": "Process creation",
+          "example": "4688 or EDR process trees for the same execution"
+        },
+        {
+          "label": "Audit logs",
+          "example": "PowerShell, service changes, or registry modifications"
+        }
+      ]
+    },
+    "active_directory__windows_servers": {
+      "summary": "Domain controller Security events and member-server WinEvent logs may overlap for auth and policy activity.",
+      "sharedTelemetry": [
+        {
+          "label": "Authentication events",
+          "example": "Kerberos, NTLM, or LDAP bind outcomes"
+        },
+        {
+          "label": "Group Policy changes",
+          "example": "Policy application logged on DCs and members"
+        },
+        {
+          "label": "Account lifecycle",
+          "example": "User/group create, modify, disable across DC and member logs"
+        }
+      ]
+    },
+    "active_directory__saas_sso": {
+      "summary": "On-prem AD Security events and cloud IdP sign-in logs may describe the same identities.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Hybrid auth with sync'd UPNs in Entra and AD"
+        },
+        {
+          "label": "Account changes",
+          "example": "User provisioning visible in AD and IdP audit"
+        },
+        {
+          "label": "Failed authentication",
+          "example": "Lockout or bad-password signals in both streams"
+        }
+      ]
+    },
+    "active_directory__sso_pam": {
+      "summary": "AD domain events and PAM/SSO audit logs may duplicate privileged access activity.",
+      "sharedTelemetry": [
+        {
+          "label": "Privileged sign-in",
+          "example": "Admin logon to DC vs. PAM session start"
+        },
+        {
+          "label": "Credential use",
+          "example": "Kerberos ticket or vault checkout for the same admin"
+        },
+        {
+          "label": "Account management",
+          "example": "Group membership changes in AD and IdP"
+        }
+      ]
+    },
+    "saas_general__saas_office": {
+      "summary": "Dedicated M365 sizing and a blended SaaS row may both include the same audit volume.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Azure AD / Entra sign-in logs in M365 and general SaaS totals"
+        },
+        {
+          "label": "Audit logs",
+          "example": "Exchange, SharePoint, or Teams admin activity"
+        },
+        {
+          "label": "Security alerts",
+          "example": "Defender or compliance signals already in M365 audit streams"
+        }
+      ]
+    },
+    "saas_office__saas_sso": {
+      "summary": "M365 Unified Audit Log and standalone IdP sign-in feeds may overlap for the same tenants.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Entra sign-ins in M365 audit and IdP export"
+        },
+        {
+          "label": "Admin activity",
+          "example": "Tenant configuration changes logged twice"
+        },
+        {
+          "label": "Conditional access",
+          "example": "Policy evaluation outcomes in both pipelines"
+        }
+      ]
+    },
+    "saas_general__saas_sso": {
+      "summary": "General SaaS totals often include IdP sign-in volume already sized in a dedicated SSO row.",
+      "sharedTelemetry": [
+        {
+          "label": "Sign-in events",
+          "example": "Okta, Entra, or PingFederate authentication logs"
+        },
+        {
+          "label": "App assignment changes",
+          "example": "OAuth or SAML federation updates"
+        }
+      ]
+    },
+    "saas_sso__sso_pam": {
+      "summary": "IdP sign-in logs and PAM session audit may duplicate privileged authentication events.",
+      "sharedTelemetry": [
+        {
+          "label": "Privileged sign-in",
+          "example": "Break-glass or vault-initiated admin sessions"
+        },
+        {
+          "label": "MFA outcomes",
+          "example": "Step-up auth logged by IdP and PAM"
+        },
+        {
+          "label": "Federation events",
+          "example": "SAML/OIDC assertions for the same admin users"
+        }
+      ]
+    }
+  }
+}

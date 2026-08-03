@@ -1,0 +1,71 @@
+{
+  "description": "Modeled Splunk ingest planning defaults measured from synthetic raw event samples — not official vendor sizing.",
+  "platforms": {
+    "generic_kubernetes": {
+      "label": "Kubernetes / Generic",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.000318, "medium": 0.004, "high": 0.064 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0033, "medium": 0.067, "high": 1.06 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.000145, "medium": 0.0021, "high": 0.03 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.00004, "medium": 0.0011, "high": 0.032 }
+      }
+    },
+    "openshift": {
+      "label": "Red Hat OpenShift",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.000373, "medium": 0.0046, "high": 0.069 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0037, "medium": 0.073, "high": 1.11 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.000172, "medium": 0.0024, "high": 0.033 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.000049, "medium": 0.0013, "high": 0.034 }
+      }
+    },
+    "eks": {
+      "label": "Amazon EKS",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.000408, "medium": 0.0049, "high": 0.073 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0037, "medium": 0.072, "high": 1.11 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.00019, "medium": 0.0025, "high": 0.035 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.000048, "medium": 0.0013, "high": 0.034 }
+      }
+    },
+    "aks": {
+      "label": "Azure AKS",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.000455, "medium": 0.0054, "high": 0.077 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0036, "medium": 0.071, "high": 1.1 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.000214, "medium": 0.0028, "high": 0.037 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.000046, "medium": 0.0013, "high": 0.033 }
+      }
+    },
+    "gke": {
+      "label": "Google GKE",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.0004, "medium": 0.0049, "high": 0.072 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0039, "medium": 0.075, "high": 1.14 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.000186, "medium": 0.0025, "high": 0.034 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.000048, "medium": 0.0013, "high": 0.034 }
+      }
+    },
+    "average_blended": {
+      "label": "Average / Blended",
+      "components": {
+        "control_plane": { "label": "Control-plane logs", "unit": "cluster", "low": 0.000391, "medium": 0.0048, "high": 0.071 },
+        "audit_events": { "label": "Audit/events", "unit": "cluster", "low": 0.0036, "medium": 0.072, "high": 1.1 },
+        "node_infra": { "label": "Node/infrastructure logs", "unit": "node", "low": 0.000182, "medium": 0.0025, "high": 0.034 },
+        "container_stdout": { "label": "Container stdout logs", "unit": "pod/container", "low": 0.000046, "medium": 0.0013, "high": 0.033 }
+      }
+    }
+  },
+  "overlapSourceIds": [
+    "iaas",
+    "iaas_instances",
+    "app_servers",
+    "app_servers_nonprod",
+    "web_servers",
+    "apm",
+    "middleware",
+    "middleware_nonprod",
+    "linux_servers",
+    "business_txn"
+  ]
+}

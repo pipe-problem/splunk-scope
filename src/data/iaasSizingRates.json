@@ -1,0 +1,198 @@
+{
+  "description": "Modeled Splunk ingest planning defaults for IaaS — not official vendor sizing.",
+  "standardProviderRates": {
+    "aws": {
+      "label": "AWS",
+      "unit": "account",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.3,
+      "high": 3.0
+    },
+    "azure": {
+      "label": "Microsoft Azure",
+      "unit": "subscription",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.35,
+      "high": 3.5
+    },
+    "gcp": {
+      "label": "GCP",
+      "unit": "project",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.3,
+      "high": 3.0
+    },
+    "oci": {
+      "label": "Oracle OCI",
+      "unit": "tenancy / compartment",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.3,
+      "high": 3.0
+    },
+    "ibm": {
+      "label": "IBM Cloud",
+      "unit": "account",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.3,
+      "high": 3.25
+    },
+    "average": {
+      "label": "Average / Unknown",
+      "unit": "cloud account equivalent",
+      "accountFieldLabel": "Number of cloud accounts",
+      "low": 0.05,
+      "medium": 0.3,
+      "high": 3.25
+    }
+  },
+  "advancedScopes": [
+    {
+      "id": "cloud_audit",
+      "label": "Cloud audit / control-plane logs",
+      "countKey": "accountLikeContainers",
+      "confidence": "medium"
+    },
+    {
+      "id": "compute_platform",
+      "label": "Compute / instance platform events",
+      "countKey": "instances",
+      "confidence": "medium"
+    },
+    {
+      "id": "network_flow",
+      "label": "Network flow logs",
+      "countKey": "flowLogInterfaces",
+      "confidence": "low"
+    },
+    {
+      "id": "storage_access",
+      "label": "Cloud storage access / audit logs",
+      "countKey": "storageBuckets",
+      "confidence": "low"
+    },
+    {
+      "id": "k8s_control_plane",
+      "label": "Kubernetes control-plane logs",
+      "countKey": "kubernetesClusters",
+      "confidence": "low"
+    },
+    {
+      "id": "k8s_audit_events",
+      "label": "Kubernetes audit / events",
+      "countKey": "kubernetesClusters",
+      "confidence": "low"
+    },
+    {
+      "id": "pod_stdout",
+      "label": "Pod / container stdout logs",
+      "countKey": "containersOrPods",
+      "confidence": "low"
+    },
+    {
+      "id": "config_inventory",
+      "label": "Configuration / inventory / posture logs",
+      "countKey": "accountLikeContainers",
+      "confidence": "medium"
+    }
+  ],
+  "advancedCountFields": [
+    {
+      "key": "accountLikeContainers",
+      "label": "Cloud accounts / subscriptions / projects",
+      "helper": "How many cloud account-like containers will send audit/config logs?"
+    },
+    {
+      "key": "instances",
+      "label": "Instances / VMs",
+      "helper": "How many cloud VMs will send platform or instance activity logs?"
+    },
+    {
+      "key": "flowLogInterfaces",
+      "label": "VMs / NICs with flow logs",
+      "helper": "How many VMs, NICs, or equivalent network interfaces have flow logs enabled?"
+    },
+    {
+      "key": "storageBuckets",
+      "label": "Buckets / storage accounts",
+      "helper": "How many buckets or storage accounts will send access or data-event logs?"
+    },
+    {
+      "key": "kubernetesClusters",
+      "label": "Kubernetes clusters",
+      "helper": "How many managed Kubernetes clusters will send control-plane or audit logs?"
+    },
+    {
+      "key": "containersOrPods",
+      "label": "Containers / pods",
+      "helper": "How many containers or pods will send stdout/application logs?"
+    }
+  ],
+  "advancedScopeRates": {
+    "aws": {
+      "cloud_audit": { "unit": "account", "low": 0.0097, "medium": 0.078, "high": 0.855 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.000026, "medium": 0.000289, "high": 0.0031 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.001, "medium": 0.01, "high": 0.05 },
+      "storage_access": { "unit": "bucket", "low": 0.0037, "medium": 0.03, "high": 0.555 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.0029, "medium": 0.017, "high": 0.196 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000847, "medium": 0.0085, "high": 0.155 },
+      "config_inventory": { "unit": "account", "low": 0.00032, "medium": 0.0035, "high": 0.051 }
+    },
+    "azure": {
+      "cloud_audit": { "unit": "subscription", "low": 0.012, "medium": 0.098, "high": 0.987 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.000034, "medium": 0.000374, "high": 0.0035 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.0032, "medium": 0.035, "high": 0.341 },
+      "storage_access": { "unit": "storage account", "low": 0.0038, "medium": 0.031, "high": 0.562 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.0031, "medium": 0.018, "high": 0.2 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000843, "medium": 0.0085, "high": 0.154 },
+      "config_inventory": { "unit": "subscription", "low": 0.000407, "medium": 0.0044, "high": 0.058 }
+    },
+    "gcp": {
+      "cloud_audit": { "unit": "project", "low": 0.011, "medium": 0.088, "high": 0.917 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.000029, "medium": 0.000325, "high": 0.0033 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.0026, "medium": 0.03, "high": 0.314 },
+      "storage_access": { "unit": "bucket", "low": 0.0038, "medium": 0.031, "high": 0.557 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.003, "medium": 0.017, "high": 0.196 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000847, "medium": 0.0084, "high": 0.154 },
+      "config_inventory": { "unit": "project", "low": 0.000356, "medium": 0.0039, "high": 0.054 }
+    },
+    "oci": {
+      "cloud_audit": { "unit": "tenancy / compartment", "low": 0.011, "medium": 0.09, "high": 0.931 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.00003, "medium": 0.000335, "high": 0.0033 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.0025, "medium": 0.028, "high": 0.308 },
+      "storage_access": { "unit": "bucket", "low": 0.004, "medium": 0.033, "high": 0.574 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.0029, "medium": 0.017, "high": 0.196 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000845, "medium": 0.0085, "high": 0.155 },
+      "config_inventory": { "unit": "tenancy / compartment", "low": 0.000367, "medium": 0.004, "high": 0.055 }
+    },
+    "ibm": {
+      "cloud_audit": { "unit": "account", "low": 0.0095, "medium": 0.077, "high": 0.842 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.000031, "medium": 0.000343, "high": 0.0034 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.0028, "medium": 0.031, "high": 0.324 },
+      "storage_access": { "unit": "bucket", "low": 0.0038, "medium": 0.031, "high": 0.562 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.0031, "medium": 0.018, "high": 0.199 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000847, "medium": 0.0084, "high": 0.154 },
+      "config_inventory": { "unit": "account", "low": 0.000374, "medium": 0.0041, "high": 0.055 }
+    },
+    "average": {
+      "cloud_audit": { "unit": "account equivalent", "low": 0.011, "medium": 0.086, "high": 0.906 },
+      "compute_platform": { "unit": "instance / VM", "low": 0.00003, "medium": 0.000333, "high": 0.0033 },
+      "network_flow": { "unit": "VM / NIC", "low": 0.0024, "medium": 0.027, "high": 0.268 },
+      "storage_access": { "unit": "bucket / storage account", "low": 0.0038, "medium": 0.031, "high": 0.562 },
+      "k8s_control_plane": { "unit": "cluster", "low": 0.003, "medium": 0.017, "high": 0.197 },
+      "k8s_audit_events": { "unit": "cluster", "low": 0.013, "medium": 0.107, "high": 1.04 },
+      "pod_stdout": { "unit": "container", "low": 0.000846, "medium": 0.0084, "high": 0.154 },
+      "config_inventory": { "unit": "account equivalent", "low": 0.000365, "medium": 0.004, "high": 0.055 }
+    }
+  },
+  "overlapChildSourceIds": ["iaas_containers", "iaas_instances", "iaas_storage"]
+}

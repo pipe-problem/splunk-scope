@@ -1,0 +1,97 @@
+{
+  "description": "Conservative planning guardrails from the original sizing calculator sheet. Applied as floors via max(additive, guardrail) for normal planning profiles — not blind overrides.",
+  "notes": {
+    "crm": "CRM sizing includes a planning guardrail based on active CRM users to avoid underestimating record and activity volume.",
+    "office": "Office productivity sizing uses the largest user/mailbox/collaboration basis for planning guardrails.",
+    "sso": "Identity sizing uses a conservative active-user planning guardrail because sign-in, MFA, policy, and application access events can vary significantly.",
+    "saas_audit_only": "Audit-only tenant baseline. User activity and integrations are not included.",
+    "office_audit_only": "Audit-only productivity logging. Mail, file, and collaboration activity are not fully included.",
+    "containers": "The original sizing sheet treated container/platform logging as a high-level item. Scope sizes it more accurately from clusters, nodes, and containers.",
+    "cloud_storage_full": "Full storage access logs can be much larger than management audit logs because every GET/PUT/READ/WRITE-style event may generate activity.",
+    "firewalls": "Firewall ingest is driven by traffic volume, protected users, policy logging, and threat logs — not only device count."
+  },
+  "guardrails": [
+    {
+      "sourceId": "saas_general",
+      "applyMode": "max_with_additive",
+      "profileField": "saasCollectionProfile",
+      "appliesToProfiles": ["standard_activity", "full_activity"],
+      "tenantRates": { "lowPerUnit": 0.06, "expectedPerUnit": 0.15, "highPerUnit": 0.3 },
+      "userRates": { "lowPerUnit": 0.002, "expectedPerUnit": 0.005, "highPerUnit": 0.01 },
+      "noteKey": null
+    },
+    {
+      "sourceId": "saas_crm",
+      "applyMode": "max_with_additive",
+      "profileField": "crmCollectionProfile",
+      "appliesToProfiles": ["standard_crm_activity", "full_crm_activity"],
+      "userRates": { "lowPerUnit": 0.002, "expectedPerUnit": 0.005, "highPerUnit": 0.01 },
+      "noteKey": "crm"
+    },
+    {
+      "sourceId": "saas_office",
+      "applyMode": "max_with_additive",
+      "profileField": "officeCollectionProfile",
+      "appliesToProfiles": ["standard_activity", "full_activity"],
+      "userRates": { "lowPerUnit": 0.002, "expectedPerUnit": 0.005, "highPerUnit": 0.01 },
+      "noteKey": "office"
+    },
+    {
+      "sourceId": "saas_sso",
+      "applyMode": "max_with_additive",
+      "profileField": "ssoCollectionProfile",
+      "appliesToProfiles": ["authentication_security", "full_identity_activity"],
+      "userRates": { "lowPerUnit": 0.002, "expectedPerUnit": 0.005, "highPerUnit": 0.01 },
+      "noteKey": "sso"
+    },
+    {
+      "sourceId": "iaas_instances",
+      "applyMode": "max_with_additive",
+      "profileField": "cloudVmCollectionProfile",
+      "appliesToProfiles": ["standard_vm_logs", "full_vm_logs"],
+      "instanceRates": { "lowPerUnit": 0.1, "expectedPerUnit": 0.25, "highPerUnit": 0.35 },
+      "fullInstanceRates": { "lowPerUnit": 0.15, "expectedPerUnit": 0.35, "highPerUnit": 0.5 },
+      "minimalInstanceRates": { "lowPerUnit": 0.04, "expectedPerUnit": 0.11, "highPerUnit": 0.18 },
+      "noteKey": null
+    },
+    {
+      "sourceId": "iaas_storage",
+      "applyMode": "max_with_additive",
+      "profileField": "cloudStorageCollectionProfile",
+      "appliesToProfiles": ["full_storage_access_logs"],
+      "assetRates": { "lowPerUnit": 0.1, "expectedPerUnit": 0.25, "highPerUnit": 0.35 },
+      "noteKey": "cloud_storage_full"
+    },
+    {
+      "sourceId": "iaas_containers",
+      "applyMode": "max_with_additive",
+      "profileField": null,
+      "appliesToProfiles": null,
+      "clusterRates": { "lowPerUnit": 0.1, "expectedPerUnit": 0.25, "highPerUnit": 0.35 },
+      "noteKey": "containers"
+    },
+    {
+      "sourceId": "windows_servers",
+      "applyMode": "max_with_additive",
+      "profileField": "windowsLogProfile",
+      "appliesToProfiles": ["all_logs"],
+      "serverRates": { "lowPerUnit": 0.2, "expectedPerUnit": 0.3, "highPerUnit": 0.45 },
+      "noteKey": null
+    },
+    {
+      "sourceId": "dlp",
+      "applyMode": "dlp_combined",
+      "noteKey": null
+    },
+    {
+      "sourceId": "firewalls",
+      "applyMode": "firewall_max",
+      "noteKey": "firewalls"
+    },
+    {
+      "sourceId": "asset_cmdb",
+      "applyMode": "asset_export",
+      "noteKey": null
+    }
+  ]
+}

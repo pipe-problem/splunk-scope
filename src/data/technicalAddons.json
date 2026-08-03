@@ -1,0 +1,268 @@
+{
+  "version": "1.1.0",
+  "lastUpdated": "2026-06-01",
+  "addons": [
+    {
+      "id": "ta_windows",
+      "catalogId": "ta_windows",
+      "name": "Splunk Add-on for Microsoft Windows",
+      "supportedSources": [
+        "windows_security_event_log",
+        "windows_system_log",
+        "active_directory_security"
+      ],
+      "category": "Infrastructure"
+    },
+    {
+      "id": "ta_unix_linux",
+      "catalogId": "ta_unix_linux",
+      "name": "Splunk Add-on for Unix and Linux",
+      "supportedSources": [
+        "linux_system_logs",
+        "linux_auditd",
+        "unix_auth"
+      ],
+      "category": "Infrastructure"
+    },
+    {
+      "id": "ta_sysmon",
+      "catalogId": "ta_sysmon",
+      "name": "Splunk Add-on for Microsoft Sysmon",
+      "supportedSources": [
+        "windows_sysmon",
+        "endpoint_process_network"
+      ],
+      "category": "Endpoint"
+    },
+    {
+      "id": "ta_aws",
+      "catalogId": "ta_aws",
+      "name": "Splunk Add-on for Amazon Web Services (AWS)",
+      "supportedSources": [
+        "aws_cloudtrail",
+        "aws_config",
+        "aws_vpc_flow",
+        "aws_cloudwatch"
+      ],
+      "category": "Cloud"
+    },
+    {
+      "id": "ta_azure",
+      "catalogId": "ta_azure",
+      "name": "Splunk Add-on for Microsoft Azure",
+      "supportedSources": [
+        "azure_activity",
+        "azure_platform_logs",
+        "azure_ad_audit"
+      ],
+      "category": "Cloud"
+    },
+    {
+      "id": "ta_gcp",
+      "catalogId": "ta_gcp",
+      "name": "Splunk Add-on for Google Cloud Platform",
+      "supportedSources": [
+        "gcp_cloud_audit",
+        "gcp_security_command_center",
+        "gcp_vpc_flow"
+      ],
+      "category": "Cloud"
+    },
+    {
+      "id": "ta_microsoft_cloud_services",
+      "catalogId": "ta_microsoft_cloud_services",
+      "name": "Splunk Add-on for Microsoft Cloud Services",
+      "supportedSources": [
+        "microsoft_365_audit",
+        "azure_ad_identity",
+        "microsoft_defender_cloud"
+      ],
+      "category": "Cloud"
+    },
+    {
+      "id": "ta_office_365",
+      "catalogId": "ta_office_365",
+      "name": "Splunk Add-on for Microsoft Office 365",
+      "supportedSources": [
+        "m365_activity",
+        "exchange_online",
+        "sharepoint_onedrive_audit",
+        "teams"
+      ],
+      "category": "SaaS"
+    },
+    {
+      "id": "ta_okta",
+      "catalogId": "ta_okta_identity_cloud",
+      "name": "Splunk Add-on for Okta Identity Cloud",
+      "supportedSources": [
+        "okta_system_log",
+        "identity_sso_events"
+      ],
+      "category": "Identity"
+    },
+    {
+      "id": "ta_palo_alto",
+      "catalogId": "ta_palo_alto",
+      "name": "Palo Alto Networks Add-on for Splunk",
+      "supportedSources": [
+        "palo_alto_firewall_traffic",
+        "palo_alto_threat",
+        "pan_os_globalprotect"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_cisco_asa",
+      "catalogId": "ta_cisco_asa",
+      "name": "Splunk Add-on for Cisco ASA",
+      "supportedSources": [
+        "cisco_asa_firewall",
+        "cisco_vpn",
+        "cisco_threat_detections"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_crowdstrike",
+      "catalogId": "ta_crowdstrike",
+      "name": "Splunk Add-on for CrowdStrike FDR",
+      "supportedSources": [
+        "crowdstrike_falcon_host",
+        "crowdstrike_detection",
+        "crowdstrike_ngsiem"
+      ],
+      "category": "Endpoint"
+    },
+    {
+      "id": "ta_zscaler",
+      "catalogId": "ta_zscaler",
+      "name": "Splunk Add-on for Zscaler",
+      "supportedSources": [
+        "zscaler_web_proxy",
+        "zscaler_zia_firewall",
+        "zscaler_private_access"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_proofpoint",
+      "catalogId": "ta_proofpoint_on_demand",
+      "name": "Proofpoint On Demand Email Security Add-on",
+      "supportedSources": [
+        "proofpoint_tap",
+        "email_security_threat",
+        "proofpoint_message"
+      ],
+      "category": "Email Security"
+    },
+    {
+      "id": "ta_fortinet_fortigate",
+      "catalogId": "ta_fortinet",
+      "name": "Fortinet FortiGate Add-On for Splunk",
+      "supportedSources": [
+        "fortigate_traffic",
+        "fortigate_utm",
+        "fortigate_ssl_vpn"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_checkpoint",
+      "catalogId": "checkpoint_app",
+      "name": "Check Point App for Splunk",
+      "supportedSources": [
+        "checkpoint_firewall",
+        "checkpoint_audit",
+        "checkpoint_ips"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_kubernetes",
+      "catalogId": "ta_kubernetes",
+      "name": "Splunk OpenTelemetry Collector for Kubernetes",
+      "supportedSources": [
+        "kubernetes_audit",
+        "container_metrics",
+        "pod_logs"
+      ],
+      "category": "Containers"
+    },
+    {
+      "id": "ta_snmp",
+      "catalogId": "ta_snmp",
+      "name": "Splunk Connect for SNMP",
+      "supportedSources": [
+        "snmp_traps",
+        "network_device_metrics"
+      ],
+      "category": "Infrastructure"
+    },
+    {
+      "id": "ta_sophos",
+      "catalogId": "ta_sophos",
+      "name": "Splunk Add-on for Sophos",
+      "supportedSources": [
+        "sophos_central_endpoint",
+        "sophos_threat"
+      ],
+      "category": "Endpoint"
+    },
+    {
+      "id": "ta_google_workspace",
+      "catalogId": "ta_google_workspace",
+      "name": "Splunk Add-on for Google Workspace",
+      "supportedSources": [
+        "google_workspace_admin",
+        "google_drive_audit",
+        "google_login"
+      ],
+      "category": "SaaS"
+    },
+    {
+      "id": "ta_cloudflare",
+      "catalogId": "ta_cloudflare",
+      "name": "Splunk Add-on for Cloudflare",
+      "needsReview": true,
+      "supportedSources": [
+        "cloudflare_http",
+        "cloudflare_firewall_events",
+        "cloudflare_dns"
+      ],
+      "category": "Network Security"
+    },
+    {
+      "id": "ta_oracle_cloud",
+      "catalogId": "ta_oracle_cloud",
+      "name": "Splunk Addon for Oracle Cloud Infrastructure (OCI)",
+      "supportedSources": [
+        "oci_audit",
+        "oci_vcn_flow",
+        "oci_identity"
+      ],
+      "category": "Cloud"
+    },
+    {
+      "id": "ta_service_now",
+      "catalogId": "ta_servicenow",
+      "name": "Splunk Add-on for ServiceNow",
+      "supportedSources": [
+        "servicenow_audit",
+        "servicenow_incident_change",
+        "servicenow_cmdb"
+      ],
+      "category": "ITSM"
+    },
+    {
+      "id": "ta_tenable",
+      "catalogId": "ta_tenable",
+      "name": "Tenable Add-On for Splunk",
+      "supportedSources": [
+        "tenable_nessus_scan",
+        "vulnerability_findings"
+      ],
+      "category": "Vulnerability"
+    }
+  ]
+}

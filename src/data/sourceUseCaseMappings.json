@@ -1,0 +1,2267 @@
+{
+  "schemaVersion": "1.7",
+  "lastUpdated": "2026-05-06",
+  "mappings": {
+    "active_directory": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "apm": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "app_servers": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "app_servers_nonprod": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "application_event_log": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "asset_cmdb": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "business_txn": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "casb": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "config_mgmt": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "cspm": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "cwpp": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "database": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "db_access": {
+      "useCases": [
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "db_transaction": {
+      "useCases": [
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "ddos": {
+      "useCases": [
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "deception": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "desktops": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "devops_cicd": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "dhcp": {
+      "useCases": [
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "dhcp_server_logs": {
+      "useCases": [
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "dlp": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "dns": {
+      "useCases": [
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "dns_server_logs": {
+      "useCases": [
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "dpi": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "edr": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "email": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "firewalls": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "forwarded_events": {
+      "useCases": [
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "fw_internal": {
+      "useCases": [
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "fw_perimeter": {
+      "useCases": [
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "fw_waf": {
+      "useCases": [
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "hypervisor": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "iaas": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "iaas_containers": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "iaas_instances": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "iaas_storage": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "ics_scada": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "ids_ips": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "iis_logs": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "linux_servers": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "linux_servers_nonprod": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "loadbalancer": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "mainframe": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "mdm": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "middleware": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "middleware_nonprod": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "nac": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "ndr": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "netflow": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "ot_security": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "paas": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "performance_metrics": {
+      "useCases": [
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "pki": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "powershell_operational": {
+      "useCases": [
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "proxy": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "routers": {
+      "useCases": [
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_conferencing": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_crm": {
+      "useCases": [
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_filesharing": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_general": {
+      "useCases": [
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_office": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "saas_sso": {
+      "useCases": [
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "sandbox": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "sap": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "sase": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "security_event_log": {
+      "useCases": [
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "setup_event_log": {
+      "useCases": [
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "sso_pam": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "storage_prod": {
+      "useCases": [
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "switches": {
+      "useCases": [
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "sysmon": {
+      "useCases": [
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "system_event_log": {
+      "useCases": [
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "threat_intel": {
+      "useCases": [
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "uba": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "vpn": {
+      "useCases": [
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "identity_access",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "vuln_mgmt": {
+      "useCases": [
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "risk_based_alerting",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "web_servers": {
+      "useCases": [
+        {
+          "useCaseId": "ai_ml_analytics",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "business_analytics",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "digital_experience",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "observability_apm",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "web_servers_nonprod": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "kubernetes_container",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "windows_defender": {
+      "useCases": [
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    },
+    "windows_servers": {
+      "useCases": [
+        {
+          "useCaseId": "application_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "cloud_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "compliance_audit",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "database_monitoring",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "enterprise_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "infrastructure_monitoring",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "it_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "platform_admin",
+          "relevance": "high"
+        }
+      ],
+      "needsReview": false
+    },
+    "wireless": {
+      "useCases": [
+        {
+          "useCaseId": "endpoint_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "foundational_security",
+          "relevance": "medium"
+        },
+        {
+          "useCaseId": "network_operations",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "ot_ics_security",
+          "relevance": "medium"
+        }
+      ],
+      "needsReview": false
+    }
+  }
+}

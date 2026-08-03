@@ -1,0 +1,1089 @@
+{
+  "crawl": [
+    {
+      "id": "crawl_foundational_visibility",
+      "label": "Foundational visibility",
+      "description": "Centralize the first set of high-value logs and confirm searchable visibility.",
+      "internalMeaning": "Prioritize core telemetry onboarding, validation searches, and first dashboards.",
+      "customerFacingText": "Start by centralizing the highest-value data sources and validating that teams can search and investigate from one place.",
+      "tags": [
+        "visibility",
+        "foundational",
+        "data_onboarding"
+      ]
+    },
+    {
+      "id": "crawl_initial_security_visibility",
+      "label": "Initial security visibility",
+      "description": "Establish baseline security logging from identity, endpoint, and perimeter sources.",
+      "internalMeaning": "Onboard AD, firewall, and endpoint telemetry with first security dashboards.",
+      "customerFacingText": "Begin with identity, endpoint, and network perimeter logs to establish a security baseline.",
+      "tags": [
+        "security",
+        "visibility",
+        "baseline"
+      ]
+    },
+    {
+      "id": "crawl_linux_server_monitoring",
+      "label": "Linux server monitoring",
+      "description": "Bring Linux system and application logs into Splunk for operations and security.",
+      "internalMeaning": "Prioritize syslog, auditd, and key application logs from Linux estates.",
+      "customerFacingText": "Centralize Linux server and application logs for search and basic monitoring.",
+      "tags": [
+        "linux",
+        "servers",
+        "ops"
+      ]
+    },
+    {
+      "id": "crawl_identity_and_auth_baseline",
+      "label": "Identity and authentication baseline",
+      "description": "Capture sign-in and authentication events from core identity systems.",
+      "internalMeaning": "Onboard AD/Azure AD/Okta sign-in logs with first identity dashboards.",
+      "customerFacingText": "Establish visibility into sign-ins and authentication activity from core identity platforms.",
+      "tags": [
+        "identity",
+        "authentication",
+        "ad"
+      ]
+    },
+    {
+      "id": "crawl_network_perimeter_baseline",
+      "label": "Network perimeter baseline",
+      "description": "Collect firewall and perimeter device logs for traffic and threat visibility.",
+      "internalMeaning": "Onboard perimeter firewalls with traffic and threat prevention logging.",
+      "customerFacingText": "Start with perimeter firewall logs to understand traffic and blocked activity.",
+      "tags": [
+        "network",
+        "firewall",
+        "perimeter"
+      ]
+    },
+    {
+      "id": "crawl_cloud_audit_baseline",
+      "label": "Cloud audit baseline",
+      "description": "Enable cloud platform audit and control-plane logging.",
+      "internalMeaning": "Onboard AWS CloudTrail, Azure Activity, or GCP audit logs.",
+      "customerFacingText": "Turn on cloud audit logging so platform changes and API activity are searchable.",
+      "tags": [
+        "cloud",
+        "audit",
+        "cspm"
+      ]
+    },
+    {
+      "id": "crawl_dns_visibility",
+      "label": "DNS visibility",
+      "description": "Capture DNS query and resolution logs for security and operations.",
+      "internalMeaning": "Onboard DNS server or resolver logs for investigation context.",
+      "customerFacingText": "Add DNS logging to support threat hunting and operational troubleshooting.",
+      "tags": [
+        "dns",
+        "network",
+        "investigation"
+      ]
+    },
+    {
+      "id": "crawl_app_log_visibility",
+      "label": "Application log visibility",
+      "description": "Centralize logs from priority business applications.",
+      "internalMeaning": "Onboard top-tier application logs with parsing validation.",
+      "customerFacingText": "Bring critical application logs into Splunk for search and triage.",
+      "tags": [
+        "application",
+        "logs",
+        "business"
+      ]
+    },
+    {
+      "id": "crawl_basic_dashboarding",
+      "label": "Basic dashboarding",
+      "description": "Create first operational and security dashboards for stakeholders.",
+      "internalMeaning": "Build starter dashboards tied to onboarded sources and use cases.",
+      "customerFacingText": "Deliver initial dashboards so teams can monitor key metrics without ad-hoc searches.",
+      "tags": [
+        "dashboards",
+        "reporting",
+        "stakeholders"
+      ]
+    },
+    {
+      "id": "crawl_ingest_validation",
+      "label": "Ingest validation",
+      "description": "Validate parsing, timestamps, and field extraction on onboarded sources.",
+      "internalMeaning": "Run field discovery and ingest QA on each new source.",
+      "customerFacingText": "Confirm data arrives correctly with expected fields and timestamps before expanding scope.",
+      "tags": [
+        "validation",
+        "parsing",
+        "quality"
+      ]
+    },
+    {
+      "id": "crawl_source_owner_alignment",
+      "label": "Source owner alignment",
+      "description": "Identify owners and logging scope for each onboarded source.",
+      "internalMeaning": "Document source owners, retention, and logging policies.",
+      "customerFacingText": "Align with source owners on what is logged, who owns it, and how it will be used.",
+      "tags": [
+        "governance",
+        "stakeholders",
+        "ownership"
+      ]
+    },
+    {
+      "id": "crawl_first_searches",
+      "label": "First searches and investigations",
+      "description": "Enable analysts to run saved searches and basic investigations.",
+      "internalMeaning": "Publish starter searches and investigation playbooks.",
+      "customerFacingText": "Equip the team with starter searches and a simple investigation workflow.",
+      "tags": [
+        "investigation",
+        "searches",
+        "analysts"
+      ]
+    },
+    {
+      "id": "crawl_first_security_use_cases",
+      "label": "First security use cases",
+      "description": "Implement a small set of high-value security detections or use cases.",
+      "internalMeaning": "Deploy 3–5 starter detections aligned to onboarded telemetry.",
+      "customerFacingText": "Start with a focused set of security use cases that match available data.",
+      "tags": [
+        "security",
+        "detections",
+        "use_cases"
+      ]
+    },
+    {
+      "id": "crawl_operational_visibility",
+      "label": "Operational visibility",
+      "description": "Establish IT operations monitoring for infrastructure health.",
+      "internalMeaning": "Onboard infra metrics and service logs for ops dashboards.",
+      "customerFacingText": "Give IT operations baseline visibility into infrastructure and service health.",
+      "tags": [
+        "operations",
+        "it_ops",
+        "monitoring"
+      ]
+    },
+    {
+      "id": "crawl_compliance_evidence_start",
+      "label": "Compliance evidence start",
+      "description": "Begin collecting audit evidence from systems in scope for compliance.",
+      "internalMeaning": "Onboard audit logs required for initial compliance controls.",
+      "customerFacingText": "Start collecting audit evidence needed for compliance programs in scope.",
+      "tags": [
+        "compliance",
+        "audit",
+        "grc"
+      ]
+    },
+    {
+      "id": "crawl_windows_endpoint_baseline",
+      "label": "Windows endpoint baseline",
+      "description": "Collect Windows security and system events from endpoints.",
+      "internalMeaning": "Onboard Windows Event Log and Defender telemetry.",
+      "customerFacingText": "Centralize Windows endpoint events for security and operations.",
+      "tags": [
+        "windows",
+        "endpoint",
+        "defender"
+      ]
+    },
+    {
+      "id": "crawl_email_collaboration_baseline",
+      "label": "Email and collaboration baseline",
+      "description": "Bring email and M365/O365 audit activity into Splunk.",
+      "internalMeaning": "Onboard Exchange or M365 unified audit logs.",
+      "customerFacingText": "Add email and collaboration audit logs for identity and threat investigations.",
+      "tags": [
+        "email",
+        "m365",
+        "collaboration"
+      ]
+    },
+    {
+      "id": "crawl_vpn_remote_access",
+      "label": "VPN and remote access",
+      "description": "Capture VPN and remote access authentication and session logs.",
+      "internalMeaning": "Onboard VPN concentrator and remote access logs.",
+      "customerFacingText": "Monitor VPN and remote access activity for security and capacity planning.",
+      "tags": [
+        "vpn",
+        "remote_access",
+        "network"
+      ]
+    },
+    {
+      "id": "crawl_web_proxy_baseline",
+      "label": "Web proxy baseline",
+      "description": "Collect web proxy logs for URL and threat visibility.",
+      "internalMeaning": "Onboard proxy logs with URL categorization where available.",
+      "customerFacingText": "Add web proxy logs to understand user browsing and blocked requests.",
+      "tags": [
+        "proxy",
+        "web",
+        "network"
+      ]
+    },
+    {
+      "id": "crawl_database_audit_start",
+      "label": "Database audit start",
+      "description": "Enable database audit and access logging for critical databases.",
+      "internalMeaning": "Onboard DB audit logs for tier-1 databases.",
+      "customerFacingText": "Start database audit logging for sensitive data stores.",
+      "tags": [
+        "database",
+        "audit",
+        "compliance"
+      ]
+    },
+    {
+      "id": "crawl_container_k8s_pilot",
+      "label": "Container / Kubernetes pilot",
+      "description": "Pilot container and Kubernetes log collection.",
+      "internalMeaning": "Onboard a pilot cluster with container stdout and audit logs.",
+      "customerFacingText": "Run a pilot to bring Kubernetes and container logs into Splunk.",
+      "tags": [
+        "kubernetes",
+        "containers",
+        "cloud_native"
+      ]
+    },
+    {
+      "id": "crawl_siem_console_replacement",
+      "label": "SIEM console replacement",
+      "description": "Replace console-hopping with a single search and dashboard experience.",
+      "internalMeaning": "Consolidate daily checks into Splunk dashboards and saved searches.",
+      "customerFacingText": "Replace daily multi-console checks with unified Splunk visibility.",
+      "tags": [
+        "siem",
+        "consolidation",
+        "efficiency"
+      ]
+    },
+    {
+      "id": "crawl_threat_intel_feeds",
+      "label": "Threat intelligence feeds",
+      "description": "Integrate baseline threat intelligence feeds for enrichment.",
+      "internalMeaning": "Add open or licensed TI feeds for IP and domain enrichment.",
+      "customerFacingText": "Enrich events with threat intelligence to speed investigations.",
+      "tags": [
+        "threat_intel",
+        "enrichment",
+        "security"
+      ]
+    },
+    {
+      "id": "crawl_asset_inventory_start",
+      "label": "Asset inventory start",
+      "description": "Establish an asset and inventory baseline from available sources.",
+      "internalMeaning": "Onboard CMDB or discovery data for asset context.",
+      "customerFacingText": "Build an initial asset inventory view from CMDB and discovery sources.",
+      "tags": [
+        "asset",
+        "inventory",
+        "cmdb"
+      ]
+    },
+    {
+      "id": "crawl_log_retention_alignment",
+      "label": "Log retention alignment",
+      "description": "Align retention and indexing tiers with stakeholder requirements.",
+      "internalMeaning": "Document retention per source and index strategy.",
+      "customerFacingText": "Align log retention and indexing with legal, security, and cost requirements.",
+      "tags": [
+        "retention",
+        "governance",
+        "cost"
+      ]
+    },
+    {
+      "id": "crawl_parsing_and_fields",
+      "label": "Parsing and field standardization",
+      "description": "Standardize sourcetypes, fields, and CIM alignment on onboarded data.",
+      "internalMeaning": "Apply props, aliases, and CIM tags on priority sources.",
+      "customerFacingText": "Standardize parsing and fields so searches work consistently across sources.",
+      "tags": [
+        "parsing",
+        "cim",
+        "normalization"
+      ]
+    },
+    {
+      "id": "crawl_stakeholder_demo",
+      "label": "Stakeholder demonstration",
+      "description": "Prepare a stakeholder demo of initial Splunk value.",
+      "internalMeaning": "Build demo dashboards and sample investigations for leadership.",
+      "customerFacingText": "Demonstrate initial Splunk value to stakeholders with real customer data.",
+      "tags": [
+        "demo",
+        "stakeholders",
+        "adoption"
+      ]
+    },
+    {
+      "id": "crawl_helpdesk_integration",
+      "label": "Help desk integration",
+      "description": "Connect Splunk views to help desk or ticketing workflows.",
+      "internalMeaning": "Link notable events or dashboards to ticket creation.",
+      "customerFacingText": "Integrate Splunk visibility with help desk workflows for faster response.",
+      "tags": [
+        "itsm",
+        "ticketing",
+        "operations"
+      ]
+    },
+    {
+      "id": "crawl_backup_and_recovery_logs",
+      "label": "Backup and recovery logs",
+      "description": "Collect backup job and recovery logs for operational assurance.",
+      "internalMeaning": "Onboard backup software logs for job success monitoring.",
+      "customerFacingText": "Monitor backup and recovery job status from centralized logs.",
+      "tags": [
+        "backup",
+        "operations",
+        "resilience"
+      ]
+    },
+    {
+      "id": "crawl_foundational_training",
+      "label": "Foundational training",
+      "description": "Train the team on Splunk search, dashboards, and intake workflows.",
+      "internalMeaning": "Deliver Splunk fundamentals training for analysts and admins.",
+      "customerFacingText": "Train the team on core Splunk skills for search, dashboards, and daily use.",
+      "tags": [
+        "training",
+        "enablement",
+        "adoption"
+      ]
+    }
+  ],
+  "walk": [
+    {
+      "id": "walk_expand_correlation",
+      "label": "Expand correlation",
+      "description": "Add enrichment and cross-source correlation beyond day-one sources.",
+      "internalMeaning": "Onboard enrichment sources and multi-source correlation searches.",
+      "customerFacingText": "Expand beyond initial sources with enrichment and cross-domain correlation.",
+      "tags": [
+        "correlation",
+        "enrichment",
+        "maturity"
+      ]
+    },
+    {
+      "id": "walk_add_enrichment_sources",
+      "label": "Add enrichment sources",
+      "description": "Bring in CMDB, asset, vulnerability, and identity context.",
+      "internalMeaning": "Onboard CMDB, vulnerability scanners, and identity governance feeds.",
+      "customerFacingText": "Add enrichment data so investigations have asset and risk context.",
+      "tags": [
+        "enrichment",
+        "cmdb",
+        "vulnerability"
+      ]
+    },
+    {
+      "id": "walk_improve_detection_coverage",
+      "label": "Improve detection coverage",
+      "description": "Expand detection content across MITRE tactics and priority use cases.",
+      "internalMeaning": "Deploy additional correlation searches and notable event workflows.",
+      "customerFacingText": "Broaden detection coverage across priority security use cases.",
+      "tags": [
+        "detections",
+        "mitre",
+        "security"
+      ]
+    },
+    {
+      "id": "walk_identity_endpoint_network_correlation",
+      "label": "Identity-endpoint-network correlation",
+      "description": "Correlate identity, endpoint, and network events in investigations.",
+      "internalMeaning": "Build cross-domain searches linking user, device, and traffic.",
+      "customerFacingText": "Connect identity, endpoint, and network telemetry in unified investigations.",
+      "tags": [
+        "correlation",
+        "identity",
+        "endpoint",
+        "network"
+      ]
+    },
+    {
+      "id": "walk_add_vulnerability_context",
+      "label": "Add vulnerability context",
+      "description": "Integrate vulnerability scan and risk data for prioritization.",
+      "internalMeaning": "Onboard Qualys, Tenable, or Rapid7 with asset mapping.",
+      "customerFacingText": "Add vulnerability context to prioritize remediation and detections.",
+      "tags": [
+        "vulnerability",
+        "risk",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "walk_add_asset_context",
+      "label": "Add asset context",
+      "description": "Enrich events with authoritative asset and ownership data.",
+      "internalMeaning": "Onboard CMDB or ServiceNow asset data with lookups.",
+      "customerFacingText": "Enrich events with asset ownership and classification data.",
+      "tags": [
+        "asset",
+        "cmdb",
+        "enrichment"
+      ]
+    },
+    {
+      "id": "walk_cloud_saas_expansion",
+      "label": "Cloud and SaaS expansion",
+      "description": "Expand cloud control plane and SaaS application coverage.",
+      "internalMeaning": "Add additional cloud regions, SaaS apps, and CASB logs.",
+      "customerFacingText": "Expand cloud and SaaS logging as workloads grow.",
+      "tags": [
+        "cloud",
+        "saas",
+        "expansion"
+      ]
+    },
+    {
+      "id": "walk_service_health_views",
+      "label": "Service health views",
+      "description": "Build service-level dashboards and SLO-oriented views.",
+      "internalMeaning": "Create service maps and health dashboards per critical service.",
+      "customerFacingText": "Deliver service health views aligned to business services.",
+      "tags": [
+        "service_health",
+        "slo",
+        "observability"
+      ]
+    },
+    {
+      "id": "walk_dashboard_refinement",
+      "label": "Dashboard refinement",
+      "description": "Refine dashboards based on analyst and stakeholder feedback.",
+      "internalMeaning": "Iterate dashboards with user feedback and KPI alignment.",
+      "customerFacingText": "Refine dashboards based on how analysts and leaders actually use them.",
+      "tags": [
+        "dashboards",
+        "feedback",
+        "iteration"
+      ]
+    },
+    {
+      "id": "walk_alert_tuning",
+      "label": "Alert tuning",
+      "description": "Tune alert volume, thresholds, and suppression rules.",
+      "internalMeaning": "Review notable volume and tune correlation searches.",
+      "customerFacingText": "Tune alerts to reduce noise while maintaining detection efficacy.",
+      "tags": [
+        "alerting",
+        "tuning",
+        "soc"
+      ]
+    },
+    {
+      "id": "walk_cim_data_model_validation",
+      "label": "CIM data model validation",
+      "description": "Validate CIM compliance and acceleration for key data models.",
+      "internalMeaning": "Run CIM validation and accelerate priority data models.",
+      "customerFacingText": "Validate CIM alignment and accelerate models for performance.",
+      "tags": [
+        "cim",
+        "data_models",
+        "validation"
+      ]
+    },
+    {
+      "id": "walk_investigation_workflows",
+      "label": "Investigation workflows",
+      "description": "Formalize investigation playbooks and case workflows.",
+      "internalMeaning": "Document and automate top investigation scenarios.",
+      "customerFacingText": "Establish repeatable investigation workflows for common scenarios.",
+      "tags": [
+        "investigation",
+        "playbooks",
+        "soc"
+      ]
+    },
+    {
+      "id": "walk_multi_source_correlation",
+      "label": "Multi-source correlation",
+      "description": "Build correlation across three or more telemetry domains.",
+      "internalMeaning": "Deploy searches joining identity, network, endpoint, and cloud.",
+      "customerFacingText": "Correlate across multiple telemetry domains for richer context.",
+      "tags": [
+        "correlation",
+        "multi_source",
+        "security"
+      ]
+    },
+    {
+      "id": "walk_expand_to_nonprod",
+      "label": "Expand to non-production",
+      "description": "Extend logging to dev/test for parity and pre-prod validation.",
+      "internalMeaning": "Onboard non-prod environments with reduced retention.",
+      "customerFacingText": "Extend visibility to non-production for testing and parity.",
+      "tags": [
+        "nonprod",
+        "expansion",
+        "environments"
+      ]
+    },
+    {
+      "id": "walk_operational_reporting",
+      "label": "Operational reporting",
+      "description": "Deliver recurring operational reports for IT and security leaders.",
+      "internalMeaning": "Schedule reports for uptime, incidents, and security KPIs.",
+      "customerFacingText": "Provide recurring operational reports for leadership review.",
+      "tags": [
+        "reporting",
+        "operations",
+        "leadership"
+      ]
+    },
+    {
+      "id": "walk_soar_integration_pilot",
+      "label": "SOAR integration pilot",
+      "description": "Pilot SOAR playbooks for top alert types.",
+      "internalMeaning": "Connect notable events to SOAR with 2–3 starter playbooks.",
+      "customerFacingText": "Pilot automation playbooks for the highest-volume alert types.",
+      "tags": [
+        "soar",
+        "automation",
+        "pilot"
+      ]
+    },
+    {
+      "id": "walk_ueba_exploration",
+      "label": "UEBA exploration",
+      "description": "Evaluate user and entity behavior analytics on identity data.",
+      "internalMeaning": "Pilot UEBA on identity and access telemetry.",
+      "customerFacingText": "Explore behavioral analytics to detect anomalous user activity.",
+      "tags": [
+        "ueba",
+        "behavior",
+        "identity"
+      ]
+    },
+    {
+      "id": "walk_threat_hunting_program",
+      "label": "Threat hunting program",
+      "description": "Establish a lightweight threat hunting cadence.",
+      "internalMeaning": "Schedule monthly hunts on priority hypotheses.",
+      "customerFacingText": "Start a regular threat hunting program with documented hypotheses.",
+      "tags": [
+        "threat_hunting",
+        "security",
+        "maturity"
+      ]
+    },
+    {
+      "id": "walk_executive_kpi_dashboards",
+      "label": "Executive KPI dashboards",
+      "description": "Build executive dashboards for security and operations KPIs.",
+      "internalMeaning": "Create leadership views for risk, incidents, and compliance posture.",
+      "customerFacingText": "Give executives clear KPI dashboards without search complexity.",
+      "tags": [
+        "executive",
+        "kpi",
+        "dashboards"
+      ]
+    },
+    {
+      "id": "walk_data_model_acceleration",
+      "label": "Data model acceleration",
+      "description": "Accelerate tstats-friendly data models for performance.",
+      "internalMeaning": "Enable acceleration on Network Traffic, Authentication, and Endpoint models.",
+      "customerFacingText": "Accelerate data models to improve search performance at scale.",
+      "tags": [
+        "acceleration",
+        "performance",
+        "data_models"
+      ]
+    },
+    {
+      "id": "walk_ingest_capacity_planning",
+      "label": "Ingest capacity planning",
+      "description": "Plan ingest growth and license alignment for expansion.",
+      "internalMeaning": "Model ingest growth and license needs for walk-phase sources.",
+      "customerFacingText": "Plan ingest capacity as new sources and retention requirements grow.",
+      "tags": [
+        "capacity",
+        "licensing",
+        "planning"
+      ]
+    },
+    {
+      "id": "walk_partner_team_enablement",
+      "label": "Partner team enablement",
+      "description": "Enable adjacent teams (NetOps, AppOps) on Splunk workflows.",
+      "internalMeaning": "Train partner teams on dashboards and self-service searches.",
+      "customerFacingText": "Enable partner teams to use Splunk for their operational needs.",
+      "tags": [
+        "enablement",
+        "cross_team",
+        "adoption"
+      ]
+    },
+    {
+      "id": "walk_compliance_reporting",
+      "label": "Compliance reporting",
+      "description": "Automate compliance reports for in-scope frameworks.",
+      "internalMeaning": "Build scheduled compliance reports with evidence links.",
+      "customerFacingText": "Automate compliance reporting for frameworks in scope.",
+      "tags": [
+        "compliance",
+        "reporting",
+        "grc"
+      ]
+    },
+    {
+      "id": "walk_ot_it_convergence",
+      "label": "OT/IT convergence planning",
+      "description": "Plan OT telemetry integration where industrial assets exist.",
+      "internalMeaning": "Assess OT network visibility and passive collection options.",
+      "customerFacingText": "Plan OT visibility integration where operational technology is in scope.",
+      "tags": [
+        "ot",
+        "ics",
+        "convergence"
+      ]
+    },
+    {
+      "id": "walk_mltk_baselining",
+      "label": "AI Toolkit baselining",
+      "description": "Apply ML Toolkit for baseline anomaly detection on key metrics.",
+      "internalMeaning": "Deploy MLTK baselines on VPN, auth, and network metrics.",
+      "customerFacingText": "Use machine learning baselines to detect anomalies in key metrics.",
+      "tags": [
+        "ml",
+        "mltk",
+        "anomaly"
+      ]
+    },
+    {
+      "id": "walk_index_and_sourcetype_governance",
+      "label": "Index and sourcetype governance",
+      "description": "Govern indexes, sourcetypes, and naming conventions.",
+      "internalMeaning": "Document index strategy and sourcetype standards.",
+      "customerFacingText": "Establish governance for indexes and sourcetypes as scope expands.",
+      "tags": [
+        "governance",
+        "indexes",
+        "standards"
+      ]
+    },
+    {
+      "id": "walk_cross_region_expansion",
+      "label": "Cross-region expansion",
+      "description": "Expand logging to additional regions or business units.",
+      "internalMeaning": "Onboard regional variants of core sources with consistent parsing.",
+      "customerFacingText": "Expand consistent logging to additional regions or business units.",
+      "tags": [
+        "expansion",
+        "global",
+        "scale"
+      ]
+    },
+    {
+      "id": "walk_vendor_ta_expansion",
+      "label": "Vendor TA expansion",
+      "description": "Deploy additional technical add-ons for new vendor sources.",
+      "internalMeaning": "Install and configure TAs for walk-phase vendors.",
+      "customerFacingText": "Deploy technical add-ons needed for expanded vendor coverage.",
+      "tags": [
+        "technical_addons",
+        "vendors",
+        "integration"
+      ]
+    },
+    {
+      "id": "walk_incident_metrics",
+      "label": "Incident metrics and MTTR",
+      "description": "Track incident metrics and mean time to respond in Splunk.",
+      "internalMeaning": "Build MTTR and incident volume dashboards from ticket and alert data.",
+      "customerFacingText": "Measure incident response metrics to drive improvement.",
+      "tags": [
+        "mttr",
+        "incidents",
+        "metrics"
+      ]
+    },
+    {
+      "id": "walk_privacy_and_access_controls",
+      "label": "Privacy and access controls",
+      "description": "Implement role-based access and data privacy controls.",
+      "internalMeaning": "Configure RBAC, field filtering, and index-level permissions.",
+      "customerFacingText": "Implement access controls and privacy guardrails as data scope grows.",
+      "tags": [
+        "rbac",
+        "privacy",
+        "governance"
+      ]
+    }
+  ],
+  "run": [
+    {
+      "id": "run_optimize_and_mature",
+      "label": "Optimize and mature",
+      "description": "Mature detections, automation, and operational processes at scale.",
+      "internalMeaning": "Optimize ingest, detections, and SOC workflows for sustained operations.",
+      "customerFacingText": "Mature the platform with optimized detections, automation, and governance.",
+      "tags": [
+        "maturity",
+        "optimization",
+        "soc"
+      ]
+    },
+    {
+      "id": "run_advanced_detection_engineering",
+      "label": "Advanced detection engineering",
+      "description": "Engineer advanced detections with tuning cadence and purple team input.",
+      "internalMeaning": "Maintain detection engineering backlog with ATT&CK mapping.",
+      "customerFacingText": "Advance detection engineering with structured tuning and purple team feedback.",
+      "tags": [
+        "detections",
+        "engineering",
+        "att_ck"
+      ]
+    },
+    {
+      "id": "run_risk_based_alerting",
+      "label": "Risk-based alerting",
+      "description": "Transition to risk-based alerting with asset and threat context.",
+      "internalMeaning": "Deploy RBA with asset criticality and threat context.",
+      "customerFacingText": "Move to risk-based alerting that prioritizes work using business context.",
+      "tags": [
+        "rba",
+        "risk",
+        "alerting"
+      ]
+    },
+    {
+      "id": "run_soar_readiness",
+      "label": "SOAR readiness",
+      "description": "Prepare full SOAR deployment with playbooks and case management.",
+      "internalMeaning": "Complete SOAR integration with case workflows and playbooks.",
+      "customerFacingText": "Prepare for full security orchestration and automated response.",
+      "tags": [
+        "soar",
+        "automation",
+        "maturity"
+      ]
+    },
+    {
+      "id": "run_automation_playbooks",
+      "label": "Automation playbooks",
+      "description": "Automate top response actions with human-in-the-loop controls.",
+      "internalMeaning": "Deploy production playbooks for enrichment and containment prep.",
+      "customerFacingText": "Automate repeatable response actions with appropriate human oversight.",
+      "tags": [
+        "automation",
+        "playbooks",
+        "soar"
+      ]
+    },
+    {
+      "id": "run_ml_anomaly_candidates",
+      "label": "ML anomaly candidates",
+      "description": "Operationalize ML-driven anomaly detection on priority domains.",
+      "internalMeaning": "Productionize MLTK or premium ML detections on key metrics.",
+      "customerFacingText": "Operationalize machine learning for anomaly detection at scale.",
+      "tags": [
+        "ml",
+        "anomaly",
+        "advanced"
+      ]
+    },
+    {
+      "id": "run_mature_soc_workflows",
+      "label": "Mature SOC workflows",
+      "description": "Run mature SOC tiers, escalation, and on-call integration.",
+      "internalMeaning": "Formalize tier-1/2/3 workflows with on-call and escalation paths.",
+      "customerFacingText": "Operate mature SOC workflows with clear tiers and escalation.",
+      "tags": [
+        "soc",
+        "operations",
+        "maturity"
+      ]
+    },
+    {
+      "id": "run_executive_reporting",
+      "label": "Executive reporting",
+      "description": "Deliver executive reporting tied to business risk and outcomes.",
+      "internalMeaning": "Produce quarterly executive briefings from Splunk KPIs.",
+      "customerFacingText": "Deliver executive reporting that ties security and ops to business outcomes.",
+      "tags": [
+        "executive",
+        "reporting",
+        "leadership"
+      ]
+    },
+    {
+      "id": "run_performance_optimization",
+      "label": "Performance optimization",
+      "description": "Optimize search, acceleration, and cluster performance.",
+      "internalMeaning": "Tune searches, summaries, and resource utilization.",
+      "customerFacingText": "Optimize platform performance for search speed and cost efficiency.",
+      "tags": [
+        "performance",
+        "optimization",
+        "platform"
+      ]
+    },
+    {
+      "id": "run_ingest_reconciliation",
+      "label": "Ingest reconciliation",
+      "description": "Reconcile ingest billing, license usage, and source attribution.",
+      "internalMeaning": "Audit ingest per index and reconcile with license entitlements.",
+      "customerFacingText": "Reconcile ingest usage with licensing and source attribution.",
+      "tags": [
+        "ingest",
+        "licensing",
+        "governance"
+      ]
+    },
+    {
+      "id": "run_retention_optimization",
+      "label": "Retention optimization",
+      "description": "Optimize retention tiers and storage costs.",
+      "internalMeaning": "Implement frozen archives and tiered retention policies.",
+      "customerFacingText": "Optimize retention and storage costs while meeting compliance needs.",
+      "tags": [
+        "retention",
+        "cost",
+        "storage"
+      ]
+    },
+    {
+      "id": "run_year_two_expansion",
+      "label": "Year-two expansion",
+      "description": "Plan and execute year-two scope expansion.",
+      "internalMeaning": "Roadmap additional use cases, sources, and premium apps.",
+      "customerFacingText": "Plan year-two expansion aligned to business priorities.",
+      "tags": [
+        "expansion",
+        "roadmap",
+        "strategy"
+      ]
+    },
+    {
+      "id": "run_platform_governance",
+      "label": "Platform governance",
+      "description": "Establish ongoing platform governance and change control.",
+      "internalMeaning": "Run governance council for content, indexes, and apps.",
+      "customerFacingText": "Govern the platform with ongoing change control and standards.",
+      "tags": [
+        "governance",
+        "platform",
+        "standards"
+      ]
+    },
+    {
+      "id": "run_continuous_improvement",
+      "label": "Continuous improvement",
+      "description": "Maintain continuous improvement cadence for content and operations.",
+      "internalMeaning": "Quarterly content reviews and improvement backlog.",
+      "customerFacingText": "Maintain a continuous improvement program for content and operations.",
+      "tags": [
+        "improvement",
+        "cadence",
+        "maturity"
+      ]
+    },
+    {
+      "id": "run_detection_tuning_cadence",
+      "label": "Detection tuning cadence",
+      "description": "Run structured detection tuning on a recurring schedule.",
+      "internalMeaning": "Monthly tuning reviews with false-positive tracking.",
+      "customerFacingText": "Run recurring detection tuning to keep alert quality high.",
+      "tags": [
+        "tuning",
+        "detections",
+        "cadence"
+      ]
+    },
+    {
+      "id": "run_threat_hunting_maturity",
+      "label": "Threat hunting maturity",
+      "description": "Mature threat hunting with hypothesis backlog and tooling.",
+      "internalMeaning": "Operational hunting program with documented outcomes.",
+      "customerFacingText": "Mature threat hunting with structured hypotheses and outcomes.",
+      "tags": [
+        "threat_hunting",
+        "maturity",
+        "security"
+      ]
+    },
+    {
+      "id": "run_purple_team_program",
+      "label": "Purple team program",
+      "description": "Integrate purple team exercises with detection content.",
+      "internalMeaning": "Schedule purple team tests mapped to ATT&CK techniques.",
+      "customerFacingText": "Use purple team exercises to validate and improve detections.",
+      "tags": [
+        "purple_team",
+        "validation",
+        "security"
+      ]
+    },
+    {
+      "id": "run_business_kpi_integration",
+      "label": "Business KPI integration",
+      "description": "Integrate business KPIs with security and operations metrics.",
+      "internalMeaning": "Correlate security events with business transaction metrics.",
+      "customerFacingText": "Connect security and operations metrics to business KPIs.",
+      "tags": [
+        "business",
+        "kpi",
+        "integration"
+      ]
+    },
+    {
+      "id": "run_multi_tenant_governance",
+      "label": "Multi-tenant governance",
+      "description": "Govern multi-team or multi-BU Splunk usage at scale.",
+      "internalMeaning": "Separate indexes, RBAC, and chargeback per tenant.",
+      "customerFacingText": "Govern multi-team Splunk usage with clear boundaries and chargeback.",
+      "tags": [
+        "multi_tenant",
+        "governance",
+        "scale"
+      ]
+    },
+    {
+      "id": "run_disaster_recovery",
+      "label": "Disaster recovery readiness",
+      "description": "Validate DR for Splunk infrastructure and critical content.",
+      "internalMeaning": "Test backup, restore, and DR failover procedures.",
+      "customerFacingText": "Validate disaster recovery for Splunk and critical content.",
+      "tags": [
+        "dr",
+        "resilience",
+        "operations"
+      ]
+    },
+    {
+      "id": "run_content_development_standards",
+      "label": "Content development standards",
+      "description": "Maintain standards for searches, dashboards, and apps.",
+      "internalMeaning": "Publish and enforce content development standards.",
+      "customerFacingText": "Maintain standards for how teams build and publish Splunk content.",
+      "tags": [
+        "content",
+        "standards",
+        "governance"
+      ]
+    },
+    {
+      "id": "run_api_and_integration_hub",
+      "label": "API and integration hub",
+      "description": "Use Splunk as integration hub for security and IT ecosystems.",
+      "internalMeaning": "Integrate SOAR, ITSM, CMDB, and cloud APIs via Splunk.",
+      "customerFacingText": "Use Splunk as a hub for security and IT ecosystem integrations.",
+      "tags": [
+        "integration",
+        "api",
+        "ecosystem"
+      ]
+    },
+    {
+      "id": "run_observability_convergence",
+      "label": "Observability convergence",
+      "description": "Converge security and observability workflows where appropriate.",
+      "internalMeaning": "Unify APM, logs, and security views for critical services.",
+      "customerFacingText": "Converge observability and security views for critical services.",
+      "tags": [
+        "observability",
+        "convergence",
+        "apm"
+      ]
+    },
+    {
+      "id": "run_compliance_continuous_monitoring",
+      "label": "Compliance continuous monitoring",
+      "description": "Run continuous compliance monitoring with drift detection.",
+      "internalMeaning": "Automated compliance dashboards with exception workflows.",
+      "customerFacingText": "Monitor compliance continuously with automated drift detection.",
+      "tags": [
+        "compliance",
+        "continuous",
+        "grc"
+      ]
+    },
+    {
+      "id": "run_vendor_content_adoption",
+      "label": "Vendor content adoption",
+      "description": "Adopt and customize vendor content packs at scale.",
+      "internalMeaning": "Curate ES, ITSI, or vendor content with local customization.",
+      "customerFacingText": "Adopt and customize vendor content packs for your environment.",
+      "tags": [
+        "content",
+        "vendor",
+        "es"
+      ]
+    },
+    {
+      "id": "run_cloud_native_maturity",
+      "label": "Cloud-native maturity",
+      "description": "Mature cloud-native logging and container observability.",
+      "internalMeaning": "Full K8s, serverless, and cloud-native monitoring at scale.",
+      "customerFacingText": "Mature cloud-native observability across containers and serverless.",
+      "tags": [
+        "cloud_native",
+        "kubernetes",
+        "maturity"
+      ]
+    },
+    {
+      "id": "run_security_metrics_program",
+      "label": "Security metrics program",
+      "description": "Run a formal security metrics and benchmarking program.",
+      "internalMeaning": "Track security metrics against industry benchmarks.",
+      "customerFacingText": "Run a formal program to measure and benchmark security outcomes.",
+      "tags": [
+        "metrics",
+        "benchmarking",
+        "security"
+      ]
+    },
+    {
+      "id": "run_knowledge_management",
+      "label": "Knowledge management",
+      "description": "Maintain knowledge base for searches, runbooks, and lessons learned.",
+      "internalMeaning": "Centralize runbooks and investigation notes in Splunk or ITSM.",
+      "customerFacingText": "Maintain institutional knowledge for searches and investigations.",
+      "tags": [
+        "knowledge",
+        "runbooks",
+        "enablement"
+      ]
+    },
+    {
+      "id": "run_innovation_pilot_track",
+      "label": "Innovation pilot track",
+      "description": "Pilot emerging capabilities (GenAI assist, new apps) safely.",
+      "internalMeaning": "Sandbox pilots for new Splunk capabilities with governance.",
+      "customerFacingText": "Safely pilot emerging capabilities in a governed sandbox.",
+      "tags": [
+        "innovation",
+        "pilot",
+        "emerging"
+      ]
+    },
+    {
+      "id": "run_sustainability_and_cost",
+      "label": "Sustainability and cost optimization",
+      "description": "Optimize total cost of ownership for Splunk at scale.",
+      "internalMeaning": "Review license, cloud, and personnel costs quarterly.",
+      "customerFacingText": "Optimize total cost of ownership while maintaining capability.",
+      "tags": [
+        "cost",
+        "tco",
+        "sustainability"
+      ]
+    }
+  ]
+}

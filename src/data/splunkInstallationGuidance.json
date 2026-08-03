@@ -1,0 +1,154 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-29",
+  "disclaimer": {
+    "full": "This document provides planning-level sizing and architecture guidance. Estimated ingest volumes, implementation steps, hardware requirements, onboarding effort, and startup sequencing depend on the customer's actual environment, logging configuration, retention requirements, network design, app usage, and final architecture. Validate with customer-specific measurements and qualified Splunk/Cisco technical personnel before final purchase, deployment, or implementation commitments. This is not a quote, license commitment, capacity guarantee, or fixed professional services estimate.",
+    "short": "Planning-level guidance only — validate ingest, architecture, and implementation steps with customer-specific measurement before purchase or deployment commitments.",
+    "footer": "Estimates include 20% planning contingency. Not a quote, license commitment, capacity guarantee, or fixed professional services estimate."
+  },
+  "officialLinks": {
+    "system_requirements": {
+      "label": "Splunk Enterprise system requirements",
+      "url": "https://help.splunk.com/en?resourceId=Splunk_Installation_Systemrequirements"
+    },
+    "reference_hardware": {
+      "label": "Splunk Enterprise reference hardware",
+      "url": "https://help.splunk.com/?resourceId=Splunk_Capacity_Referencehardware"
+    },
+    "install_linux": {
+      "label": "Install Splunk Enterprise on Linux",
+      "url": "https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/9.1/install-splunk-enterprise-on-linux-or-macos/install-on-linux"
+    },
+    "install_windows": {
+      "label": "Install Splunk Enterprise on Windows",
+      "url": "https://help.splunk.com/?resourceId=Splunk_Installation_InstallonWindows"
+    },
+    "cloud_uf_forwarding": {
+      "label": "Forward data to Splunk Cloud Platform (Universal Forwarder)",
+      "url": "https://help.splunk.com/en/data-management/forward-data/universal-forwarder-manual/10.2/forward-data/how-to-forward-data-to-the-splunk-cloud-platform"
+    },
+    "cloud_uf_credentials": {
+      "label": "Splunk Cloud Universal Forwarder credentials package",
+      "url": "https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/universal-forwarder-manual/9.0/configure-the-universal-forwarder/install-and-configure-the-splunk-cloud-platform-universal-forwarder-credentials-package"
+    },
+    "install_windows_uf": {
+      "label": "Install a Windows Universal Forwarder",
+      "url": "https://help.splunk.com/splunk-cloud-platform/forward-and-process-data/universal-forwarder-manual/9.4/install-the-universal-forwarder/install-a-windows-universal-forwarder"
+    },
+    "uf_download": {
+      "label": "Universal Forwarder download",
+      "url": "https://www.splunk.com/en_us/download/universal-forwarder.html"
+    },
+    "apps_addons_overview": {
+      "label": "Splunk apps and add-ons overview",
+      "url": "https://help.splunk.com/en/data-management/splunk-enterprise-admin-manual/9.4/meet-splunk-apps/apps-and-add-ons"
+    },
+    "indexes_conf": {
+      "label": "indexes.conf reference",
+      "url": "https://docs.splunk.com/Documentation/Splunk/9.4.2/Admin/Indexesconf"
+    }
+  },
+  "referenceHardware": {
+    "summary": "Use official Splunk reference hardware as a baseline. Actual hardware depends on ingest volume, search concurrency, retention, clustering, premium apps, and workload mix.",
+    "minimumIndexer": "Minimum indexer reference baseline includes 12 physical CPU cores or 24 vCPU, 12 GB RAM, storage sized for retention and I/O requirements, and a 1 Gb NIC."
+  },
+  "universalForwarder": {
+    "title": "Universal Forwarder — high-level steps",
+    "steps": [
+      "Download the Universal Forwarder from Splunk.",
+      "Install on the source host using the platform-appropriate installer.",
+      "Configure outputs.conf to forward to the Splunk destination (indexers, heavy forwarder, or Splunk Cloud receiving endpoint).",
+      "For Splunk Cloud, install and configure the Splunk Cloud Platform Universal Forwarder credentials package.",
+      "Configure inputs (monitored logs, Windows event channels, scripted inputs, or TA-driven modular inputs).",
+      "Restart the forwarder and validate connectivity.",
+      "Confirm events arrive in Splunk with expected sourcetype, host, and index."
+    ],
+    "linkKeys": ["uf_download", "cloud_uf_forwarding", "cloud_uf_credentials", "install_windows_uf"]
+  },
+  "deploymentTypes": {
+    "cloud": {
+      "label": "Splunk Cloud Platform",
+      "overview": "Splunk operates indexers and search heads. Customer teams focus on access, app/add-on installation, data onboarding, forwarder deployment, and validation.",
+      "approach": [
+        "Confirm Splunk Cloud tenant access, roles, and onboarding contacts.",
+        "Install required apps and add-ons via Splunk Cloud vetting or approved private app process.",
+        "Define indexes, retention, and HEC tokens where applicable.",
+        "Deploy Universal Forwarders or approved collection methods (syslog via SC4S, HEC, vendor add-ons).",
+        "Install Splunk Cloud forwarder credentials on forwarders where required.",
+        "Validate data flow, field extraction, and dashboard readiness."
+      ],
+      "focusAreas": [
+        "Splunk Cloud access and RBAC",
+        "Required apps/add-ons and TA modular inputs",
+        "Universal Forwarder deployment and credentials package",
+        "HEC or SC4S where appropriate",
+        "Index and sourcetype validation"
+      ],
+      "caveats": [
+        "Splunk Cloud limits certain inputs.conf configurations — use Data Manager and approved onboarding patterns.",
+        "Private apps require Splunk Cloud vetting before installation.",
+        "Hybrid paths need network and security review for forwarder-to-cloud connectivity."
+      ],
+      "linkKeys": ["cloud_uf_forwarding", "cloud_uf_credentials", "apps_addons_overview", "indexes_conf"]
+    },
+    "onprem": {
+      "label": "Customer-managed Splunk Enterprise",
+      "overview": "Customer provisions and operates Splunk Enterprise infrastructure including indexers, search heads, and forwarders.",
+      "approach": [
+        "Confirm supported OS and Splunk Enterprise system requirements.",
+        "Plan deployment topology (standalone, distributed, indexer cluster, search head cluster).",
+        "Provision hosts using reference hardware as a baseline.",
+        "Install Splunk Enterprise on Linux or Windows per official documentation.",
+        "Configure indexes.conf, retention, and licensing.",
+        "Install required apps and technical add-ons.",
+        "Deploy Universal Forwarders, syslog collectors, or heavy forwarders as needed.",
+        "Validate ingest, search, and dashboard readiness."
+      ],
+      "focusAreas": [
+        "System requirements and reference hardware sizing",
+        "Indexer and search head cluster design",
+        "Index configuration and retention",
+        "Universal Forwarder and SC4S deployment",
+        "App/TA installation and parsing validation"
+      ],
+      "caveats": [
+        "Actual hardware and storage must be sized for ingest, retention, search load, and premium apps.",
+        "Clustering and multisite designs add operational complexity — validate with Splunk architecture guidance.",
+        "Change management and security hardening are customer responsibilities."
+      ],
+      "linkKeys": ["system_requirements", "reference_hardware", "install_linux", "install_windows", "uf_download", "apps_addons_overview", "indexes_conf"]
+    },
+    "hybrid": {
+      "label": "Hybrid (Splunk Cloud + on-premises collection)",
+      "overview": "Combine Splunk Cloud for analytics with on-premises forwarders, syslog collectors, or heavy forwarders based on source location and network constraints.",
+      "approach": [
+        "Identify which sources originate on-premises vs. cloud/SaaS.",
+        "Use Splunk Cloud onboarding patterns for cloud-native sources (HEC, vendor cloud add-ons).",
+        "Deploy on-premises forwarders or SC4S for datacenter and endpoint sources.",
+        "Validate network paths, latency, encryption, and firewall rules for forwarder-to-cloud traffic.",
+        "Install Splunk Cloud forwarder credentials where forwarders send to Splunk Cloud.",
+        "Align index routing and retention across hybrid boundaries.",
+        "Validate end-to-end search and correlation across onboarded sources."
+      ],
+      "focusAreas": [
+        "Source location and collection method per zone",
+        "Splunk Cloud forwarder credentials and outputs configuration",
+        "SC4S or heavy forwarder tiers in DMZ or collector zones",
+        "Security and change-control for hybrid data paths"
+      ],
+      "caveats": [
+        "Hybrid design requires validation of source location, network path, latency, and security constraints.",
+        "Duplicate collection paths can inflate ingest — coordinate firewall, proxy, and SASE overlap.",
+        "Not every on-premises input pattern is supported directly in Splunk Cloud — use approved forwarding tiers."
+      ],
+      "linkKeys": ["cloud_uf_forwarding", "cloud_uf_credentials", "system_requirements", "reference_hardware", "uf_download", "apps_addons_overview"]
+    }
+  },
+  "collectionMethodExamples": [
+    "Universal Forwarder — endpoint and server log collection",
+    "Syslog / Splunk Connect for Syslog (SC4S) — network and security appliances",
+    "HTTP Event Collector (HEC) — cloud APIs and application telemetry",
+    "API / modular input — vendor add-ons and SaaS integrations",
+    "Heavy Forwarder — intermediate parsing and routing tier"
+  ]
+}

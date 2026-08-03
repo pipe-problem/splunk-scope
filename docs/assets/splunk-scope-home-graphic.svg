@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Splunk Scope home page radar/topology graphic  static, PowerPoint-ready -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 220 220" role="img" aria-label="Splunk Scope topology radar graphic">
+  <defs>
+    <linearGradient id="radar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E954B7"/>
+      <stop offset="55%" stop-color="#FF7A1A"/>
+      <stop offset="100%" stop-color="#FFD84D"/>
+    </linearGradient>
+    <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E954B7" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#E954B7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="220" height="220" fill="#050505"/>
+  <circle cx="110" cy="110" r="100" fill="url(#radar-glow)"/>
+  <circle cx="110" cy="110" r="35" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.36"/>
+  <circle cx="110" cy="110" r="55" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.28"/>
+  <circle cx="110" cy="110" r="75" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.20"/>
+  <circle cx="110" cy="110" r="95" fill="none" stroke="url(#radar-grad)" stroke-width="0.75" opacity="0.12"/>
+  <circle cx="110" cy="110" r="50" fill="none" stroke="url(#radar-grad)" stroke-width="1.5" opacity="0.45"/>
+  <line x1="110" y1="110" x2="110" y2="12" stroke="url(#radar-grad)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="110" y1="38" x2="168" y2="72" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="110" y1="38" x2="52" y2="88" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="168" y1="72" x2="182" y2="138" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="52" y1="88" x2="38" y2="152" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="182" y1="138" x2="110" y2="182" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="38" y1="152" x2="110" y2="182" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="110" y1="38" x2="148" y2="48" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <line x1="52" y1="88" x2="72" y2="168" stroke="url(#radar-grad)" stroke-width="0.8" opacity="0.2"/>
+  <circle cx="110" cy="38" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="168" cy="72" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="52" cy="88" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="182" cy="138" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="38" cy="152" r="2.5" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="110" cy="182" r="3" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="148" cy="48" r="2" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="72" cy="168" r="2" fill="url(#radar-grad)" opacity="0.85"/>
+  <circle cx="110" cy="110" r="5" fill="url(#radar-grad)"/>
+</svg>

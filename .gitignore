@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local env
+.env
+.env.*
+*.local
+
+# OS / editor
+.DS_Store
+._*
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Test artifacts
+playwright-report/
+test-results/
+coverage/
+
+# Python tooling (optional scripts)
+.pylibs/
+__pycache__/
+*.pyc
+
+# Generated exports (workshop artifacts — do not commit)
+*.pdf
+*.pptx
+splunk-scope-*.pdf
+splunk-scope-*.pptx
+customer_deliverables.zip
+
+# Vite cache
+.vite/

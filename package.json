@@ -1,0 +1,52 @@
+{
+  "name": "splunk-scope",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:smoke": "node tests/smoke/navigation.spec.mjs",
+    "test:e2e": "playwright test --config e2e/smoke/playwright/playwright.config.mjs",
+    "test:plan-matrix": "node scripts/plan-matrix-test.mjs",
+    "gen:sizing-doc": "node scripts/generateDataSourceSizingDoc.mjs",
+    "gen:research-sheet": "node scripts/generateSourceResearchSheet.mjs",
+    "validate:catalog": "node scripts/validateSourceCatalog.js && node scripts/validateSourceContent.mjs",
+    "validate:measurement": "node scripts/audit-measurement-coverage.mjs",
+    "validate:splunkbase": "node scripts/validateSplunkbaseCatalog.js",
+    "refresh:splunkbase": "node scripts/refreshSplunkbaseCatalog.js",
+    "screenshots": "npm run build && node scripts/capture-screenshots.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "d3-force": "^3.0.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
+    "jszip": "^3.10.1",
+    "lucide-react": "^1.14.0",
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.15.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.5.0",
+    "playwright": "^1.60.0",
+    "tailwindcss": "^4.2.4",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
+  }
+}

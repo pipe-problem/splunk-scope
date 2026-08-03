@@ -1,0 +1,514 @@
+{
+  "schemaVersion": "1.7",
+  "lastUpdated": "2026-05-06",
+  "disclaimer": "Vendor-specific multipliers are estimates. Actual rates depend on configuration, logging level, and traffic volume.",
+  "rates": {
+    "firewalls": {
+      "vendors": [
+        {
+          "vendor": "Palo Alto Networks",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.35,
+          "multiplierHigh": 2.1,
+          "notes": "Traffic, Threat, URL Filtering, and WildFire logging can push volume to the high end; PA-7000/VM clusters scale with sessions."
+        },
+        {
+          "vendor": "Fortinet",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.45,
+          "notes": "FortiGate syslog tends to be more compact than some NGFW vendors; UTM features and SSL inspection increase volume materially."
+        },
+        {
+          "vendor": "Cisco ASA/Firepower",
+          "multiplierLow": 0.8,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.75,
+          "notes": "ASA-style ACL logging verbosity dominates; FTD with IPS/URL and FMC correlation events adds significant variability."
+        },
+        {
+          "vendor": "Check Point",
+          "multiplierLow": 0.8,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.55,
+          "notes": "SmartEvent, HTTPS inspection, and blade-enabled logging materially increase exported log volume."
+        },
+        {
+          "vendor": "Juniper SRX",
+          "multiplierLow": 0.65,
+          "multiplierAverage": 0.9,
+          "multiplierHigh": 1.35,
+          "notes": "Session-based syslog tends moderate versus some competitors; AppSecure and UTM features drive the upper range."
+        }
+      ]
+    },
+    "edr": {
+      "vendors": [
+        {
+          "vendor": "CrowdStrike",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.2,
+          "multiplierHigh": 1.65,
+          "notes": "Script control, network containment telemetry, and Falcon platform options increase event rates versus baseline EDR."
+        },
+        {
+          "vendor": "Microsoft Defender for Endpoint",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.4,
+          "notes": "Advanced hunting, tamper protection, and ASR rule verbosity can lift volume; server workloads often exceed desktops."
+        },
+        {
+          "vendor": "SentinelOne",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.45,
+          "notes": "Deep Visibility and Ranger network story data can add substantial ancillary events on top of core telemetry."
+        },
+        {
+          "vendor": "VMware Carbon Black",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.5,
+          "notes": "Enterprise EDR with continuous recording and full process trees trends higher; App Control reduces noise in some estates."
+        },
+        {
+          "vendor": "Trellix",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.3,
+          "notes": "McAfee/Trellix enterprise endpoint telemetry varies widely with policy packs, exploit prevention, and file/registry watchlists."
+        }
+      ]
+    },
+    "sso_pam": {
+      "vendors": [
+        {
+          "vendor": "Okta",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "System Log + fine-grained app assignments and Okta Identity Engine workflows increase authentication-adjacent audit events."
+        },
+        {
+          "vendor": "Microsoft Entra ID",
+          "multiplierLow": 1.0,
+          "multiplierAverage": 1.2,
+          "multiplierHigh": 1.55,
+          "notes": "Sign-in and audit logs with CA policies, PIM, and Graph-rich directory changes often produce high sustained volume."
+        },
+        {
+          "vendor": "Ping Identity",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.25,
+          "notes": "Federate/Access/ping services mix drives variance; token/transaction logging detail is the main lever."
+        },
+        {
+          "vendor": "Cisco Duo",
+          "multiplierLow": 0.55,
+          "multiplierAverage": 0.75,
+          "multiplierHigh": 1.05,
+          "notes": "Telephony and telephony-heavy MFA estates can spike authentication telemetry; base Duo logs are lighter than full IdP platforms."
+        },
+        {
+          "vendor": "CyberArk",
+          "multiplierLow": 1.05,
+          "multiplierAverage": 1.35,
+          "multiplierHigh": 1.85,
+          "notes": "Session recordings, vault access events, and connector/CPM activity typically produce elevated ingest versus SSO-only tools."
+        }
+      ]
+    },
+    "iaas": {
+      "vendors": [
+        {
+          "vendor": "AWS",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.45,
+          "notes": "CloudTrail organization trails + VPC Flow Logs + GuardDuty/Config significantly increase volume versus control-plane-only logging."
+        },
+        {
+          "vendor": "Microsoft Azure",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.6,
+          "notes": "Activity/Diagnostic settings breadth and Defender for Cloud alerts often push Azure estates toward the upper band."
+        },
+        {
+          "vendor": "Google Cloud",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.35,
+          "notes": "Audit Logs + VPC Flow Logs + SCC findings scale with project fan-out and enabled data access logging."
+        },
+        {
+          "vendor": "Oracle Cloud Infrastructure",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.9,
+          "multiplierHigh": 1.25,
+          "notes": "OCI Audit + VCN Flow Logs + Cloud Guard; volume scales with compartment structure and enabled services."
+        },
+        {
+          "vendor": "IBM Cloud",
+          "multiplierLow": 0.8,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.3,
+          "notes": "Activity Tracker events plus VPC flow and platform services vary with account topology and enabled integrations."
+        }
+      ]
+    },
+    "vuln_mgmt": {
+      "vendors": [
+        {
+          "vendor": "Tenable",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.45,
+          "notes": "Nessus/T.sc with asset discovery, agent telemetry, and web-app scanning modules increases exported finding and job detail."
+        },
+        {
+          "vendor": "Qualys",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "Cloud Agent + passive scanner and WAS can add continuous streams beyond scheduled scan summaries."
+        },
+        {
+          "vendor": "Rapid7",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.4,
+          "notes": "InsightVM/Agent with remediation ticketing and integration sprawl often correlates with richer exported change/finding events."
+        },
+        {
+          "vendor": "Microsoft Defender Vulnerability Management",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.9,
+          "multiplierHigh": 1.15,
+          "notes": "Bundled with M365/Defender stack; ingest often lower than standalone VM suites but scales with endpoint breadth."
+        },
+        {
+          "vendor": "Wiz",
+          "multiplierLow": 1.05,
+          "multiplierAverage": 1.25,
+          "multiplierHigh": 1.6,
+          "notes": "Cloud-native graph inventory plus continuous posture events can be chatty in large multi-account estates."
+        }
+      ]
+    },
+    "proxy": {
+      "vendors": [
+        {
+          "vendor": "Zscaler",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "Web logs, firewall, DNS, and DLP forwarding granularity (NSS/CBI) are the primary volume drivers."
+        },
+        {
+          "vendor": "Netskope",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.45,
+          "notes": "SSE with CASB/SWG + granular SaaS transaction detail often trends toward higher sustained web/SaaS telemetry."
+        },
+        {
+          "vendor": "Cisco Umbrella",
+          "multiplierLow": 0.7,
+          "multiplierAverage": 0.9,
+          "multiplierHigh": 1.2,
+          "notes": "DNS-centric logging is often lighter than full proxy payloads; Secure Internet Gateway features increase detail."
+        },
+        {
+          "vendor": "Palo Alto Prisma Access",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.55,
+          "notes": "Remote user traffic inspection and threat/url logging mirror NG firewall-like volume scaled by user concurrency."
+        },
+        {
+          "vendor": "Cloudflare",
+          "multiplierLow": 0.65,
+          "multiplierAverage": 0.85,
+          "multiplierHigh": 1.25,
+          "notes": "Gateway/Zero Trust logs vary widely: DNS-only estates skew low; full HTTP inspection and PCAP-adjacent features skew high."
+        }
+      ]
+    },
+    "database": {
+      "vendors": [
+        {
+          "vendor": "Oracle",
+          "multiplierLow": 1.1,
+          "multiplierAverage": 1.45,
+          "multiplierHigh": 2.2,
+          "notes": "Unified Audit Trail, fine-grained auditing, and redo-heavy environments can generate very high audit/log volume."
+        },
+        {
+          "vendor": "Microsoft SQL Server",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.2,
+          "multiplierHigh": 1.75,
+          "notes": "Extended Events vs. SQL Audit vs. heavy DDL/DML auditing dominates variability; Always On replicas can multiply streams."
+        },
+        {
+          "vendor": "PostgreSQL",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.35,
+          "notes": "pg_audit and statement logging are the main levers; default configurations are often leaner than commercial suites."
+        },
+        {
+          "vendor": "MySQL / MariaDB",
+          "multiplierLow": 0.6,
+          "multiplierAverage": 0.85,
+          "multiplierHigh": 1.2,
+          "notes": "General/slow query logs and audit plugins range from minimal to very verbose depending on compliance mode."
+        },
+        {
+          "vendor": "MongoDB",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.5,
+          "notes": "Auditing, profiler, and change streams can scale sharply with high document churn and sharded clusters."
+        }
+      ]
+    },
+    "storage_prod": {
+      "vendors": [
+        {
+          "vendor": "NetApp",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.4,
+          "notes": "ONTAP EMS/autosupport-style telemetry and per-volume auditing increase with multi-protocol and MetroCluster estates."
+        },
+        {
+          "vendor": "Dell EMC",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.45,
+          "notes": "PowerStore/PowerMax/Unisphere exports vary by array family; VPLEX/RecoverPoint adjacency can add integration log sprawl."
+        },
+        {
+          "vendor": "Pure Storage",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.25,
+          "notes": "Generally streamlined management APIs/logs; FlashArray/FlashBlade telemetry increases with replication and workload intensity."
+        },
+        {
+          "vendor": "HPE",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "Alletra/3PAR/Nimble families differ; SSMC/InfoSight integrations and replication events affect exported detail."
+        },
+        {
+          "vendor": "IBM Storage",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.3,
+          "notes": "Spectrum Virtualize/FlashSystem event streams scale with cluster size and copy services activity."
+        }
+      ]
+    },
+    "ics_scada": {
+      "vendors": [
+        {
+          "vendor": "Nozomi Networks",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.35,
+          "notes": "Asset and anomaly detections scale with monitored segments and protocol depth; span/mirror placement affects event richness."
+        },
+        {
+          "vendor": "Claroty",
+          "multiplierLow": 1.0,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.4,
+          "notes": "Deep DPI across diverse OT protocols and integration fan-out can produce sustained medium-high telemetry."
+        },
+        {
+          "vendor": "Dragos",
+          "multiplierLow": 1.05,
+          "multiplierAverage": 1.2,
+          "multiplierHigh": 1.5,
+          "notes": "Collection platform density and ICS-specific analytics often correlate with higher exported detection narratives."
+        },
+        {
+          "vendor": "Rockwell Automation",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.2,
+          "notes": "PlantPAx/FactoryTalk and Stratix switching environments vary; controller and HMI logging verbosity drives spread."
+        },
+        {
+          "vendor": "Siemens",
+          "multiplierLow": 0.8,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.3,
+          "notes": "SIMATIC/TIA and industrial comms monitoring scale with cell/line complexity and security module enablement."
+        }
+      ]
+    },
+    "ndr": {
+      "vendors": [
+        {
+          "vendor": "Darktrace",
+          "multiplierLow": 1.1,
+          "multiplierAverage": 1.35,
+          "multiplierHigh": 1.75,
+          "notes": "Model-driven detections and explanatory metadata can be voluminous versus flow-only sensors."
+        },
+        {
+          "vendor": "ExtraHop",
+          "multiplierLow": 1.05,
+          "multiplierAverage": 1.25,
+          "multiplierHigh": 1.55,
+          "notes": "L7 payload analysis and decryption options materially increase exported event detail."
+        },
+        {
+          "vendor": "Vectra AI",
+          "multiplierLow": 1.0,
+          "multiplierAverage": 1.15,
+          "multiplierHigh": 1.45,
+          "notes": "Cognito detections plus metadata exports scale with east-west coverage and SaaS/identity detect modules."
+        },
+        {
+          "vendor": "Corelight",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.5,
+          "notes": "Zeek-derived logs scale with link speed, SSL inspection policy, and enabled log suites (files/DNS/HTTP richness)."
+        },
+        {
+          "vendor": "Cisco Secure Network Analytics",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.4,
+          "notes": "Former Stealthwatch; NetFlow/IPFIX-centric baselining is often lighter than full PCAP-adjacent NDR but still bandwidth-sensitive."
+        }
+      ]
+    },
+    "email": {
+      "vendors": [
+        {
+          "vendor": "Microsoft Exchange / Microsoft 365",
+          "multiplierLow": 1.0,
+          "multiplierAverage": 1.3,
+          "multiplierHigh": 1.8,
+          "notes": "Message trace, Advanced Auditing, Defender for Office 365, and transport agent detail can dominate mail telemetry volume."
+        },
+        {
+          "vendor": "Proofpoint",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.45,
+          "notes": "Tap syslog/SIEM exports vary with TAP depth, URL rewrite logging, and attachment analytics enabled."
+        },
+        {
+          "vendor": "Mimecast",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.35,
+          "notes": "Journal and SMTP transaction logging settings drive most variance; impersonation and URL protect events add volume."
+        },
+        {
+          "vendor": "Barracuda",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.25,
+          "notes": "Gateway syslog formats differ by appliance generation; ATP and sandbox detail increase sustained events."
+        },
+        {
+          "vendor": "Cisco Email Security Appliance (ESA)",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.4,
+          "notes": "Text mail logs vs. injection/debug and AMP retrospection logging materially change daily exported volume."
+        }
+      ]
+    },
+    "switches": {
+      "vendors": [
+        {
+          "vendor": "Cisco",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "IOS-XE/NX-OS with 802.1X, CTS, and SPAN-heavy telemetry can exceed baseline L2 syslog estates."
+        },
+        {
+          "vendor": "Juniper",
+          "multiplierLow": 0.8,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.2,
+          "notes": "EX/QFX with structured syslog tend moderate; EVPN/VXLAN fabrics increase state change events."
+        },
+        {
+          "vendor": "Arista",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.25,
+          "notes": "EOS event-monitor and LANZ can add fine-grained buffer/latency telemetry beyond standard syslog."
+        },
+        {
+          "vendor": "HPE Aruba",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 0.95,
+          "multiplierHigh": 1.2,
+          "notes": "Central-managed campuses with detailed client troubleshooting logs trend higher than basic up/down traps."
+        },
+        {
+          "vendor": "Dell",
+          "multiplierLow": 0.75,
+          "multiplierAverage": 0.9,
+          "multiplierHigh": 1.15,
+          "notes": "OS10/SONiC-based estates vary; OpenFlow/BGP-rich spine overlays can increase routing adjacency chatter in logs."
+        }
+      ]
+    },
+    "routers": {
+      "vendors": [
+        {
+          "vendor": "Cisco",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.45,
+          "notes": "ISR/ASR with full BGP updates, NetFlow/sFlow exports, and security feature sets increase management/log volume."
+        },
+        {
+          "vendor": "Juniper",
+          "multiplierLow": 0.9,
+          "multiplierAverage": 1.05,
+          "multiplierHigh": 1.35,
+          "notes": "MX/PTX scale with peers and services; firewall filter logging on edge routers can dominate."
+        },
+        {
+          "vendor": "Arista",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.3,
+          "notes": "WAN routing profiles vary; heavy telemetry on DCI segments pushes toward the high band."
+        },
+        {
+          "vendor": "Nokia",
+          "multiplierLow": 0.85,
+          "multiplierAverage": 1.0,
+          "multiplierHigh": 1.3,
+          "notes": "7750/SR families with extensive service logging and PM stats correlate with higher SIEM ingest."
+        },
+        {
+          "vendor": "Huawei",
+          "multiplierLow": 0.95,
+          "multiplierAverage": 1.1,
+          "multiplierHigh": 1.4,
+          "notes": "NE/ATN platforms with detailed security and routing syslog exports show wide operator-driven variance."
+        }
+      ]
+    }
+  }
+}

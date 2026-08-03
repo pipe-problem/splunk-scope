@@ -1,0 +1,1010 @@
+{
+  "schemaVersion": "1.7",
+  "lastUpdated": "2026-05-06",
+  "methods": {
+    "active_directory": {
+      "primaryUnit": "Domain controllers",
+      "secondaryUnits": [
+        "Named user accounts (optional sanity check)"
+      ],
+      "howToCount": "Count physical and virtual domain controllers that forward security (Directory Service) events to Splunk. Exclude member servers unless they run AD DS.",
+      "customerQuestion": "How many AD domain controllers send Directory Service / Security Channel events to the SIEM?",
+      "commonMistakes": [
+        "Counting every Windows server instead of DCs only",
+        "Forgetting RODCs or DR site controllers",
+        "Equating user mailboxes with interactive directory users"
+      ]
+    },
+    "apm": {
+      "primaryUnit": "Monitored applications (APM entities)",
+      "secondaryUnits": [
+        "APM collector/agent hosts",
+        "Daily trace sample volume"
+      ],
+      "howToCount": "Use the number of distinct services or application names under APM management (one per instrumented app), not every JVM/process replica.",
+      "customerQuestion": "How many application services are instrumented in your APM (per golden 'service' name)?",
+      "commonMistakes": [
+        "Counting every container replica as a separate app",
+        "Omitting non-prod if it forwards to the same index",
+        "Ignoring head-based trace sampling that still exports metrics"
+      ]
+    },
+    "app_servers": {
+      "primaryUnit": "Application server hosts",
+      "secondaryUnits": [
+        "Hosted business applications",
+        "Clusters / scale-out nodes"
+      ],
+      "howToCount": "Count OS instances whose primary role is hosting middleware or business application runtimes (Java/.NET/app servers), whether VMs or bare metal.",
+      "customerQuestion": "How many dedicated application server hosts generate logs you plan to index?",
+      "commonMistakes": [
+        "Double-counting the same host under Web Servers and App Servers",
+        "Counting DB servers as app servers",
+        "Excluding passive DR nodes that still emit logs"
+      ]
+    },
+    "app_servers_nonprod": {
+      "primaryUnit": "Non-production application server hosts",
+      "secondaryUnits": [
+        "Dev/test/stage environments"
+      ],
+      "howToCount": "Same as production application servers but scoped to dev, test, and staging tiers that forward logs to Splunk.",
+      "customerQuestion": "How many non-prod application server hosts are in log scope?",
+      "commonMistakes": [
+        "Double-counting hosts already scoped under Web Servers (Non-Production)",
+        "Assuming non-prod volume is negligible during release testing"
+      ]
+    },
+    "application_event_log": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Applications logging to this channel"
+      ],
+      "howToCount": "Use the same Windows server count as the parent Windows Servers source when Application log collection is enabled; volume scales per enabled channel per server.",
+      "customerQuestion": "On how many Windows servers will you collect the Application event log?",
+      "commonMistakes": [
+        "Counting desktop endpoints",
+        "Assuming all third-party apps write meaningful events by default"
+      ]
+    },
+    "asset_cmdb": {
+      "primaryUnit": "Authoritative asset or identity sources",
+      "secondaryUnits": [
+        "Total records synced per source"
+      ],
+      "howToCount": "Count distinct CMDB exports, LDAP/AD 'golden' identity lists, or automated inventory integrations that feed Splunk (one pipeline per upstream system).",
+      "customerQuestion": "How many systems of record regularly push asset or identity snapshots into Splunk?",
+      "commonMistakes": [
+        "Counting total CI rows instead of upstream integrations",
+        "Treating every SCCM site as a separate source when one aggregator export exists"
+      ]
+    },
+    "business_txn": {
+      "primaryUnit": "Instrumented business applications",
+      "secondaryUnits": [
+        "Transactions per day (volume driver)"
+      ],
+      "howToCount": "Count applications emitting business or payment transaction logs (order, claims, wire, etc.), not every microservice unless each emits txn records.",
+      "customerQuestion": "How many core business applications produce transaction-level logs you will onboard?",
+      "commonMistakes": [
+        "Using order counts as 'application count'",
+        "Ignoring batch windows that spike TPS",
+        "Mixing debug logs with transaction records"
+      ]
+    },
+    "casb": {
+      "primaryUnit": "Protected users",
+      "secondaryUnits": [
+        "Monitored SaaS platforms",
+        "API connectors"
+      ],
+      "howToCount": "Use workforce (or entitled) user count covered by the CASB policy set--same basis as licensing where possible.",
+      "customerQuestion": "How many users are covered by your CASB / SSE cloud policies?",
+      "commonMistakes": [
+        "Counting SaaS licenses instead of routed user population",
+        "Omitting service accounts with API activity",
+        "Using global user count when only a BU is enforced"
+      ]
+    },
+    "config_mgmt": {
+      "primaryUnit": "Managed nodes under configuration tooling",
+      "secondaryUnits": [
+        "Control/masters",
+        "Environments"
+      ],
+      "howToCount": "Count servers, VMs, or instances managed by Ansible Tower, Puppet, Chef, Salt, etc., that emit run reports or change events.",
+      "customerQuestion": "How many endpoints are managed by your configuration or desired-state automation platform?",
+      "commonMistakes": [
+        "Counting only masters/orchestrators",
+        "Including containers twice if also counted elsewhere without scope rules"
+      ]
+    },
+    "cspm": {
+      "primaryUnit": "Cloud accounts under assessment",
+      "secondaryUnits": [
+        "Cloud resources evaluated",
+        "Integrated projects/subscriptions"
+      ],
+      "howToCount": "Count AWS accounts, Azure subscriptions, GCP projects (or folders if one export), OCI tenancies--match the CSPM product's billing boundary.",
+      "customerQuestion": "How many cloud accounts or subscriptions does your CSPM continuously assess?",
+      "commonMistakes": [
+        "Counting every resource instead of account boundary",
+        "Excluding sandbox accounts that still generate findings",
+        "Mixing CSPM with pure CWPP only"
+      ]
+    },
+    "cwpp": {
+      "primaryUnit": "Protected workloads",
+      "secondaryUnits": [
+        "Container hosts",
+        "Server OS instances"
+      ],
+      "howToCount": "Count servers, VMs, and Kubernetes worker nodes (or pods if licensed per pod) covered by the workload protection product.",
+      "customerQuestion": "How many OS instances or nodes run the cloud workload protection agent?",
+      "commonMistakes": [
+        "Double-counting EDR on same host without dedupe rules",
+        "Using hypervisor count instead of VM/agent count"
+      ]
+    },
+    "database": {
+      "primaryUnit": "Database instances",
+      "secondaryUnits": [
+        "Clusters / replicas (if logged separately)"
+      ],
+      "howToCount": "Count RDBMS/NoSQL instances (one per SID/database service). For Always On clusters, count each replica that independently emits audit logs if forwarded separately.",
+      "customerQuestion": "How many database instances will forward audit or diagnostic logs?",
+      "commonMistakes": [
+        "Counting schemas instead of instances",
+        "Ignoring passive replicas with audit enabled",
+        "Combining dev/test without scope"
+      ]
+    },
+    "db_access": {
+      "primaryUnit": "Database instances (access/audit logs)",
+      "secondaryUnits": [
+        "Sensitive tables monitored"
+      ],
+      "howToCount": "Count only database instances where access auditing (logins, object access) is enabled and forwarded--not total enterprise DB inventory.",
+      "customerQuestion": "For how many database instances will you collect access or unified audit trails?",
+      "commonMistakes": [
+        "Assuming default auditing is on",
+        "Forgetting proxy/scan user noise in logs"
+      ]
+    },
+    "db_transaction": {
+      "primaryUnit": "Database instances (transaction logs)",
+      "secondaryUnits": [
+        "High-churn applications"
+      ],
+      "howToCount": "Count instances emitting redo/binlog/transaction telemetry or verbose statement logs; align with DBA guidance on who runs txn log shipping to the SIEM.",
+      "customerQuestion": "How many databases produce high-volume transactional or redo-class logs you plan to index?",
+      "commonMistakes": [
+        "Enabling full statement logging without filtering",
+        "Underestimating OLTP peak windows"
+      ]
+    },
+    "ddos": {
+      "primaryUnit": "Mitigation services or scrubbing centers",
+      "secondaryUnits": [
+        "Protected sites / ASNs"
+      ],
+      "howToCount": "Count contracted DDoS protection services or on-prem appliances that export attack/mitigation logs per site or per service.",
+      "customerQuestion": "How many DDoS protection services or scrubbing endpoints feed logs?",
+      "commonMistakes": [
+        "Counting public IPs instead of contracted services",
+        "Omitting DNS-based protection logs"
+      ]
+    },
+    "deception": {
+      "primaryUnit": "Decoy endpoints or sensors",
+      "secondaryUnits": [
+        "Campaigns / decoy networks"
+      ],
+      "howToCount": "Count deception agents, honeypot VMs, or appliance-managed decoys that generate security events--exclude production workloads.",
+      "customerQuestion": "How many deception assets actively generate telemetry to the SIEM?",
+      "commonMistakes": [
+        "Counting production servers as decoys",
+        "Ignoring emulated services that burst alerts during scans"
+      ]
+    },
+    "desktops": {
+      "primaryUnit": "Managed endpoints (workstations)",
+      "secondaryUnits": [
+        "VDI sessions if broken out"
+      ],
+      "howToCount": "Count laptops/desktops with forwarders or agents shipping endpoint logs (physical plus persistent VDI golden images × concurrent if licensing differs).",
+      "customerQuestion": "How many employee workstations forward Windows/Linux/macOS security logs?",
+      "commonMistakes": [
+        "Using headcount instead of deployed agents",
+        "Counting kiosk/shared devices twice",
+        "Omitting contractors with managed devices"
+      ]
+    },
+    "devops_cicd": {
+      "primaryUnit": "CI/CD controller hosts or SaaS orgs",
+      "secondaryUnits": [
+        "Active pipelines",
+        "Build agents"
+      ],
+      "howToCount": "Count self-hosted controllers (Jenkins masters, GitLab runners managers) or, for SaaS, count distinct orgs/projects only if each exports separately. Prefer counting systems that emit build audit streams.",
+      "customerQuestion": "How many CI/CD systems export build, deploy, and audit events you will ingest?",
+      "commonMistakes": [
+        "Counting every ephemeral build pod as a permanent unit",
+        "Ignoring Git audit vs pipeline logs split"
+      ]
+    },
+    "dhcp": {
+      "primaryUnit": "DHCP servers",
+      "secondaryUnits": [
+        "Active leases",
+        "Scopes"
+      ],
+      "howToCount": "Count DHCP server appliances or OS roles that serve leases and forward DHCP logs.",
+      "customerQuestion": "How many DHCP servers send lease and conflict events to Splunk?",
+      "commonMistakes": [
+        "Counting relays instead of authoritative servers",
+        "Mixing IPAM-only exports with DHCP service logs"
+      ]
+    },
+    "dhcp_server_logs": {
+      "primaryUnit": "Windows servers (DHCP role)",
+      "secondaryUnits": [
+        "Scopes served"
+      ],
+      "howToCount": "Use the Windows server count for hosts running the DHCP Server role whose DHCP service logs are collected.",
+      "customerQuestion": "How many Windows DHCP servers will forward DHCP server service logs?",
+      "commonMistakes": [
+        "Counting all Windows servers instead of DHCP role holders"
+      ]
+    },
+    "dlp": {
+      "primaryUnit": "DLP-protected users or endpoints",
+      "secondaryUnits": [
+        "Managed channels (web, email, endpoint)"
+      ],
+      "howToCount": "Prefer the DLP console's covered-endpoint or covered-user metric; align with policy enforcement scope.",
+      "customerQuestion": "How many users or endpoints are actively enforced by DLP policies feeding the SIEM?",
+      "commonMistakes": [
+        "Using email-only DLP stats for endpoint DLP",
+        "Omitting server DLP agents"
+      ]
+    },
+    "dns": {
+      "primaryUnit": "DNS servers (authoritative + internal recursive)",
+      "secondaryUnits": [
+        "Query logging enablement",
+        "User population behind resolvers"
+      ],
+      "howToCount": "Count servers or appliances answering internal DNS that export queries or rpz hits; add resolver clusters as one unit per HA pair if logs are merged.",
+      "customerQuestion": "How many DNS systems export query or security logs (not just SNMP)?",
+      "commonMistakes": [
+        "Counting external public resolvers you don't operate",
+        "Enabling full query logging without sizing"
+      ]
+    },
+    "dns_server_logs": {
+      "primaryUnit": "Windows servers (DNS role)",
+      "secondaryUnits": [
+        "Zones hosted"
+      ],
+      "howToCount": "Count Windows servers running the DNS Server role with analytical/debug logging forwarded.",
+      "customerQuestion": "How many Windows DNS servers forward DNS analytical logs?",
+      "commonMistakes": [
+        "Confusing with generic Windows Security events only"
+      ]
+    },
+    "dpi": {
+      "primaryUnit": "DPI sensor appliances or modules",
+      "secondaryUnits": [
+        "Inspected Gbps"
+      ],
+      "howToCount": "Count inline DPI systems or modules generating metadata/PCAP-derived events; use monitored bandwidth as secondary scaling input.",
+      "customerQuestion": "How many DPI systems or taps export events, and what aggregate inspected throughput?",
+      "commonMistakes": [
+        "Equating SPAN ports with production DPI capacity",
+        "Ignoring SSL inspection policy impact"
+      ]
+    },
+    "edr": {
+      "primaryUnit": "Managed endpoints",
+      "secondaryUnits": [
+        "Servers with EDR agents",
+        "Excluded network devices"
+      ],
+      "howToCount": "Count all devices with the EDR agent enrolled (workstations + servers). Use the vendor console's active-sensor count where available.",
+      "customerQuestion": "How many endpoints report into your EDR platform daily?",
+      "commonMistakes": [
+        "Deduping VDI by image instead of active sessions policy",
+        "Counting stale/offline agents",
+        "Mixing MDM-only with EDR"
+      ]
+    },
+    "email": {
+      "primaryUnit": "Mail gateways or Exchange servers",
+      "secondaryUnits": [
+        "Protected mailboxes (volume driver)"
+      ],
+      "howToCount": "Count SMTP gateways, hybrid Exchange nodes, or logical mail-hygiene services exporting message logs. Use mailbox/user count as secondary for SaaS.",
+      "customerQuestion": "How many mail security hops or Exchange systems forward message tracking and filtering logs?",
+      "commonMistakes": [
+        "Counting every M365 license instead of hybrid servers",
+        "Omitting journaling mailboxes",
+        "Ignoring TLS report-only appliances"
+      ]
+    },
+    "firewalls": {
+      "primaryUnit": "Firewall appliances or virtual instances",
+      "secondaryUnits": [
+        "Users behind perimeter",
+        "Logging profile"
+      ],
+      "howToCount": "Each physical appliance, logical HA member (if separately logged), and distinct vFW instance counts as one; cloud FWaaS often per region/policy bundle per vendor guidance.",
+      "customerQuestion": "How many firewall devices or separately logged virtual instances send traffic/threat logs?",
+      "commonMistakes": [
+        "Counting HA passive devices without logs",
+        "Treating VPN concentrator logs as separate firewall without scoping",
+        "Missing east-west internal firewalls"
+      ]
+    },
+    "forwarded_events": {
+      "primaryUnit": "Windows collector / source servers",
+      "secondaryUnits": [
+        "Subscribed forwarders"
+      ],
+      "howToCount": "Count Windows Event Collector servers or endpoints using forwarded subscriptions; ingestion scales with collected source servers, not just collectors.",
+      "customerQuestion": "How many servers participate in Windows Event Forwarding collections you index?",
+      "commonMistakes": [
+        "Counting only collectors and ignoring upstream members"
+      ]
+    },
+    "fw_internal": {
+      "primaryUnit": "Internal segmentation firewalls",
+      "secondaryUnits": [
+        "Zones segmented"
+      ],
+      "howToCount": "Subset of total firewalls enforcing east-west policies; count each logged instance separately from perimeter.",
+      "customerQuestion": "How many internal segmentation firewalls forward logs?",
+      "commonMistakes": [
+        "Double-counting the same device under perimeter and internal"
+      ]
+    },
+    "fw_perimeter": {
+      "primaryUnit": "Internet-facing firewalls",
+      "secondaryUnits": [
+        "Public links protected"
+      ],
+      "howToCount": "Count only border firewalls or cloud edge instances directly handling north-south traffic with logging enabled.",
+      "customerQuestion": "How many perimeter firewalls export north-south traffic logs?",
+      "commonMistakes": [
+        "Including internal-only virtual firewalls",
+        "Missing cloud edge NGFW pairs per AZ"
+      ]
+    },
+    "fw_waf": {
+      "primaryUnit": "WAF instances or protected app pairs",
+      "secondaryUnits": [
+        "Public applications"
+      ],
+      "howToCount": "Count deployed WAF appliances, cloud WAF instances, or ADC-integrated WAF modules that emit security/access logs per vendor unit of scale.",
+      "customerQuestion": "How many WAF instances or logical services generate logs you will onboard?",
+      "commonMistakes": [
+        "Counting origin web servers as WAFs",
+        "Omitting CDN-managed WAF edges"
+      ]
+    },
+    "hypervisor": {
+      "primaryUnit": "Hypervisor hosts",
+      "secondaryUnits": [
+        "Registered VMs (context)"
+      ],
+      "howToCount": "Count ESXi hosts, Hyper-V nodes, KVM hosts, etc., that export hypervisor management/audit logs--not every guest VM.",
+      "customerQuestion": "How many hypervisor hosts forward host-level audit and task events?",
+      "commonMistakes": [
+        "Counting every VM instead of hosts",
+        "Ignoring vCenter-only exports without host logs"
+      ]
+    },
+    "iaas": {
+      "primaryUnit": "Cloud accounts or subscriptions",
+      "secondaryUnits": [
+        "VMs with flow logs (advanced)",
+        "Kubernetes clusters (advanced)"
+      ],
+      "howToCount": "Standard mode: count AWS accounts, Azure subscriptions, GCP projects, OCI tenancies, or IBM accounts. Advanced mode: enter scope-specific counts when the customer knows VM, storage, flow log, or Kubernetes details.",
+      "customerQuestion": "How many cloud accounts or subscriptions will feed control-plane and security logs? (Use advanced sizing if they can provide VM, flow log, storage, or Kubernetes counts.)",
+      "commonMistakes": [
+        "Using instance count as the primary account metric in standard mode",
+        "Double-counting VMs or clusters also sized as separate child sources"
+      ]
+    },
+    "iaas_containers": {
+      "primaryUnit": "Kubernetes or container clusters",
+      "secondaryUnits": [
+        "Worker/control nodes",
+        "Active pods or containers (stdout)"
+      ],
+      "howToCount": "Enter cluster count (control-plane and audit), node count (kubelet/runtime/infrastructure logs), and active pods or containers emitting stdout. Use pod count as an approximation if container count is unknown.",
+      "customerQuestion": "How many clusters, nodes, and active pods/containers forward platform and application logs?",
+      "commonMistakes": [
+        "Counting namespaces as clusters",
+        "Sizing container stdout here and again under application or web server sources",
+        "Ignoring managed control plane log settings"
+      ]
+    },
+    "iaas_instances": {
+      "primaryUnit": "Cloud VM or compute instances",
+      "secondaryUnits": [
+        "Collection profile (base vs full VM logs)",
+        "Optional per-component toggles"
+      ],
+      "howToCount": "Enter the number of cloud VMs or instances sending logs via cloud-native agents (CloudWatch, Azure Monitor, Ops Agent, etc.) or VM log forwarding. Choose base telemetry or full VM logs based on what the agent collects.",
+      "customerQuestion": "How many cloud VMs or instances will send logs, and what is the agent collection profile?",
+      "commonMistakes": [
+        "Including stopped instances that are not logging",
+        "Sizing application logs here and again under Application Servers or Web Servers",
+        "Double-counting with on-prem Linux/Windows server sources for the same workloads"
+      ]
+    },
+    "iaas_storage": {
+      "primaryUnit": "Storage assets (buckets, accounts, volumes, or filesystems)",
+      "secondaryUnits": [
+        "Collection profile (base vs full access logs)",
+        "Optional per-component toggles"
+      ],
+      "howToCount": "For AWS and Google, count buckets. For Azure, count storage accounts. For NetApp, count volumes. For Dell PowerScale, count filesystems or access zones. Choose base telemetry or full access logs based on what is collected.",
+      "customerQuestion": "How many storage assets will send logs, and is object/file access logging enabled?",
+      "commonMistakes": [
+        "Counting every bucket when only sensitive prefixes log",
+        "Sizing access logs here and again under Application Servers or Web Servers",
+        "Double-counting with IaaS advanced storage bucket counts"
+      ]
+    },
+    "ics_scada": {
+      "primaryUnit": "OT / SCADA systems or segments",
+      "secondaryUnits": [
+        "Sensors or PLCs (context)",
+        "Manual GB/day overrides"
+      ],
+      "howToCount": "Count HMI/SCADA servers, historians, or OT security monitors representing a plant line or cell--not every physical sensor unless each exports logs.",
+      "customerQuestion": "How many SCADA or OT systems (or monitored segments) forward security-relevant events?",
+      "commonMistakes": [
+        "IT asset counts as OT",
+        "Underestimating historian polling volume"
+      ]
+    },
+    "ids_ips": {
+      "primaryUnit": "IPS/IDS sensors or appliances",
+      "secondaryUnits": [
+        "Protected segments"
+      ],
+      "howToCount": "Count inline IPS appliances, virtual sensors, or NGFW blades dedicated to IDS/IPS event export.",
+      "customerQuestion": "How many IDS/IPS sensors generate alert logs to the SIEM?",
+      "commonMistakes": [
+        "Counting passive PCAP taps twice with NDR",
+        "Omitting virtual sensors per VLAN"
+      ]
+    },
+    "iis_logs": {
+      "primaryUnit": "Windows servers (IIS role)",
+      "secondaryUnits": [
+        "Websites hosted"
+      ],
+      "howToCount": "Count Windows servers running IIS that forward W3C or custom logs.",
+      "customerQuestion": "How many IIS servers ship web access and error logs?",
+      "commonMistakes": [
+        "Counting app servers without IIS",
+        "Extremely verbose failed-request tracing enabled by default"
+      ]
+    },
+    "linux_servers": {
+      "primaryUnit": "Linux/Unix servers",
+      "secondaryUnits": [
+        "Log forwarders"
+      ],
+      "howToCount": "Count production servers with syslog/auditd/agent forwarding enabled.",
+      "customerQuestion": "How many production Linux servers forward auth and system logs?",
+      "commonMistakes": [
+        "Containers counted as hosts without policy",
+        "Omitting AIX/mainframe-adjacent Linux"
+      ]
+    },
+    "linux_servers_nonprod": {
+      "primaryUnit": "Non-production Linux/Unix servers",
+      "secondaryUnits": [
+        "Environments (dev/test/stage)"
+      ],
+      "howToCount": "Same as production Linux count but scoped to lower environments that still ship logs to Splunk.",
+      "customerQuestion": "How many non-prod Linux servers are in log scope?",
+      "commonMistakes": [
+        "Assuming non-prod is negligible during release spikes"
+      ]
+    },
+    "loadbalancer": {
+      "primaryUnit": "Load balancer devices or virtual services",
+      "secondaryUnits": [
+        "Back-end pools"
+      ],
+      "howToCount": "Count ADC/LB appliances or managed LBs (per active unit) exporting access and health logs.",
+      "customerQuestion": "How many load balancers send access and health check logs?",
+      "commonMistakes": [
+        "Counting VIPs instead of devices",
+        "Omitting GSLB-only appliances"
+      ]
+    },
+    "mainframe": {
+      "primaryUnit": "Mainframe LPARs or systems",
+      "secondaryUnits": [
+        "SMF record types",
+        "Manual GB/day"
+      ],
+      "howToCount": "Count logical partitions or systems emitting SMF/RACF/ syslog forwards--confirm with mainframe ops.",
+      "customerQuestion": "How many mainframe systems or LPARs export security and operations logs?",
+      "commonMistakes": [
+        "Treating DASD count as systems",
+        "Underestimating SMF volume"
+      ]
+    },
+    "mdm": {
+      "primaryUnit": "Managed mobile devices",
+      "secondaryUnits": [
+        "Enrolled users"
+      ],
+      "howToCount": "Count smartphones/tablets enrolled in MDM/UEM with compliance and inventory logs flowing to SIEM.",
+      "customerQuestion": "How many mobile devices are under MDM management in scope?",
+      "commonMistakes": [
+        "Counting inactive devices",
+        "Mixing BYOD privacy-limited telemetry"
+      ]
+    },
+    "middleware": {
+      "primaryUnit": "Middleware cluster nodes or instances",
+      "secondaryUnits": [
+        "Integrated applications"
+      ],
+      "howToCount": "Count hosts running brokers (IBM MQ, Kafka, Rabbit), app servers, or ESB nodes that emit dedicated middleware logs.",
+      "customerQuestion": "How many middleware nodes forward application/integration logs?",
+      "commonMistakes": [
+        "Counting Kafka topics instead of brokers",
+        "Double-counting with app_servers"
+      ]
+    },
+    "middleware_nonprod": {
+      "primaryUnit": "Non-production middleware nodes",
+      "secondaryUnits": [
+        "Dev/test/stage environments"
+      ],
+      "howToCount": "Same as production middleware but scoped to lower environments that still ship broker and integration logs to Splunk.",
+      "customerQuestion": "How many non-prod middleware nodes are in log scope?",
+      "commonMistakes": [
+        "Assuming non-prod brokers are silent",
+        "Double-counting shared integration test harnesses"
+      ]
+    },
+    "nac": {
+      "primaryUnit": "NAC policy servers",
+      "secondaryUnits": [
+        "Access switches integrated"
+      ],
+      "howToCount": "Count Cisco ISE PSNs, Aruba ClearPass nodes, or equivalent policy servers exporting authentication and posture events.",
+      "customerQuestion": "How many NAC policy servers or clusters export RADIUS/posture logs?",
+      "commonMistakes": [
+        "Counting every access switch",
+        "Omitting guest workflow logs"
+      ]
+    },
+    "ndr": {
+      "primaryUnit": "NDR network sensors or collectors",
+      "secondaryUnits": [
+        "Monitored bandwidth",
+        "Sites"
+      ],
+      "howToCount": "Count deployed network sensors/collectors (physical or virtual). Use monitored Gbps as secondary sizing when required.",
+      "customerQuestion": "How many NDR sensors cover your monitored network segments?",
+      "commonMistakes": [
+        "Confusing NetFlow exporters with full NDR sensors",
+        "Double-counting Corelight + tap on same link without dedupe"
+      ]
+    },
+    "netflow": {
+      "primaryUnit": "Flow-exporting devices",
+      "secondaryUnits": [
+        "Interfaces enabled",
+        "Sampling rate"
+      ],
+      "howToCount": "Count routers, switches, or firewalls sending NetFlow/IPFIX/sFlow to collectors feeding Splunk.",
+      "customerQuestion": "How many devices export NetFlow or IPFIX records?",
+      "commonMistakes": [
+        "Using interface count instead of exporting devices",
+        "Ignoring sampler asymmetry across vendors"
+      ]
+    },
+    "ot_security": {
+      "primaryUnit": "OT security sensors",
+      "secondaryUnits": [
+        "Monitored OT VLANs"
+      ],
+      "howToCount": "Count dedicated OT IDS/visibility appliances (often passive) separate from general IT NDR if split in architecture.",
+      "customerQuestion": "How many OT-specific security sensors forward alerts?",
+      "commonMistakes": [
+        "Mapping 1:1 with every PLC",
+        "Missing dual-homed sensors"
+      ]
+    },
+    "paas": {
+      "primaryUnit": "Managed PaaS services or app stacks",
+      "secondaryUnits": [
+        "Underlying instances"
+      ],
+      "howToCount": "Count distinct managed platform services (function apps, managed DBs, queues) with diagnostic logging on--not every HTTP call.",
+      "customerQuestion": "How many managed cloud platform services emit logs you will centralize?",
+      "commonMistakes": [
+        "Counting every serverless invocation",
+        "Omitting integration with shared diagnostic settings"
+      ]
+    },
+    "performance_metrics": {
+      "primaryUnit": "Windows servers (metrics channel)",
+      "secondaryUnits": [
+        "PerfMon objects enabled"
+      ],
+      "howToCount": "Use Windows server count for hosts where performance counters are collected at Splunk-relevant intervals.",
+      "customerQuestion": "On how many Windows servers will performance metrics be collected at scale?",
+      "commonMistakes": [
+        "Defaulting to 10s intervals without storage planning"
+      ]
+    },
+    "pki": {
+      "primaryUnit": "CA / PKI servers",
+      "secondaryUnits": [
+        "Issued certificates per year"
+      ],
+      "howToCount": "Count issuing CA servers, online responders, and HSM-attached log sources exporting issuance and OCSP events.",
+      "customerQuestion": "How many PKI servers forward certificate lifecycle logs?",
+      "commonMistakes": [
+        "Counting public CA certs instead of internal CA systems"
+      ]
+    },
+    "powershell_operational": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "PowerShell logging policies"
+      ],
+      "howToCount": "Windows servers with Module/Script Block Logging enabled for forwarded Operational channel events.",
+      "customerQuestion": "How many servers forward PowerShell operational events?",
+      "commonMistakes": [
+        "Forgetting constrained language mode exceptions",
+        "Over-collection on jump hosts"
+      ]
+    },
+    "proxy": {
+      "primaryUnit": "Proxy appliances or SWG seats",
+      "secondaryUnits": [
+        "Concurrent users",
+        "Sites"
+      ],
+      "howToCount": "Count explicit proxies, secure web gateways, or cloud SWG connectors with access logs--use protected user count when appliance count is abstracted.",
+      "customerQuestion": "How many proxy systems or SWG connectors export web access logs?",
+      "commonMistakes": [
+        "Transparent intercept devices missed",
+        "Omitting PAC-based cloud proxies"
+      ]
+    },
+    "routers": {
+      "primaryUnit": "Routers",
+      "secondaryUnits": [
+        "WAN links"
+      ],
+      "howToCount": "Count managed routers exporting syslog/traps relevant to security--not passive optical gear.",
+      "customerQuestion": "How many routers send configuration and security syslog?",
+      "commonMistakes": [
+        "Counting L3 switches billed as routers without clarity",
+        "Missing SD-WAN edge routers"
+      ]
+    },
+    "saas_conferencing": {
+      "primaryUnit": "Licensed conferencing users",
+      "secondaryUnits": [
+        "Tenants"
+      ],
+      "howToCount": "Users with Zoom/Teams Webinar licenses etc. covered by audit exports (use admin portal active user count).",
+      "customerQuestion": "How many users are in scope for conferencing SaaS audit logs?",
+      "commonMistakes": [
+        "Meeting minutes vs user seats confusion"
+      ]
+    },
+    "saas_crm": {
+      "primaryUnit": "Active CRM users",
+      "secondaryUnits": [
+        "Tenants / orgs / instances",
+        "Integrations / API clients",
+        "Collection profile and activity level"
+      ],
+      "howToCount": "Enter CRM tenant count, active users, and integrations separately. Choose vendor, collection profile (audit, standard, or full), and activity level.",
+      "customerQuestion": "How many CRM tenants, active users, and integrations send audit and activity logs to Splunk?",
+      "commonMistakes": [
+        "Sizing Salesforce here and again under SaaS (General)",
+        "API integration volume omitted in full-activity profiles",
+        "Using licensed seats instead of active CRM users"
+      ]
+    },
+    "saas_filesharing": {
+      "primaryUnit": "Collaboration users",
+      "secondaryUnits": [
+        "Shared sites/libraries"
+      ],
+      "howToCount": "Users covered by Box/Dropbox/OneDrive audit logging to SIEM.",
+      "customerQuestion": "How many file-sharing users are monitored?",
+      "commonMistakes": [
+        "External collaborator double count"
+      ]
+    },
+    "saas_general": {
+      "primaryUnit": "Active SaaS users",
+      "secondaryUnits": [
+        "Tenants / orgs / instances",
+        "Integrations / API clients",
+        "Collection profile and activity level"
+      ],
+      "howToCount": "Enter actual active users (not per-1,000). Count tenants/orgs/instances and integrations or connected apps separately. Choose audit-only, standard activity, or full activity (including API/integration logs).",
+      "customerQuestion": "How many SaaS tenants, active users, and integrations send logs to Splunk, and what activity profile is collected?",
+      "commonMistakes": [
+        "Using licensed seats instead of regularly active users",
+        "Sizing M365/Google here when dedicated Office SaaS child is used",
+        "Omitting integration/API client volume in full-activity profiles"
+      ]
+    },
+    "saas_office": {
+      "primaryUnit": "Active productivity users",
+      "secondaryUnits": [
+        "Tenants / orgs",
+        "Active mailboxes",
+        "Active file users",
+        "Collaboration / Teams users",
+        "Collection profile"
+      ],
+      "howToCount": "Enter tenant count, active users, mailboxes, file users, and collaboration users separately. Choose Microsoft 365, Google Workspace, or individual workloads (Exchange, SharePoint, Teams).",
+      "customerQuestion": "How many tenants, mailboxes, file users, and Teams users send productivity audit logs to Splunk?",
+      "commonMistakes": [
+        "Counting Microsoft 365 suite and Exchange/SharePoint/Teams workloads twice",
+        "Using licensed seats instead of active mailboxes or file users",
+        "Omitting shared mailbox volume in Exchange profiles"
+      ]
+    },
+    "saas_sso": {
+      "primaryUnit": "SSO-enrolled users",
+      "secondaryUnits": [
+        "IdP apps integrated"
+      ],
+      "howToCount": "Users authenticating via IdP that exports sign-in logs feeding this bucket.",
+      "customerQuestion": "How many users authenticate through the IdP whose SaaS SSO logs you centralize?",
+      "commonMistakes": [
+        "Duplicate with Entra ID general logs without scope"
+      ]
+    },
+    "sandbox": {
+      "primaryUnit": "Sandbox appliances or services",
+      "secondaryUnits": [
+        "Daily analysis submissions"
+      ],
+      "howToCount": "Count malware analysis clusters (physical or cloud) emitting result logs.",
+      "customerQuestion": "How many sandbox systems or services export analysis reports?",
+      "commonMistakes": [
+        "Submission spikes during outbreaks",
+        "Omitting integration retries"
+      ]
+    },
+    "sap": {
+      "primaryUnit": "SAP systems (SIDs)",
+      "secondaryUnits": [
+        "Application users"
+      ],
+      "howToCount": "Count SAP application instances or central instances per SID that forward security/audit logs.",
+      "customerQuestion": "How many SAP systems forward security audit (SM20/SUIM-class) events?",
+      "commonMistakes": [
+        "Dialog users vs named users licensing mismatch"
+      ]
+    },
+    "sase": {
+      "primaryUnit": "Users routed through SASE",
+      "secondaryUnits": [
+        "Sites / branches"
+      ],
+      "howToCount": "Concurrent or provisioned users sending traffic via SASE/SSE fabric--match vendor sizing docs.",
+      "customerQuestion": "How many users traverse your SASE service daily?",
+      "commonMistakes": [
+        "Site count instead of user count",
+        "VPN-only users not hairpinned through SASE"
+      ]
+    },
+    "security_event_log": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Domain vs workgroup"
+      ],
+      "howToCount": "Windows servers with Security channel collected; aligns 1:1 with Windows server inventory in scope.",
+      "customerQuestion": "How many Windows servers forward Security event logs?",
+      "commonMistakes": [
+        "Filtering too aggressively at source losing 4624/4688",
+        "Archive-only servers forgotten"
+      ]
+    },
+    "setup_event_log": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Change windows"
+      ],
+      "howToCount": "Servers with Setup channel enabled--same base count as Windows servers when selected.",
+      "customerQuestion": "How many servers collect Setup events (patch/driver install trail)?",
+      "commonMistakes": [
+        "High churn during patch Tuesdays"
+      ]
+    },
+    "sso_pam": {
+      "primaryUnit": "Interactive users (SSO / PAM)",
+      "secondaryUnits": [
+        "Identity platforms (IdP / PAM consoles)",
+        "Privileged access sessions (context)"
+      ],
+      "howToCount": "Count unique human identities covered by SSO sign-in and privileged-access logging. Use workforce or contractor identities that authenticate through the in-scope IdP/PAM, not device or mailbox counts.",
+      "customerQuestion": "How many users authenticate through your SSO and privileged access tooling that forwards audit events?",
+      "commonMistakes": [
+        "Machine accounts dominating counts",
+        "Double-counting across Entra and Okta without dedupe"
+      ]
+    },
+    "storage_prod": {
+      "primaryUnit": "Production storage arrays or clusters",
+      "secondaryUnits": [
+        "Manual GB/day"
+      ],
+      "howToCount": "Count physical arrays or unified management clusters exporting EMS or audit events, using each vendor's definition of one storage system.",
+      "customerQuestion": "How many production storage systems forward management and security events?",
+      "commonMistakes": [
+        "Counting individual disks",
+        "Ignoring replication partners"
+      ]
+    },
+    "switches": {
+      "primaryUnit": "Managed switches",
+      "secondaryUnits": [
+        "Access ports"
+      ],
+      "howToCount": "Count network switches forwarding syslog/traps to SIEM (stack members may count per member if separate streams).",
+      "customerQuestion": "How many switches export security-relevant syslog?",
+      "commonMistakes": [
+        "Unmanaged access switches omitted",
+        "Duplicate stacks"
+      ]
+    },
+    "sysmon": {
+      "primaryUnit": "Windows servers (Sysmon)",
+      "secondaryUnits": [
+        "Sysmon schema version"
+      ],
+      "howToCount": "Servers with Sysmon installed and Operational log forwarded--subset or all Windows servers.",
+      "customerQuestion": "How many Windows systems run Sysmon with events centralized?",
+      "commonMistakes": [
+        "Hashing algorithms exploding EventData size",
+        "Over-broad network include filters"
+      ]
+    },
+    "system_event_log": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Hardware vendors"
+      ],
+      "howToCount": "Windows servers collecting System channel events.",
+      "customerQuestion": "How many Windows servers forward System event logs?",
+      "commonMistakes": [
+        "Driver noise on legacy hosts"
+      ]
+    },
+    "threat_intel": {
+      "primaryUnit": "Threat intel feeds or integrations",
+      "secondaryUnits": [
+        "Indicators per day"
+      ],
+      "howToCount": "Count distinct commercial/open feeds or TIP connectors publishing into Splunk (not raw IoC rows).",
+      "customerQuestion": "How many threat intelligence feeds or TIP integrations stream into Splunk?",
+      "commonMistakes": [
+        "Treating very large STIX bundles as one feed without volume planning",
+        "Duplicate feeds from partner resellers"
+      ]
+    },
+    "uba": {
+      "primaryUnit": "Analyzed human users",
+      "secondaryUnits": [
+        "Data sources feeding UBA"
+      ],
+      "howToCount": "Interactable workforce identities monitored by UEBA product (usually matches HR-active users).",
+      "customerQuestion": "How many users does your UEBA baseline and analyze?",
+      "commonMistakes": [
+        "Service accounts inflating baselines",
+        "Contractors inconsistently onboarded"
+      ]
+    },
+    "vpn": {
+      "primaryUnit": "VPN gateway appliances or clusters",
+      "secondaryUnits": [
+        "Concurrent remote users"
+      ],
+      "howToCount": "Count head-end VPN concentrators (physical/virtual) exporting session logs; use peak concurrent users as secondary driver.",
+      "customerQuestion": "How many VPN gateways send authentication and tunnel logs?",
+      "commonMistakes": [
+        "SSL portals vs headends confused",
+        "ZTNA counted as classic VPN without split"
+      ]
+    },
+    "vuln_mgmt": {
+      "primaryUnit": "Scanned or agent-covered assets",
+      "secondaryUnits": [
+        "Scan managers",
+        "Scan frequency"
+      ],
+      "howToCount": "Use VM product's managed asset count (servers + network devices + optional workstations).",
+      "customerQuestion": "How many assets are actively assessed by your vulnerability management platform?",
+      "commonMistakes": [
+        "IP count vs authenticated scan asset count",
+        "Duplicates across overlapping scans"
+      ]
+    },
+    "web_servers": {
+      "primaryUnit": "Web servers",
+      "secondaryUnits": [
+        "Requests per day"
+      ],
+      "howToCount": "Count HTTP/S servers (Apache, nginx, IIS where categorized here) emitting access logs.",
+      "customerQuestion": "How many web servers forward access/error logs?",
+      "commonMistakes": [
+        "Reverse proxies vs origins",
+        "Debug log level"
+      ]
+    },
+    "web_servers_nonprod": {
+      "primaryUnit": "Non-production web servers",
+      "secondaryUnits": [
+        "Dev/test/stage environments"
+      ],
+      "howToCount": "Count HTTP/S servers in dev, test, and staging that forward access and error logs.",
+      "customerQuestion": "How many non-prod web servers are in log scope?",
+      "commonMistakes": [
+        "Mixing production traffic through non-prod VIPs",
+        "Omitting internal-only staging tiers"
+      ]
+    },
+    "windows_defender": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Defender SKUs"
+      ],
+      "howToCount": "Servers forwarding Microsoft-Windows-Windows Defender/Operational events.",
+      "customerQuestion": "How many Windows servers send Defender operational events?",
+      "commonMistakes": [
+        "Mixing with MDE cloud alerts only path"
+      ]
+    },
+    "windows_servers": {
+      "primaryUnit": "Windows servers",
+      "secondaryUnits": [
+        "Domain membership"
+      ],
+      "howToCount": "All physical and virtual Windows Server OS instances with forwarders or WEC in scope.",
+      "customerQuestion": "How many Windows servers centralize event logs?",
+      "commonMistakes": [
+        "Excluding VDIs misclassified",
+        "Jump boxes skewing auth volume"
+      ]
+    },
+    "wireless": {
+      "primaryUnit": "Wireless access points or WLC-managed clusters",
+      "secondaryUnits": [
+        "SSIDs"
+      ],
+      "howToCount": "Count APs (or controller clusters if logs are per-WLC) exporting client/session security events.",
+      "customerQuestion": "How many access points or controllers forward wireless security logs?",
+      "commonMistakes": [
+        "Autonomous vs controller architectures miscounted"
+      ]
+    }
+  }
+}

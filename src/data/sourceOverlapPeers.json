@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "notes": "Optional manual peer hints merged with overlap groups and substitution rules in sourceOverlapLookupEngine.",
+  "sources": {
+    "firewalls": {
+      "likelyPeerSourceIds": ["ids_ips", "ndr", "sase", "proxy", "vpn"],
+      "notes": "Perimeter controls often share flow, threat, and VPN telemetry with adjacent security layers."
+    },
+    "ids_ips": {
+      "likelyPeerSourceIds": ["firewalls", "ndr", "sase"],
+      "notes": "Inline or TAP IDS may duplicate firewall UTM or NDR behavioral alerts."
+    },
+    "ndr": {
+      "likelyPeerSourceIds": ["firewalls", "ids_ips", "netflow", "sase"],
+      "notes": "NDR sensors may ingest the same flows as firewall exports or NetFlow collectors."
+    },
+    "proxy": {
+      "likelyPeerSourceIds": ["sase", "casb", "firewalls"],
+      "notes": "Web proxy, SWG, and SASE often consolidate into one SSE platform."
+    },
+    "sase": {
+      "likelyPeerSourceIds": ["proxy", "casb", "firewalls", "vpn"],
+      "notes": "SASE bundles SWG, ZTNA, CASB, and sometimes firewall functions."
+    },
+    "vpn": {
+      "likelyPeerSourceIds": ["firewalls", "sase"],
+      "notes": "VPN concentrators may run on firewalls or be replaced by SASE ZTNA."
+    },
+    "edr": {
+      "likelyPeerSourceIds": ["windows_servers", "desktops", "cwpp"],
+      "notes": "EDR agents often stream the same host events collected by OS log forwarders."
+    },
+    "windows_servers": {
+      "likelyPeerSourceIds": ["edr", "active_directory"],
+      "notes": "WinEvent Security channels overlap with EDR and domain-controller telemetry."
+    },
+    "active_directory": {
+      "likelyPeerSourceIds": ["saas_sso", "sso_pam", "windows_servers"],
+      "notes": "Directory Service events may duplicate IdP sign-in and PAM audit streams."
+    },
+    "saas_office": {
+      "likelyPeerSourceIds": ["saas_general", "saas_sso", "casb"],
+      "notes": "M365 audit volume may be double-counted in general SaaS or CASB rows."
+    },
+    "saas_general": {
+      "likelyPeerSourceIds": ["saas_office", "saas_sso", "casb"],
+      "notes": "Blended SaaS totals often include productivity and IdP audit already sized elsewhere."
+    },
+    "casb": {
+      "likelyPeerSourceIds": ["sase", "proxy", "saas_office", "cspm"],
+      "notes": "CASB may share cloud app governance telemetry with SSE and posture tools."
+    },
+    "cspm": {
+      "likelyPeerSourceIds": ["iaas", "cwpp", "casb", "cloud_storage"],
+      "notes": "Posture findings vs. raw control-plane logs vs. runtime workload telemetry."
+    },
+    "cwpp": {
+      "likelyPeerSourceIds": ["cspm", "iaas", "edr"],
+      "notes": "Workload protection and posture from one vendor can emit overlapping findings."
+    },
+    "iaas": {
+      "likelyPeerSourceIds": ["cspm", "cwpp", "cloud_storage"],
+      "notes": "Control-plane audit logs overlap with CSPM misconfiguration alerts on the same accounts."
+    }
+  }
+}

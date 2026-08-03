@@ -1,0 +1,476 @@
+[
+  {
+    "category": "Security",
+    "apps": [
+      {
+        "id": "enterprise_security",
+        "catalogId": "splunk_enterprise_security",
+        "name": "Splunk Enterprise Security",
+        "shortName": "ES",
+        "description": "Premium SIEM with correlation, notable events, and security analytics.",
+        "appType": "app"
+      },
+      {
+        "id": "user_behavior_analytics",
+        "catalogId": "splunk_uba",
+        "name": "Splunk User Behavior Analytics",
+        "shortName": "UEBA",
+        "needsReview": true,
+        "description": "Detect insider threats and anomalous user and entity activity.",
+        "appType": "app"
+      },
+      {
+        "id": "attack_analyzer",
+        "name": "Splunk Attack Analyzer",
+        "description": "Investigate and visualize attack paths and security findings.",
+        "appType": "app"
+      },
+      {
+        "id": "mission_control",
+        "catalogId": "splunk_mission_control",
+        "name": "Splunk Mission Control",
+        "needsReview": true,
+        "description": "Unified security operations workbench across Splunk security products.",
+        "appType": "app"
+      },
+      {
+        "id": "soar",
+        "catalogId": "splunk_soar",
+        "name": "Splunk SOAR",
+        "needsReview": true,
+        "description": "Security orchestration, automation, and response for playbooks and case management.",
+        "appType": "app"
+      },
+      {
+        "id": "security_essentials",
+        "catalogId": "security_essentials",
+        "name": "Splunk Security Essentials",
+        "description": "Free app with prebuilt searches and dashboards for common security use cases.",
+        "appType": "app"
+      },
+      {
+        "id": "infosec_app",
+        "name": "Splunk InfoSec App",
+        "description": "Operational dashboards and analytics for security and incident response teams.",
+        "appType": "app"
+      },
+      {
+        "id": "app_pci_compliance",
+        "name": "Splunk App for PCI Compliance",
+        "description": "Maps PCI DSS requirements to Splunk searches and compliance reporting.",
+        "appType": "app"
+      },
+      {
+        "id": "app_fraud_analytics",
+        "name": "Splunk App for Fraud Analytics",
+        "description": "Fraud detection patterns and visualizations for transaction and account risk.",
+        "appType": "app"
+      },
+      {
+        "id": "app_stream",
+        "catalogId": "app_stream",
+        "name": "Splunk App for Stream",
+        "description": "Capture and analyze wire data with Splunk Stream for network visibility.",
+        "appType": "app"
+      },
+      {
+        "id": "add_on_microsoft_security",
+        "name": "Splunk Add-on for Microsoft Security",
+        "description": "Ingest and normalize logs from Microsoft Defender and related security products.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_aws",
+        "catalogId": "ta_aws",
+        "name": "Splunk Add-on for AWS",
+        "description": "Collect AWS CloudTrail, Config, and service logs for security and operations.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_microsoft_cloud_services",
+        "catalogId": "ta_microsoft_cloud_services",
+        "name": "Splunk Add-on for Microsoft Cloud Services",
+        "description": "Onboard Microsoft 365 and Azure activity and audit data into Splunk.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_okta",
+        "catalogId": "ta_okta_identity_cloud",
+        "name": "Splunk Add-on for Okta Identity Cloud",
+        "description": "Normalize Okta identity and authentication events for IAM analytics.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_crowdstrike",
+        "catalogId": "ta_crowdstrike",
+        "name": "Splunk Add-on for CrowdStrike",
+        "description": "Integrate Falcon endpoint and threat intelligence data with Splunk.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_palo_alto_networks",
+        "catalogId": "ta_palo_alto",
+        "name": "Splunk Add-on for Palo Alto Networks",
+        "description": "Parse firewall, PAN-OS, and Cortex telemetry for network security analytics.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_cisco_security",
+        "catalogId": "ta_cisco_asa",
+        "name": "Splunk Add-on for Cisco Security",
+        "description": "Ingest Cisco ASA, FTD, AMP, and Umbrella security events into Splunk.",
+        "appType": "addon"
+      },
+      {
+        "id": "cisco_networks_app",
+        "catalogId": "app_cisco_network_data",
+        "name": "App for Cisco Network Data",
+        "description": "Network visibility dashboards and analytics for Cisco IOS, NX-OS, and ASA devices.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "Observability / IT Ops",
+    "apps": [
+      {
+        "id": "observability_cloud",
+        "name": "Splunk Observability Cloud",
+        "description": "Full-stack observability suite spanning metrics, traces, logs, and real user monitoring.",
+        "appType": "app"
+      },
+      {
+        "id": "apm",
+        "name": "Splunk APM",
+        "shortName": "APM",
+        "description": "Distributed tracing and service performance analysis for cloud-native applications.",
+        "appType": "app"
+      },
+      {
+        "id": "infrastructure_monitoring",
+        "name": "Splunk Infrastructure Monitoring",
+        "description": "Real-time metrics, alerts, and dashboards for hosts, containers, and cloud services.",
+        "appType": "app"
+      },
+      {
+        "id": "log_observer",
+        "name": "Splunk Log Observer",
+        "description": "Explore and troubleshoot application logs within the Observability Cloud experience.",
+        "appType": "app"
+      },
+      {
+        "id": "rum",
+        "name": "Splunk RUM",
+        "shortName": "RUM",
+        "description": "Real user monitoring for web and mobile frontend performance and errors.",
+        "appType": "app"
+      },
+      {
+        "id": "synthetic_monitoring",
+        "name": "Splunk Synthetic Monitoring",
+        "description": "Proactive uptime and transaction checks from global synthetic test locations.",
+        "appType": "app"
+      },
+      {
+        "id": "it_service_intelligence",
+        "catalogId": "splunk_itsi",
+        "name": "Splunk IT Service Intelligence",
+        "shortName": "ITSI",
+        "description": "Service-centric KPIs, anomaly detection, and multi-tier IT operations analytics.",
+        "appType": "app"
+      },
+      {
+        "id": "app_content_packs",
+        "name": "Splunk App for Content Packs",
+        "description": "Discover and install curated ITSI content packs for common operational domains.",
+        "appType": "app"
+      },
+      {
+        "id": "app_vmware",
+        "name": "Splunk App for VMware",
+        "description": "Operational dashboards for VMware vSphere environments in Splunk.",
+        "appType": "app"
+      },
+      {
+        "id": "add_on_vmware",
+        "catalogId": "ta_vmware",
+        "name": "Splunk Add-on for VMware",
+        "description": "Collect and normalize VMware vSphere metrics and log data for Splunk.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_unix_linux",
+        "catalogId": "ta_unix_linux",
+        "name": "Splunk Add-on for Unix and Linux",
+        "description": "Standardized field extractions for Unix and Linux system and audit logs.",
+        "appType": "addon"
+      },
+      {
+        "id": "add_on_windows",
+        "catalogId": "ta_windows",
+        "name": "Splunk Add-on for Windows",
+        "description": "Normalize Windows Event Log and performance telemetry for Splunk searches.",
+        "appType": "addon"
+      },
+      {
+        "id": "app_windows_infrastructure",
+        "name": "Splunk App for Windows Infrastructure",
+        "description": "Prebuilt views for Active Directory, DNS, DHCP, and Windows server health.",
+        "appType": "app"
+      },
+      {
+        "id": "app_unix_linux",
+        "name": "Splunk App for Unix and Linux",
+        "description": "Dashboards and reports for Unix and Linux performance and capacity planning.",
+        "appType": "app"
+      },
+      {
+        "id": "appdynamics_integration",
+        "name": "AppDynamics Integration",
+        "description": "Correlate AppDynamics application performance data with Splunk analytics.",
+        "appType": "app"
+      },
+      {
+        "id": "db_connect",
+        "name": "Splunk DB Connect",
+        "shortName": "DB Connect",
+        "description": "Query relational databases and bring structured data into Splunk indexes.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "Platform / Admin",
+    "apps": [
+      {
+        "id": "cloud_platform",
+        "name": "Splunk Cloud Platform",
+        "description": "Managed Splunk Cloud deployment with scaling, patching, and compliance options.",
+        "appType": "app"
+      },
+      {
+        "id": "enterprise",
+        "name": "Splunk Enterprise",
+        "description": "Self-managed Splunk platform for indexing, search, and on-prem or private cloud.",
+        "appType": "app"
+      },
+      {
+        "id": "monitoring_console",
+        "name": "Splunk Monitoring Console",
+        "description": "Fleet health, resource usage, and distributed deployment visibility for admins.",
+        "appType": "app"
+      },
+      {
+        "id": "deployment_server",
+        "name": "Splunk Deployment Server",
+        "description": "Centralized distribution of apps, configurations, and updates to forwarders and peers.",
+        "appType": "app"
+      },
+      {
+        "id": "edge_processor",
+        "name": "Splunk Edge Processor",
+        "description": "Filter, route, and transform data at the edge before delivery to Splunk Cloud.",
+        "appType": "app"
+      },
+      {
+        "id": "ingest_processor",
+        "name": "Splunk Ingest Processor",
+        "description": "Cloud-native pipelines to parse, enrich, and drop events during ingestion.",
+        "appType": "app"
+      },
+      {
+        "id": "data_manager",
+        "name": "Splunk Data Manager",
+        "description": "Guided onboarding and governance for cloud and hybrid data sources.",
+        "appType": "app"
+      },
+      {
+        "id": "connect_syslog",
+        "name": "Splunk Connect for Syslog",
+        "description": "Scalable syslog collection service for high-volume RFC-compliant log streams.",
+        "appType": "app"
+      },
+      {
+        "id": "connect_kubernetes",
+        "catalogId": "ta_kubernetes",
+        "name": "Splunk OpenTelemetry Collector for Kubernetes",
+        "description": "Kubernetes metrics, logs, and object metadata for container platform observability.",
+        "appType": "app"
+      },
+      {
+        "id": "http_event_collector",
+        "name": "Splunk HTTP Event Collector",
+        "shortName": "HEC",
+        "description": "Token-based HTTP API for high-throughput, secure log and event ingestion.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "AI / ML",
+    "apps": [
+      {
+        "id": "ai_assistant_spl",
+        "name": "Splunk AI Assistant for SPL",
+        "description": "Natural language assistance to author and explain Splunk Search Processing Language.",
+        "appType": "app"
+      },
+      {
+        "id": "ai_toolkit",
+        "name": "Splunk AI Toolkit",
+        "shortName": "AITK",
+        "description": "Framework and examples for building AI-powered workflows on Splunk data.",
+        "appType": "app"
+      },
+      {
+        "id": "machine_learning_toolkit",
+        "catalogId": "splunk_ai_toolkit",
+        "name": "Splunk AI Toolkit",
+        "shortName": "AITK",
+        "description": "AI-assisted workflows, guided analytics, and SPL integrations on Splunk data.",
+        "appType": "app"
+      },
+      {
+        "id": "app_data_science_deep_learning",
+        "name": "Splunk App for Data Science and Deep Learning",
+        "shortName": "DSDL",
+        "description": "Notebook-based data science and deep learning models using external compute.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "Compliance / Risk",
+    "apps": [
+      {
+        "id": "pci_compliance",
+        "name": "PCI Compliance",
+        "description": "Tracking, dashboards, and reports aligned to PCI DSS control objectives.",
+        "appType": "app"
+      },
+      {
+        "id": "hipaa_healthcare_audit",
+        "name": "HIPAA / Healthcare Audit",
+        "description": "Healthcare access, PHI handling, and audit readiness for HIPAA-regulated data.",
+        "appType": "app"
+      },
+      {
+        "id": "sox_audit",
+        "name": "SOX Audit",
+        "description": "Financial controls monitoring and evidence collection for SOX ITGC requirements.",
+        "appType": "app"
+      },
+      {
+        "id": "nist_cis_iso_control_monitoring",
+        "name": "NIST / CIS / ISO Control Monitoring",
+        "description": "Map security telemetry to NIST CSF, CIS Controls, and ISO 27001-style frameworks.",
+        "appType": "app"
+      },
+      {
+        "id": "risk_based_alerting",
+        "name": "Risk-Based Alerting",
+        "description": "Prioritize and tune alerts using entity risk scores and business context.",
+        "appType": "app"
+      },
+      {
+        "id": "audit_compliance_reporting",
+        "name": "Audit and Compliance Reporting",
+        "description": "Scheduled attestations, evidence exports, and stakeholder compliance summaries.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "Cloud / SaaS",
+    "apps": [
+      {
+        "id": "cloud_aws_apps",
+        "name": "AWS Apps and Add-ons",
+        "description": "Splunk apps and add-ons for Amazon Web Services services and governance data.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_azure_apps",
+        "name": "Azure Apps and Add-ons",
+        "description": "Integrations for Azure Monitor, resources, and Microsoft cloud platform logs.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_google_apps",
+        "name": "Google Cloud Apps and Add-ons",
+        "description": "Onboarding GCP audit, VPC, and platform logs into Splunk for hybrid visibility.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_microsoft_365_apps",
+        "name": "Microsoft 365 Apps and Add-ons",
+        "description": "Exchange, Teams, SharePoint, and Entra ID activity for collaboration security.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_google_workspace_apps",
+        "name": "Google Workspace Apps and Add-ons",
+        "description": "Gmail, Drive, Calendar, and Admin audit logs for Google Workspace environments.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_salesforce_apps",
+        "name": "Salesforce Apps and Add-ons",
+        "description": "Event monitoring, API, and security telemetry from Salesforce orgs in Splunk.",
+        "appType": "app"
+      },
+      {
+        "id": "cloud_servicenow_apps",
+        "name": "ServiceNow Apps and Add-ons",
+        "description": "ITSM, CMDB, and SecOps data flows between ServiceNow and Splunk.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "OT / ICS",
+    "apps": [
+      {
+        "id": "ot_security_monitoring",
+        "name": "OT Security Monitoring",
+        "description": "Visibility, baselining, and alerts for operational technology and plant networks.",
+        "appType": "app"
+      },
+      {
+        "id": "scada_industrial_telemetry",
+        "name": "SCADA / Industrial Telemetry",
+        "description": "Historian, controller, and industrial protocol data for process and safety analytics.",
+        "appType": "app"
+      },
+      {
+        "id": "nozomi_networks_integration",
+        "name": "Nozomi Networks Integration",
+        "description": "Correlate Nozomi OT and IoT security findings with enterprise SIEM workflows.",
+        "appType": "app"
+      },
+      {
+        "id": "claroty_integration",
+        "name": "Claroty Integration",
+        "description": "Bring Claroty asset inventory and threat detection into Splunk for unified response.",
+        "appType": "app"
+      },
+      {
+        "id": "dragos_integration",
+        "name": "Dragos Integration",
+        "description": "Ingest Dragos industrial threat intelligence and OT incident data into Splunk.",
+        "appType": "app"
+      }
+    ]
+  },
+  {
+    "category": "Other",
+    "apps": [
+      {
+        "id": "other_custom",
+        "name": "Other / Custom App or Use Case",
+        "description": "Internal build, community app, or specialized use case not listed above.",
+        "appType": "app"
+      }
+    ]
+  }
+]

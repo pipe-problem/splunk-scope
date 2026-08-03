@@ -1,0 +1,300 @@
+{
+  "version": "1.1.0",
+  "lastUpdated": "2026-06-01",
+  "budgetBands": {
+    "low": { "maxBudgetGbDay": 60, "description": "Constrained ingest — prioritize minimum-viable sources" },
+    "medium": { "maxBudgetGbDay": 150, "description": "Balanced planning — core plus selective enrichment" },
+    "high": { "minBudgetGbDay": 150, "description": "Higher headroom — broader enrichment acceptable" }
+  },
+  "defaultBudgetBand": "medium",
+  "scoreWeights": {
+    "capabilityGapClosure": 30,
+    "useCaseRelevance": 22,
+    "appAlignment": 18,
+    "deploymentFit": 12,
+    "ingestEfficiency": 10,
+    "interpretationKeywords": 8
+  },
+  "budgetModifiers": {
+    "low": {
+      "enrichmentPenalty": 18,
+      "minimumViableBoost": 15,
+      "overlapStrictness": 1.2
+    },
+    "medium": {
+      "enrichmentPenalty": 8,
+      "minimumViableBoost": 8,
+      "overlapStrictness": 1.0
+    },
+    "high": {
+      "enrichmentPenalty": 0,
+      "minimumViableBoost": 4,
+      "overlapStrictness": 0.85
+    }
+  },
+  "cloudOnlySourceIds": ["cspm", "cwpp", "casb", "iaas", "cloud_storage"],
+  "siemCoreSourceIds": [
+    "active_directory", "saas_sso", "sso_pam", "windows_servers", "desktops",
+    "edr", "firewalls", "vpn", "dns", "dhcp", "email", "vuln_mgmt", "asset_cmdb"
+  ],
+  "cloudInScopeKeywords": [
+    "cloud security", "cspm", "cwpp", "casb", "cloud workload", "cloud control",
+    "iaas", "aws audit", "azure audit", "gcp audit", "cloud posture", "saas security"
+  ],
+  "cloudInScopeUseCaseIds": ["cloud_security", "cloud_native", "saas_monitoring"],
+  "appCapabilityMappings": {
+    "enterprise_security": {
+      "boostCapabilities": [
+        "authentication_success_events",
+        "authentication_failure_events",
+        "network_traffic_events",
+        "perimeter_control_events",
+        "endpoint_detection_events",
+        "malware_detection_events",
+        "asset_inventory_events"
+      ],
+      "boostSourceIds": ["active_directory", "firewalls", "edr", "windows_servers", "desktops", "asset_cmdb", "vpn", "dns", "saas_sso", "sso_pam", "email"]
+    },
+    "infosec_app": {
+      "boostCapabilities": ["authentication_success_events", "network_traffic_events", "host_security_events"],
+      "boostSourceIds": ["active_directory", "firewalls", "edr", "dns", "vpn"]
+    },
+    "security_essentials": {
+      "boostCapabilities": ["authentication_success_events", "network_traffic_events"],
+      "boostSourceIds": ["active_directory", "firewalls", "edr"]
+    },
+    "cisco_networks_app": {
+      "boostSourceIds": ["switches", "routers", "firewalls", "vpn"]
+    },
+    "machine_learning_toolkit": {
+      "boostSourceIds": ["edr", "active_directory", "saas_office", "firewalls", "vpn"]
+    }
+  },
+  "useCaseCapabilityHints": {
+    "foundational_security": ["authentication_success_events", "network_traffic_events", "host_security_events"],
+    "enterprise_security": ["authentication_success_events", "malware_detection_events", "network_traffic_events", "asset_inventory_events"],
+    "threat_detection": ["endpoint_detection_events", "malware_detection_events", "network_traffic_events"],
+    "identity_access": ["authentication_success_events", "authentication_failure_events", "privilege_escalation_events"],
+    "network_security": ["network_traffic_events", "perimeter_control_events", "dns_query_events"]
+  },
+  "deploymentWeights": {
+    "onprem": {
+      "boostSourceIds": ["active_directory", "firewalls", "vpn", "edr", "windows_servers", "desktops", "dns", "dhcp", "switches", "routers", "email"],
+      "deemphasizeSourceIds": ["cspm", "cwpp", "casb", "iaas", "cloud_storage"]
+    },
+    "cloud": {
+      "boostSourceIds": ["saas_office", "saas_sso", "sso_pam", "edr", "active_directory", "firewalls", "vpn", "dns", "email"],
+      "deemphasizeSourceIds": ["cspm", "cwpp", "casb", "iaas", "cloud_storage"]
+    },
+    "hybrid": {
+      "boostSourceIds": ["active_directory", "saas_office", "saas_sso", "sso_pam", "firewalls", "edr", "windows_servers", "vpn"],
+      "deemphasizeSourceIds": ["cspm", "cwpp"]
+    }
+  },
+  "minimumViableByBand": {
+    "low": ["firewalls", "active_directory", "edr", "windows_servers", "desktops"],
+    "medium": ["firewalls", "active_directory", "edr", "windows_servers", "dns", "vpn", "saas_sso"],
+    "high": []
+  },
+  "enrichmentSourceIds": [
+    "vuln_mgmt",
+    "asset_cmdb",
+    "dns",
+    "dhcp",
+    "netflow",
+    "proxy",
+    "sase",
+    "ndr",
+    "threat_intel",
+    "email",
+    "business_txn"
+  ],
+  "highVolumeSourceIds": [
+    "netflow",
+    "proxy",
+    "sase",
+    "ndr",
+    "wireless",
+    "stream"
+  ],
+  "substitutionRules": [
+    {
+      "id": "firewall_covers_ids_ips",
+      "capability": "perimeter_control_events",
+      "primarySources": ["firewalls"],
+      "downgradeSources": ["ids_ips"],
+      "downgradeTo": "redundant",
+      "reasonTemplate": "Firewall logging may already include IDS/IPS-style events — confirm whether this is a separate feed."
+    },
+    {
+      "id": "firewall_covers_ndr_partial",
+      "capability": "network_traffic_events",
+      "primarySources": ["firewalls"],
+      "downgradeSources": ["ndr"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Network perimeter visibility may already be covered by configured firewall logs."
+    },
+    {
+      "id": "edr_covers_defender_logs",
+      "capability": "endpoint_detection_events",
+      "primarySources": ["edr"],
+      "downgradeSources": ["av_edr_legacy"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Endpoint detection may already be covered by the configured EDR source."
+    },
+    {
+      "id": "edr_covers_windows_endpoint",
+      "capability": "endpoint_detection_events",
+      "primarySources": ["edr"],
+      "downgradeSources": ["desktops"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "EDR may already cover workstation telemetry — add Windows desktop logs only if distinct detections are needed."
+    },
+    {
+      "id": "sso_idp_covers_auth_platform",
+      "capability": "authentication_success_events",
+      "primarySources": ["saas_sso"],
+      "downgradeSources": ["sso_pam"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "SSO / identity provider is already configured — separate IAM platform logs are optional unless you need distinct IdP telemetry."
+    },
+    {
+      "id": "ad_covers_core_auth",
+      "capability": "authentication_success_events",
+      "primarySources": ["active_directory"],
+      "downgradeSources": ["sso_pam"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Core authentication visibility may be covered by Active Directory — add SSO only if cloud identity is in scope."
+    },
+    {
+      "id": "sso_covers_ad_partial",
+      "capability": "authentication_success_events",
+      "primarySources": ["saas_sso", "sso_pam"],
+      "downgradeSources": ["active_directory"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Cloud IdP may cover primary authentication — confirm whether on-prem AD security logs are still required."
+    },
+    {
+      "id": "m365_covers_entra_audit",
+      "capability": "authentication_success_events",
+      "primarySources": ["saas_office"],
+      "downgradeSources": ["saas_sso"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Microsoft 365 audit may overlap with Entra ID / SSO feeds — avoid duplicate identity telemetry."
+    },
+    {
+      "id": "proxy_covers_sase_casb",
+      "capability": "network_traffic_events",
+      "primarySources": ["proxy"],
+      "downgradeSources": ["sase", "casb"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Web proxy logs may overlap with SASE/CASB — prefer one primary web security feed unless distinct use cases require both."
+    },
+    {
+      "id": "sase_covers_proxy_casb",
+      "capability": "network_traffic_events",
+      "primarySources": ["sase"],
+      "downgradeSources": ["proxy", "casb"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "SASE telemetry may overlap with proxy/CASB — confirm whether a separate web proxy feed is needed."
+    },
+    {
+      "id": "netflow_covers_ndr",
+      "capability": "network_traffic_events",
+      "primarySources": ["netflow"],
+      "downgradeSources": ["ndr"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "NetFlow metadata may cover basic network visibility — NDR adds depth only if required."
+    },
+    {
+      "id": "ndr_covers_netflow",
+      "capability": "network_traffic_events",
+      "primarySources": ["ndr"],
+      "downgradeSources": ["netflow"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "NDR/packet analytics may reduce need for separate NetFlow when full metadata is not required."
+    },
+    {
+      "id": "dns_appliance_covers_windows_dns",
+      "capability": "dns_query_events",
+      "primarySources": ["dns"],
+      "downgradeSources": ["windows_servers"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Dedicated DNS appliance logs may cover Windows DNS — avoid duplicate DNS telemetry."
+    },
+    {
+      "id": "vpn_covers_firewall_remote",
+      "capability": "remote_access_events",
+      "primarySources": ["vpn"],
+      "downgradeSources": ["firewalls"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "VPN concentrator logs may overlap with firewall remote-access logs — confirm distinct value before counting both."
+    },
+    {
+      "id": "firewall_covers_vpn_remote",
+      "capability": "remote_access_events",
+      "primarySources": ["firewalls"],
+      "downgradeSources": ["vpn"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Firewall may already log VPN sessions — add dedicated VPN telemetry only if session detail is missing."
+    },
+    {
+      "id": "cspm_covers_iaas_audit",
+      "capability": "cloud_audit_events",
+      "primarySources": ["cspm"],
+      "downgradeSources": ["iaas"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "CSPM may overlap with raw cloud control-plane logs — align on one primary cloud audit path per provider."
+    },
+    {
+      "id": "iaas_covers_cspm",
+      "capability": "cloud_audit_events",
+      "primarySources": ["iaas"],
+      "downgradeSources": ["cspm"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Cloud control-plane logs may overlap with CSPM findings — confirm distinct detection value before both are counted."
+    },
+    {
+      "id": "cwpp_covers_edr_cloud",
+      "capability": "endpoint_detection_events",
+      "primarySources": ["edr", "cwpp"],
+      "downgradeSources": ["cwpp"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "CWPP workload protection may overlap with EDR on cloud hosts — confirm distinct detection value."
+    },
+    {
+      "id": "dc_covers_member_servers",
+      "capability": "host_security_events",
+      "primarySources": ["active_directory"],
+      "downgradeSources": ["windows_servers"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Domain controller security logs may reduce need for duplicate Windows server auth telemetry."
+    },
+    {
+      "id": "network_device_covers_syslog",
+      "capability": "network_traffic_events",
+      "primarySources": ["switches", "routers", "firewalls"],
+      "downgradeSources": ["syslog_collectors"],
+      "downgradeTo": "optional",
+      "reasonTemplate": "Direct network device syslog may make a generic syslog collector redundant for the same feeds."
+    }
+  ],
+  "ingestEfficiency": {
+    "highRateThreshold": 0.35,
+    "lowBudgetHighVolumePenalty": 12
+  },
+  "interpretationKeywords": [
+    { "keywords": ["identity", "authentication", "sso", "entra", "okta", "ad "], "boostSourceIds": ["active_directory", "saas_sso", "sso_pam"], "boost": 6 },
+    { "keywords": ["firewall", "perimeter", "vpn", "anyconnect"], "boostSourceIds": ["firewalls", "vpn"], "boost": 6 },
+    { "keywords": ["endpoint", "edr", "crowdstrike", "defender", "falcon"], "boostSourceIds": ["edr"], "boost": 6 },
+    { "keywords": ["cisco", "switch", "router", "network"], "boostSourceIds": ["switches", "routers", "firewalls"], "boost": 5 },
+    { "keywords": ["m365", "office 365", "microsoft 365"], "boostSourceIds": ["saas_office", "saas_sso"], "boost": 5 },
+    { "keywords": ["cloud security", "cspm", "cwpp", "casb", "iaas", "aws", "azure", "gcp"], "boostSourceIds": ["cspm", "cwpp", "iaas", "casb"], "boost": 8 },
+    { "keywords": ["dns", "dhcp"], "boostSourceIds": ["dns", "dhcp"], "boost": 4 },
+    { "keywords": ["vulnerability", "tenable", "qualys"], "boostSourceIds": ["vuln_mgmt"], "boost": 4 },
+    { "keywords": ["cmdb", "asset", "servicenow"], "boostSourceIds": ["asset_cmdb"], "boost": 4 },
+    { "keywords": ["email", "proofpoint", "phishing"], "boostSourceIds": ["email"], "boost": 4 }
+  ],
+  "labelOrder": ["suggested", "needs_review", "optional", "redundant"],
+  "topSuggestedLimit": 3
+}
