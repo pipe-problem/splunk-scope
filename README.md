@@ -10,24 +10,136 @@ Everything runs locally in your browser. Customer session data never leaves your
 
 ---
 
-## Install and open Scope
+## Download Splunk Scope
 
-You need [Node.js 20+](https://nodejs.org/) and a modern browser (Chrome, Edge, or Firefox).
+Splunk Scope is a **private GitHub repository**. You need access from the repo owner before you can download it.
 
-**Get the project**
+**Repository:** [github.com/pipe-problem/splunk-scope](https://github.com/pipe-problem/splunk-scope)
+
+### Before you start
+
+| Requirement | Details |
+|-------------|---------|
+| **GitHub access** | You must be logged in and invited as a collaborator on `pipe-problem/splunk-scope` (private repo). If clone or download fails with “not found,” ask the owner for access. |
+| **Node.js 20+** | Install from [nodejs.org](https://nodejs.org/) (LTS recommended). Check with `node -v` — you should see `v20.x` or newer. |
+| **npm** | Bundled with Node.js. Check with `npm -v`. |
+| **Browser** | Chrome, Edge, or Firefox (recent version). |
+| **Splunk login** | **Not required** to run Scope. |
+
+Optional: [Git](https://git-scm.com/downloads) if you want to clone and pull updates. Not required if you use **Download ZIP**.
+
+---
+
+### Option A — Clone with Git (recommended for updates)
+
+Use this if you plan to run `git pull` when new versions are published.
+
+1. Open a terminal (Terminal on Mac, PowerShell or Command Prompt on Windows).
+2. Go to the folder where you keep projects, for example:
+   ```bash
+   cd ~/Documents
+   ```
+3. Clone the repository:
+   ```bash
+   git clone https://github.com/pipe-problem/splunk-scope.git
+   ```
+4. If GitHub asks you to sign in:
+   - **HTTPS:** Use a [Personal Access Token](https://github.com/settings/tokens) as the password (classic token with **repo** scope). GitHub no longer accepts account passwords for git over HTTPS.
+   - **SSH (alternative):** If you use SSH keys with GitHub:
+     ```bash
+     git clone git@github.com:pipe-problem/splunk-scope.git
+     ```
+5. Enter the project folder:
+   ```bash
+   cd splunk-scope
+   ```
+
+**Update later:** From inside `splunk-scope`, run `git pull` to fetch the latest code, then `npm install` if dependencies changed.
+
+---
+
+### Option B — Download ZIP (no Git required)
+
+Use this for a one-time download or if you do not use Git.
+
+1. Sign in to GitHub and open [github.com/pipe-problem/splunk-scope](https://github.com/pipe-problem/splunk-scope).
+2. Click the green **Code** button near the top right of the file list.
+3. Choose **Download ZIP**.
+4. Unzip the archive:
+   - **Mac:** Double-click the ZIP file. You will get a folder named `splunk-scope-main` or `splunk-scope-master`.
+   - **Windows:** Right-click → **Extract All…**
+5. Open a terminal and go into that folder, for example:
+   ```bash
+   cd ~/Downloads/splunk-scope-main
+   ```
+   (Adjust the path if your unzip location or folder name differs.)
+
+**Note:** With ZIP downloads there is no `git pull`. To get a newer version, download a fresh ZIP and repeat setup below.
+
+---
+
+### Install dependencies
+
+From inside the `splunk-scope` folder (clone or unzipped), run:
 
 ```bash
-git clone https://github.com/pipe-problem/splunk-scope.git
-cd splunk-scope
 npm install
+```
+
+This downloads React, Vite, and other packages into `node_modules/` (a few hundred MB; first run may take 1–2 minutes).
+
+If you see permission errors on Mac/Linux, do **not** use `sudo npm install`. Fix npm permissions or use a Node version manager ([nvm](https://github.com/nvm-sh/nvm)) instead.
+
+---
+
+### Start Splunk Scope
+
+```bash
 npm run dev
 ```
 
-Open the URL shown in your terminal (usually **http://localhost:5173**).
+The terminal prints a local URL, usually:
 
-Prefer a ZIP? On the GitHub repo page, choose **Code → Download ZIP**, unzip the folder, then run `npm install` and `npm run dev` inside it.
+**http://localhost:5173**
 
-Scope does not require a Splunk login to run.
+Open that URL in your browser. Scope runs entirely on your machine—keep the terminal window open while you work.
+
+To stop the app, press **Ctrl+C** in the terminal.
+
+---
+
+### Production build (optional)
+
+To serve a static build without the dev server (for example, hosting on an internal web server):
+
+```bash
+npm run build
+npm run preview
+```
+
+Open the URL shown (typically **http://localhost:4173**). The built files are in the `dist/` folder.
+
+---
+
+### Quick check that everything worked
+
+1. Browser shows the **Splunk Scope** home page (dark theme).
+2. Click **Begin planning session**.
+3. On **Intake**, click **Load Example** and confirm the demo customer loads.
+
+If that works, you are ready for a real workshop.
+
+---
+
+### Common download / setup issues
+
+| Problem | What to try |
+|---------|-------------|
+| **Repository not found** | Confirm you are logged into GitHub and have been granted access to the private repo. |
+| **`node: command not found`** | Install Node.js 20+ from [nodejs.org](https://nodejs.org/) and restart the terminal. |
+| **`npm install` fails** | Ensure you are inside the `splunk-scope` folder (there should be a `package.json` file). Try deleting `node_modules/` and running `npm install` again. |
+| **Port already in use** | Another app may be using port 5173. Stop other dev servers or set `npm run dev -- --port 5174` and open the new URL. |
+| **Blank page in browser** | Hard-refresh (Ctrl+Shift+R / Cmd+Shift+R). Confirm the terminal still shows the dev server running with no errors. |
 
 ---
 
