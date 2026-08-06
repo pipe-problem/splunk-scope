@@ -1,10 +1,34 @@
 # Changelog
 
-All notable changes to **Splunk Scope** are documented in this file. Release numbering follows the application version in `package.json` and `catalogVersion.json` where applicable.
+All notable changes to **Splunk Scope** are documented in this file. Release numbering follows the application version in `package.json` and [`src/data/catalogVersion.json`](src/data/catalogVersion.json). See [`docs/VERSIONING.md`](docs/VERSIONING.md) for the release checklist.
 
 ---
 
-## [Unreleased] — 2026-07-01
+## [Unreleased]
+
+_(Nothing yet.)_
+
+---
+
+## [2.0.1] — 2026-08-06
+
+### Added
+
+- **Pre-intake source display** — [`isIntakeReadyForSourceRelevance()`](src/utils/intakeReadiness.js) gates relevance scoring until intake has planning context (use cases, apps, customer name, notes, etc.). Factory-default Crawl/Walk/Run presets alone do not enable scores.
+- **Documentation** — [`CONTRIBUTING.md`](CONTRIBUTING.md), [`docs/README.md`](docs/README.md), [`docs/VERSIONING.md`](docs/VERSIONING.md), [`scripts/README.md`](scripts/README.md), [`e2e/README.md`](e2e/README.md), [`src/data/README.md`](src/data/README.md).
+
+### Changed
+
+- **Data Sources cards** — Before intake: no `X/10` badge; subtitle is catalog `source.description`. After intake: relevance badge appears; unconfigured cards still use catalog description (not intake-driven one-liners). Configured cards show sizing count summary (e.g. device counts).
+- **Source config panel** — Relevance chip hidden until intake is ready.
+- **Filter bar** — "High relevance" filter hidden until intake is ready.
+- **Category tab order** — Stable catalog order before intake; relevance-ranked order after intake.
+- **Version alignment** — `package.json`, `version.js`, `catalogVersion.json`, and README footer synced to **2.0.1**.
+- **Docs refresh** — `USER_GUIDE`, `PROJECT_SCOPE`, `ARCHITECTURE`, and `DOC_INDEX` updated for v2.x behavior and current repo layout.
+
+---
+
+## [Unreleased archive] — 2026-07-01
 
 ### Added
 

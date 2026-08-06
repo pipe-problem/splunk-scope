@@ -25,13 +25,13 @@
 
 ---
 
-## Core Features (v1.9)
+## Core Features (v2.x)
 
 | Area | Capability |
 |------|------------|
-| **Intake** | Customer name, deployment (Cloud / On-premises / Hybrid), use cases, Splunk apps, goals, optional context import |
+| **Intake** | Customer name, deployment (Cloud / On-premises / Hybrid), use cases, Splunk apps, goals, optional Circuit import |
 | **Analysis** | Customer-facing summary: grouped **Suggested Splunk Products** (solutions / apps / add-ons / dependencies) from `appRecommendationEngine.js`, focus areas, source preview |
-| **Sources** | Minimal configure drawer (status + sizing fields only); priority badges use soft language (High priority / Suggested) |
+| **Sources** | Category grid with configure panel (status + sizing only). **Before intake:** no relevance score; cards show catalog description. **After intake:** relevance `X/10` and high-relevance filter. **Configured:** card shows sizing count summary |
 | **Source Reference Library** | SE workspace with search, full source intel, **Suggested deployment path** (doc + Splunkbase links), downloadable briefs |
 | **Coverage** | Multi-use-case domain scoring with adjustable ingest buffer |
 | **Architecture paths** | Four phased paths (Crawl + Walk A/B + Run) in a Coverage-style carousel: readiness gauge, KPI strip, circular navigation; technical Sources \| Scoring accordion; explicit CTA to set report path |

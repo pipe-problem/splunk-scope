@@ -256,6 +256,9 @@ Overlap notes are **annotate-only**: they flag possible double-counting between 
 | Guide | When to read it |
 |-------|-----------------|
 | [**User Guide**](docs/USER_GUIDE.md) | Full walkthrough of every screen and export |
+| [**Contributing**](CONTRIBUTING.md) | Dev setup, tests, catalog edits, releases |
+| [**Documentation index**](docs/DOC_INDEX.md) | Full list of guides and reference material |
+| [**Versioning**](docs/VERSIONING.md) | Release numbering and checklist |
 | [**Sizing Methodology**](docs/SIZING_METHODOLOGY.md) | How GB/day bands and units are calculated |
 | [**Circuit Import**](docs/CIRCUIT_IMPORT.md) | Paste discovery notes from Circuit or other LLM workflows |
 | [**Source Recommendation Rules**](docs/SOURCE_RECOMMENDATION_RULES.md) | How source priorities and labels are assigned |
@@ -280,4 +283,4 @@ Open a [GitHub issue](https://github.com/pipe-problem/splunk-scope/issues) for b
 
 ---
 
-**Version 2.0.0** · For Splunk Solutions Engineering and authorized partner use
+**Version 2.0.1** · For Splunk Solutions Engineering and authorized partner use

@@ -7,35 +7,37 @@ Technical overview of **Splunk Scope**: a local React application for Splunk pla
 ## Directory structure
 
 ```text
-project_sizing/
-├── docs/                          # See DOC_INDEX.md — canonical docs + archive/
+splunk-scope/                      # GitHub: pipe-problem/splunk-scope
+├── docs/                          # See DOC_INDEX.md and docs/README.md
 │   ├── DOC_INDEX.md               # Documentation map
+│   ├── README.md                  # Docs hub by audience
+│   ├── VERSIONING.md              # Release process
 │   ├── PROJECT_SCOPE.md           # Mission + features
 │   ├── PRODUCT_PRINCIPLES.md      # Decision rules
 │   ├── ARCHITECTURE.md            # This file
-│   ├── APP_RECOMMENDATION_ENGINE.md
-│   ├── SOURCE_RECOMMENDATION_RULES.md
-│   ├── SIZING_METHODOLOGY.md
-│   └── archive/                   # Historical audits, QA, generated reports
+│   ├── USER_GUIDE.md              # SE workshop walkthrough
+│   └── …                          # Engine reference, audits, methodology
+├── CONTRIBUTING.md                # Dev setup and release checklist
+├── scripts/                       # See scripts/README.md
+├── e2e/                           # See e2e/README.md (Playwright smoke)
 ├── dist/                          # Vite production build output
 ├── public/                        # Static assets
-├── scripts/
-│   ├── refreshSplunkbaseCatalog.js   # Optional catalog refresh (manual staging / checks)
-│   └── splunkbase_staging.json       # Staging payload for --manual refresh (when used)
 ├── src/
-│   ├── components/               # Reusable UI (charts, modals, progress rail, etc.)
-│   ├── config/                  # Constants, workflow steps, feature flags
-│   ├── context/                  # `AppContext.jsx` — global state + persistence
-│   ├── data/                     # JSON catalogs (sources, use cases, apps, rates, requirements)
-│   ├── pages/                    # Workflow screens (mostly presentational)
+│   ├── components/               # Reusable UI
+│   ├── config/                  # version.js, workflow steps, feature flags
+│   ├── context/                  # AppContext.jsx — global state + persistence
+│   ├── data/                     # JSON catalogs — see src/data/README.md
+│   ├── pages/                    # Workflow screens
 │   ├── services/                 # Engines and resolvers (domain logic)
+│   ├── utils/                    # Shared helpers (e.g. intakeReadiness.js)
 │   ├── App.jsx                   # Shell, stepper, session tools
-│   ├── main.jsx                  # Entry
-│   └── index.css                 # Global styles / Tailwind
+│   └── main.jsx                  # Entry
 ├── index.html
 ├── package.json
 └── vite.config.js
 ```
+
+**External reference folder:** `../splunk-scope-reference/` holds generated spreadsheets, validation reports, and historical archives (not tracked in git).
 
 ---
 
@@ -55,6 +57,7 @@ Domain behavior lives in **`src/services/`** — pure or near-pure modules consu
 | **`logRequirementEngine`** | Log **capabilities** from `logRequirements.json`, app key resolution, satisfaction checks vs. sources. |
 | **`sourceRequirementEngine`** | Combines log/app/data-model requirements with domain classification for final labels and explanations. |
 | **`sourceRelevanceEngine`** | Relevance scoring and ordering helpers for the catalog. |
+| **`intakeReadiness.js`** | Gates source relevance scoring until intake has planning context. |
 | **`sourceInsightEngine`** | Rich per-source metadata for modals and detail panels. |
 | **`coverageEngine`** | Per-domain coverage (max strength), split current/future, multi-use-case validation. |
 | **`priorityEngine`** | Priority scores for ordering sources and feeding plans. |

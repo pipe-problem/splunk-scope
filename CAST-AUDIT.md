@@ -1,3 +1,5 @@
+> **Legacy document.** This audit predates the **Splunk Scope** product rename. For current architecture see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md); for release history see [`CHANGELOG.md`](CHANGELOG.md).
+
 # CAST Application Audit
 
 **Customer Architecture Strategy Tool for Splunk Planning**

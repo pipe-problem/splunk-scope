@@ -94,8 +94,9 @@ Configure which telemetry feeds are **in scope**, **planned later**, or **skippe
 ### Source grid
 
 - Sources are grouped by **category** (Identity, Network, Cloud, Endpoint, etc.)
-- Each card shows a **priority hint** (e.g. High priority, Suggested)—soft language for customers
-- **Top suggested** sources appear at the top of each category ( capped at 3 )
+- **Before intake is filled in:** cards show the catalog description only — no relevance score (`X/10`). Complete Intake first (customer name, use cases, apps, or notes).
+- **After intake:** each card shows a relevance score (`X/10`) based on your selections. Unconfigured cards still show the catalog description; configured cards show sizing counts (e.g. number of firewalls).
+- Use the **High relevance** filter (visible after intake) to focus on top-scoring sources.
 
 ### Configure a source
 

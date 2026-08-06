@@ -1,20 +1,12 @@
 {
-  "appVersion": "1.8.0",
+  "appVersion": "2.0.1",
   "sourceCatalogVersion": "1.8",
   "sizingRatesVersion": "1.8",
   "useCaseMappingVersion": "1.8",
-  "lastUpdated": "2026-05-07",
+  "lastUpdated": "2026-08-06",
   "changeSummary": [
-    "Expanded low/average/high sizing rates for all sources",
-    "Added vendor/model-specific sizing framework",
-    "Added source counting methodology for every source",
-    "Added source-to-use-case mappings",
-    "Expanded log capability mappings",
-    "Wired up startup guide validation checkpoints",
-    "Fixed future module import paths",
-    "Expanded SOURCE_GUIDANCE coverage in startup guide engine",
-    "Added ReviewPage to workflow stepper",
-    "Added source filtering UX improvements",
-    "Improved print/export for all report tabs"
+    "App 2.0.1: pre-intake source relevance gating; catalog descriptions on unconfigured cards",
+    "Documentation refresh: CONTRIBUTING, folder READMEs, VERSIONING guide",
+    "Version numbers aligned across package.json, version.js, and catalogVersion.json"
   ]
 }
