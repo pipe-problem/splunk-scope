@@ -30,6 +30,75 @@ Optional: [Git](https://git-scm.com/downloads) if you want to clone and pull upd
 
 ---
 
+### Quick start — copy and paste (Git clone)
+
+Run these commands **one block at a time** in Terminal (Mac) or PowerShell (Windows). You must have [Node.js 20+](https://nodejs.org/) installed first.
+
+**Mac / Linux:**
+
+```bash
+cd ~/Documents
+git clone https://github.com/pipe-problem/splunk-scope.git
+cd splunk-scope
+npm install
+npm run build
+npm run dev
+```
+
+**Windows (PowerShell):**
+
+```powershell
+cd $HOME\Documents
+git clone https://github.com/pipe-problem/splunk-scope.git
+cd splunk-scope
+npm install
+npm run build
+npm run dev
+```
+
+Then open **http://localhost:5173** in your browser.
+
+- `npm run build` confirms the download is complete (if any app files are missing, this step fails with a clear error instead of a blank browser page).
+- Keep the terminal open while using Scope. Press **Ctrl+C** to stop.
+
+**Already cloned?** Pull the latest fix, reinstall if needed, and rebuild:
+
+```bash
+cd ~/Documents/splunk-scope
+git pull
+npm install
+npm run build
+npm run dev
+```
+
+---
+
+### Quick start — copy and paste (ZIP download)
+
+After you download and unzip the repo from GitHub:
+
+**Mac / Linux** (change the folder name if yours differs):
+
+```bash
+cd ~/Downloads/splunk-scope-main
+npm install
+npm run build
+npm run dev
+```
+
+**Windows (PowerShell):**
+
+```powershell
+cd $HOME\Downloads\splunk-scope-main
+npm install
+npm run build
+npm run dev
+```
+
+Open **http://localhost:5173** in your browser.
+
+---
+
 ### Option A — Clone with Git (recommended for updates)
 
 Use this if you plan to run `git pull` when new versions are published.
@@ -138,8 +207,8 @@ If that works, you are ready for a real workshop.
 | **Repository not found** | Confirm you are logged into GitHub and have been granted access to the private repo. |
 | **`node: command not found`** | Install Node.js 20+ from [nodejs.org](https://nodejs.org/) and restart the terminal. |
 | **`npm install` fails** | Ensure you are inside the `splunk-scope` folder (there should be a `package.json` file). Try deleting `node_modules/` and running `npm install` again. |
-| **Port already in use** | Another app may be using port 5173. Stop other dev servers or set `npm run dev -- --port 5174` and open the new URL. |
-| **Blank page in browser** | Hard-refresh (Ctrl+Shift+R / Cmd+Shift+R). Confirm the terminal still shows the dev server running with no errors. |
+| **Blank page or red Vite error overlay** | Run `git pull` (or re-download ZIP) to get the latest code, then `npm install` and `npm run build`. If build fails with “Failed to resolve import”, the download is incomplete—ask the repo owner for an updated copy. |
+| **Port already in use** | Another app may be using port 5173. Stop other dev servers or run `npm run dev -- --port 5174` and open the new URL. |
 
 ---
 

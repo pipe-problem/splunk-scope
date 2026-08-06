@@ -20,7 +20,7 @@ Thumbs.db
 # Test artifacts
 playwright-report/
 test-results/
-coverage/
+/coverage/
 
 # Python tooling (optional scripts)
 .pylibs/
