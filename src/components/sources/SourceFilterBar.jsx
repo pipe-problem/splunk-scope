@@ -8,7 +8,15 @@ const FILTER_LABELS = {
   high_priority: 'High relevance',
 };
 
-export default function SourceFilterBar({ searchQuery, onSearchChange, statusFilter, onStatusFilterChange }) {
+export default function SourceFilterBar({
+  searchQuery,
+  onSearchChange,
+  statusFilter,
+  onStatusFilterChange,
+  intakeReady = false,
+}) {
+  const filterKeys = intakeReady ? FILTER_KEYS : FILTER_KEYS.filter((k) => k !== 'high_priority');
+
   return (
     <div className="flex items-center gap-2 flex-wrap">
       <div className="relative flex-1 min-w-[180px]">
@@ -16,7 +24,7 @@ export default function SourceFilterBar({ searchQuery, onSearchChange, statusFil
         <input className="input-field !pl-8 !py-2 !text-label" value={searchQuery} onChange={(e) => onSearchChange(e.target.value)} placeholder="Search M365, AD, Okta, CloudTrail, firewalls…" aria-label="Search sources" />
       </div>
       <div className="flex items-center gap-1">
-        {FILTER_KEYS.map((s) => (
+        {filterKeys.map((s) => (
           <button
             key={s}
             type="button"

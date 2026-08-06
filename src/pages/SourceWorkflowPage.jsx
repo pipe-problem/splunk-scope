@@ -20,6 +20,7 @@ import {
   listCustomSourcesFromSession,
   defaultCustomSourceState,
 } from '../utils/customSources';
+import { isIntakeReadyForSourceRelevance } from '../utils/intakeReadiness.js';
 import PageHeaderActions from '../components/layout/PageHeaderActions';
 import WorkflowStepIndicator from '../components/layout/WorkflowStepIndicator';
 import { STEP } from '../config/workflowSteps.js';
@@ -36,14 +37,16 @@ function categoryConfiguredCount(cat, sources) {
   return list.filter((s) => sources[s.id]?.status === 'current').length;
 }
 
-function sortSourcesForGrid(sources, sourceStates, displayMetaById) {
+function sortSourcesForGrid(sources, sourceStates, displayMetaById, intakeReady) {
   return [...sources].sort((a, b) => {
     const aConfigured = sourceStates[a.id]?.status === 'current' ? 1 : 0;
     const bConfigured = sourceStates[b.id]?.status === 'current' ? 1 : 0;
     if (bConfigured !== aConfigured) return bConfigured - aConfigured;
-    const aScore = displayMetaById.get(a.id)?.relevanceScore1to10 ?? 0;
-    const bScore = displayMetaById.get(b.id)?.relevanceScore1to10 ?? 0;
-    if (bScore !== aScore) return bScore - aScore;
+    if (intakeReady) {
+      const aScore = displayMetaById.get(a.id)?.relevanceScore1to10 ?? 0;
+      const bScore = displayMetaById.get(b.id)?.relevanceScore1to10 ?? 0;
+      if (bScore !== aScore) return bScore - aScore;
+    }
     return (a.name || '').localeCompare(b.name || '');
   });
 }
@@ -62,6 +65,7 @@ export default function SourceWorkflowPage() {
 
   const useCases = useMemo(() => resolveUseCaseProfiles(state.intake).profiles, [state.intake]);
   const intake = state.intake;
+  const intakeReady = useMemo(() => isIntakeReadyForSourceRelevance(intake), [intake]);
 
   const prioritizedCatalog = useMemo(
     () =>
@@ -94,12 +98,22 @@ export default function SourceWorkflowPage() {
   const customSources = useMemo(() => listCustomSourcesFromSession(state.sources), [state.sources]);
 
   const sortedCategories = useMemo(() => {
-    const ranked = rankCategoriesByRelevance(prioritizedCatalog);
-    const rankedSet = new Set(ranked);
-    const remainder = categories.filter((c) => !rankedSet.has(c));
-    const base = [...ranked, ...remainder];
+    const base = intakeReady
+      ? (() => {
+          const ranked = rankCategoriesByRelevance(prioritizedCatalog);
+          const rankedSet = new Set(ranked);
+          const remainder = categories.filter((c) => !rankedSet.has(c));
+          return [...ranked, ...remainder];
+        })()
+      : [...categories];
     return base.includes(CUSTOM_SOURCE_CATEGORY) ? base : [...base, CUSTOM_SOURCE_CATEGORY];
-  }, [prioritizedCatalog]);
+  }, [prioritizedCatalog, intakeReady]);
+
+  useEffect(() => {
+    if (!intakeReady && statusFilter === 'high_priority') {
+      setStatusFilter('all');
+    }
+  }, [intakeReady, statusFilter]);
 
   useEffect(() => {
     if (!didResetCategoryTab.current && sortedCategories.length > 0) {
@@ -177,8 +191,8 @@ export default function SourceWorkflowPage() {
       classified = classified.filter((s) => (state.sources[s.id]?.status || 'unknown') === statusFilter);
     }
 
-    return sortSourcesForGrid(classified, state.sources, displayMetaById);
-  }, [allSources, searchQuery, activeCategory, statusFilter, state.sources, useCases, intake, state.overlapDecisions, displayMetaById]);
+    return sortSourcesForGrid(classified, state.sources, displayMetaById, intakeReady);
+  }, [allSources, searchQuery, activeCategory, statusFilter, state.sources, useCases, intake, state.overlapDecisions, displayMetaById, intakeReady]);
 
   const openedSource = useMemo(() => {
     if (!openedSourceId) return null;
@@ -316,6 +330,7 @@ export default function SourceWorkflowPage() {
           onSearchChange={setSearchQuery}
           statusFilter={statusFilter}
           onStatusFilterChange={setStatusFilter}
+          intakeReady={intakeReady}
         />
       </div>
 
@@ -371,6 +386,7 @@ export default function SourceWorkflowPage() {
                   source={openedSource}
                   ss={state.sources[openedSource.id] || { status: 'unknown' }}
                   displayMeta={displayMetaById.get(openedSource.id)}
+                  showRelevance={intakeReady}
                   useCases={useCases}
                   sessionSources={state.sources}
                   anchorRect={panelAnchorRect}
@@ -422,7 +438,6 @@ export default function SourceWorkflowPage() {
                 const meta = displayMetaById.get(source.id) || {
                   relevanceScore1to10: 1,
                   appLabels: [],
-                  whyOneLine: source.description,
                 };
                 return (
                   <SourceGridCard
@@ -430,9 +445,9 @@ export default function SourceWorkflowPage() {
                     source={source}
                     ss={ss}
                     isOpen={openedSourceId === source.id}
+                    showRelevance={intakeReady}
                     relevanceScore1to10={meta.relevanceScore1to10}
                     appLabels={meta.appLabels}
-                    whyOneLine={meta.whyOneLine}
                     onToggle={toggleSourcePanel}
                   />
                 );

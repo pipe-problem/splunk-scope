@@ -17,15 +17,15 @@ export default function SourceGridCard({
   source,
   ss,
   isOpen,
+  showRelevance = false,
   relevanceScore1to10,
   appLabels = [],
-  whyOneLine,
   onToggle,
 }) {
   const configured = ss?.status === 'current';
   const configuredSummary = configured ? formatConfiguredSourceSummary(source, ss) : null;
   const { primary, secondary } = displayName(source, ss);
-  const description = configuredSummary || (whyOneLine || source.description || '').trim();
+  const description = configuredSummary || (source.description || '').trim();
 
   const handleClick = (event) => {
     if (event.target.closest('a, button')) return;
@@ -39,6 +39,10 @@ export default function SourceGridCard({
     }
   };
 
+  const ariaLabel = showRelevance
+    ? `${source.name}, relevance ${relevanceScore1to10 ?? 'unknown'} out of 10${configured ? ', configured' : ''}`
+    : `${source.name}${configured ? ', configured' : ''}`;
+
   return (
     <div
       role="button"
@@ -47,7 +51,7 @@ export default function SourceGridCard({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       aria-expanded={isOpen}
-      aria-label={`${source.name}, relevance ${relevanceScore1to10 ?? 'unknown'} out of 10${configured ? ', configured' : ''}`}
+      aria-label={ariaLabel}
       className={`card-compact !p-0 h-full flex flex-col min-h-0 transition-all cursor-pointer select-none ${
         isOpen
           ? 'ring-2 ring-[var(--cast-accent)]/45 shadow-[var(--shadow-glow)] scale-[1.01]'
@@ -65,12 +69,14 @@ export default function SourceGridCard({
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <span
-              className="text-badge font-bold tabular-nums px-1.5 py-0.5 rounded bg-[var(--cast-accent-muted)] text-[var(--cast-accent)]"
-              title="Relevance to your goals"
-            >
-              {relevanceScore1to10 ?? '—'}/10
-            </span>
+            {showRelevance && (
+              <span
+                className="text-badge font-bold tabular-nums px-1.5 py-0.5 rounded bg-[var(--cast-accent-muted)] text-[var(--cast-accent)]"
+                title="Relevance to your goals"
+              >
+                {relevanceScore1to10 ?? '—'}/10
+              </span>
+            )}
             {configured ? (
               <CheckCircle2 size={16} className="text-[var(--cast-success)]" aria-label="Configured" title="Configured" />
             ) : (
@@ -79,7 +85,7 @@ export default function SourceGridCard({
           </div>
         </div>
 
-        {appLabels.length > 0 && (
+        {showRelevance && appLabels.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {appLabels.slice(0, 2).map((label) => (
               <span

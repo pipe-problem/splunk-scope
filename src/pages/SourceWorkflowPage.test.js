@@ -17,6 +17,17 @@ describe('SourceWorkflowPage redesign', () => {
     expect(pageSource).not.toContain('formatIngestString');
   });
 
+  it('gates relevance on intake readiness', () => {
+    expect(pageSource).toContain('isIntakeReadyForSourceRelevance');
+    expect(pageSource).toContain('showRelevance={intakeReady}');
+    expect(pageSource).toContain('intakeReady={intakeReady}');
+  });
+
+  it('sorts by relevance only when intake is ready', () => {
+    expect(pageSource).toContain('sortSourcesForGrid');
+    expect(pageSource).toContain('intakeReady');
+  });
+
   it('uses in-page SourceConfigPanel instead of full-screen modal', () => {
     expect(pageSource).toContain('SourceConfigPanel');
     expect(pageSource).not.toContain('SourceConfigModal');
@@ -41,11 +52,15 @@ describe('SourceWorkflowPage redesign', () => {
 
 describe('SourceGridCard customer view', () => {
   it('card click toggles panel and shows Configure or Edit footer', () => {
+    expect(cardSource).toContain('showRelevance');
     expect(cardSource).toContain('relevanceScore1to10');
     expect(cardSource).toContain('onToggle');
     expect(cardSource).toContain('role="button"');
     expect(cardSource).not.toMatch(/GB\s*\/\s*day/i);
     expect(cardSource).not.toContain('RelevanceReviewBadge');
+    expect(cardSource).not.toContain('whyOneLine');
+    expect(cardSource).toContain('source.description');
+    expect(cardSource).toContain('formatConfiguredSourceSummary');
     expect(cardSource).not.toContain('onConfigure');
     expect(cardSource).not.toContain('btn-primary');
     expect(cardSource).toContain("'Edit'");
@@ -59,6 +74,7 @@ describe('SourceConfigPanel', () => {
   it('save sets configured status without ingest display', () => {
     expect(panelSource).toContain('applySourceConfigSave');
     expect(panelSource).not.toMatch(/GB\s*\/\s*day/i);
+    expect(panelSource).toContain('showRelevance');
     expect(panelSource).toContain('Configured');
     expect(panelSource).toContain('Not configured');
     expect(panelSource).toContain('anchorRect');

@@ -106,6 +106,7 @@ export default function SourceConfigPanel({
   source,
   ss,
   displayMeta,
+  showRelevance = false,
   useCases,
   sessionSources,
   anchorRect,
@@ -187,9 +188,11 @@ export default function SourceConfigPanel({
         <div className="min-w-0 flex-1">
           <h2 className="text-xl sm:text-2xl font-bold text-[var(--cast-text)] leading-snug pr-2">{source.name}</h2>
           <div className="flex flex-wrap items-center gap-2 mt-3">
-            <span className="text-badge px-2.5 py-0.5 rounded-full bg-[var(--cast-accent-muted)] text-[var(--cast-accent)] border border-[var(--cast-accent)]/25 font-semibold">
-              Relevance {displayMeta?.relevanceScore1to10 ?? '—'}/10
-            </span>
+            {showRelevance && (
+              <span className="text-badge px-2.5 py-0.5 rounded-full bg-[var(--cast-accent-muted)] text-[var(--cast-accent)] border border-[var(--cast-accent)]/25 font-semibold">
+                Relevance {displayMeta?.relevanceScore1to10 ?? '—'}/10
+              </span>
+            )}
             <span
               className={`text-badge px-2.5 py-0.5 rounded-full border ${
                 configured
