@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef, useLayoutEffect, createElement } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { X, Check, RotateCcw } from 'lucide-react';
 import vendorModels from '../../data/vendorModels.json';
 import { getMeasurementQuestion, resolveMeasurementInputFields } from '../../services/sourceMeasurementQuestionsService.js';
-import { getLogOptions } from '../../services/sourceHierarchyEngine.js';
+import { hasWorkbookBackedLogChannelOptions, getWorkbookBackedLogOptions } from '../../utils/workbookMeasurementDimensions.js';
 import { applySourceConfigSave, applySourceConfigReset } from '../../services/sourceConfigModalEngine.js';
 import { getNestedValue, patchDraftField } from '../../utils/draftPathUtils.js';
 import { fieldMatchesPrimary } from '../../utils/measurementInputFields.js';
 import SourceMoreInfoPanel from './SourceMoreInfoPanel.jsx';
-import { getSizingPanelForSource, hasCompositeSizingPanel } from './sizingPanelRegistry.js';
 
 function resolveSelectOptions(optionsSource) {
   if (!optionsSource) return [];
@@ -17,11 +16,6 @@ function resolveSelectOptions(optionsSource) {
     obj = obj?.[p];
   }
   return Array.isArray(obj) ? obj.map((v) => (typeof v === 'string' ? v : v.name || v.id)) : [];
-}
-
-function hasMeaningfulLogVariants(source) {
-  const opts = getLogOptions(source);
-  return opts.filter((o) => o.group === 'basic').length > 1;
 }
 
 function normalizeCopy(text) {
@@ -118,8 +112,8 @@ export default function SourceConfigPanel({
   const { numbers, selects } = resolveMeasurementInputFields(source.id, source, measurement);
   const primaryInputField = measurement?.primaryInputField;
   const showQuestion = Boolean(measurement?.question);
-  const showLogToggles = hasMeaningfulLogVariants(source);
-  const logOpts = showLogToggles ? getLogOptions(source).filter((o) => o.group === 'basic') : [];
+  const showLogToggles = hasWorkbookBackedLogChannelOptions(source);
+  const logOpts = showLogToggles ? getWorkbookBackedLogOptions(source) : [];
 
   const [draft, setDraft] = useState(() => ({ ...ss }));
   const panelRef = useRef(null);
@@ -140,7 +134,12 @@ export default function SourceConfigPanel({
 
   const toggleLog = (optionId) => {
     const selected = { ...(draft.selectedLogOptions || {}) };
-    selected[optionId] = selected[optionId] === false ? true : false;
+    const opt = logOpts.find((o) => o.id === optionId);
+    const isAdvanced = opt?.group === 'advanced';
+    const currentlyOn = isAdvanced
+      ? selected[optionId] === true
+      : selected[optionId] !== false;
+    selected[optionId] = currentlyOn ? false : true;
     patchDraft({ selectedLogOptions: selected });
   };
 
@@ -159,18 +158,8 @@ export default function SourceConfigPanel({
 
   const sizingFields = [...numbers, ...selects];
   const multiField = sizingFields.length > 1;
-  const sizingPanelComponent = getSizingPanelForSource(source.id);
-  const useCompositePanel = hasCompositeSizingPanel(source.id);
 
-  const handleCompositeUpdate = (sourceId, patch) => {
-    if (sourceId === source.id) {
-      patchDraft(patch);
-    }
-  };
-
-  const transformOrigin = anchorRect
-    ? `${Math.round(((anchorRect.left + anchorRect.width / 2) / window.innerWidth) * 100)}% ${Math.round(((anchorRect.top + anchorRect.height / 2) / window.innerHeight) * 100)}%`
-    : 'center center';
+  const transformOrigin = 'center center';
 
   return (
     <div
@@ -178,13 +167,13 @@ export default function SourceConfigPanel({
       role="dialog"
       aria-modal="true"
       aria-label={`Configure ${source.name}`}
-      className={`source-config-panel card-compact !p-0 pointer-events-auto z-40 w-[min(92vw,68rem)] max-h-[88vh] flex flex-col shadow-[var(--shadow-glow)] ring-1 ring-[var(--cast-accent)]/20 transition-all duration-300 ease-out ${
+      className={`source-config-panel card-compact !p-0 pointer-events-auto z-40 w-[min(92vw,68rem)] max-h-[min(88dvh,calc(100dvh-5rem))] flex flex-col shadow-[var(--shadow-glow)] ring-1 ring-[var(--cast-accent)]/20 transition-all duration-300 ease-out ${
         entered ? 'scale-100 opacity-100' : 'scale-[0.96] opacity-0'
       }`}
       style={{ transformOrigin }}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="shrink-0 border-b border-[var(--cast-border)]/80 bg-[var(--cast-panel)]/60 px-5 py-4 sm:px-7 sm:py-5 flex items-start justify-between gap-4 rounded-t-xl">
+      <div className="sticky top-0 z-10 shrink-0 border-b border-[var(--cast-border)]/80 bg-[var(--cast-panel)] px-5 py-4 sm:px-7 sm:py-5 flex items-start justify-between gap-4 rounded-t-xl">
         <div className="min-w-0 flex-1">
           <h2 className="text-xl sm:text-2xl font-bold text-[var(--cast-text)] leading-snug pr-2">{source.name}</h2>
           {(source.customerSummary || source.description) && (
@@ -272,16 +261,7 @@ export default function SourceConfigPanel({
             </div>
           )}
 
-          {useCompositePanel && sizingPanelComponent ? (
-            <div className="rounded-xl border border-[var(--cast-border)] bg-[var(--cast-panel-alt)]/25 px-5 py-4 sm:px-6 sm:py-5">
-              {createElement(sizingPanelComponent, {
-                sourceId: source.id,
-                ss: draft,
-                sessionSources,
-                update: handleCompositeUpdate,
-              })}
-            </div>
-          ) : sizingFields.length > 0 ? (
+          {sizingFields.length > 0 ? (
             <div
               className={
                 multiField
@@ -300,7 +280,12 @@ export default function SourceConfigPanel({
                   key={f.key}
                   field={f}
                   value={getNestedValue(draft, f.key)}
-                  onChange={(v) => patchField(f.key, v)}
+                  onChange={(v) => {
+                    patchField(f.key, v);
+                    if (f.key === 'ssoActiveUserCount' || f.key === 'officeActiveUserCount' || f.key === 'crmActiveUserCount') {
+                      patchField('count', v);
+                    }
+                  }}
                   hideLabel={hideLabel}
                   hideHelper={hideHelper}
                   ariaLabel={measurement.question}
@@ -322,13 +307,24 @@ export default function SourceConfigPanel({
 
           {showLogToggles && logOpts.length > 0 && (
             <div className="rounded-xl border border-[var(--cast-border)] bg-[var(--cast-panel-alt)]/30 px-5 py-4 sm:px-6 sm:py-5 mt-6 space-y-3">
-              <h4 className="text-sm font-semibold text-[var(--cast-text)]">Log types</h4>
+              <h4 className="text-sm font-semibold text-[var(--cast-text)]">Log channels to collect</h4>
+              <p className="text-sm text-[var(--cast-text-muted)] leading-relaxed">
+                Select which Windows event logs to forward — rates align with the sizing calculator per server.
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
                 {logOpts.map((opt) => {
-                  const on = (draft.selectedLogOptions || {})[opt.id] !== false;
+                  const isAdvanced = opt.group === 'advanced';
+                  const on = isAdvanced
+                    ? (draft.selectedLogOptions || {})[opt.id] === true
+                    : (draft.selectedLogOptions || {})[opt.id] !== false;
                   return (
                     <label key={opt.id} className="flex items-start gap-2.5 text-sm text-[var(--cast-text-secondary)] cursor-pointer leading-relaxed">
-                      <input type="checkbox" checked={on} onChange={() => toggleLog(opt.id)} className="accent-[var(--cast-accent)] mt-0.5 shrink-0" />
+                      <input
+                        type="checkbox"
+                        checked={on}
+                        onChange={() => toggleLog(opt.id)}
+                        className="accent-[var(--cast-accent)] mt-0.5 shrink-0"
+                      />
                       <span>{opt.name}</span>
                     </label>
                   );

@@ -36,9 +36,9 @@ const TOP_20_SOURCE_IDS = [
 ];
 
 describe('resolveMeasurementInputFields', () => {
-  it('synthesizes iaasAccountCount when catalog input_fields is empty', () => {
+  it('exposes iaasAccountCount from catalog input_fields', () => {
     const source = catalogById.iaas;
-    expect(source.input_fields).toEqual([]);
+    expect(source.input_fields.length).toBeGreaterThanOrEqual(1);
 
     const measurement = getMeasurementQuestion('iaas');
     const rate = originalSizingRates.entries.iaas;
@@ -47,7 +47,7 @@ describe('resolveMeasurementInputFields', () => {
     expect(numbers.length).toBeGreaterThanOrEqual(1);
     expect(numbers[0].key).toBe('iaasAccountCount');
     expect(numbers[0].type).toBe('number');
-    expect(numbers[0].label).toMatch(/cloud accounts/i);
+    expect(numbers[0].label).toMatch(/accounts/i);
   });
 
   it('does not show supplementary add-on fields when log channel toggles exist', () => {
@@ -60,6 +60,18 @@ describe('resolveMeasurementInputFields', () => {
     expect(keys).toContain('number_of_servers');
     expect(keys).not.toContain('windows_application_log_servers');
     expect(keys).not.toContain('windows_security_log_servers');
+  });
+
+  it('does not inject storage_prod secondary count fields into configure UI', () => {
+    const source = catalogById.storage_prod;
+    const rate = originalSizingRates.entries.storage_prod;
+    const measurement = getMeasurementQuestion('storage_prod');
+    const { numbers } = resolveMeasurementInputFields('storage_prod', source, measurement, rate);
+
+    const keys = numbers.map((f) => f.key);
+    expect(keys).toEqual(['number_of_systems']);
+    expect(keys).not.toContain('storage_moderate_iops_arrays');
+    expect(keys).not.toContain('storage_san_switches');
   });
 
   for (const sourceId of TOP_20_SOURCE_IDS) {

@@ -235,8 +235,8 @@ describe('IaaS via sizingEngine integration', () => {
       iaas_containers: { status: 'current', count: 2 },
     };
     const parent = calculateSourceSize(iaas, inputs.iaas, { catalog: sourceCatalog, allInputs: inputs });
-    expect(parent.expected).toBeCloseTo(0.9, 1);
-    expect(parent.rateSource).toBe('iaas_cloud');
+    expect(parent.expected).toBeCloseTo(0.75, 1);
+    expect(parent.rateSource).toBe('workbook_simple');
   });
 
   it('rolls up parent when child is active and parent has no direct inputs', () => {

@@ -7,7 +7,7 @@
     "description": "IaaS includes cloud provider infrastructure logs such as audit activity, VM events, flow logs, storage access logs, Kubernetes control-plane logs, and configuration/inventory changes.",
     "whyItMatters": "Cloud infrastructure logs are foundational for detecting unauthorized access, misconfigurations, and lateral movement in cloud environments. Without these, you have no visibility into your cloud control plane.",
     "configuredItemLabel": "# of cloud accounts",
-    "sizingUnit": "per_account",
+    "sizingUnit": "per_item",
     "sizingRate": 0.25,
     "sizingRateLow": 0.2,
     "sizingRateHigh": 0.3,
@@ -45,7 +45,7 @@
         "id": "iaas_containers",
         "name": "Containers / Pods / Clusters",
         "configuredItemLabel": "# of container clusters",
-        "sizingUnit": "additive",
+        "sizingUnit": "per_item",
         "sizingRate": 0.25,
         "sizingRateLow": 0.2,
         "sizingRateHigh": 0.3,
@@ -57,10 +57,27 @@
         ],
         "mitreId": "DS0032",
         "description": "Containers / Pods / Clusters includes Kubernetes and container platform logs such as control-plane activity, audit events, node/runtime logs, and application logs written by containers.",
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Microsoft AKS",
+              "Google GKE",
+              "AWS EKS",
+              "Red Hat OpenShift"
+            ]
+          },
+          {
+            "key": "containerCounts.clusters",
+            "label": "Number of clusters",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "containerCounts.clusters",
-          "strategy": "container_additive",
+          "strategy": "per_item",
           "rate_per_unit": 0.25
         },
         "whyItMatters": "Kubernetes and container control-plane logs reveal cluster admin abuse, risky workloads, and runtime events that complement cloud audit trails.",
@@ -71,7 +88,7 @@
         "id": "iaas_instances",
         "name": "Cloud Instances / VMs",
         "configuredItemLabel": "# of VMs or cloud servers",
-        "sizingUnit": "additive",
+        "sizingUnit": "per_item",
         "sizingRate": 0.1,
         "sizingRateLow": 0.08000000000000002,
         "sizingRateHigh": 0.12,
@@ -84,10 +101,28 @@
         ],
         "mitreId": "DS0032",
         "description": "Cloud Instances / VMs includes logs collected from cloud virtual machines through provider agents or VM log forwarding, such as OS events, authentication/security activity, agent health, and optionally application/service logs.",
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "AWS EC2",
+              "Azure VMs",
+              "GCP Compute Engine",
+              "VMware Cloud",
+              "Oracle Cloud Compute"
+            ]
+          },
+          {
+            "key": "cloudVmInstanceCount",
+            "label": "Number of instances",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "cloudVmInstanceCount",
-          "strategy": "cloud_vm_additive",
+          "strategy": "per_item",
           "rate_per_unit": 0.1
         },
         "whyItMatters": "Cloud VM logs extend visibility into guest OS and agent telemetry for workloads that may not yet send logs through a central forwarder.",
@@ -98,7 +133,7 @@
         "id": "iaas_storage",
         "name": "Cloud Storage",
         "configuredItemLabel": "# of storage assets",
-        "sizingUnit": "additive",
+        "sizingUnit": "per_item",
         "sizingRate": 0.25,
         "sizingRateLow": 0.2,
         "sizingRateHigh": 0.3,
@@ -111,10 +146,28 @@
         ],
         "mitreId": "DS0010",
         "description": "Cloud Storage includes logs from cloud object storage and cloud file storage platforms, such as management activity, object/file access requests, lifecycle or replication events, and storage health telemetry.",
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Amazon S3",
+              "Azure Blob Storage",
+              "GCP Cloud Storage",
+              "NetApp Cloud Volumes",
+              "Dell APEX / PowerScale"
+            ]
+          },
+          {
+            "key": "cloudStorageAssetCount",
+            "label": "Number of storage assets",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "cloudStorageAssetCount",
-          "strategy": "cloud_storage_additive",
+          "strategy": "per_item",
           "rate_per_unit": 0.25
         },
         "whyItMatters": "Object and file storage access logs detect public exposure, ransomware staging, and unauthorized data access in cloud buckets and shares.",
@@ -122,10 +175,28 @@
         "customerSummary": "Cloud Storage includes logs from cloud object storage and cloud file storage platforms, such as management activity, object/file access requests, lifecycle or replication events, and storage health telemetry."
       }
     ],
-    "input_fields": [],
+    "input_fields": [
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "AWS",
+          "Azure",
+          "GCP",
+          "Oracle Cloud",
+          "IBM Cloud"
+        ]
+      },
+      {
+        "key": "iaasAccountCount",
+        "label": "Number of accounts",
+        "type": "number"
+      }
+    ],
     "sizing_formula": {
       "primary_input": "iaasAccountCount",
-      "strategy": "iaas_cloud",
+      "strategy": "per_item",
       "rate_per_unit": 0.25
     },
     "workbookRateGbPerUnit": 0.25,
@@ -171,27 +242,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_applications",
-        "label": "Number of PaaS applications",
-        "type": "number",
-        "helper": "App Services, Lambda functions, Cloud Functions, etc."
-      },
-      {
-        "key": "number_of_instances",
-        "label": "Number of running instances",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "Platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "AWS Lambda/ECS/EKS",
-          "Azure App Service/Functions",
-          "GCP Cloud Run/Functions",
-          "Heroku",
-          "Other"
+          "AWS CloudTrail",
+          "Azure Monitor",
+          "GCP Cloud Logging",
+          "AWS Config",
+          "Amazon Inspector"
         ]
+      },
+      {
+        "key": "number_of_applications",
+        "label": "Number of applications",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -243,27 +308,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of SaaS users",
-        "type": "number",
-        "helper": "Licensed or active users across all SaaS platforms"
-      },
-      {
-        "key": "number_of_platforms",
-        "label": "Number of SaaS platforms",
-        "type": "number",
-        "helper": "Distinct SaaS apps sending logs (M365, Salesforce, etc.)"
-      },
-      {
-        "key": "audit_level",
-        "label": "Audit logging level",
+        "key": "vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Basic sign-in only",
-          "Sign-in + admin activity",
-          "Full audit (all user activity)",
-          "Unknown"
+          "Salesforce",
+          "ServiceNow",
+          "Workday",
+          "Box",
+          "Atlassian Cloud"
         ]
+      },
+      {
+        "key": "number_of_users",
+        "label": "Number of users",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -276,7 +335,7 @@
         "id": "saas_office",
         "name": "Office Productivity (M365/Google)",
         "configuredItemLabel": "Office tenants, users, and workloads",
-        "sizingUnit": "additive",
+        "sizingUnit": "per_user",
         "sizingRate": 0.005,
         "sizingRateLow": 0.004,
         "sizingRateHigh": 0.006,
@@ -287,10 +346,28 @@
           "SharePoint Online",
           "Microsoft Teams"
         ],
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Microsoft 365",
+              "Google Workspace",
+              "Exchange Online",
+              "SharePoint Online",
+              "Microsoft Teams"
+            ]
+          },
+          {
+            "key": "officeActiveUserCount",
+            "label": "Number of users",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "officeActiveUserCount",
-          "strategy": "office_productivity_additive",
+          "strategy": "per_user",
           "rate_per_unit": 0.005
         },
         "description": "Microsoft 365 and Google Workspace audit and activity telemetry: sign-in and admin audit, Exchange/SharePoint/Teams activity, and security/compliance signals routed to Splunk.",
@@ -302,7 +379,7 @@
         "id": "saas_crm",
         "name": "CRM",
         "configuredItemLabel": "CRM tenants, users, and integrations",
-        "sizingUnit": "additive",
+        "sizingUnit": "per_user",
         "sizingRate": 0.005,
         "sizingRateLow": 0.004,
         "sizingRateHigh": 0.006,
@@ -313,10 +390,28 @@
           "Zendesk",
           "ServiceNow CSM"
         ],
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Salesforce",
+              "Microsoft Dynamics 365",
+              "HubSpot",
+              "Zendesk",
+              "ServiceNow CSM"
+            ]
+          },
+          {
+            "key": "crmActiveUserCount",
+            "label": "Number of users",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "crmActiveUserCount",
-          "strategy": "crm_additive",
+          "strategy": "per_user",
           "rate_per_unit": 0.005
         },
         "description": "CRM platform audit and API activity (Salesforce, Dynamics, HubSpot, ServiceNow CSM, Zendesk): logins, object changes, integrations, and security events.",
@@ -339,10 +434,27 @@
           "Microsoft Entra ID",
           "Ping Identity"
         ],
-        "input_fields": [],
+        "input_fields": [
+          {
+            "key": "vendor",
+            "label": "IdP vendor",
+            "type": "select",
+            "options": [
+              "Okta",
+              "Duo",
+              "Microsoft Entra ID",
+              "Ping Identity"
+            ]
+          },
+          {
+            "key": "ssoActiveUserCount",
+            "label": "Number of users",
+            "type": "number"
+          }
+        ],
         "sizing_formula": {
           "primary_input": "ssoActiveUserCount",
-          "strategy": "sso_identity_additive",
+          "strategy": "per_user",
           "rate_per_unit": 0.005
         },
         "description": "Identity-provider and SSO/MFA logs (Okta, Entra ID, Ping, Duo): authentication, MFA challenges, admin changes, and federation events.",
@@ -365,8 +477,19 @@
         ],
         "input_fields": [
           {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Zoom",
+              "Microsoft Teams",
+              "Slack",
+              "Webex"
+            ]
+          },
+          {
             "key": "count",
-            "label": "# of users with conferencing accounts",
+            "label": "Number of users",
             "type": "number"
           }
         ],
@@ -397,8 +520,20 @@
         ],
         "input_fields": [
           {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Box",
+              "Dropbox",
+              "Google Drive",
+              "SharePoint",
+              "OneDrive"
+            ]
+          },
+          {
             "key": "count",
-            "label": "# of users in Box, Dropbox, or OneDrive",
+            "label": "Number of users",
             "type": "number"
           }
         ],
@@ -424,7 +559,7 @@
     "description": "CSPM tools continuously monitor cloud infrastructure for misconfigurations, compliance violations, and security risks.",
     "whyItMatters": "CSPM findings provide critical context for security operations — revealing attack surface, misconfigurations, and drift that could be exploited before an attacker does.",
     "configuredItemLabel": "# of cloud accounts covered",
-    "sizingUnit": "per_account",
+    "sizingUnit": "per_item",
     "sizingRate": 0.05,
     "sizingRateLow": 0.04000000000000001,
     "sizingRateHigh": 0.06,
@@ -453,27 +588,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_accounts",
-        "label": "Number of cloud accounts monitored",
-        "type": "number"
-      },
-      {
-        "key": "number_of_resources",
-        "label": "Estimated cloud resources",
-        "type": "number",
-        "helper": "Total resources scanned for compliance"
-      },
-      {
         "key": "vendor",
-        "label": "CSPM vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Prisma Cloud",
           "Wiz",
-          "Orca",
-          "Native (AWS Config/Azure Policy)",
-          "Other"
+          "Aqua CSPM",
+          "Prisma Cloud",
+          "CloudSploit",
+          "Orca Security"
         ]
+      },
+      {
+        "key": "number_of_accounts",
+        "label": "Number of accounts",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -514,22 +643,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_instances",
-        "label": "Number of protected workloads",
-        "type": "number",
-        "helper": "VMs, containers, or serverless functions monitored"
-      },
-      {
         "key": "vendor",
-        "label": "CWPP vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "CrowdStrike",
-          "Prisma Cloud",
-          "Aqua",
           "Lacework",
-          "Other"
+          "Cisco Tetration",
+          "Prisma Cloud",
+          "Aqua Security"
         ]
+      },
+      {
+        "key": "number_of_instances",
+        "label": "Number of instances",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -575,13 +702,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of users monitored",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Zscaler",
+          "Cisco Cloudlock",
+          "Forcepoint",
+          "Netskope",
+          "Microsoft Defender for Cloud Apps"
+        ]
       },
       {
-        "key": "number_of_platforms",
-        "label": "Number of cloud apps monitored",
+        "key": "number_of_users",
+        "label": "Number of users",
         "type": "number"
       }
     ],
@@ -629,14 +763,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of users",
-        "type": "number",
-        "helper": "Remote and hybrid users routing through SASE"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Zscaler",
+          "Netskope",
+          "Palo Alto Prisma Access",
+          "Cisco Umbrella"
+        ]
       },
       {
-        "key": "number_of_sites",
-        "label": "Number of sites/locations",
+        "key": "number_of_users",
+        "label": "Number of users",
         "type": "number"
       }
     ],
@@ -814,10 +953,17 @@
     ],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft Windows Server"
+        ]
+      },
+      {
         "key": "number_of_servers",
-        "label": "Number of Windows servers",
-        "type": "number",
-        "helper": "All Windows servers with event log forwarding enabled"
+        "label": "Number of servers",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -868,21 +1014,22 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of Linux servers",
-        "type": "number",
-        "helper": "Production Linux/Unix servers with log collection"
-      },
-      {
-        "key": "logging_scope",
-        "label": "Collection scope",
+        "key": "vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Auth/secure only",
-          "Auth + syslog",
-          "Full system + application",
-          "Unknown"
+          "Red Hat",
+          "Ubuntu",
+          "CentOS",
+          "SUSE",
+          "AIX",
+          "Solaris"
         ]
+      },
+      {
+        "key": "number_of_servers",
+        "label": "Number of servers",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -924,8 +1071,18 @@
     "aiOpportunities": [],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Red Hat",
+          "Ubuntu",
+          "CentOS"
+        ]
+      },
+      {
         "key": "number_of_servers",
-        "label": "Number of non-prod Linux servers",
+        "label": "Number of servers",
         "type": "number"
       }
     ],
@@ -968,15 +1125,18 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of mainframe LPARs",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "IBM z/OS",
+          "IBM z/VM"
+        ]
       },
       {
-        "key": "manual_gb_day",
-        "label": "Manual estimate (GB/day)",
-        "type": "number",
-        "helper": "Mainframe volumes vary widely — manual estimate recommended"
+        "key": "number_of_systems",
+        "label": "Number of mainframe systems",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1025,27 +1185,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of hypervisor hosts",
-        "type": "number",
-        "helper": "ESXi hosts, Hyper-V hosts, etc."
-      },
-      {
-        "key": "number_of_vms",
-        "label": "Number of VMs (optional)",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "Hypervisor vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "VMware vSphere",
+          "VMware ESXi",
+          "VMware vCenter",
           "Microsoft Hyper-V",
-          "KVM/Proxmox",
-          "Nutanix",
-          "Other"
+          "Citrix XenServer",
+          "Linux KVM"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of virtualization hosts",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1106,7 +1260,7 @@
         "input_fields": [
           {
             "key": "count",
-            "label": "# of instances for transaction logs",
+            "label": "Number of instances for transaction logs",
             "type": "number"
           }
         ],
@@ -1131,7 +1285,7 @@
         "input_fields": [
           {
             "key": "count",
-            "label": "# of instances for access logs",
+            "label": "Number of instances for access logs",
             "type": "number"
           }
         ],
@@ -1148,34 +1302,22 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_instances",
-        "label": "Number of database instances",
-        "type": "number",
-        "helper": "Individual DB instances (not schemas)"
-      },
-      {
         "key": "vendor",
-        "label": "Database engine",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "Oracle",
-          "SQL Server",
+          "Microsoft SQL Server",
+          "MySQL",
           "PostgreSQL",
-          "MySQL/MariaDB",
           "MongoDB",
-          "Other"
+          "MariaDB"
         ]
       },
       {
-        "key": "audit_level",
-        "label": "Audit logging level",
-        "type": "select",
-        "options": [
-          "Connection/auth only",
-          "DDL + DML",
-          "Full query audit",
-          "Unknown"
-        ]
+        "key": "number_of_instances",
+        "label": "Number of instances",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1224,15 +1366,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of production web servers",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Apache",
+          "Nginx",
+          "Microsoft IIS",
+          "Caddy"
+        ]
       },
       {
-        "key": "requests_per_day",
-        "label": "Estimated requests/day (millions)",
-        "type": "number",
-        "helper": "Affects access log volume significantly"
+        "key": "number_of_servers",
+        "label": "Number of servers",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1280,15 +1427,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of non-prod web servers",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Apache",
+          "Nginx",
+          "Microsoft IIS",
+          "Caddy"
+        ]
       },
       {
-        "key": "requests_per_day",
-        "label": "Estimated requests/day (millions)",
-        "type": "number",
-        "helper": "Lower traffic than production; still affects access log volume"
+        "key": "number_of_servers",
+        "label": "Number of servers",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1333,13 +1485,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of production application servers",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Apache Tomcat",
+          "IBM WebSphere",
+          "Oracle WebLogic",
+          "JBoss/WildFly",
+          "Microsoft .NET"
+        ]
       },
       {
-        "key": "number_of_applications",
-        "label": "Number of distinct applications",
+        "key": "number_of_servers",
+        "label": "Number of servers",
         "type": "number"
       }
     ],
@@ -1384,13 +1543,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of non-prod application servers",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Apache Tomcat",
+          "IBM WebSphere",
+          "Oracle WebLogic",
+          "JBoss/WildFly",
+          "Microsoft .NET"
+        ]
       },
       {
-        "key": "number_of_applications",
-        "label": "Number of distinct applications",
+        "key": "number_of_servers",
+        "label": "Number of servers",
         "type": "number"
       }
     ],
@@ -1431,23 +1597,21 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of production middleware systems",
-        "type": "number",
-        "helper": "Message queues, ESBs, API gateways"
-      },
-      {
         "key": "vendor",
-        "label": "Platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "MuleSoft",
           "IBM MQ",
+          "TIBCO",
           "RabbitMQ",
-          "Kafka",
-          "Apache Camel",
-          "Other"
+          "Apache Kafka",
+          "Software AG"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of production middleware systems",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1487,23 +1651,21 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of non-prod middleware systems",
-        "type": "number",
-        "helper": "Dev/test/stage message queues, ESBs, API gateways"
-      },
-      {
         "key": "vendor",
-        "label": "Platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "MuleSoft",
           "IBM MQ",
+          "TIBCO",
           "RabbitMQ",
-          "Kafka",
-          "Apache Camel",
-          "Other"
+          "Apache Kafka",
+          "Software AG"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of non-prod middleware systems",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1548,19 +1710,20 @@
     ],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "New Relic",
+          "AppDynamics",
+          "Dynatrace",
+          "Datadog APM",
+          "Splunk APM"
+        ]
+      },
+      {
         "key": "number_of_applications",
-        "label": "Number of instrumented applications",
-        "type": "number",
-        "helper": "Apps with APM agents or OpenTelemetry"
-      },
-      {
-        "key": "number_of_instances",
-        "label": "Number of service instances",
-        "type": "number"
-      },
-      {
-        "key": "traces_per_day",
-        "label": "Estimated traces/day (millions)",
+        "label": "Number of applications",
         "type": "number"
       }
     ],
@@ -1602,13 +1765,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of PKI/CA systems",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft AD CS",
+          "DigiCert",
+          "Let's Encrypt",
+          "HashiCorp Vault"
+        ]
       },
       {
-        "key": "number_of_certificates",
-        "label": "Active certificates managed",
+        "key": "number_of_systems",
+        "label": "Number of pki / ca servers",
         "type": "number"
       }
     ],
@@ -1655,14 +1824,18 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of SAP systems",
-        "type": "number",
-        "helper": "Production SAP instances (ECC, S/4HANA, etc.)"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "SAP NetWeaver",
+          "SAP S/4HANA",
+          "SAP HANA"
+        ]
       },
       {
-        "key": "number_of_users",
-        "label": "Number of SAP users",
+        "key": "number_of_systems",
+        "label": "Number of sap systems",
         "type": "number"
       }
     ],
@@ -1710,21 +1883,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_endpoints",
-        "label": "Number of desktops/laptops",
-        "type": "number",
-        "helper": "User endpoints with log collection agents"
-      },
-      {
-        "key": "logging_scope",
-        "label": "Collection scope",
+        "key": "vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Logon/security events only",
-          "Security + application crash",
-          "Full endpoint telemetry",
-          "Unknown"
+          "Microsoft Windows",
+          "Apple macOS",
+          "Linux"
         ]
+      },
+      {
+        "key": "number_of_endpoints",
+        "label": "Number of users",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1776,22 +1947,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of PAM / vault platforms",
-        "type": "number",
-        "helper": "Distinct PAM vaults or privileged-access platforms forwarding audit logs (not user count)"
-      },
-      {
         "key": "vendor",
-        "label": "Vendor",
+        "label": "PAM / vault vendor",
         "type": "select",
         "options": [
           "CyberArk",
           "BeyondTrust",
           "Delinea (Thycotic)",
-          "HashiCorp Vault",
-          "Other"
+          "SailPoint",
+          "HashiCorp Vault"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of identity management platforms",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1840,10 +2010,12 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of AD users",
-        "type": "number",
-        "helper": "Active user accounts in the directory"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft Active Directory"
+        ]
       },
       {
         "key": "number_of_dcs",
@@ -1895,32 +2067,21 @@
     ],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft Exchange",
+          "Proofpoint",
+          "Mimecast",
+          "Barracuda",
+          "Cisco Email Security"
+        ]
+      },
+      {
         "key": "number_of_systems",
         "label": "Number of mail servers or gateways",
-        "type": "number",
-        "helper": "Exchange servers, SMTP relays, or secure email gateways exporting logs"
-      },
-      {
-        "key": "vendor",
-        "label": "Email platform",
-        "type": "select",
-        "options": [
-          "Microsoft 365/Exchange Online",
-          "Google Workspace",
-          "On-prem Exchange",
-          "Other"
-        ]
-      },
-      {
-        "key": "logging_scope",
-        "label": "Log types",
-        "type": "select",
-        "options": [
-          "Message trace only",
-          "Message trace + DLP",
-          "Full audit + content inspection",
-          "Unknown"
-        ]
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -1960,21 +2121,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_devices",
-        "label": "Number of managed devices",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "MDM vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Intune",
-          "Jamf",
+          "JAMF Pro",
+          "Microsoft Intune",
           "VMware Workspace ONE",
-          "MobileIron",
-          "Other"
+          "Scalefusion"
         ]
+      },
+      {
+        "key": "number_of_devices",
+        "label": "Number of devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2022,33 +2182,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_assets",
-        "label": "Number of scanned assets",
-        "type": "number",
-        "helper": "Hosts/IPs scanned for vulnerabilities"
-      },
-      {
-        "key": "scan_frequency",
-        "label": "Scan frequency",
-        "type": "select",
-        "options": [
-          "Daily",
-          "Weekly",
-          "Monthly",
-          "Continuous"
-        ]
-      },
-      {
         "key": "vendor",
-        "label": "Scanner",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Tenable/Nessus",
+          "Tenable Nessus",
           "Qualys",
-          "Rapid7",
-          "CrowdStrike",
-          "Other"
+          "Rapid7 InsightVM",
+          "Tripwire IP360",
+          "OpenVAS"
         ]
+      },
+      {
+        "key": "number_of_assets",
+        "label": "Number of scanning appliances or managers",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2096,21 +2244,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_devices",
-        "label": "Number of flow-exporting devices",
-        "type": "number",
-        "helper": "Routers/switches/firewalls exporting NetFlow/IPFIX"
-      },
-      {
-        "key": "sampling_rate",
-        "label": "Sampling rate",
+        "key": "vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "1:1 (full)",
-          "1:100",
-          "1:1000",
-          "Unknown"
+          "Cisco NetFlow",
+          "sFlow",
+          "IPFIX",
+          "Splunk Stream"
         ]
+      },
+      {
+        "key": "number_of_devices",
+        "label": "Number of devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2157,20 +2304,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of IDS/IPS sensors",
-        "type": "number"
-      },
-      {
         "key": "vendor",
         "label": "Vendor",
         "type": "select",
         "options": [
-          "Snort/Suricata",
-          "Cisco",
-          "Palo Alto",
-          "Other"
+          "Snort",
+          "Suricata",
+          "Cisco Firepower",
+          "TippingPoint",
+          "McAfee IPS"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of ids/ips sensors",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2219,22 +2367,22 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_feeds",
-        "label": "Number of threat intel feeds",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "Primary TI source",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "MISP",
+          "CrowdStrike",
+          "Mandiant",
           "Anomali",
           "Recorded Future",
-          "CrowdStrike Intel",
-          "Open source",
-          "Other"
+          "MISP",
+          "AlienVault OTX"
         ]
+      },
+      {
+        "key": "number_of_feeds",
+        "label": "Number of feeds",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2275,13 +2423,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of sandbox systems",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Cisco AMP",
+          "Palo Alto WildFire",
+          "Check Point SandBlast",
+          "CrowdStrike Falcon Sandbox",
+          "Cuckoo"
+        ]
       },
       {
-        "key": "submissions_per_day",
-        "label": "Estimated submissions/day",
+        "key": "number_of_systems",
+        "label": "Number of sandbox systems",
         "type": "number"
       }
     ],
@@ -2333,18 +2488,6 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_endpoints",
-        "label": "Number of endpoints with EDR",
-        "type": "number",
-        "helper": "Workstations and servers with EDR agent"
-      },
-      {
-        "key": "number_of_servers",
-        "label": "Number of servers included",
-        "type": "number",
-        "helper": "Servers typically generate more EDR telemetry than workstations"
-      },
-      {
         "key": "vendor",
         "label": "EDR vendor",
         "type": "select",
@@ -2353,9 +2496,13 @@
           "Microsoft Defender for Endpoint",
           "SentinelOne",
           "Carbon Black",
-          "Cortex XDR",
-          "Other"
+          "Tanium"
         ]
+      },
+      {
+        "key": "number_of_endpoints",
+        "label": "Number of endpoints",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2399,26 +2546,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_sensors",
-        "label": "Number of NDR sensors",
-        "type": "number"
-      },
-      {
-        "key": "bandwidth_gbps",
-        "label": "Monitored bandwidth (Gbps)",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "NDR vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Vectra",
+          "Vectra AI",
           "Darktrace",
-          "ExtraHop",
-          "Corelight/Zeek",
-          "Other"
+          "ExtraHop Reveal(x)",
+          "Cisco Stealthwatch"
         ]
+      },
+      {
+        "key": "number_of_sensors",
+        "label": "Number of sensors",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2460,27 +2601,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of monitored users",
-        "type": "number",
-        "helper": "Users covered by DLP policies across email, web, endpoint, and cloud channels"
-      },
-      {
-        "key": "number_of_channels",
-        "label": "DLP products/channels monitored",
-        "type": "number",
-        "helper": "Count of DLP products or channels (email, web, endpoint, cloud) — planning floor ~0.05 GB/day per channel"
-      },
-      {
-        "key": "dlpSizingProfile",
-        "label": "DLP sizing profile",
+        "key": "vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "User and channel monitoring",
-          "Channel/products only",
-          "Lookup/context only"
-        ],
-        "helper": "User monitoring requires monitored users; channel-only uses product/channel floor rates"
+          "Microsoft Purview",
+          "Digital Guardian",
+          "Symantec DLP",
+          "Forcepoint"
+        ]
+      },
+      {
+        "key": "number_of_users",
+        "label": "Number of users",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2571,33 +2705,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_assets",
-        "label": "Number of asset/identity data sources",
-        "type": "number",
-        "helper": "CMDB exports, LDAP/AD sync sources, or identity list feeds"
-      },
-      {
-        "key": "assetExportProfile",
-        "label": "Ingest profile",
-        "type": "select",
-        "options": [
-          "Lookup/context only",
-          "Periodic CMDB/identity exports",
-          "Full asset/identity synchronization"
-        ],
-        "helper": "Lookup/context sources are enrichment only; periodic/full exports use ~0.025 GB/day per source"
-      },
-      {
         "key": "vendor",
-        "label": "CMDB platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "ServiceNow",
-          "BMC",
-          "Flexera",
-          "Custom",
-          "Other"
+          "BMC Helix",
+          "Ivanti",
+          "Microsoft AD",
+          "LDAP"
         ]
+      },
+      {
+        "key": "number_of_assets",
+        "label": "Number of asset or identity data sources",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2638,20 +2760,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of deception assets",
-        "type": "number"
-      },
-      {
         "key": "vendor",
         "label": "Vendor",
         "type": "select",
         "options": [
-          "Attivo",
-          "Illusive",
-          "TrapX",
-          "Other"
+          "Thinkst Canary",
+          "Attivo Networks",
+          "Illusive Networks",
+          "CyberTrap"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of deception/honeypot systems",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2716,7 +2838,7 @@
         "input_fields": [
           {
             "key": "count",
-            "label": "# of internet-facing firewalls",
+            "label": "Number of internet-facing firewalls",
             "type": "number"
           }
         ],
@@ -2741,7 +2863,7 @@
         "input_fields": [
           {
             "key": "count",
-            "label": "# of internal firewalls",
+            "label": "Number of internal firewalls",
             "type": "number"
           }
         ],
@@ -2772,8 +2894,20 @@
         ],
         "input_fields": [
           {
+            "key": "vendor",
+            "label": "Vendor",
+            "type": "select",
+            "options": [
+              "Imperva",
+              "F5",
+              "Barracuda",
+              "Cloudflare WAF",
+              "AWS WAF"
+            ]
+          },
+          {
             "key": "count",
-            "label": "# of WAF instances",
+            "label": "Number of waf instances",
             "type": "number"
           }
         ],
@@ -2790,40 +2924,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of users protected",
-        "type": "number",
-        "helper": "Firewall ingest correlates more with protected user population than device count"
-      },
-      {
-        "key": "number_of_systems",
-        "label": "Number of firewall devices",
-        "type": "number",
-        "helper": "Physical/virtual firewall instances — used for confidence scoring"
-      },
-      {
         "key": "vendor",
         "label": "Vendor",
         "type": "select",
         "options": [
           "Palo Alto Networks",
-          "Fortinet",
-          "Cisco ASA/FTD",
+          "Cisco ASA/Firepower",
           "Check Point",
-          "Juniper SRX",
-          "Other"
+          "Fortinet FortiGate",
+          "Juniper SRX"
         ]
       },
       {
-        "key": "logging_scope",
-        "label": "Logging scope",
-        "type": "select",
-        "options": [
-          "Basic traffic only",
-          "Traffic + threat prevention",
-          "Full verbose (all sessions)",
-          "Unknown"
-        ]
+        "key": "number_of_systems",
+        "label": "Number of firewall devices total",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -2866,8 +2981,19 @@
     "aiOpportunities": [],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Cisco Catalyst",
+          "Arista",
+          "Juniper EX",
+          "HP/Aruba"
+        ]
+      },
+      {
         "key": "number_of_systems",
-        "label": "Number of switches",
+        "label": "Number of managed switches",
         "type": "number"
       }
     ],
@@ -2906,6 +3032,16 @@
     ],
     "aiOpportunities": [],
     "input_fields": [
+      {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Cisco IOS",
+          "Juniper MX",
+          "Arista"
+        ]
+      },
       {
         "key": "number_of_systems",
         "label": "Number of routers",
@@ -2956,22 +3092,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of VPN gateway devices",
-        "type": "number",
-        "helper": "VPN concentrators, GlobalProtect portals, or SSL VPN appliances exporting connection logs"
-      },
-      {
         "key": "vendor",
-        "label": "VPN vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "Cisco AnyConnect",
           "Palo Alto GlobalProtect",
-          "Zscaler",
-          "Fortinet",
-          "Other"
+          "Fortinet FortiClient",
+          "Citrix NetScaler"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of vpn gateway devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3019,27 +3153,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of users",
-        "type": "number",
-        "helper": "Users routing through the proxy"
-      },
-      {
-        "key": "number_of_systems",
-        "label": "Number of proxy appliances",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "Proxy vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "Zscaler",
-          "Broadcom/Symantec",
-          "McAfee Web Gateway",
-          "Squid",
-          "Other"
+          "Symantec/Broadcom ProxySG",
+          "Forcepoint",
+          "McAfee Web Gateway"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of web proxy devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3081,21 +3208,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_devices",
-        "label": "Number of NAC-controlled devices",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "NAC vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "Cisco ISE",
           "Aruba ClearPass",
-          "FortiNAC",
-          "Portnox",
-          "Other"
+          "Forescout"
         ]
+      },
+      {
+        "key": "number_of_devices",
+        "label": "Number of devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3145,25 +3270,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of users generating DNS queries",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft DNS",
+          "BIND",
+          "Infoblox",
+          "PowerDNS",
+          "Cloudflare"
+        ]
       },
       {
         "key": "number_of_servers",
-        "label": "Number of DNS servers",
+        "label": "Number of servers",
         "type": "number"
-      },
-      {
-        "key": "query_logging",
-        "label": "Query logging enabled",
-        "type": "select",
-        "options": [
-          "Yes - all queries",
-          "Response only",
-          "No query logging",
-          "Unknown"
-        ]
       }
     ],
     "sizing_formula": {
@@ -3203,13 +3324,19 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_servers",
-        "label": "Number of DHCP servers",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Microsoft DHCP",
+          "ISC DHCP",
+          "Infoblox",
+          "Cisco"
+        ]
       },
       {
-        "key": "number_of_leases",
-        "label": "Approximate active leases",
+        "key": "number_of_servers",
+        "label": "Number of servers",
         "type": "number"
       }
     ],
@@ -3253,22 +3380,21 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of load balancers",
-        "type": "number"
-      },
-      {
         "key": "vendor",
         "label": "Vendor",
         "type": "select",
         "options": [
           "F5 BIG-IP",
-          "Citrix ADC",
-          "AWS ALB/NLB",
-          "Azure LB",
+          "Citrix NetScaler",
+          "Nginx",
           "HAProxy",
-          "Other"
+          "AWS ALB/NLB"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of load balancer devices",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3306,8 +3432,19 @@
     "aiOpportunities": [],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Akamai",
+          "Cloudflare",
+          "Arbor/Netscout",
+          "A10 Networks"
+        ]
+      },
+      {
         "key": "number_of_systems",
-        "label": "Number of DDoS mitigation points",
+        "label": "Number of ddos protection services",
         "type": "number"
       }
     ],
@@ -3346,8 +3483,19 @@
     "aiOpportunities": [],
     "input_fields": [
       {
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Cisco Meraki",
+          "Aruba",
+          "Ruckus",
+          "Ubiquiti"
+        ]
+      },
+      {
         "key": "number_of_systems",
-        "label": "Number of wireless controllers/APs",
+        "label": "Number of wireless access points",
         "type": "number"
       }
     ],
@@ -3392,13 +3540,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of DPI sensors",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Splunk Stream",
+          "Zeek (Bro)",
+          "Moloch/Arkime",
+          "PCAP"
+        ]
       },
       {
-        "key": "bandwidth_gbps",
-        "label": "Monitored bandwidth (Gbps)",
+        "key": "number_of_systems",
+        "label": "Number of dpi systems",
         "type": "number"
       }
     ],
@@ -3438,16 +3592,20 @@
     "aiOpportunities": [],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of storage systems",
-        "type": "number",
-        "helper": "SAN, NAS, or object storage arrays"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Dell EMC",
+          "NetApp",
+          "Pure Storage",
+          "HPE"
+        ]
       },
       {
-        "key": "manual_gb_day",
-        "label": "Manual estimate (GB/day)",
-        "type": "number",
-        "helper": "Storage log volumes vary widely"
+        "key": "number_of_systems",
+        "label": "Number of production storage arrays",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3494,34 +3652,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of OT/SCADA systems",
-        "type": "number",
-        "helper": "PLCs, HMIs, RTUs, historians"
-      },
-      {
-        "key": "number_of_sensors",
-        "label": "Number of network sensors",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "OT platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
-          "Siemens",
-          "Rockwell/Allen-Bradley",
-          "Schneider Electric",
-          "Honeywell",
-          "ABB",
-          "Other"
+          "Honeywell Experion",
+          "Siemens WinCC",
+          "Wonderware",
+          "ClearSCADA",
+          "Ignition"
         ]
       },
       {
-        "key": "manual_gb_day",
-        "label": "Manual estimate (GB/day)",
-        "type": "number",
-        "helper": "OT environments vary significantly"
+        "key": "number_of_systems",
+        "label": "Number of industrial control or scada systems",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3562,21 +3707,20 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of OT security monitoring points",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "OT security vendor",
+        "label": "Vendor",
         "type": "select",
         "options": [
+          "Dragos",
           "Nozomi Networks",
           "Claroty",
-          "Dragos",
-          "Fortinet OT",
-          "Other"
+          "Armis"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of ot network security sensors",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3619,27 +3763,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_pipelines",
-        "label": "Number of CI/CD pipelines",
-        "type": "number"
-      },
-      {
-        "key": "number_of_builds_per_day",
-        "label": "Builds per day",
-        "type": "number"
-      },
-      {
         "key": "vendor",
-        "label": "CI/CD platform",
+        "label": "Vendor",
         "type": "select",
         "options": [
+          "Jenkins",
           "GitHub Actions",
           "GitLab CI",
-          "Jenkins",
           "Azure DevOps",
-          "CircleCI",
-          "Other"
+          "CircleCI"
         ]
+      },
+      {
+        "key": "number_of_pipelines",
+        "label": "Number of pipelines",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3683,23 +3821,21 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_systems",
-        "label": "Number of managed systems",
-        "type": "number",
-        "helper": "Nodes managed by Ansible, Puppet, Chef, etc."
-      },
-      {
         "key": "vendor",
-        "label": "Tool",
+        "label": "Vendor",
         "type": "select",
         "options": [
           "Ansible",
           "Puppet",
           "Chef",
           "Terraform",
-          "SaltStack",
-          "Other"
+          "Salt Stack"
         ]
+      },
+      {
+        "key": "number_of_systems",
+        "label": "Number of servers running config management",
+        "type": "number"
       }
     ],
     "sizing_formula": {
@@ -3741,13 +3877,19 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_applications",
-        "label": "Number of business applications",
-        "type": "number"
+        "key": "vendor",
+        "label": "Vendor",
+        "type": "select",
+        "options": [
+          "Oracle Apps",
+          "SAP",
+          "Salesforce",
+          "Custom Applications"
+        ]
       },
       {
-        "key": "transactions_per_day",
-        "label": "Estimated transactions/day (thousands)",
+        "key": "number_of_applications",
+        "label": "Number of applications",
         "type": "number"
       }
     ],

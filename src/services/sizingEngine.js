@@ -15,6 +15,12 @@ import { calculateSaaSSizing } from './saasSizingEngine.js'
 import { calculateOfficeProductivitySizing } from './officeProductivitySizingEngine.js'
 import { calculateCrmSizing } from './crmSizingEngine.js'
 import { calculateSsoIdentitySizing } from './ssoIdentitySizingEngine.js'
+import {
+  calculateWorkbookSimpleSizing,
+  applyWorkbookSimpleToResult,
+  shouldUseWorkbookSimpleSizing,
+  shouldRunCompositeEngine,
+} from './workbookSimpleSizing.js'
 import { parseCount, normalizeIaasState } from './iaasSizingEngine.js'
 import { normalizeSaaSState } from './saasSizingEngine.js'
 
@@ -362,6 +368,18 @@ export function calculateSourceSize(source, inputState, sizingContext) {
     return result
   }
 
+  if (source?.id && shouldUseWorkbookSimpleSizing(source.id, inputState, source.sizing_formula?.primary_input)) {
+    const simple = calculateWorkbookSimpleSizing(
+      source.id,
+      inputState,
+      source.sizing_formula?.primary_input,
+    )
+    if (simple) {
+      return applyWorkbookSimpleToResult({ ...result }, simple, source.id)
+    }
+  }
+
+  if (shouldRunCompositeEngine(source.id, inputState, source.sizing_formula?.primary_input)) {
   if (source.id === 'iaas') {
     return calculateIaasSizing(inputState, sizingContext)
   }
@@ -392,6 +410,7 @@ export function calculateSourceSize(source, inputState, sizingContext) {
 
   if (source.id === 'saas_sso') {
     return calculateSsoIdentitySizing(inputState, sizingContext)
+  }
   }
 
   if (source.id === 'dlp') {

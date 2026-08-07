@@ -53,21 +53,7 @@ export function resolveMeasurementInputFields(sourceId, source, measurement, ori
     );
   }
 
-  for (const sec of originalRate?.optionalSecondaryInputs || []) {
-    if (!sec?.field) continue;
-    const hasLogChannelToggles =
-      (source?.log_options || []).filter((o) => o.group === 'basic').length > 1;
-    if (hasLogChannelToggles) continue;
-    if (numbers.some((f) => f.key === sec.field)) continue;
-    numbers.push(
-      syntheticNumberField(sec.field, {
-        label: titleCaseUnit(sec.unitLabel || sec.field),
-        helper: sec.rateGbPerUnit != null
-          ? `Supplementary add-on: ${sec.rateGbPerUnit} GB/day per ${sec.unitLabel || 'unit'}`
-          : '',
-      }),
-    );
-  }
+  // Multi-dimensional workbook measurements use log channel toggles (windows_servers), not extra number fields.
 
   if (primaryKey) {
     numbers.sort((a, b) => {

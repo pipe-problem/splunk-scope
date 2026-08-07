@@ -560,12 +560,29 @@ describe('v1.9 Sizing Accuracy Validation', () => {
     });
   }
 
-  describe('SSO additive sizing (saas_sso)', () => {
+  describe('SSO workbook simple sizing (saas_sso)', () => {
     const source = flatCatalog.find((s) => s.id === 'saas_sso');
 
-    it('uses additive model with tenant + users, not flat 0.005 GB/user', () => {
+    it('sizes active users × workbook rate in default configure path', () => {
       const r = calculateSourceSize(source, {
         status: 'current',
+        vendor: 'Okta',
+        ssoActiveUserCount: '500',
+      });
+      expect(r.rateSource).toBe('workbook_simple');
+      expect(r.expected).toBeCloseTo(2.5, 2);
+    });
+
+    it('legacy count maps to active users via workbook simple rate', () => {
+      const r = calculateSourceSize(source, { status: 'current', count: '100' });
+      expect(r.expected).toBeCloseTo(0.5, 2);
+      expect(r.rateSource).toBe('workbook_simple');
+    });
+
+    it('advanced additive model when useAdvancedSizing is enabled', () => {
+      const r = calculateSourceSize(source, {
+        status: 'current',
+        useAdvancedSizing: true,
         ssoIdpVendor: 'okta',
         ssoTenantCount: '1',
         ssoActiveUserCount: '500',
@@ -579,16 +596,9 @@ describe('v1.9 Sizing Accuracy Validation', () => {
       expect(r.expected).toBeGreaterThan(0);
     });
 
-    it('legacy count maps to active users via workbook simple rate', () => {
-      const r = calculateSourceSize(source, { status: 'current', count: '100' });
-      expect(r.expected).toBeCloseTo(0.5, 2);
-      expect(r.rateSource).toBe('workbook_simple');
-    });
-
-    it('without users or integrations yields small tenant-only audit estimate', () => {
+    it('without users yields no sizing confidence', () => {
       const r = calculateSourceSize(source, { status: 'current' });
-      expect(r.expected).toBeLessThan(0.01);
-      expect(['sso_identity_additive', 'workbook_simple']).toContain(r.rateSource);
+      expect(r.confidence).toBe('none');
     });
   });
 

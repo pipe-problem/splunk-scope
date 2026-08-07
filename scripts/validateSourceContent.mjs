@@ -162,6 +162,46 @@ async function main() {
       originalRate?.primaryInputField ||
       null;
 
+    const inputFields = source.input_fields || [];
+    if (inputFields.length > 2) {
+      addIssue(
+        sourceId,
+        'input_fields_too_many',
+        `input_fields has ${inputFields.length} entries — max 2 (vendor + primary count)`,
+      );
+    }
+    for (const field of inputFields) {
+      if (field.key === 'vendor') continue;
+      if (expectedPrimary && fieldMatchesPrimary(field.key, expectedPrimary)) continue;
+      if (field.type === 'number' && expectedPrimary && field.key === expectedPrimary) continue;
+      addIssue(
+        sourceId,
+        'input_field_not_allowed',
+        `input_fields key "${field.key}" is not vendor or workbook primary "${expectedPrimary || '?'}"`,
+      );
+    }
+
+    const workbookSecondaries = originalRate?.optionalSecondaryInputs || [];
+    if ((source.log_options || []).length > 0 && !workbookSecondaries.length) {
+      addIssue(
+        sourceId,
+        'log_options_without_workbook_secondary',
+        'log_options present but originalSizingRates has no optionalSecondaryInputs',
+      );
+    }
+    if (workbookSecondaries.length > 0) {
+      for (const sec of workbookSecondaries) {
+        if (!sec?.field) continue;
+        if (inputFields.some((f) => f.key === sec.field)) {
+          addIssue(
+            sourceId,
+            'secondary_in_input_fields',
+            `workbook secondary "${sec.field}" must use log toggles, not input_fields`,
+          );
+        }
+      }
+    }
+
     if (formulaPrimary && measurement?.primaryInputField && measurement.primaryInputField !== formulaPrimary) {
       addIssue(
         sourceId,

@@ -28,11 +28,13 @@ describe('SourceWorkflowPage redesign', () => {
     expect(pageSource).toContain('intakeReady');
   });
 
-  it('uses in-page SourceConfigPanel instead of full-screen modal', () => {
+  it('uses fixed viewport overlay for SourceConfigPanel', () => {
     expect(pageSource).toContain('SourceConfigPanel');
     expect(pageSource).not.toContain('SourceConfigModal');
     expect(pageSource).not.toContain('function ConfigDrawer');
     expect(pageSource).toContain('panelAnchorRect');
+    expect(pageSource).toContain('fixed inset-0 z-50');
+    expect(pageSource).toContain('z-[60]');
   });
 
   it('supports URL deep link and pending navigation', () => {
@@ -89,7 +91,10 @@ describe('SourceConfigPanel', () => {
     expect(panelSource).toContain('source-config-section');
     expect(panelSource).toContain('overflowAppCount');
     expect(panelSource).toContain('fieldLabelRepeatsQuestion');
-    expect(panelSource).toContain('sizingPanelRegistry');
+    expect(panelSource).toContain('sticky top-0');
+    expect(panelSource).not.toContain('sizingPanelRegistry');
+    expect(panelSource).toContain('workbookMeasurementDimensions');
+    expect(panelSource).toContain('Log channels to collect');
   });
 
   it('uses SourceMoreInfoPanel instead of details text wall', () => {

@@ -368,39 +368,7 @@ export default function SourceWorkflowPage() {
           </aside>
         )}
 
-        <div className="flex-1 min-h-0 min-w-0 overflow-y-auto hidden-scrollbar p-4 relative source-grid-region">
-          {openedSource && !openedIsCustom && (
-            <>
-              <button
-                type="button"
-                className="absolute inset-0 z-30 bg-[var(--cast-bg)]/55 backdrop-blur-[2px] cursor-default rounded-lg"
-                aria-label="Close configuration panel"
-                onClick={() => {
-                  setOpenedSourceId(null);
-                  setPanelAnchorRect(null);
-                }}
-              />
-              <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none p-4">
-                <SourceConfigPanel
-                  key={openedSource.id}
-                  source={openedSource}
-                  ss={state.sources[openedSource.id] || { status: 'unknown' }}
-                  displayMeta={displayMetaById.get(openedSource.id)}
-                  showRelevance={intakeReady}
-                  useCases={useCases}
-                  sessionSources={state.sources}
-                  anchorRect={panelAnchorRect}
-                  onClose={() => {
-                    setOpenedSourceId(null);
-                    setPanelAnchorRect(null);
-                  }}
-                  onSave={handleModalSave}
-                  onReset={handleModalReset}
-                />
-              </div>
-            </>
-          )}
-
+        <div className="flex-1 min-h-0 min-w-0 overflow-y-auto hidden-scrollbar p-4 source-grid-region">
           {overlapPrompt && (
             <div className={`${overlapResolvedOnce ? 'rounded-lg border border-[var(--cast-warning)]/30 bg-[var(--cast-warning)]/5' : 'card border-[var(--cast-warning)]/30 bg-[var(--cast-warning)]/5'} space-y-2 mb-3 p-3`}>
               <div className="flex items-center gap-2">
@@ -460,6 +428,38 @@ export default function SourceWorkflowPage() {
           </div>
         </div>
       </div>
+
+      {openedSource && !openedIsCustom && (
+        <>
+          <button
+            type="button"
+            className="fixed inset-0 z-50 bg-[var(--cast-bg)]/55 backdrop-blur-[2px] cursor-default"
+            aria-label="Close configuration panel"
+            onClick={() => {
+              setOpenedSourceId(null);
+              setPanelAnchorRect(null);
+            }}
+          />
+          <div className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none p-4 pt-20">
+            <SourceConfigPanel
+              key={openedSource.id}
+              source={openedSource}
+              ss={state.sources[openedSource.id] || { status: 'unknown' }}
+              displayMeta={displayMetaById.get(openedSource.id)}
+              showRelevance={intakeReady}
+              useCases={useCases}
+              sessionSources={state.sources}
+              anchorRect={panelAnchorRect}
+              onClose={() => {
+                setOpenedSourceId(null);
+                setPanelAnchorRect(null);
+              }}
+              onSave={handleModalSave}
+              onReset={handleModalReset}
+            />
+          </div>
+        </>
+      )}
 
       <CustomSourceModal open={customModalOpen} onClose={() => setCustomModalOpen(false)} onCreate={handleCreateCustom} />
 

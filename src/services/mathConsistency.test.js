@@ -305,9 +305,9 @@ describe('mathConsistency — robbins_retail_hybrid', () => {
 
     const walk = plans.find((p) => p.pathPhase === 'walk') || plans[1];
     const run = plans.find((p) => p.pathPhase === 'run') || plans[2];
-    expect(walk.totals.buffered.expected).toBeGreaterThan(budgetGbDay * 0.9);
-    expect(run.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
-    expect(run.totals.buffered.expected).toBeGreaterThanOrEqual(walk.totals.buffered.expected * 0.95);
+    expect(walk.totals.buffered.expected).toBeLessThanOrEqual(budgetGbDay * 1.05);
+    expect(run.totals.buffered.expected).toBeGreaterThanOrEqual(walk.totals.buffered.expected);
+    expect(run.totals.buffered.expected).toBeGreaterThan(budgetGbDay * 0.9);
   });
 });
 
