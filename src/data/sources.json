@@ -8,9 +8,9 @@
     "whyItMatters": "Cloud infrastructure logs are foundational for detecting unauthorized access, misconfigurations, and lateral movement in cloud environments. Without these, you have no visibility into your cloud control plane.",
     "configuredItemLabel": "# of cloud accounts",
     "sizingUnit": "per_account",
-    "sizingRate": 0.3,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 3,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "AWS",
       "Azure",
@@ -46,9 +46,9 @@
         "name": "Containers / Pods / Clusters",
         "configuredItemLabel": "# of container clusters",
         "sizingUnit": "additive",
-        "sizingRate": 0.004,
-        "sizingRateLow": 0.000318,
-        "sizingRateHigh": 1.06,
+        "sizingRate": 0.25,
+        "sizingRateLow": 0.2,
+        "sizingRateHigh": 0.3,
         "exampleVendors": [
           "Microsoft AKS",
           "Google GKE",
@@ -60,18 +60,21 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "containerCounts.clusters",
-          "strategy": "container_additive"
+          "strategy": "container_additive",
+          "rate_per_unit": 0.25
         },
-        "whyItMatters": "Kubernetes and container control-plane logs reveal cluster admin abuse, risky workloads, and runtime events that complement cloud audit trails."
+        "whyItMatters": "Kubernetes and container control-plane logs reveal cluster admin abuse, risky workloads, and runtime events that complement cloud audit trails.",
+        "workbookRateGbPerUnit": 0.25,
+        "customerSummary": "Containers / Pods / Clusters includes Kubernetes and container platform logs such as control-plane activity, audit events, node/runtime logs, and application logs written by containers."
       },
       {
         "id": "iaas_instances",
         "name": "Cloud Instances / VMs",
         "configuredItemLabel": "# of VMs or cloud servers",
         "sizingUnit": "additive",
-        "sizingRate": 0.011828,
-        "sizingRateLow": 0.000929,
-        "sizingRateHigh": 0.139274,
+        "sizingRate": 0.1,
+        "sizingRateLow": 0.08000000000000002,
+        "sizingRateHigh": 0.12,
         "exampleVendors": [
           "AWS EC2",
           "Azure VMs",
@@ -84,18 +87,21 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "cloudVmInstanceCount",
-          "strategy": "cloud_vm_additive"
+          "strategy": "cloud_vm_additive",
+          "rate_per_unit": 0.1
         },
-        "whyItMatters": "Cloud VM logs extend visibility into guest OS and agent telemetry for workloads that may not yet send logs through a central forwarder."
+        "whyItMatters": "Cloud VM logs extend visibility into guest OS and agent telemetry for workloads that may not yet send logs through a central forwarder.",
+        "workbookRateGbPerUnit": 0.1,
+        "customerSummary": "Cloud Instances / VMs includes logs collected from cloud virtual machines through provider agents or VM log forwarding, such as OS events, authentication/security activity, agent health, and optionally application/service logs."
       },
       {
         "id": "iaas_storage",
         "name": "Cloud Storage",
         "configuredItemLabel": "# of storage assets",
         "sizingUnit": "additive",
-        "sizingRate": 0.0032,
-        "sizingRateLow": 0.0002,
-        "sizingRateHigh": 0.093,
+        "sizingRate": 0.25,
+        "sizingRateLow": 0.2,
+        "sizingRateHigh": 0.3,
         "exampleVendors": [
           "Amazon S3",
           "Azure Blob Storage",
@@ -108,16 +114,22 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "cloudStorageAssetCount",
-          "strategy": "cloud_storage_additive"
+          "strategy": "cloud_storage_additive",
+          "rate_per_unit": 0.25
         },
-        "whyItMatters": "Object and file storage access logs detect public exposure, ransomware staging, and unauthorized data access in cloud buckets and shares."
+        "whyItMatters": "Object and file storage access logs detect public exposure, ransomware staging, and unauthorized data access in cloud buckets and shares.",
+        "workbookRateGbPerUnit": 0.25,
+        "customerSummary": "Cloud Storage includes logs from cloud object storage and cloud file storage platforms, such as management activity, object/file access requests, lifecycle or replication events, and storage health telemetry."
       }
     ],
     "input_fields": [],
     "sizing_formula": {
       "primary_input": "iaasAccountCount",
-      "strategy": "iaas_cloud"
-    }
+      "strategy": "iaas_cloud",
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "IaaS includes cloud provider infrastructure logs such as audit activity, VM events, flow logs, storage access logs, Kubernetes control-plane logs, and configuration/inventory changes."
   },
   {
     "id": "paas",
@@ -129,8 +141,8 @@
     "configuredItemLabel": "# of managed cloud platform services",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.08,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "AWS CloudTrail",
       "Azure Monitor",
@@ -186,7 +198,9 @@
       "primary_input": "number_of_applications",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Platform-as-a-Service logs including managed databases, serverless functions, messaging queues, and application hosting platforms."
   },
   {
     "id": "saas_general",
@@ -196,10 +210,10 @@
     "description": "SaaS platform audit and activity logs: admin/configuration changes, authentication and access security, user/object activity, and API/integration events. Sized by tenant count, active users, and integrations — not per-1,000 users.",
     "whyItMatters": "SaaS platforms are primary vectors for business email compromise, data exfiltration, and account takeover. Visibility into user activity is critical for detecting insider threats and compromised accounts.",
     "configuredItemLabel": "SaaS tenants, active users, and integrations",
-    "sizingUnit": "additive",
-    "sizingRate": 0.01338,
-    "sizingRateLow": 0.00182,
-    "sizingRateHigh": 0.1295,
+    "sizingUnit": "per_user",
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Salesforce",
       "ServiceNow",
@@ -255,7 +269,7 @@
     "sizing_formula": {
       "primary_input": "number_of_users",
       "strategy": "per_user",
-      "rate_per_unit": 0.002
+      "rate_per_unit": 0.15
     },
     "children": [
       {
@@ -263,9 +277,9 @@
         "name": "Office Productivity (M365/Google)",
         "configuredItemLabel": "Office tenants, users, and workloads",
         "sizingUnit": "additive",
-        "sizingRate": 0.01338,
-        "sizingRateLow": 0.00182,
-        "sizingRateHigh": 0.1295,
+        "sizingRate": 0.005,
+        "sizingRateLow": 0.004,
+        "sizingRateHigh": 0.006,
         "exampleVendors": [
           "Microsoft 365",
           "Google Workspace",
@@ -276,19 +290,22 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "officeActiveUserCount",
-          "strategy": "office_productivity_additive"
+          "strategy": "office_productivity_additive",
+          "rate_per_unit": 0.005
         },
         "description": "Microsoft 365 and Google Workspace audit and activity telemetry: sign-in and admin audit, Exchange/SharePoint/Teams activity, and security/compliance signals routed to Splunk.",
-        "whyItMatters": "Office productivity clouds are the top vector for account takeover and data exfiltration. Centralizing M365/Google audit logs enables BEC detection, DLP correlation, and insider-threat investigations."
+        "whyItMatters": "Office productivity clouds are the top vector for account takeover and data exfiltration. Centralizing M365/Google audit logs enables BEC detection, DLP correlation, and insider-threat investigations.",
+        "workbookRateGbPerUnit": 0.005,
+        "customerSummary": "Microsoft 365 or Google Workspace audit logs—mail, files, Teams, and admin activity."
       },
       {
         "id": "saas_crm",
         "name": "CRM",
         "configuredItemLabel": "CRM tenants, users, and integrations",
         "sizingUnit": "additive",
-        "sizingRate": 0.02668,
-        "sizingRateLow": 0.000998,
-        "sizingRateHigh": 0.0805,
+        "sizingRate": 0.005,
+        "sizingRateLow": 0.004,
+        "sizingRateHigh": 0.006,
         "exampleVendors": [
           "Salesforce",
           "Microsoft Dynamics 365",
@@ -299,19 +316,23 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "crmActiveUserCount",
-          "strategy": "crm_additive"
+          "strategy": "crm_additive",
+          "rate_per_unit": 0.005
         },
         "description": "CRM platform audit and API activity (Salesforce, Dynamics, HubSpot, ServiceNow CSM, Zendesk): logins, object changes, integrations, and security events.",
-        "whyItMatters": "CRM systems hold customer PII and revenue data. Audit visibility supports fraud detection, privileged access monitoring, and compliance for sales and service operations."
+        "whyItMatters": "CRM systems hold customer PII and revenue data. Audit visibility supports fraud detection, privileged access monitoring, and compliance for sales and service operations.",
+        "workbookRateGbPerUnit": 0.005,
+        "customerSummary": "CRM audit logs (Salesforce, Dynamics, etc.) for logins, record changes, and integrations."
       },
       {
         "id": "saas_sso",
-        "name": "SSO / Identity Provider",
+        "name": "Cloud IdP SSO Sign-ins",
         "configuredItemLabel": "# of users enrolled in SSO or MFA",
+        "customerSummary": "Sign-in and MFA events from your cloud identity provider (Okta, Entra, Ping) for SaaS and VPN apps.",
         "sizingUnit": "per_user",
         "sizingRate": 0.005,
-        "sizingRateLow": 0.003,
-        "sizingRateHigh": 0.008,
+        "sizingRateLow": 0.004,
+        "sizingRateHigh": 0.006,
         "exampleVendors": [
           "Okta",
           "Duo",
@@ -321,10 +342,12 @@
         "input_fields": [],
         "sizing_formula": {
           "primary_input": "ssoActiveUserCount",
-          "strategy": "sso_identity_additive"
+          "strategy": "sso_identity_additive",
+          "rate_per_unit": 0.005
         },
         "description": "Identity-provider and SSO/MFA logs (Okta, Entra ID, Ping, Duo): authentication, MFA challenges, admin changes, and federation events.",
-        "whyItMatters": "SSO is the front door to SaaS and VPN. IdP logs are essential for detecting credential theft, MFA fatigue, and unauthorized app assignments."
+        "whyItMatters": "SSO is the front door to SaaS and VPN. IdP logs are essential for detecting credential theft, MFA fatigue, and unauthorized app assignments.",
+        "workbookRateGbPerUnit": 0.005
       },
       {
         "id": "saas_conferencing",
@@ -332,8 +355,8 @@
         "configuredItemLabel": "# of users with conferencing accounts",
         "sizingUnit": "per_user",
         "sizingRate": 0.005,
-        "sizingRateLow": 0.002,
-        "sizingRateHigh": 0.008,
+        "sizingRateLow": 0.004,
+        "sizingRateHigh": 0.006,
         "exampleVendors": [
           "Zoom",
           "Microsoft Teams",
@@ -353,7 +376,9 @@
           "rate_per_unit": 0.005
         },
         "description": "Web conferencing audit logs (Zoom, Teams, Webex, Slack huddles): meetings, recordings, admin settings, and sign-in activity forwarded to Splunk.",
-        "whyItMatters": "Conferencing platforms expose meeting content and guest access paths. Audit logs help detect hijacking, data leakage via recordings, and shadow IT conferencing."
+        "whyItMatters": "Conferencing platforms expose meeting content and guest access paths. Audit logs help detect hijacking, data leakage via recordings, and shadow IT conferencing.",
+        "workbookRateGbPerUnit": 0.005,
+        "customerSummary": "Web conferencing audit logs (Zoom, Teams, Webex, Slack huddles): meetings, recordings, admin settings, and sign-in activity forwarded to Splunk."
       },
       {
         "id": "saas_filesharing",
@@ -361,8 +386,8 @@
         "configuredItemLabel": "# of users in Box, Dropbox, or OneDrive",
         "sizingUnit": "per_user",
         "sizingRate": 0.005,
-        "sizingRateLow": 0.002,
-        "sizingRateHigh": 0.01,
+        "sizingRateLow": 0.004,
+        "sizingRateHigh": 0.006,
         "exampleVendors": [
           "Box",
           "Dropbox",
@@ -383,9 +408,13 @@
           "rate_per_unit": 0.005
         },
         "description": "Enterprise file-sharing audit logs (Box, Dropbox, OneDrive standalone tenants): file access, sharing links, admin actions, and DLP-related events.",
-        "whyItMatters": "File shares are a common exfiltration path. File-sharing audit trails underpin insider-threat and data-loss investigations."
+        "whyItMatters": "File shares are a common exfiltration path. File-sharing audit trails underpin insider-threat and data-loss investigations.",
+        "workbookRateGbPerUnit": 0.005,
+        "customerSummary": "Enterprise file-sharing audit logs (Box, Dropbox, OneDrive standalone tenants): file access, sharing links, admin actions, and DLP-related events."
       }
-    ]
+    ],
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "General SaaS application audit logs not covered by Office, CRM, or IdP rows."
   },
   {
     "id": "cspm",
@@ -397,8 +426,8 @@
     "configuredItemLabel": "# of cloud accounts covered",
     "sizingUnit": "per_account",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Wiz",
       "Aqua CSPM",
@@ -451,7 +480,9 @@
       "primary_input": "number_of_accounts",
       "strategy": "per_item",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "CSPM tools continuously monitor cloud infrastructure for misconfigurations, compliance violations, and security risks."
   },
   {
     "id": "cwpp",
@@ -463,8 +494,8 @@
     "configuredItemLabel": "# of servers or containers covered",
     "sizingUnit": "per_item",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Lacework",
       "Cisco Tetration",
@@ -505,7 +536,9 @@
       "primary_input": "number_of_instances",
       "strategy": "per_item",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Runtime protection for cloud workloads including VMs, containers, and serverless functions."
   },
   {
     "id": "casb",
@@ -518,8 +551,8 @@
     "configuredItemLabel": "# of users covered",
     "sizingUnit": "per_user",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.08,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Zscaler",
       "Cisco Cloudlock",
@@ -556,7 +589,9 @@
       "primary_input": "number_of_users",
       "strategy": "per_user",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Cloud app discovery, sanctioned/unsanctioned usage, and CASB policy violation logs."
   },
   {
     "id": "sase",
@@ -569,8 +604,8 @@
     "configuredItemLabel": "# of users routed through SASE",
     "sizingUnit": "per_user",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Zscaler",
       "Netskope",
@@ -609,7 +644,9 @@
       "primary_input": "number_of_users",
       "strategy": "per_user",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Secure access edge logs for remote users (SWG, ZTNA, CASB bundle)."
   },
   {
     "id": "windows_servers",
@@ -620,9 +657,9 @@
     "whyItMatters": "Windows Security logs are the backbone of on-premises detection — authentication events, privilege usage, process creation, and policy changes are all captured here.",
     "configuredItemLabel": "# of total Windows servers (physical + virtual)",
     "sizingUnit": "per_item",
-    "sizingRate": 0.18,
-    "sizingRateLow": 0.12,
-    "sizingRateHigh": 0.35,
+    "sizingRate": 0.3,
+    "sizingRateLow": 0.24,
+    "sizingRateHigh": 0.36,
     "overlap_group": "endpoint_security",
     "exampleVendors": [
       "Microsoft Windows Server"
@@ -786,8 +823,10 @@
     "sizing_formula": {
       "primary_input": "number_of_servers",
       "strategy": "per_item",
-      "rate_per_unit": 0.18
-    }
+      "rate_per_unit": 0.3
+    },
+    "workbookRateGbPerUnit": 0.3,
+    "customerSummary": "Windows Event Logs from physical and virtual servers."
   },
   {
     "id": "linux_servers",
@@ -799,8 +838,8 @@
     "configuredItemLabel": "# of production Linux/Unix servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.08,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Red Hat",
       "Ubuntu",
@@ -850,7 +889,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "System logs from production Linux/Unix servers including syslog, auth logs, performance metrics, and security events."
   },
   {
     "id": "linux_servers_nonprod",
@@ -862,8 +903,8 @@
     "configuredItemLabel": "# of non-prod Linux/Unix servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.25,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Red Hat",
       "Ubuntu",
@@ -892,7 +933,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "System logs from development, test, and staging Linux/Unix environments."
   },
   {
     "id": "mainframe",
@@ -904,8 +947,8 @@
     "configuredItemLabel": "# of mainframe systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.15,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "IBM z/OS",
       "IBM z/VM"
@@ -940,7 +983,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Mainframe system logs including SMF records, RACF security events, and system activity."
   },
   {
     "id": "hypervisor",
@@ -952,8 +997,8 @@
     "configuredItemLabel": "# of virtualization hosts",
     "sizingUnit": "per_item",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.15,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "VMware ESXi",
       "VMware vCenter",
@@ -1007,7 +1052,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Hypervisor and virtual infrastructure management logs from VMware vCenter, ESXi hosts, Hyper-V, and other platforms."
   },
   {
     "id": "database",
@@ -1019,8 +1066,8 @@
     "configuredItemLabel": "# of database instances",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.08,
-    "sizingRateHigh": 0.35,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Oracle",
       "Microsoft SQL Server",
@@ -1054,8 +1101,8 @@
         "configuredItemLabel": "# of instances for transaction logs",
         "sizingUnit": "per_item",
         "sizingRate": 0.1,
-        "sizingRateLow": 0.05,
-        "sizingRateHigh": 0.2,
+        "sizingRateLow": 0.08000000000000002,
+        "sizingRateHigh": 0.12,
         "input_fields": [
           {
             "key": "count",
@@ -1069,7 +1116,9 @@
           "rate_per_unit": 0.1
         },
         "description": "Database transaction or SQL audit streams capturing DML/DDL activity, sensitive table access, and application database calls.",
-        "whyItMatters": "Transaction-level database telemetry supports fraud detection, data integrity monitoring, and forensic reconstructions after data tampering."
+        "whyItMatters": "Transaction-level database telemetry supports fraud detection, data integrity monitoring, and forensic reconstructions after data tampering.",
+        "workbookRateGbPerUnit": 0.1,
+        "customerSummary": "Database transaction or SQL audit streams capturing DML/DDL activity, sensitive table access, and application database calls."
       },
       {
         "id": "db_access",
@@ -1077,8 +1126,8 @@
         "configuredItemLabel": "# of instances for access logs",
         "sizingUnit": "per_item",
         "sizingRate": 0.05,
-        "sizingRateLow": 0.02,
-        "sizingRateHigh": 0.15,
+        "sizingRateLow": 0.04000000000000001,
+        "sizingRateHigh": 0.06,
         "input_fields": [
           {
             "key": "count",
@@ -1092,7 +1141,9 @@
           "rate_per_unit": 0.05
         },
         "description": "Database access and authentication audit logs (DBA actions, failed logins, privilege use) from enterprise RDBMS platforms.",
-        "whyItMatters": "Database access logs reveal credential abuse, excessive privilege use, and suspicious query patterns that raw transaction logs may not contextualize."
+        "whyItMatters": "Database access logs reveal credential abuse, excessive privilege use, and suspicious query patterns that raw transaction logs may not contextualize.",
+        "workbookRateGbPerUnit": 0.05,
+        "customerSummary": "Database access and authentication audit logs (DBA actions, failed logins, privilege use) from enterprise RDBMS platforms."
       }
     ],
     "input_fields": [
@@ -1131,7 +1182,9 @@
       "primary_input": "number_of_instances",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Database audit logs, transaction logs, access logs, and error logs from relational and NoSQL database systems."
   },
   {
     "id": "web_servers",
@@ -1143,8 +1196,8 @@
     "configuredItemLabel": "# of production web servers hosting applications",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Apache",
       "Nginx",
@@ -1186,7 +1239,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Web server access logs, error logs, and performance metrics from HTTP/HTTPS serving infrastructure."
   },
   {
     "id": "web_servers_nonprod",
@@ -1198,8 +1253,8 @@
     "configuredItemLabel": "# of non-prod web servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.06,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Apache",
       "Nginx",
@@ -1240,7 +1295,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Web server access logs, error logs, and performance metrics from dev, test, and staging HTTP/HTTPS environments."
   },
   {
     "id": "app_servers",
@@ -1252,8 +1309,8 @@
     "configuredItemLabel": "# of production application servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Apache Tomcat",
       "IBM WebSphere",
@@ -1290,7 +1347,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Application server logs including J2EE containers, ."
   },
   {
     "id": "app_servers_nonprod",
@@ -1302,8 +1361,8 @@
     "configuredItemLabel": "# of non-prod application servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.06,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Apache Tomcat",
       "IBM WebSphere",
@@ -1339,7 +1398,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Application server logs from development, test, and staging J2EE, ."
   },
   {
     "id": "middleware",
@@ -1351,8 +1412,8 @@
     "configuredItemLabel": "# of production middleware systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.4,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "IBM MQ",
       "TIBCO",
@@ -1393,7 +1454,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Message queuing, ESB, and integration platform logs."
   },
   {
     "id": "middleware_nonprod",
@@ -1405,8 +1468,8 @@
     "configuredItemLabel": "# of non-prod middleware systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.06,
-    "sizingRateHigh": 0.24,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "IBM MQ",
       "TIBCO",
@@ -1447,7 +1510,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Message queuing, ESB, and integration platform logs from dev, test, and staging environments."
   },
   {
     "id": "apm",
@@ -1459,8 +1524,8 @@
     "configuredItemLabel": "# of APM-monitored applications",
     "sizingUnit": "per_item",
     "sizingRate": 0.1,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.25,
+    "sizingRateLow": 0.08000000000000002,
+    "sizingRateHigh": 0.12,
     "exampleVendors": [
       "New Relic",
       "AppDynamics",
@@ -1503,7 +1568,9 @@
       "primary_input": "number_of_applications",
       "strategy": "per_item",
       "rate_per_unit": 0.1
-    }
+    },
+    "workbookRateGbPerUnit": 0.1,
+    "customerSummary": "Application performance metrics, traces, and error tracking from APM platforms."
   },
   {
     "id": "pki",
@@ -1515,8 +1582,8 @@
     "configuredItemLabel": "# of PKI / CA servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.005,
-    "sizingRateLow": 0.001,
-    "sizingRateHigh": 0.01,
+    "sizingRateLow": 0.004,
+    "sizingRateHigh": 0.006,
     "exampleVendors": [
       "Microsoft AD CS",
       "DigiCert",
@@ -1549,7 +1616,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.005
-    }
+    },
+    "workbookRateGbPerUnit": 0.005,
+    "customerSummary": "Certificate lifecycle logs including issuance, revocation, renewal, and enrollment events."
   },
   {
     "id": "sap",
@@ -1561,8 +1630,8 @@
     "configuredItemLabel": "# of SAP systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "SAP NetWeaver",
       "SAP S/4HANA",
@@ -1601,7 +1670,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "SAP application logs including security audit logs, change documents, and transaction logs."
   },
   {
     "id": "desktops",
@@ -1611,9 +1682,9 @@
     "description": "Windows Event Logs, macOS unified logs, and Linux desktop logs from end-user workstations.",
     "whyItMatters": "Endpoints are the initial compromise point for most attacks. Workstation logs provide process execution, network connection, and authentication data critical for detecting phishing, malware, and lateral movement.",
     "configuredItemLabel": "# of managed end-user devices",
-    "sizingUnit": "per_item",
-    "sizingRate": 0.004,
-    "sizingRateLow": 0.002,
+    "sizingUnit": "per_user",
+    "sizingRate": 0.01,
+    "sizingRateLow": 0.008,
     "sizingRateHigh": 0.012,
     "exampleVendors": [
       "Microsoft Windows",
@@ -1659,27 +1730,30 @@
     "sizing_formula": {
       "primary_input": "number_of_endpoints",
       "strategy": "per_item",
-      "rate_per_unit": 0.004
-    }
+      "rate_per_unit": 0.01
+    },
+    "workbookRateGbPerUnit": 0.01,
+    "customerSummary": "Windows Event Logs, macOS unified logs, and Linux desktop logs from end-user workstations."
   },
   {
     "id": "sso_pam",
-    "name": "User Authentication (SSO / PAM / IAM)",
+    "name": "Privileged Access (PAM) / Vault Platforms",
     "category": "End-User Support",
     "subcategory": "Identity",
-    "description": "Identity and access management logs from SSO, PAM, and IAM platforms including authentication events, privilege usage, and session management.",
-    "whyItMatters": "Identity is the new perimeter. SSO/PAM logs are the single most valuable source for detecting credential theft, privilege escalation, and unauthorized access across the entire environment.",
+    "customerSummary": "Privileged-access and vault session logs from PAM tools (CyberArk, BeyondTrust)—not the same as everyday SSO sign-ins.",
+    "description": "Privileged access management and vault platform logs: vaulted credential checkout, session recording, policy changes, and privileged session activity.",
+    "whyItMatters": "PAM logs prove who accessed privileged credentials and when — essential for insider threat, audit, and investigating lateral movement using admin accounts.",
     "configuredItemLabel": "# of identity management platforms",
     "sizingUnit": "per_item",
-    "sizingRate": 0.001,
-    "sizingRateLow": 0.0004,
-    "sizingRateHigh": 0.004,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "CyberArk",
       "BeyondTrust",
-      "Okta",
-      "Ping Identity",
-      "SailPoint"
+      "Delinea (Thycotic)",
+      "SailPoint",
+      "HashiCorp Vault"
     ],
     "telemetryDomains": {
       "authentication": "strong",
@@ -1702,43 +1776,44 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of SSO/PAM users",
+        "key": "number_of_systems",
+        "label": "Number of PAM / vault platforms",
         "type": "number",
-        "helper": "Users authenticating through SSO or PAM"
+        "helper": "Distinct PAM vaults or privileged-access platforms forwarding audit logs (not user count)"
       },
       {
         "key": "vendor",
         "label": "Vendor",
         "type": "select",
         "options": [
-          "Okta",
-          "Azure AD/Entra",
-          "Ping Identity",
           "CyberArk",
           "BeyondTrust",
+          "Delinea (Thycotic)",
+          "HashiCorp Vault",
           "Other"
         ]
       }
     ],
     "sizing_formula": {
-      "primary_input": "number_of_users",
-      "strategy": "per_user",
-      "rate_per_unit": 0.001
-    }
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25
   },
   {
     "id": "active_directory",
     "name": "Active Directory / Domain Controllers",
     "category": "End-User Support",
     "subcategory": "Identity",
+    "customerSummary": "On-prem Windows domain controller security logs (Kerberos, logons, group changes).",
     "description": "Windows Security Event Logs from Domain Controllers capturing all authentication, group policy changes, and directory modifications.",
     "whyItMatters": "Active Directory is the identity backbone of most enterprises. DC logs capture every authentication, group membership change, and Kerberos ticket event — essential for detecting Pass-the-Hash, Golden Ticket, and DCSync attacks.",
     "configuredItemLabel": "# of AD domain controllers",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.15,
-    "sizingRateHigh": 0.75,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Microsoft Active Directory"
     ],
@@ -1780,7 +1855,8 @@
       "primary_input": "number_of_dcs",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25
   },
   {
     "id": "email",
@@ -1792,8 +1868,8 @@
     "configuredItemLabel": "# of mail servers or gateways",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Microsoft Exchange",
       "Proofpoint",
@@ -1819,9 +1895,10 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of email users",
-        "type": "number"
+        "key": "number_of_systems",
+        "label": "Number of mail servers or gateways",
+        "type": "number",
+        "helper": "Exchange servers, SMTP relays, or secure email gateways exporting logs"
       },
       {
         "key": "vendor",
@@ -1847,10 +1924,12 @@
       }
     ],
     "sizing_formula": {
-      "primary_input": "number_of_users",
-      "strategy": "per_user",
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "On-prem mail server or secure email gateway message tracking and threat logs."
   },
   {
     "id": "mdm",
@@ -1862,8 +1941,8 @@
     "configuredItemLabel": "# of managed mobile devices",
     "sizingUnit": "per_item",
     "sizingRate": 0.5,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.75,
+    "sizingRateLow": 0.4,
+    "sizingRateHigh": 0.6,
     "exampleVendors": [
       "JAMF Pro",
       "Microsoft Intune",
@@ -1902,7 +1981,9 @@
       "primary_input": "number_of_devices",
       "strategy": "per_item",
       "rate_per_unit": 0.5
-    }
+    },
+    "workbookRateGbPerUnit": 0.5,
+    "customerSummary": "MDM platform logs including device compliance, app deployment, and security policy enforcement."
   },
   {
     "id": "vuln_mgmt",
@@ -1913,9 +1994,9 @@
     "whyItMatters": "Vulnerability data provides critical risk context for security operations — correlating active exploits with known vulnerabilities dramatically improves alert prioritization and incident response.",
     "configuredItemLabel": "# of scanning appliances or managers",
     "sizingUnit": "per_item",
-    "sizingRate": 0.0001,
-    "sizingRateLow": 0.00005,
-    "sizingRateHigh": 0.0003,
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Tenable Nessus",
       "Qualys",
@@ -1973,8 +2054,10 @@
     "sizing_formula": {
       "primary_input": "number_of_assets",
       "strategy": "per_item",
-      "rate_per_unit": 0.0001
-    }
+      "rate_per_unit": 0.15
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Vulnerability scanner results, compliance scan data, and asset discovery information."
   },
   {
     "id": "netflow",
@@ -1985,9 +2068,9 @@
     "whyItMatters": "NetFlow provides the 'who talked to whom, when, and how much' view of your network. Essential for detecting C2 beacons, lateral movement, data exfiltration, and network reconnaissance.",
     "configuredItemLabel": "# of devices exporting NetFlow data",
     "sizingUnit": "per_item",
-    "sizingRate": 0.5,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 2,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Cisco NetFlow",
       "sFlow",
@@ -2033,8 +2116,10 @@
     "sizing_formula": {
       "primary_input": "number_of_devices",
       "strategy": "per_item",
-      "rate_per_unit": 0.5
-    }
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "NetFlow, sFlow, or IPFIX metadata from routers, switches, or firewalls."
   },
   {
     "id": "ids_ips",
@@ -2047,8 +2132,8 @@
     "configuredItemLabel": "# of IDS/IPS sensors",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.4,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Snort",
       "Suricata",
@@ -2092,7 +2177,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Alert and event logs from network-based intrusion detection and prevention systems."
   },
   {
     "id": "threat_intel",
@@ -2104,8 +2191,8 @@
     "configuredItemLabel": "# of threat intel feeds",
     "sizingUnit": "per_item",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.01,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "CrowdStrike",
       "Mandiant",
@@ -2154,7 +2241,9 @@
       "primary_input": "number_of_feeds",
       "strategy": "per_item",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Threat intelligence indicators (IOCs), threat actor profiles, and campaign information from commercial and open-source feeds."
   },
   {
     "id": "sandbox",
@@ -2166,8 +2255,8 @@
     "configuredItemLabel": "# of sandbox systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Cisco AMP",
       "Palo Alto WildFire",
@@ -2200,7 +2289,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Sandbox detonation results including behavioral analysis, IOC extraction, and verdict information."
   },
   {
     "id": "edr",
@@ -2212,9 +2303,9 @@
     "whyItMatters": "EDR provides the deepest endpoint visibility available — process trees, command-line arguments, file modifications, and network connections. This is essential for detecting advanced threats that evade traditional AV.",
     "configuredItemLabel": "# of endpoints covered by EDR",
     "sizingUnit": "per_item",
-    "sizingRate": 0.015,
-    "sizingRateLow": 0.005,
-    "sizingRateHigh": 0.04,
+    "sizingRate": 0.02,
+    "sizingRateLow": 0.016,
+    "sizingRateHigh": 0.024,
     "exampleVendors": [
       "CrowdStrike Falcon",
       "Microsoft Defender for Endpoint",
@@ -2270,8 +2361,10 @@
     "sizing_formula": {
       "primary_input": "number_of_endpoints",
       "strategy": "per_item",
-      "rate_per_unit": 0.015
-    }
+      "rate_per_unit": 0.02
+    },
+    "workbookRateGbPerUnit": 0.02,
+    "customerSummary": "Endpoint detection alerts and telemetry from your EDR platform (CrowdStrike, Defender, etc.)."
   },
   {
     "id": "ndr",
@@ -2284,8 +2377,8 @@
     "configuredItemLabel": "# of NDR network sensors",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.4,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Vectra AI",
       "Darktrace",
@@ -2332,7 +2425,9 @@
       "primary_input": "number_of_sensors",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Network-based detection and response platform logs including lateral movement alerts, encrypted traffic analysis, and behavioral anomalies."
   },
   {
     "id": "dlp",
@@ -2342,10 +2437,10 @@
     "description": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems.",
     "whyItMatters": "DLP logs are essential for detecting and investigating data exfiltration — both malicious insiders and external attackers staging data for theft.",
     "configuredItemLabel": "# of endpoints covered by DLP",
-    "sizingUnit": "per_item",
+    "sizingUnit": "per_user",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Microsoft Purview",
       "Digital Guardian",
@@ -2392,7 +2487,9 @@
       "primary_input": "number_of_users",
       "strategy": "per_user",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems."
   },
   {
     "id": "uba",
@@ -2435,7 +2532,8 @@
       "primary_input": "number_of_users",
       "strategy": "per_user",
       "rate_per_unit": 0.15
-    }
+    },
+    "customerSummary": "User and entity behavior analytics output including risk scores, anomaly detections, and threat indicators."
   },
   {
     "id": "asset_cmdb",
@@ -2446,9 +2544,9 @@
     "whyItMatters": "Asset and identity context transforms raw alerts into actionable intelligence — knowing the criticality, owner, and classification of impacted assets dramatically improves response prioritization.",
     "configuredItemLabel": "# of asset or identity data sources",
     "sizingUnit": "per_item",
-    "sizingRate": 0.025,
-    "sizingRateLow": 0.01,
-    "sizingRateHigh": 0.05,
+    "sizingRate": 0.05,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "ServiceNow",
       "BMC Helix",
@@ -2505,8 +2603,10 @@
     "sizing_formula": {
       "primary_input": "number_of_assets",
       "strategy": "per_item",
-      "rate_per_unit": 0.025
-    }
+      "rate_per_unit": 0.05
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Asset inventory, identity directory, and CMDB data used for enrichment and context in security operations."
   },
   {
     "id": "deception",
@@ -2518,8 +2618,8 @@
     "configuredItemLabel": "# of deception/honeypot systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.015,
-    "sizingRateLow": 0.005,
-    "sizingRateHigh": 0.03,
+    "sizingRateLow": 0.012,
+    "sizingRateHigh": 0.018,
     "exampleVendors": [
       "Thinkst Canary",
       "Attivo Networks",
@@ -2558,7 +2658,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.015
-    }
+    },
+    "workbookRateGbPerUnit": 0.015,
+    "customerSummary": "Honeypot, honeytoken, and deception platform alerts indicating interaction with decoy systems or credentials."
   },
   {
     "id": "firewalls",
@@ -2571,8 +2673,8 @@
     "configuredItemLabel": "# of firewall devices total",
     "sizingUnit": "per_item",
     "sizingRate": 1,
-    "sizingRateLow": 0.5,
-    "sizingRateHigh": 2.5,
+    "sizingRateLow": 0.8,
+    "sizingRateHigh": 1.2,
     "exampleVendors": [
       "Palo Alto Networks",
       "Cisco ASA/Firepower",
@@ -2608,9 +2710,9 @@
         "name": "Perimeter Firewalls",
         "configuredItemLabel": "# of internet-facing firewalls",
         "sizingUnit": "per_item",
-        "sizingRate": 0.55,
-        "sizingRateLow": 0.2,
-        "sizingRateHigh": 1.5750000000000002,
+        "sizingRate": 1,
+        "sizingRateLow": 0.8,
+        "sizingRateHigh": 1.2,
         "input_fields": [
           {
             "key": "count",
@@ -2621,19 +2723,21 @@
         "sizing_formula": {
           "primary_input": "count",
           "strategy": "per_item",
-          "rate_per_unit": 0.55
+          "rate_per_unit": 1
         },
         "description": "Internet-facing next-generation firewall traffic, threat, and VPN logs from perimeter appliances and virtual firewalls.",
-        "whyItMatters": "Perimeter firewalls see north-south attacks first. These logs anchor network detection, threat hunting, and compliance evidence for external exposure."
+        "whyItMatters": "Perimeter firewalls see north-south attacks first. These logs anchor network detection, threat hunting, and compliance evidence for external exposure.",
+        "workbookRateGbPerUnit": 1,
+        "customerSummary": "Internet-facing firewall traffic and threat logs (north-south)."
       },
       {
         "id": "fw_internal",
         "name": "Internal Segmentation Firewalls",
         "configuredItemLabel": "# of internal firewalls",
         "sizingUnit": "per_item",
-        "sizingRate": 0.375,
-        "sizingRateLow": 0.13999999999999999,
-        "sizingRateHigh": 1.275,
+        "sizingRate": 1,
+        "sizingRateLow": 0.8,
+        "sizingRateHigh": 1.2,
         "input_fields": [
           {
             "key": "count",
@@ -2644,19 +2748,21 @@
         "sizing_formula": {
           "primary_input": "count",
           "strategy": "per_item",
-          "rate_per_unit": 0.375
+          "rate_per_unit": 1
         },
         "description": "Internal segmentation firewall logs for east-west traffic between zones, data centers, and sensitive VLANs.",
-        "whyItMatters": "Lateral movement often crosses internal segments. Segmentation firewall logs help validate Zero Trust boundaries and detect east-west C2."
+        "whyItMatters": "Lateral movement often crosses internal segments. Segmentation firewall logs help validate Zero Trust boundaries and detect east-west C2.",
+        "workbookRateGbPerUnit": 1,
+        "customerSummary": "Internal segmentation firewall logs for east-west traffic between zones."
       },
       {
         "id": "fw_waf",
         "name": "Web Application Firewall (WAF)",
         "configuredItemLabel": "# of WAF instances",
         "sizingUnit": "per_item",
-        "sizingRate": 0.425,
-        "sizingRateLow": 0.15000000000000002,
-        "sizingRateHigh": 1.35,
+        "sizingRate": 1,
+        "sizingRateLow": 0.8,
+        "sizingRateHigh": 1.2,
         "exampleVendors": [
           "Imperva",
           "F5",
@@ -2674,10 +2780,12 @@
         "sizing_formula": {
           "primary_input": "count",
           "strategy": "per_item",
-          "rate_per_unit": 0.425
+          "rate_per_unit": 1
         },
         "description": "Web application firewall logs including HTTP/S requests, blocked attacks, bot scores, and OWASP rule hits.",
-        "whyItMatters": "WAF telemetry exposes application-layer attacks before they reach origin servers — critical for protecting customer-facing and API workloads."
+        "whyItMatters": "WAF telemetry exposes application-layer attacks before they reach origin servers — critical for protecting customer-facing and API workloads.",
+        "workbookRateGbPerUnit": 1,
+        "customerSummary": "Web application firewall HTTP/S request and block logs."
       }
     ],
     "input_fields": [
@@ -2722,7 +2830,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 1
-    }
+    },
+    "workbookRateGbPerUnit": 1,
+    "customerSummary": "Next-generation firewall traffic, threat, URL, and VPN logs from perimeter and internal devices."
   },
   {
     "id": "switches",
@@ -2734,8 +2844,8 @@
     "configuredItemLabel": "# of managed switches",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Cisco Catalyst",
       "Arista",
@@ -2765,7 +2875,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Switch logs including port security, VLAN changes, spanning tree events, and MAC address table changes."
   },
   {
     "id": "routers",
@@ -2777,8 +2889,8 @@
     "configuredItemLabel": "# of routers",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Cisco IOS",
       "Juniper MX",
@@ -2804,7 +2916,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Router logs including routing table changes, BGP events, ACL hits, and interface state changes."
   },
   {
     "id": "vpn",
@@ -2816,9 +2930,9 @@
     "whyItMatters": "VPN logs are critical for monitoring remote access — detecting compromised credentials, unusual connection times/locations, and data exfiltration over encrypted tunnels.",
     "configuredItemLabel": "# of VPN gateway devices",
     "sizingUnit": "per_item",
-    "sizingRate": 0.001,
-    "sizingRateLow": 0.0004,
-    "sizingRateHigh": 0.003,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Cisco AnyConnect",
       "Palo Alto GlobalProtect",
@@ -2842,15 +2956,10 @@
     ],
     "input_fields": [
       {
-        "key": "number_of_users",
-        "label": "Number of VPN users",
-        "type": "number",
-        "helper": "Concurrent or licensed VPN users"
-      },
-      {
         "key": "number_of_systems",
-        "label": "Number of VPN concentrators",
-        "type": "number"
+        "label": "Number of VPN gateway devices",
+        "type": "number",
+        "helper": "VPN concentrators, GlobalProtect portals, or SSL VPN appliances exporting connection logs"
       },
       {
         "key": "vendor",
@@ -2866,10 +2975,12 @@
       }
     ],
     "sizing_formula": {
-      "primary_input": "number_of_users",
-      "strategy": "per_user",
-      "rate_per_unit": 0.001
-    }
+      "primary_input": "number_of_systems",
+      "strategy": "per_item",
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "VPN gateway connection and authentication logs from concentrators and SSL VPN appliances."
   },
   {
     "id": "proxy",
@@ -2881,9 +2992,9 @@
     "whyItMatters": "Proxy logs provide URL-level visibility into all web traffic — essential for detecting C2 communications, drive-by downloads, and data exfiltration over HTTP/HTTPS.",
     "configuredItemLabel": "# of web proxy devices",
     "sizingUnit": "per_item",
-    "sizingRate": 1,
-    "sizingRateLow": 0.5,
-    "sizingRateHigh": 2,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Zscaler",
       "Symantec/Broadcom ProxySG",
@@ -2934,8 +3045,10 @@
     "sizing_formula": {
       "primary_input": "number_of_systems",
       "strategy": "per_item",
-      "rate_per_unit": 1
-    }
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Web proxy URL, category, and policy enforcement logs."
   },
   {
     "id": "nac",
@@ -2947,8 +3060,8 @@
     "configuredItemLabel": "# of NAC servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Cisco ISE",
       "Aruba ClearPass",
@@ -2989,7 +3102,9 @@
       "primary_input": "number_of_devices",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "NAC platform logs including device posture assessment, network admission decisions, and quarantine events."
   },
   {
     "id": "dns",
@@ -3000,9 +3115,9 @@
     "whyItMatters": "DNS is used in nearly every cyberattack — from initial payload delivery to C2 communication to data exfiltration. DNS logs are one of the most underutilized yet valuable data sources for threat detection.",
     "configuredItemLabel": "# of DNS servers",
     "sizingUnit": "per_item",
-    "sizingRate": 0.002,
-    "sizingRateLow": 0.001,
-    "sizingRateHigh": 0.008,
+    "sizingRate": 0.15,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Microsoft DNS",
       "BIND",
@@ -3054,8 +3169,10 @@
     "sizing_formula": {
       "primary_input": "number_of_servers",
       "strategy": "per_item",
-      "rate_per_unit": 0.002
-    }
+      "rate_per_unit": 0.15
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Internal DNS query and response logs from resolvers and authoritative servers."
   },
   {
     "id": "dhcp",
@@ -3067,8 +3184,8 @@
     "configuredItemLabel": "# of DHCP servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.1,
-    "sizingRateLow": 0.03,
-    "sizingRateHigh": 0.2,
+    "sizingRateLow": 0.08000000000000002,
+    "sizingRateHigh": 0.12,
     "exampleVendors": [
       "Microsoft DHCP",
       "ISC DHCP",
@@ -3100,7 +3217,9 @@
       "primary_input": "number_of_servers",
       "strategy": "per_item",
       "rate_per_unit": 0.1
-    }
+    },
+    "workbookRateGbPerUnit": 0.1,
+    "customerSummary": "DHCP lease logs mapping IP addresses to MAC addresses and hostnames over time."
   },
   {
     "id": "loadbalancer",
@@ -3112,8 +3231,8 @@
     "configuredItemLabel": "# of load balancer devices",
     "sizingUnit": "per_item",
     "sizingRate": 0.1,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.25,
+    "sizingRateLow": 0.08000000000000002,
+    "sizingRateHigh": 0.12,
     "exampleVendors": [
       "F5 BIG-IP",
       "Citrix NetScaler",
@@ -3156,7 +3275,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.1
-    }
+    },
+    "workbookRateGbPerUnit": 0.1,
+    "customerSummary": "Load balancer logs including traffic distribution, health checks, SSL termination events, and connection metadata."
   },
   {
     "id": "ddos",
@@ -3168,8 +3289,8 @@
     "configuredItemLabel": "# of DDoS protection services",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Akamai",
       "Cloudflare",
@@ -3194,7 +3315,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "DDoS mitigation platform logs including attack detection, traffic scrubbing, and rate limiting events."
   },
   {
     "id": "wireless",
@@ -3206,8 +3329,8 @@
     "configuredItemLabel": "# of wireless access points",
     "sizingUnit": "per_item",
     "sizingRate": 0.05,
-    "sizingRateLow": 0.02,
-    "sizingRateHigh": 0.1,
+    "sizingRateLow": 0.04000000000000001,
+    "sizingRateHigh": 0.06,
     "exampleVendors": [
       "Cisco Meraki",
       "Aruba",
@@ -3232,7 +3355,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.05
-    }
+    },
+    "workbookRateGbPerUnit": 0.05,
+    "customerSummary": "Wireless controller and access point logs including client associations, rogue AP detection, and authentication events."
   },
   {
     "id": "dpi",
@@ -3244,8 +3369,8 @@
     "configuredItemLabel": "# of DPI systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.1,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.08000000000000002,
+    "sizingRateHigh": 0.12,
     "exampleVendors": [
       "Splunk Stream",
       "Zeek (Bro)",
@@ -3281,7 +3406,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.1
-    }
+    },
+    "workbookRateGbPerUnit": 0.1,
+    "customerSummary": "Full packet capture and deep packet inspection data providing complete network transaction visibility."
   },
   {
     "id": "storage_prod",
@@ -3293,8 +3420,8 @@
     "configuredItemLabel": "# of production storage arrays",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.4,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Dell EMC",
       "NetApp",
@@ -3327,7 +3454,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Storage array logs including access patterns, performance metrics, and administrative changes for production data stores."
   },
   {
     "id": "ics_scada",
@@ -3339,8 +3468,8 @@
     "configuredItemLabel": "# of industrial control or SCADA systems",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Honeywell Experion",
       "Siemens WinCC",
@@ -3399,7 +3528,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "Industrial control system logs including SCADA events, PLC state changes, and process variable anomalies."
   },
   {
     "id": "ot_security",
@@ -3411,8 +3542,8 @@
     "configuredItemLabel": "# of OT network security sensors",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.3,
+    "sizingRateLow": 0.12,
+    "sizingRateHigh": 0.18,
     "exampleVendors": [
       "Dragos",
       "Nozomi Networks",
@@ -3452,7 +3583,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.15
-    }
+    },
+    "workbookRateGbPerUnit": 0.15,
+    "customerSummary": "OT-specific intrusion detection and asset discovery platform logs."
   },
   {
     "id": "devops_cicd",
@@ -3464,8 +3597,8 @@
     "configuredItemLabel": "# of build/CI servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
-    "sizingRateLow": 0.1,
-    "sizingRateHigh": 0.5,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Jenkins",
       "GitHub Actions",
@@ -3513,7 +3646,9 @@
       "primary_input": "number_of_pipelines",
       "strategy": "per_item",
       "rate_per_unit": 0.25
-    }
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Build system, deployment pipeline, and CI/CD platform logs including build results, deployments, and artifact management."
   },
   {
     "id": "config_mgmt",
@@ -3525,8 +3660,8 @@
     "configuredItemLabel": "# of servers running config management",
     "sizingUnit": "per_item",
     "sizingRate": 0.1,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.2,
+    "sizingRateLow": 0.08000000000000002,
+    "sizingRateHigh": 0.12,
     "exampleVendors": [
       "Ansible",
       "Puppet",
@@ -3571,7 +3706,9 @@
       "primary_input": "number_of_systems",
       "strategy": "per_item",
       "rate_per_unit": 0.1
-    }
+    },
+    "workbookRateGbPerUnit": 0.1,
+    "customerSummary": "Configuration management platform logs including state changes, compliance drift, and deployment activities."
   },
   {
     "id": "business_txn",
@@ -3582,9 +3719,9 @@
     "whyItMatters": "Business transaction logs enable detection of fraud, revenue leakage, and application abuse that security-only tools cannot identify.",
     "configuredItemLabel": "# of business applications instrumented",
     "sizingUnit": "per_item",
-    "sizingRate": 0.1,
-    "sizingRateLow": 0.05,
-    "sizingRateHigh": 0.5,
+    "sizingRate": 0.25,
+    "sizingRateLow": 0.2,
+    "sizingRateHigh": 0.3,
     "exampleVendors": [
       "Oracle Apps",
       "SAP",
@@ -3617,7 +3754,9 @@
     "sizing_formula": {
       "primary_input": "number_of_applications",
       "strategy": "per_item",
-      "rate_per_unit": 0.1
-    }
+      "rate_per_unit": 0.25
+    },
+    "workbookRateGbPerUnit": 0.25,
+    "customerSummary": "Application-level business transaction logs including order processing, payment systems, and ERP activity."
   }
 ]

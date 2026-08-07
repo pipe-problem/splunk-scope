@@ -5,6 +5,11 @@
 
 import officeRates from '../data/officeProductivitySizingRates.json';
 import { parseCount } from './iaasSizingEngine.js';
+import {
+  calculateWorkbookSimpleSizing,
+  shouldUseWorkbookSimpleSizing,
+  applyWorkbookSimpleToResult,
+} from './workbookSimpleSizing.js';
 
 export const OFFICE_PRODUCTIVITY_SOURCE_ID = 'saas_office';
 export const OFFICE_REVIEW_SUMMARY_TEXT =
@@ -249,6 +254,13 @@ function componentsForCalculation(state, productMeta) {
 export function calculateOfficeProductivitySizing(inputState, sizingContext = {}) {
   const result = emptyResult();
   if (!inputState) return result;
+
+  if (shouldUseWorkbookSimpleSizing(OFFICE_PRODUCTIVITY_SOURCE_ID, inputState)) {
+    const simple = calculateWorkbookSimpleSizing(OFFICE_PRODUCTIVITY_SOURCE_ID, inputState);
+    if (simple) {
+      return applyWorkbookSimpleToResult(result, simple, OFFICE_PRODUCTIVITY_SOURCE_ID);
+    }
+  }
 
   const state = normalizeOfficeProductivityState(inputState);
   const productMeta = getOfficeProductMeta(state.officeProductivityProduct);

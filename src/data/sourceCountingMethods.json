@@ -320,16 +320,14 @@
       ]
     },
     "email": {
-      "primaryUnit": "Mail gateways or Exchange servers",
+      "primaryUnit": "Mail servers or secure gateways",
       "secondaryUnits": [
         "Protected mailboxes (volume driver)"
       ],
-      "howToCount": "Count SMTP gateways, hybrid Exchange nodes, or logical mail-hygiene services exporting message logs. Use mailbox/user count as secondary for SaaS.",
-      "customerQuestion": "How many mail security hops or Exchange systems forward message tracking and filtering logs?",
+      "howToCount": "Count Exchange servers, SMTP relays, or secure email gateways (Proofpoint, Mimecast) exporting message or threat logs.",
+      "customerQuestion": "How many mail servers or email security gateways send logs to Splunk?",
       "commonMistakes": [
-        "Counting every M365 license instead of hybrid servers",
-        "Omitting journaling mailboxes",
-        "Ignoring TLS report-only appliances"
+        "Using mailbox/user count instead of server or gateway appliances"
       ]
     },
     "firewalls": {
@@ -775,10 +773,11 @@
       "secondaryUnits": [
         "IdP apps integrated"
       ],
-      "howToCount": "Users authenticating via IdP that exports sign-in logs feeding this bucket.",
+      "howToCount": "Users who authenticate through a cloud IdP (Okta, Entra, Ping) whose sign-in logs you centralize — separate from PAM vault platforms.",
       "customerQuestion": "How many users authenticate through the IdP whose SaaS SSO logs you centralize?",
       "commonMistakes": [
-        "Duplicate with Entra ID general logs without scope"
+        "Double-counting with Privileged Access (PAM) row",
+        "Including on-prem AD users not using cloud IdP SSO"
       ]
     },
     "sandbox": {
@@ -840,16 +839,16 @@
       ]
     },
     "sso_pam": {
-      "primaryUnit": "Interactive users (SSO / PAM)",
+      "primaryUnit": "PAM / vault platforms",
       "secondaryUnits": [
         "Identity platforms (IdP / PAM consoles)",
         "Privileged access sessions (context)"
       ],
-      "howToCount": "Count unique human identities covered by SSO sign-in and privileged-access logging. Use workforce or contractor identities that authenticate through the in-scope IdP/PAM, not device or mailbox counts.",
-      "customerQuestion": "How many users authenticate through your SSO and privileged access tooling that forwards audit events?",
+      "howToCount": "Count distinct privileged-access or vault platforms (CyberArk, BeyondTrust, etc.) that forward session audit logs — not SSO user counts.",
+      "customerQuestion": "How many PAM or vault platforms send privileged session audit logs to Splunk?",
       "commonMistakes": [
-        "Machine accounts dominating counts",
-        "Double-counting across Entra and Okta without dedupe"
+        "Counting SSO/IdP users instead of PAM platforms",
+        "Double-counting Okta sign-ins already sized under Cloud IdP SSO"
       ]
     },
     "storage_prod": {
@@ -924,15 +923,14 @@
       ]
     },
     "vpn": {
-      "primaryUnit": "VPN gateway appliances or clusters",
+      "primaryUnit": "VPN gateway devices",
       "secondaryUnits": [
         "Concurrent remote users"
       ],
-      "howToCount": "Count head-end VPN concentrators (physical/virtual) exporting session logs; use peak concurrent users as secondary driver.",
-      "customerQuestion": "How many VPN gateways send authentication and tunnel logs?",
+      "howToCount": "Count VPN concentrators, GlobalProtect gateways, or SSL VPN appliances exporting connection logs — not licensed user seats.",
+      "customerQuestion": "How many VPN gateway devices or concentrators forward logs to Splunk?",
       "commonMistakes": [
-        "SSL portals vs headends confused",
-        "ZTNA counted as classic VPN without split"
+        "Using concurrent VPN user count instead of appliance count"
       ]
     },
     "vuln_mgmt": {

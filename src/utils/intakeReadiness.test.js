@@ -26,8 +26,23 @@ describe('isIntakeReadyForSourceRelevance', () => {
     expect(isIntakeReadyForSourceRelevance({ ...emptyIntake, deploymentType: 'onprem' })).toBe(false);
   });
 
-  it('returns true when customer name is entered', () => {
-    expect(isIntakeReadyForSourceRelevance({ ...emptyIntake, customerName: 'Acme Corp' })).toBe(true);
+  it('returns false when only customer name is entered', () => {
+    expect(isIntakeReadyForSourceRelevance({ ...emptyIntake, customerName: 'Acme Corp' })).toBe(false);
+  });
+
+  it('returns false when only discovery notes are entered', () => {
+    expect(
+      isIntakeReadyForSourceRelevance({ ...emptyIntake, discoveryNotes: 'Needs AD and firewall logs' }),
+    ).toBe(false);
+  });
+
+  it('returns false when only goal preset differs from default', () => {
+    expect(
+      isIntakeReadyForSourceRelevance({
+        ...emptyIntake,
+        crawlGoalPresetId: 'crawl_compliance_first',
+      }),
+    ).toBe(false);
   });
 
   it('returns true when a use case is selected', () => {
@@ -38,16 +53,9 @@ describe('isIntakeReadyForSourceRelevance', () => {
     expect(isIntakeReadyForSourceRelevance({ ...emptyIntake, desiredApps: ['enterprise_security'] })).toBe(true);
   });
 
-  it('returns true when discovery notes are entered', () => {
-    expect(isIntakeReadyForSourceRelevance({ ...emptyIntake, discoveryNotes: 'Needs AD and firewall logs' })).toBe(true);
-  });
-
-  it('returns true when goal preset differs from default', () => {
+  it('returns true when a recommended app is selected', () => {
     expect(
-      isIntakeReadyForSourceRelevance({
-        ...emptyIntake,
-        crawlGoalPresetId: 'crawl_compliance_first',
-      }),
+      isIntakeReadyForSourceRelevance({ ...emptyIntake, recommendedApps: ['enterprise_security'] }),
     ).toBe(true);
   });
 });

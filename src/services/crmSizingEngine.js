@@ -5,6 +5,11 @@
 
 import crmRates from '../data/crmSizingRates.json';
 import { parseCount } from './iaasSizingEngine.js';
+import {
+  calculateWorkbookSimpleSizing,
+  shouldUseWorkbookSimpleSizing,
+  applyWorkbookSimpleToResult,
+} from './workbookSimpleSizing.js';
 
 export const CRM_SOURCE_ID = 'saas_crm';
 export const CRM_REVIEW_SUMMARY_TEXT =
@@ -342,6 +347,13 @@ function calcForActivityTier(vendorMeta, state, profile, toggles, tier, useDaily
 export function calculateCrmSizing(inputState, sizingContext = {}) {
   const result = emptyResult();
   if (!inputState) return result;
+
+  if (shouldUseWorkbookSimpleSizing(CRM_SOURCE_ID, inputState)) {
+    const simple = calculateWorkbookSimpleSizing(CRM_SOURCE_ID, inputState);
+    if (simple) {
+      return applyWorkbookSimpleToResult(result, simple, CRM_SOURCE_ID);
+    }
+  }
 
   const state = normalizeCrmState(inputState);
   const vendorMeta = getCrmVendorMeta(state.crmVendor);

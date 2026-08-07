@@ -74,7 +74,7 @@
       "primaryInputField": "ssoActiveUserCount",
       "unitLabel": "sso-enrolled users",
       "exampleQuantity": 8000,
-      "helperText": "Users authenticating via IdP that exports sign-in logs feeding this bucket."
+      "helperText": "Users who authenticate through a cloud IdP (Okta, Entra, Ping) whose sign-in logs you centralize — separate from PAM vault platforms."
     },
     "saas_conferencing": {
       "sourceId": "saas_conferencing",
@@ -254,11 +254,11 @@
     },
     "sso_pam": {
       "sourceId": "sso_pam",
-      "question": "How many users authenticate through your SSO and privileged access tooling that forwards audit events?",
-      "primaryInputField": "number_of_users",
+      "question": "How many PAM or vault platforms send privileged session audit logs to Splunk?",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "identity management platforms",
       "exampleQuantity": 3500,
-      "helperText": "Count unique human identities covered by SSO sign-in and privileged-access logging. Use workforce or contractor identities that authenticate through the in-scope IdP/PAM, not device or mailbox counts."
+      "helperText": "Count distinct privileged-access or vault platforms (CyberArk, BeyondTrust, etc.) that forward session audit logs — not SSO user counts."
     },
     "active_directory": {
       "sourceId": "active_directory",
@@ -270,11 +270,11 @@
     },
     "email": {
       "sourceId": "email",
-      "question": "How many mail security hops or Exchange systems forward message tracking and filtering logs?",
-      "primaryInputField": "number_of_users",
+      "question": "How many mail servers or email security gateways send logs to Splunk?",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "mail servers or gateways",
       "exampleQuantity": 12,
-      "helperText": "Count SMTP gateways, hybrid Exchange nodes, or logical mail-hygiene services exporting message logs. Use mailbox/user count as secondary for SaaS."
+      "helperText": "Count Exchange servers, SMTP relays, or secure email gateways (Proofpoint, Mimecast) exporting message or threat logs."
     },
     "mdm": {
       "sourceId": "mdm",
@@ -454,11 +454,11 @@
     },
     "vpn": {
       "sourceId": "vpn",
-      "question": "How many VPN gateways send authentication and tunnel logs?",
-      "primaryInputField": "number_of_users",
+      "question": "How many VPN gateway devices or concentrators forward logs to Splunk?",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "vpn gateway devices",
       "exampleQuantity": 8,
-      "helperText": "Count head-end VPN concentrators (physical/virtual) exporting session logs; use peak concurrent users as secondary driver."
+      "helperText": "Count VPN concentrators, GlobalProtect gateways, or SSL VPN appliances exporting connection logs — not licensed user seats."
     },
     "proxy": {
       "sourceId": "proxy",

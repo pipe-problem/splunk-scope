@@ -114,6 +114,38 @@ async function main() {
     if (!source.whyItMatters || String(source.whyItMatters).trim().length < 20) {
       addIssue(sourceId, 'missing_why_it_matters', 'whyItMatters missing or too short');
     }
+    if (!source.customerSummary || String(source.customerSummary).trim().length < 12) {
+      addIssue(sourceId, 'missing_customer_summary', 'customerSummary missing or too short');
+    }
+
+    if (originalRate) {
+      const origRate = Number(originalRate.rateGbPerUnit);
+      const scopeRate = Number(source.sizingRate ?? source.sizing_formula?.rate_per_unit);
+      if (
+        Number.isFinite(origRate) &&
+        Number.isFinite(scopeRate) &&
+        Math.abs(scopeRate - origRate) > 1e-9
+      ) {
+        addIssue(
+          sourceId,
+          'original_rate_drift',
+          `scope rate ${scopeRate} ≠ workbook original ${origRate}`,
+        );
+      }
+
+      const origPrimary = originalRate.primaryInputField;
+      const scopePrimary =
+        measurement?.primaryInputField ||
+        formulaPrimary ||
+        null;
+      if (origPrimary && scopePrimary && origPrimary !== scopePrimary) {
+        addIssue(
+          sourceId,
+          'original_primary_drift',
+          `primary "${scopePrimary}" ≠ workbook original "${origPrimary}"`,
+        );
+      }
+    }
 
     for (const field of source.input_fields || []) {
       if (!field.label || !String(field.label).trim()) {

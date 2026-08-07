@@ -5,6 +5,11 @@
 import ssoRates from '../data/ssoIdentitySizingRates.json';
 import { parseCount } from './iaasSizingEngine.js';
 import { formatIngestString } from '../utils/formatIngestDisplay.js';
+import {
+  calculateWorkbookSimpleSizing,
+  shouldUseWorkbookSimpleSizing,
+  applyWorkbookSimpleToResult,
+} from './workbookSimpleSizing.js';
 
 export const SSO_SOURCE_ID = 'saas_sso';
 export const SSO_REVIEW_SUMMARY_TEXT =
@@ -154,6 +159,13 @@ function calcForTier(vendorMeta, profileKey, tier, state) {
 export function calculateSsoIdentitySizing(inputState, sizingContext = {}) {
   const result = emptyResult();
   if (!inputState) return result;
+
+  if (shouldUseWorkbookSimpleSizing(SSO_SOURCE_ID, inputState)) {
+    const simple = calculateWorkbookSimpleSizing(SSO_SOURCE_ID, inputState);
+    if (simple) {
+      return applyWorkbookSimpleToResult(result, simple, SSO_SOURCE_ID);
+    }
+  }
 
   const state = normalizeSsoState(inputState);
   const vendorMeta = getSsoVendorMeta(state.ssoIdpVendor);

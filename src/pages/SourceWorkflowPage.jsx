@@ -436,7 +436,7 @@ export default function SourceWorkflowPage() {
               filteredSources.map((source) => {
                 const ss = state.sources[source.id] || { status: 'unknown' };
                 const meta = displayMetaById.get(source.id) || {
-                  relevanceScore1to10: 1,
+                  relevanceScore1to10: intakeReady ? 1 : null,
                   appLabels: [],
                 };
                 return (
@@ -446,7 +446,7 @@ export default function SourceWorkflowPage() {
                     ss={ss}
                     isOpen={openedSourceId === source.id}
                     showRelevance={intakeReady}
-                    relevanceScore1to10={meta.relevanceScore1to10}
+                    relevanceScore1to10={intakeReady ? meta.relevanceScore1to10 : null}
                     appLabels={meta.appLabels}
                     onToggle={toggleSourcePanel}
                   />

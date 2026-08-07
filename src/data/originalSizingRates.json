@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "sourceWorkbook": "ORIGINAL Sizing Calculator.xlsx",
   "sourceSheet": "DSA (with Calculations)",
-  "lastExtracted": "2026-07-01",
+  "lastExtracted": "2026-08-07",
   "lowMultiplierDefault": 0.8,
   "highMultiplierDefault": 1.2,
   "entryCount": 68,
@@ -14,7 +14,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: AWS; Azure; GCP; Any Other Cloud Platforms IaaS logs | MITRE ATT&CK: DS0025",
+      "notes": "AWS; Azure; GCP; Any Other Cloud Platforms IaaS logs",
       "sheetRowRef": "DSA (with Calculations)!A7",
       "sheetLabel": "IaaS"
     },
@@ -25,7 +25,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Microsoft AKS, Google GKE, AWS EKS | MITRE ATT&CK: DS0032",
+      "notes": "Microsoft AKS, Google GKE, AWS EKS",
       "sheetRowRef": "DSA (with Calculations)!A8",
       "sheetLabel": "↳ Container, pod, cluster"
     },
@@ -36,7 +36,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: EC2",
+      "notes": "EC2",
       "sheetRowRef": "DSA (with Calculations)!A9",
       "sheetLabel": "↳ Instance"
     },
@@ -47,7 +47,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Amazon S3, Azure Blob Storage, GCP Cloud Storage | MITRE ATT&CK: DS0010",
+      "notes": "Amazon S3, Azure Blob Storage, GCP Cloud Storage",
       "sheetRowRef": "DSA (with Calculations)!A10",
       "sheetLabel": "↳ Cloud Storage"
     },
@@ -58,7 +58,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "AWS CloudTrail, Config, Config Rules, Amazon Inspector, Amazon RDS, CloudWatch, VPC Flow Logs, Amazon CloudFront, Amazon EBS, Amazon ELB and AWS Billing\nAzure AD Audits, Azure AD Sign-ins, Azure AD Users, Azure Monitor Activity Logs, NSG Flow Logs, Azure Security Alerts/Tasks, Website Application Logs, Website Server Logs, Azure Billing Azure AD Audit,Current/Historical Service Status, Data Loss Prevention events, GCP Cloud Security Command Center, Cloud Asset Inventory | Example vendors: AWS; Azure; GCP; Any Other Cloud Platforms PaaS logs | MITRE ATT&CK: DS0025",
+      "notes": "AWS; Azure; GCP; Any Other Cloud Platforms PaaS logs",
       "sheetRowRef": "DSA (with Calculations)!A11",
       "sheetLabel": "PaaS"
     },
@@ -69,7 +69,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Cloud Services like 365; Web Conferencing etc. See grouping | MITRE ATT&CK: DS0025",
+      "notes": "Cloud Services like 365; Web Conferencing etc. See grouping",
       "sheetRowRef": "DSA (with Calculations)!A12",
       "sheetLabel": "SaaS"
     },
@@ -80,7 +80,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: MS Office 365; G-Suite",
+      "notes": "MS Office 365; G-Suite",
       "sheetRowRef": "DSA (with Calculations)!A13",
       "sheetLabel": "↳ Office"
     },
@@ -91,7 +91,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Salesforce",
+      "notes": "Salesforce",
       "sheetRowRef": "DSA (with Calculations)!A14",
       "sheetLabel": "↳ CRM"
     },
@@ -102,7 +102,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Okta",
+      "notes": "Okta",
       "sheetRowRef": "DSA (with Calculations)!A15",
       "sheetLabel": "↳ SSO"
     },
@@ -113,7 +113,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Zoom; Slack; MS Teams;",
+      "notes": "Zoom; Slack; MS Teams;",
       "sheetRowRef": "DSA (with Calculations)!A16",
       "sheetLabel": "↳ Web Conferencing"
     },
@@ -124,7 +124,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Box; Dropbox; Gdrive; Sharepoint",
+      "notes": "Box; Dropbox; Gdrive; Sharepoint",
       "sheetRowRef": "DSA (with Calculations)!A17",
       "sheetLabel": "↳ File Sharing"
     },
@@ -135,7 +135,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: C3, aqua cspm, cloudvisory, openCSPM, Cloudsploit",
+      "notes": "C3, aqua cspm, cloudvisory, openCSPM, Cloudsploit",
       "sheetRowRef": "DSA (with Calculations)!A18",
       "sheetLabel": "Cloud Security Posture Management (CSPM)"
     },
@@ -146,7 +146,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Lacework, Cisco Tetration",
+      "notes": "Lacework, Cisco Tetration",
       "sheetRowRef": "DSA (with Calculations)!A19",
       "sheetLabel": "Cloud Workload Protection Platform (CWPP)"
     },
@@ -157,7 +157,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Zscaler, Cisco Cloudlock, Forcepoint",
+      "notes": "Zscaler, Cisco Cloudlock, Forcepoint",
       "sheetRowRef": "DSA (with Calculations)!A20",
       "sheetLabel": "Cloud Access Security Broker (CASB)"
     },
@@ -168,7 +168,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Zscaler, NetSkope",
+      "notes": "Zscaler, NetSkope",
       "sheetRowRef": "DSA (with Calculations)!A21",
       "sheetLabel": "Secure Access Service Edge (SASE)"
     },
@@ -179,6 +179,9 @@
       "rateGbPerUnit": 0.3,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
+      "notes": "All logs",
+      "sheetRowRef": "DSA (with Calculations)!A26",
+      "sheetLabel": "Windows Servers (physical and virtual)",
       "optionalSecondaryInputs": [
         {
           "field": "windows_application_log_servers",
@@ -210,10 +213,7 @@
           "rateGbPerUnit": 0.025,
           "sheetRowRef": "DSA (with Calculations)!A31"
         }
-      ],
-      "notes": "Example vendors: All logs",
-      "sheetRowRef": "DSA (with Calculations)!A26",
-      "sheetLabel": "Windows Servers (physical and virtual)"
+      ]
     },
     "linux_servers": {
       "sourceId": "linux_servers",
@@ -222,7 +222,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: syslog; top; iostat; netstat; securelog; snare; antivirus; sar; patch logs",
+      "notes": "syslog; top; iostat; netstat; securelog; snare; antivirus; sar; patch logs",
       "sheetRowRef": "DSA (with Calculations)!A32",
       "sheetLabel": "Linux / Unix Servers  (physical and virtual)"
     },
@@ -233,7 +233,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: IBM, HP",
+      "notes": "IBM, HP",
       "sheetRowRef": "DSA (with Calculations)!A33",
       "sheetLabel": "Mainframe"
     },
@@ -244,7 +244,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: syslog; top; iostat; netstat; securelog; snare; antivirus; sar; patch logs",
+      "notes": "syslog; top; iostat; netstat; securelog; snare; antivirus; sar; patch logs",
       "sheetRowRef": "DSA (with Calculations)!A34",
       "sheetLabel": "Linux / Unix Servers - Non Prod (Dev; Test; etc)"
     },
@@ -255,7 +255,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: VMWare ESX servers; vCenter servers; HyperV | MITRE ATT&CK: DS0030",
+      "notes": "VMWare ESX servers; vCenter servers; HyperV",
       "sheetRowRef": "DSA (with Calculations)!A35",
       "sheetLabel": "Virtual Infrastructure Servers (Hypervisor)"
     },
@@ -266,7 +266,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Oracle; SQL/Server; MySQL; RDBMS logs",
+      "notes": "Oracle; SQL/Server; MySQL; RDBMS logs",
       "sheetRowRef": "DSA (with Calculations)!A40",
       "sheetLabel": "Database Instances"
     },
@@ -277,6 +277,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
+      "notes": "",
       "sheetRowRef": "DSA (with Calculations)!A41",
       "sheetLabel": "↳ Transaction logs"
     },
@@ -287,6 +288,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
+      "notes": "",
       "sheetRowRef": "DSA (with Calculations)!A42",
       "sheetLabel": "↳ Access logs"
     },
@@ -297,7 +299,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: apache; IIS; Java; debug logs; ngix; etc",
+      "notes": "apache; IIS; Java; debug logs; ngix; etc",
       "sheetRowRef": "DSA (with Calculations)!A47",
       "sheetLabel": "Web Servers"
     },
@@ -308,7 +310,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: J2EE; .NET; Tomcat; WebSphere; WebLogic; debug logs; etc | MITRE ATT&CK: DS0015",
+      "notes": "J2EE; .NET; Tomcat; WebSphere; WebLogic; debug logs; etc",
       "sheetRowRef": "DSA (with Calculations)!A48",
       "sheetLabel": "Application Servers"
     },
@@ -319,7 +321,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: JSON; SOAP; MSMQ; TIBCO; SonicMQ; debug logs; Software AG",
+      "notes": "JSON; SOAP; MSMQ; TIBCO; SonicMQ; debug logs; Software AG",
       "sheetRowRef": "DSA (with Calculations)!A49",
       "sheetLabel": "Middleware Services"
     },
@@ -330,7 +332,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: payment status; batch uploads; order processing; etc",
+      "notes": "payment status; batch uploads; order processing; etc",
       "sheetRowRef": "DSA (with Calculations)!A50",
       "sheetLabel": "Key Transaction Activity Logs"
     },
@@ -341,7 +343,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: New Relic; AppDynamics",
+      "notes": "New Relic; AppDynamics",
       "sheetRowRef": "DSA (with Calculations)!A52",
       "sheetLabel": "APM (Application Performance Monitoring)"
     },
@@ -352,7 +354,7 @@
       "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Microsoft AD, OpenSSL | MITRE ATT&CK: DS0037",
+      "notes": "Microsoft AD, OpenSSL",
       "sheetRowRef": "DSA (with Calculations)!A54",
       "sheetLabel": "Public Key Infrastructure (PKI)"
     },
@@ -363,7 +365,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: SAP Netweaver",
+      "notes": "SAP Netweaver",
       "sheetRowRef": "DSA (with Calculations)!A55",
       "sheetLabel": "SAP"
     },
@@ -374,18 +376,18 @@
       "rateGbPerUnit": 0.01,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: MS; Linux; MacOS; antivirus logs; windows logs; patch data",
+      "notes": "MS; Linux; MacOS; antivirus logs; windows logs; patch data",
       "sheetRowRef": "DSA (with Calculations)!A60",
       "sheetLabel": "Desktops / Workstations"
     },
     "sso_pam": {
       "sourceId": "sso_pam",
-      "primaryInputField": "number_of_users",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "identity management platforms",
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Identity Management logs; CyberArk; Thycotic; Okta; Ping Identity",
+      "notes": "Identity Management logs; CyberArk; Thycotic; Okta; Ping Identity",
       "sheetRowRef": "DSA (with Calculations)!A61",
       "sheetLabel": "User Authentication (Single Sign-On (SSO) / PAM / IAM)"
     },
@@ -396,18 +398,18 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Microsoft Active Directory | MITRE ATT&CK: DS0026",
+      "notes": "Microsoft Active Directory",
       "sheetRowRef": "DSA (with Calculations)!A62",
       "sheetLabel": "Active Directories; Domain Controllers"
     },
     "email": {
       "sourceId": "email",
-      "primaryInputField": "number_of_users",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "mail servers or gateways",
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: MS Exchange; Ubuntu; Open Xchange; Zimbra; Watchguard",
+      "notes": "MS Exchange; Ubuntu; Open Xchange; Zimbra; Watchguard",
       "sheetRowRef": "DSA (with Calculations)!A63",
       "sheetLabel": "Email Servers / Email Gateways"
     },
@@ -418,7 +420,7 @@
       "rateGbPerUnit": 0.5,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: JAMF pro, Scalefusion, Fleetsmith",
+      "notes": "JAMF pro, Scalefusion, Fleetsmith",
       "sheetRowRef": "DSA (with Calculations)!A69",
       "sheetLabel": "Mobile Devices Management"
     },
@@ -429,7 +431,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Tripwire IP360; Nessus; OpenVAS; ncircle; Qualys etc",
+      "notes": "Tripwire IP360; Nessus; OpenVAS; ncircle; Qualys etc",
       "sheetRowRef": "DSA (with Calculations)!A74",
       "sheetLabel": "Vulnerability Management (VM)"
     },
@@ -440,7 +442,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Netflow | MITRE ATT&CK: DS0029",
+      "notes": "Netflow",
       "sheetRowRef": "DSA (with Calculations)!A76",
       "sheetLabel": "Network and Security Traffic Analysis"
     },
@@ -451,7 +453,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Snort; Bro; Cisco Firepower; TippingPoint IPS; Juniper IDP; McAfee",
+      "notes": "Snort; Bro; Cisco Firepower; TippingPoint IPS; Juniper IDP; McAfee",
       "sheetRowRef": "DSA (with Calculations)!A77",
       "sheetLabel": "Intrusion Prevention/Detection Systems (IPS/IDS)"
     },
@@ -462,7 +464,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Anomali; FireEye; BrowdStrike; Threat Lists; Blacklists; etc | MITRE ATT&CK: DS0004",
+      "notes": "Anomali; FireEye; BrowdStrike; Threat Lists; Blacklists; etc",
       "sheetRowRef": "DSA (with Calculations)!A78",
       "sheetLabel": "Threat Intelligence Feeds"
     },
@@ -473,7 +475,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Cisco AMP; FireEye; ChaekPoint SandBlast; Cuckoo; Lastline; etc",
+      "notes": "Cisco AMP; FireEye; ChaekPoint SandBlast; Cuckoo; Lastline; etc",
       "sheetRowRef": "DSA (with Calculations)!A79",
       "sheetLabel": "Automated Malware Anaylsis (Sandbox)"
     },
@@ -484,7 +486,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Microsoft; Clearswift; Digital Guardian; Symantec; McAfee",
+      "notes": "Microsoft; Clearswift; Digital Guardian; Symantec; McAfee",
       "sheetRowRef": "DSA (with Calculations)!A82",
       "sheetLabel": "Data Loss/Leakage Prevention (DLP)"
     },
@@ -495,7 +497,7 @@
       "rateGbPerUnit": 0.02,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Tanium; Carbon Black; FireEye HX; CrowdStrike Falcon; Ziften",
+      "notes": "Tanium; Carbon Black; FireEye HX; CrowdStrike Falcon; Ziften",
       "sheetRowRef": "DSA (with Calculations)!A83",
       "sheetLabel": "EDR (Endpoint Detection & Response)"
     },
@@ -506,7 +508,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Vectra; Darktrace; Extrahop; Lastline",
+      "notes": "Vectra; Darktrace; Extrahop; Lastline",
       "sheetRowRef": "DSA (with Calculations)!A84",
       "sheetLabel": "NDR (Network Detection & Response)"
     },
@@ -517,7 +519,7 @@
       "rateGbPerUnit": 0.015,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Thinkst Canary; Cyber Trap;",
+      "notes": "Thinkst Canary; Cyber Trap;",
       "sheetRowRef": "DSA (with Calculations)!A85",
       "sheetLabel": "Deception Technology"
     },
@@ -528,7 +530,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: apache; IIS; Java; debug logs; ngix; etc",
+      "notes": "apache; IIS; Java; debug logs; ngix; etc",
       "sheetRowRef": "DSA (with Calculations)!A90",
       "sheetLabel": "Web Servers - Non-Production"
     },
@@ -539,7 +541,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: J2EE; .NET; Tomcat; WebSphere; WebLogic; debug logs; etc",
+      "notes": "J2EE; .NET; Tomcat; WebSphere; WebLogic; debug logs; etc",
       "sheetRowRef": "DSA (with Calculations)!A91",
       "sheetLabel": "Application Servers - Non-Production"
     },
@@ -550,7 +552,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: JSON; SOAP; MSMQ; TIBCO; SonicMQ; debug logs; Software AG",
+      "notes": "JSON; SOAP; MSMQ; TIBCO; SonicMQ; debug logs; Software AG",
       "sheetRowRef": "DSA (with Calculations)!A92",
       "sheetLabel": "Middleware Services - Non-Production"
     },
@@ -561,7 +563,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Puppet; Jira; Github; Chef; Docker; Ansible Tower; Salt Stack; etc",
+      "notes": "Puppet; Jira; Github; Chef; Docker; Ansible Tower; Salt Stack; etc",
       "sheetRowRef": "DSA (with Calculations)!A94",
       "sheetLabel": "Automated Configuration and Deployment tools"
     },
@@ -572,7 +574,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Jenkins; Bamboo; Travic Ci; Teamcity; API Logs; webhooks; etc",
+      "notes": "Jenkins; Bamboo; Travic Ci; Teamcity; API Logs; webhooks; etc",
       "sheetRowRef": "DSA (with Calculations)!A95",
       "sheetLabel": "Build Systems"
     },
@@ -583,7 +585,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Ethernet and virtual switch logs; netflow data",
+      "notes": "Ethernet and virtual switch logs; netflow data",
       "sheetRowRef": "DSA (with Calculations)!A100",
       "sheetLabel": "Switches"
     },
@@ -594,7 +596,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: cisco_cdr; cisco:asa; cisco_syslog; clavister; netflow; etc",
+      "notes": "cisco_cdr; cisco:asa; cisco_syslog; clavister; netflow; etc",
       "sheetRowRef": "DSA (with Calculations)!A101",
       "sheetLabel": "Routers"
     },
@@ -605,7 +607,7 @@
       "rateGbPerUnit": 1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Palo Alto; Cisco; Check Point; Fortinet etc | MITRE ATT&CK: DS0018",
+      "notes": "Palo Alto; Cisco; Check Point; Fortinet etc",
       "sheetRowRef": "DSA (with Calculations)!A102",
       "sheetLabel": "Firewalls (and NextGen Firewalls)"
     },
@@ -616,7 +618,7 @@
       "rateGbPerUnit": 1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Palo Alto; Cisco; Check Point; Fortinet etc",
+      "notes": "Palo Alto; Cisco; Check Point; Fortinet etc",
       "sheetRowRef": "DSA (with Calculations)!A103",
       "sheetLabel": "↳ Perimeter"
     },
@@ -627,7 +629,7 @@
       "rateGbPerUnit": 1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Palo Alto; Cisco; Check Point; Fortinet etc",
+      "notes": "Palo Alto; Cisco; Check Point; Fortinet etc",
       "sheetRowRef": "DSA (with Calculations)!A104",
       "sheetLabel": "↳ Internal"
     },
@@ -638,7 +640,7 @@
       "rateGbPerUnit": 1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Imperva; F5; Barracuda; Radware; Citrix Netscaler",
+      "notes": "Imperva; F5; Barracuda; Radware; Citrix Netscaler",
       "sheetRowRef": "DSA (with Calculations)!A105",
       "sheetLabel": "↳ WAF (Web Application Firewall)"
     },
@@ -649,18 +651,18 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Akamai; Arbor; Netscout; cloudflare; a10 networks; Corero",
+      "notes": "Akamai; Arbor; Netscout; cloudflare; a10 networks; Corero",
       "sheetRowRef": "DSA (with Calculations)!A106",
       "sheetLabel": "DDoS Protection"
     },
     "vpn": {
       "sourceId": "vpn",
-      "primaryInputField": "number_of_users",
+      "primaryInputField": "number_of_systems",
       "unitLabel": "vpn gateway devices",
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Citrix NetScaler Nitro; Citric NetScaler IPFIX; Cisco; etc",
+      "notes": "Citrix NetScaler Nitro; Citric NetScaler IPFIX; Cisco; etc",
       "sheetRowRef": "DSA (with Calculations)!A107",
       "sheetLabel": "VPNs"
     },
@@ -671,7 +673,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Bluecoat Proxy; Fortinet; Juniper:idp; Netscreen:firewall; Pan; etc",
+      "notes": "Bluecoat Proxy; Fortinet; Juniper:idp; Netscreen:firewall; Pan; etc",
       "sheetRowRef": "DSA (with Calculations)!A108",
       "sheetLabel": "Proxy Systems (Web Proxies)"
     },
@@ -682,7 +684,7 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Aruba ClearPass; Cisco ACS; Cisco ISE",
+      "notes": "Aruba ClearPass; Cisco ACS; Cisco ISE",
       "sheetRowRef": "DSA (with Calculations)!A109",
       "sheetLabel": "Network Access Control (NAC)"
     },
@@ -693,7 +695,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Netgear; Linksys; etc",
+      "notes": "Netgear; Linksys; etc",
       "sheetRowRef": "DSA (with Calculations)!A110",
       "sheetLabel": "Wireless Access Points"
     },
@@ -704,7 +706,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Splunk Stream; BIND; PowerDNS; Unbound; Dnsmasq; Erl-DNS; Infoblox | MITRE ATT&CK: DS0038",
+      "notes": "Splunk Stream; BIND; PowerDNS; Unbound; Dnsmasq; Erl-DNS; Infoblox",
       "sheetRowRef": "DSA (with Calculations)!A112",
       "sheetLabel": "DNS"
     },
@@ -715,7 +717,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Splunk Stream; PCAP; Zeek (Bro)",
+      "notes": "Splunk Stream; PCAP; Zeek (Bro)",
       "sheetRowRef": "DSA (with Calculations)!A114",
       "sheetLabel": "Deep Packet Inspection systems"
     },
@@ -726,7 +728,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: DHCP Insight; Linux DHCP; Infoblox",
+      "notes": "DHCP Insight; Linux DHCP; Infoblox",
       "sheetRowRef": "DSA (with Calculations)!A115",
       "sheetLabel": "DHCP"
     },
@@ -737,7 +739,7 @@
       "rateGbPerUnit": 0.1,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Citrix Netscaler; F5 Big-IP; Enginx",
+      "notes": "Citrix Netscaler; F5 Big-IP; Enginx",
       "sheetRowRef": "DSA (with Calculations)!A116",
       "sheetLabel": "Loadbalancer"
     },
@@ -748,6 +750,9 @@
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
+      "notes": "Logs from SAN; NAS; EMC VNX; NetApp Data ONTAP; etc.",
+      "sheetRowRef": "DSA (with Calculations)!A121",
+      "sheetLabel": "Production - Storage Arrays with High IOPS",
       "optionalSecondaryInputs": [
         {
           "field": "storage_moderate_iops_arrays",
@@ -773,10 +778,7 @@
           "rateGbPerUnit": 0.05,
           "sheetRowRef": "DSA (with Calculations)!A125"
         }
-      ],
-      "notes": "Example vendors: Logs from SAN; NAS; EMC VNX; NetApp Data ONTAP; etc. | MITRE ATT&CK: DS0034",
-      "sheetRowRef": "DSA (with Calculations)!A121",
-      "sheetLabel": "Production - Storage Arrays with High IOPS"
+      ]
     },
     "ics_scada": {
       "sourceId": "ics_scada",
@@ -785,7 +787,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Honeywell Experion; Wonderware; OASyS DNA; ClearSCADA; Ignition",
+      "notes": "Honeywell Experion; Wonderware; OASyS DNA; ClearSCADA; Ignition",
       "sheetRowRef": "DSA (with Calculations)!A130",
       "sheetLabel": "ICS Logs"
     },
@@ -796,7 +798,7 @@
       "rateGbPerUnit": 0.05,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Maximo; Infor; SAP EAM; Oracle",
+      "notes": "Maximo; Infor; SAP EAM; Oracle",
       "sheetRowRef": "DSA (with Calculations)!A134",
       "sheetLabel": "Asset Management"
     },
@@ -807,7 +809,7 @@
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Example vendors: Dragos; Nozomi; Claroty; Indegy; Armis",
+      "notes": "Dragos; Nozomi; Claroty; Indegy; Armis",
       "sheetRowRef": "DSA (with Calculations)!A135",
       "sheetLabel": "OT Security Solutions (OT IDS)"
     }

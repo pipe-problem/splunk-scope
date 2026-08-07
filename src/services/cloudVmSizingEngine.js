@@ -5,6 +5,11 @@
 
 import cloudVmRates from '../data/cloudVmSizingRates.json';
 import { normalizeIaasState, parseCount } from './iaasSizingEngine.js';
+import {
+  calculateWorkbookSimpleSizing,
+  shouldUseWorkbookSimpleSizing,
+  applyWorkbookSimpleToResult,
+} from './workbookSimpleSizing.js';
 
 export const CLOUD_VM_SOURCE_ID = 'iaas_instances';
 export const CLOUD_VM_REVIEW_SUMMARY =
@@ -198,6 +203,13 @@ function isComponentEnabled(toggles, componentId) {
 export function calculateCloudVmSizing(inputState, sizingContext = {}) {
   const result = emptyResult();
   if (!inputState) return result;
+
+  if (shouldUseWorkbookSimpleSizing(CLOUD_VM_SOURCE_ID, inputState)) {
+    const simple = calculateWorkbookSimpleSizing(CLOUD_VM_SOURCE_ID, inputState);
+    if (simple) {
+      return applyWorkbookSimpleToResult(result, simple, CLOUD_VM_SOURCE_ID);
+    }
+  }
 
   const state = normalizeCloudVmState(inputState);
   const provider = getCloudVmProviderMeta(state.cloudVmProvider);

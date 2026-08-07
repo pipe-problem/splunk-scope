@@ -12,7 +12,7 @@
     "test:smoke": "node tests/smoke/navigation.spec.mjs",
     "test:e2e": "playwright test --config e2e/smoke/playwright/playwright.config.mjs",
     "gen:sizing-doc": "node scripts/generateDataSourceSizingDoc.mjs",
-    "gen:research-sheet": "node scripts/generateSourceResearchSheet.mjs",
+    "gen:verification-sheet": "node scripts/generateSourceVerificationSheet.mjs",
     "validate:catalog": "node scripts/validateSourceCatalog.js && node scripts/validateSourceContent.mjs",
     "validate:measurement": "node scripts/audit-measurement-coverage.mjs",
     "validate:splunkbase": "node scripts/validateSplunkbaseCatalog.js",

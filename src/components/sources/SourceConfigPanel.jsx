@@ -187,12 +187,22 @@ export default function SourceConfigPanel({
       <div className="shrink-0 border-b border-[var(--cast-border)]/80 bg-[var(--cast-panel)]/60 px-5 py-4 sm:px-7 sm:py-5 flex items-start justify-between gap-4 rounded-t-xl">
         <div className="min-w-0 flex-1">
           <h2 className="text-xl sm:text-2xl font-bold text-[var(--cast-text)] leading-snug pr-2">{source.name}</h2>
+          {(source.customerSummary || source.description) && (
+            <p className="text-sm text-[var(--cast-text-secondary)] mt-2 leading-relaxed line-clamp-2">
+              {source.customerSummary || source.description}
+            </p>
+          )}
           <div className="flex flex-wrap items-center gap-2 mt-3">
-            {showRelevance && (
-              <span className="text-badge px-2.5 py-0.5 rounded-full bg-[var(--cast-accent-muted)] text-[var(--cast-accent)] border border-[var(--cast-accent)]/25 font-semibold">
-                Relevance {displayMeta?.relevanceScore1to10 ?? '—'}/10
-              </span>
-            )}
+            <span
+              className={`text-badge px-2.5 py-0.5 rounded-full border font-semibold ${
+                showRelevance
+                  ? 'bg-[var(--cast-accent-muted)] text-[var(--cast-accent)] border-[var(--cast-accent)]/25'
+                  : 'bg-[var(--cast-panel-alt)] text-[var(--cast-text-muted)] border-[var(--cast-border)]'
+              }`}
+              title={showRelevance ? 'Relevance to your goals' : 'Complete intake (use case or app) to score relevance'}
+            >
+              Relevance {showRelevance ? (displayMeta?.relevanceScore1to10 ?? '—') : '—'}/10
+            </span>
             <span
               className={`text-badge px-2.5 py-0.5 rounded-full border ${
                 configured

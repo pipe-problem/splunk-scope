@@ -59,6 +59,7 @@ describe('SourceGridCard customer view', () => {
     expect(cardSource).not.toMatch(/GB\s*\/\s*day/i);
     expect(cardSource).not.toContain('RelevanceReviewBadge');
     expect(cardSource).not.toContain('whyOneLine');
+    expect(cardSource).toContain('customerSummary');
     expect(cardSource).toContain('source.description');
     expect(cardSource).toContain('formatConfiguredSourceSummary');
     expect(cardSource).not.toContain('onConfigure');
@@ -74,6 +75,7 @@ describe('SourceConfigPanel', () => {
   it('save sets configured status without ingest display', () => {
     expect(panelSource).toContain('applySourceConfigSave');
     expect(panelSource).not.toMatch(/GB\s*\/\s*day/i);
+    expect(panelSource).toContain('customerSummary');
     expect(panelSource).toContain('showRelevance');
     expect(panelSource).toContain('Configured');
     expect(panelSource).toContain('Not configured');

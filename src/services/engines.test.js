@@ -25,6 +25,7 @@ import {
   flattenRecommendationNames,
 } from './appRecommendationEngine.js';
 import { assessEnterpriseSecurityEligibility } from './enterpriseSecurityEligibilityEngine.js';
+import originalSizingRates from '../data/originalSizingRates.json';
 import {
   resolveCanonicalAppId,
   getAppCatalogEntry,
@@ -484,15 +485,28 @@ describe('v1.8.1 CSS Keyframe Uniqueness', () => {
  * expected values from the ORIGINAL Sizing Calculator spreadsheet.
  */
 describe('v1.9 Sizing Accuracy Validation', () => {
+  const entries = originalSizingRates.entries || {};
+
+  function workbookSpec(sourceId, tolerance = 0.15) {
+    const entry = entries[sourceId];
+    if (!entry) throw new Error(`missing workbook entry for ${sourceId}`);
+    return {
+      unit: entry.primaryInputField,
+      rate: entry.rateGbPerUnit,
+      tolerance,
+    };
+  }
+
+  /** Workbook-aligned rates (ORIGINAL Sizing Calculator). */
   const EXPECTED_RATES = {
-    firewalls: { unit: 'number_of_systems', rate: 1.0, tolerance: 0.15 },
-    windows_servers: { unit: 'number_of_servers', rate: 0.18, tolerance: 0.15 },
-    linux_servers: { unit: 'number_of_servers', rate: 0.15, tolerance: 0.1 },
-    proxy: { unit: 'number_of_systems', rate: 1.0, tolerance: 0.03 },
-    edr: { unit: 'number_of_endpoints', rate: 0.012, tolerance: 0.01 },
-    active_directory: { unit: 'number_of_dcs', rate: 0.25, tolerance: 0.15 },
-    dns: { unit: 'number_of_servers', rate: 0.002, tolerance: 0.05 },
-    vpn: { unit: 'number_of_users', rate: 0.001, tolerance: 0.0005 },
+    firewalls: workbookSpec('firewalls'),
+    windows_servers: workbookSpec('windows_servers'),
+    linux_servers: workbookSpec('linux_servers'),
+    proxy: workbookSpec('proxy', 0.03),
+    edr: workbookSpec('edr', 0.01),
+    active_directory: workbookSpec('active_directory'),
+    dns: workbookSpec('dns', 0.05),
+    vpn: workbookSpec('vpn', 0.0005),
   };
 
   const TEST_QUANTITIES = [1, 5, 10, 50, 100, 500, 1000, 5000, 10000, 50000];
@@ -565,16 +579,16 @@ describe('v1.9 Sizing Accuracy Validation', () => {
       expect(r.expected).toBeGreaterThan(0);
     });
 
-    it('legacy count maps to active users', () => {
+    it('legacy count maps to active users via workbook simple rate', () => {
       const r = calculateSourceSize(source, { status: 'current', count: '100' });
-      expect(r.expected).toBeGreaterThan(0);
-      expect(r.rateSource).toBe('sso_identity_additive');
+      expect(r.expected).toBeCloseTo(0.5, 2);
+      expect(r.rateSource).toBe('workbook_simple');
     });
 
     it('without users or integrations yields small tenant-only audit estimate', () => {
       const r = calculateSourceSize(source, { status: 'current' });
       expect(r.expected).toBeLessThan(0.01);
-      expect(r.rateSource).toBe('sso_identity_additive');
+      expect(['sso_identity_additive', 'workbook_simple']).toContain(r.rateSource);
     });
   });
 
