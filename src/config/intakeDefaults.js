@@ -25,5 +25,8 @@ export function applyIntakeDefaults(intake = {}) {
   if (!Array.isArray(merged.recommendedApps)) {
     merged.recommendedApps = [];
   }
+  if (merged.aiImportSummary === undefined) {
+    merged.aiImportSummary = null;
+  }
   return merged;
 }

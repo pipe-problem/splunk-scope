@@ -12,10 +12,10 @@ import {
 import { parseCustomerContext } from './contextImportEngine.js';
 import {
   matchSplunkAppToken,
-  matchSourceHint,
   normalizeDeploymentType,
   filterIntakeAppIds,
 } from './intakeImportHelpers.js';
+import { mapImportDataSources } from './importSourceMapper.js';
 
 const USE_CASE_BY_NAME = new Map(useCaseProfiles.map((p) => [p.name.toLowerCase(), p.name]));
 const USE_CASE_BY_ID = new Map(useCaseProfiles.map((p) => [p.id, p.name]));
@@ -129,35 +129,25 @@ function mapGoalPresetId(phase, id, warnings) {
   return '';
 }
 
-function mapSourceHints(dataSources, warnings) {
-  const hints = [];
-  for (const row of dataSources || []) {
-    if (!row || typeof row !== 'object') continue;
-    const sourceName = row.sourceName || row.name || '';
-    const vendor = row.vendor || null;
-    const product = row.product || null;
-    let sourceId = row.sourceId || null;
-    if (sourceId && !matchSourceHint(sourceId, null, null)) {
-      warnings.push(`Unknown sourceId from Circuit: ${sourceId}`);
-      sourceId = matchSourceHint(sourceName, vendor, product);
-    } else if (!sourceId) {
-      sourceId = matchSourceHint(sourceName, vendor, product);
-    }
-    if (!sourceId && (sourceName || vendor || product)) {
-      warnings.push(`Could not map data source: ${[sourceName, vendor, product].filter(Boolean).join(' / ')}`);
-    }
-    hints.push({
-      sourceName: String(sourceName || '').trim(),
-      sourceId,
-      vendor: vendor ? String(vendor).trim() : null,
-      product: product ? String(product).trim() : null,
-      count: row.count != null && !Number.isNaN(Number(row.count)) ? Number(row.count) : null,
-      environment: row.environment || 'unknown',
-      status: row.status || 'current',
-      notes: String(row.notes || '').trim(),
-    });
-  }
-  return hints;
+function mapAiImportSummary(json, apps) {
+  const summaryBlock = json.aiSummary && typeof json.aiSummary === 'object' ? json.aiSummary : null;
+  const useCaseAssessment = String(
+    summaryBlock?.useCaseAssessment || json.summary || '',
+  ).trim();
+  if (!useCaseAssessment && !summaryBlock) return null;
+
+  const recommendedSplunkCapabilities = (summaryBlock?.recommendedSplunkCapabilities || [])
+    .map((item) => String(item).trim())
+    .filter(Boolean);
+  const recommendedAppIds = filterIntakeAppIds(
+    (summaryBlock?.recommendedAppIds || apps.ids || []).filter(Boolean),
+  );
+
+  return {
+    useCaseAssessment,
+    recommendedSplunkCapabilities,
+    recommendedAppIds,
+  };
 }
 
 function buildDiscoveryNotes(payload, sourceHints) {
@@ -176,7 +166,7 @@ function buildDiscoveryNotes(payload, sourceHints) {
         .filter(Boolean);
       return `- ${bits.join(' | ')}`;
     });
-    parts.push(`Data sources (from Circuit):\n${lines.join('\n')}`);
+    parts.push(`Data sources (from import):\n${lines.join('\n')}`);
   }
   return parts.join('\n\n').trim();
 }
@@ -185,6 +175,10 @@ function buildDiscoveryNotes(payload, sourceHints) {
  * @param {string} pastedText
  * @returns {import('./circuitResponseProcessor.js').CircuitProcessResult}
  */
+export function processImportResponse(pastedText) {
+  return processCircuitResponse(pastedText);
+}
+
 export function processCircuitResponse(pastedText) {
   const warnings = [];
   const needsReview = [];
@@ -212,8 +206,10 @@ export function processCircuitResponse(pastedText) {
           runGoalPresetId: '',
           pathBudgetPercentages: { ...DEFAULT_PATH_BUDGET_PERCENTAGES },
           sourceHints: [],
+          sourceCandidates: [],
+          aiImportSummary: null,
         },
-        warnings: ['Could not parse JSON — used pattern-matching fallback. Ask Circuit to return JSON only for best results.'],
+        warnings: ['Could not parse JSON — used pattern-matching fallback. Ask Cursor to return JSON only for best results.'],
         needsReview: heuristic.unknowns || [],
         openQuestions: [],
         confidence: heuristic.confidence || 'low',
@@ -230,7 +226,7 @@ export function processCircuitResponse(pastedText) {
       openQuestions: [],
       confidence: 'low',
       raw: null,
-      parseError: 'Could not parse JSON. Ask Circuit to return JSON only (no markdown).',
+      parseError: 'Could not parse JSON. Ask Cursor to return JSON only (no markdown).',
     };
   }
 
@@ -262,16 +258,21 @@ export function processCircuitResponse(pastedText) {
   const runGoalPresetId = mapGoalPresetId('run', json.runGoalPresetId, warnings) ||
     (json.runGoalPresetId ? '' : '');
 
-  const sourceHints = mapSourceHints(json.dataSources, warnings);
+  const { sourceCandidates, sourceHints } = mapImportDataSources(json.dataSources, warnings);
+  const allHintsForNotes = [
+    ...sourceCandidates.map((c) => c.hint),
+    ...sourceHints,
+  ];
   const pathBudgetPercentages = mapPathBudgetPercentages(json.pathBudgetPercentages, warnings);
   const openQuestions = (json.openQuestions || []).map((q) => String(q).trim()).filter(Boolean);
   const confidence = json.confidence?.overall || 'medium';
+  const aiImportSummary = mapAiImportSummary(json, apps);
 
   if (confidence === 'low') {
-    needsReview.push('Circuit reported low overall confidence.');
+    needsReview.push('Import reported low overall confidence.');
   }
   if (json.confidence?.notes) {
-    warnings.push(`Circuit confidence note: ${json.confidence.notes}`);
+    warnings.push(`Import confidence note: ${json.confidence.notes}`);
   }
   if (budget != null) {
     needsReview.push(`Budget ${budget} — confirm before applying to planning budget.`);
@@ -284,7 +285,7 @@ export function processCircuitResponse(pastedText) {
       customerName: json.customerName ? String(json.customerName).trim() : '',
       deploymentType,
       budget,
-      discoveryNotes: buildDiscoveryNotes(json, sourceHints),
+      discoveryNotes: buildDiscoveryNotes(json, allHintsForNotes),
       customUseCases: '',
       useCases,
       desiredApps: apps.ids,
@@ -293,6 +294,8 @@ export function processCircuitResponse(pastedText) {
       runGoalPresetId,
       pathBudgetPercentages,
       sourceHints,
+      sourceCandidates,
+      aiImportSummary,
     },
     warnings,
     needsReview,

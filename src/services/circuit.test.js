@@ -79,6 +79,15 @@ describe('circuitPromptBuilder', () => {
     expect(prompt).toContain('walk_expand_correlation');
     expect(prompt).toContain('run_optimize_and_mature');
   });
+
+  it('includes aiSummary and source catalog appendix for Cursor import', () => {
+    const prompt = buildCircuitExtractionPrompt();
+    expect(prompt).toContain('"aiSummary"');
+    expect(prompt).toContain('useCaseAssessment');
+    expect(prompt).toContain('"confidence"');
+    expect(prompt).toContain('primaryInputField');
+    expect(prompt).toContain('sourceId exactly');
+  });
 });
 
 describe('circuitResponseProcessor', () => {
@@ -178,6 +187,45 @@ About 500 endpoints.
     expect(defaults.crawl).toBe('crawl_foundational_visibility');
     expect(defaults.walk).toBe('walk_expand_correlation');
     expect(defaults.run).toBe('run_optimize_and_mature');
+  });
+
+  it('maps aiSummary into aiImportSummary fields', () => {
+    const payload = {
+      ...SAMPLE_CIRCUIT_JSON,
+      aiSummary: {
+        useCaseAssessment: 'Cloud SIEM with identity and perimeter focus.',
+        recommendedSplunkCapabilities: ['Enterprise Security', 'CIM'],
+        recommendedAppIds: ['enterprise_security', 'cim'],
+      },
+    };
+    const result = processCircuitResponse(JSON.stringify(payload));
+    expect(result.fields.aiImportSummary.useCaseAssessment).toContain('Cloud SIEM');
+    expect(result.fields.aiImportSummary.recommendedSplunkCapabilities).toContain('Enterprise Security');
+    expect(result.fields.aiImportSummary.recommendedAppIds).toContain('enterprise_security');
+  });
+
+  it('maps high-confidence dataSources to apply-eligible sourceCandidates', () => {
+    const payload = {
+      ...SAMPLE_CIRCUIT_JSON,
+      dataSources: [
+        {
+          sourceId: 'edr',
+          vendor: 'CrowdStrike',
+          count: 4000,
+          confidence: 'high',
+        },
+        {
+          sourceName: 'some cloud stuff',
+          confidence: 'low',
+          skipReason: 'No explicit user or tenant count',
+        },
+      ],
+    };
+    const result = processCircuitResponse(JSON.stringify(payload));
+    expect(result.fields.sourceCandidates).toHaveLength(1);
+    expect(result.fields.sourceCandidates[0].applyEligible).toBe(true);
+    expect(result.fields.sourceCandidates[0].patch.number_of_endpoints).toBe(4000);
+    expect(result.fields.sourceHints.some((h) => h.skipReason?.includes('tenant count'))).toBe(true);
   });
 });
 

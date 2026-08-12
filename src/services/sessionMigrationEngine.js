@@ -8,7 +8,7 @@
 import { remapLegacyCurrentStep } from '../config/workflowSteps.js'
 import { applyIntakeDefaults } from '../config/intakeDefaults.js'
 
-export const CURRENT_SCHEMA_VERSION = 6
+export const CURRENT_SCHEMA_VERSION = 7
 
 const INITIAL_STATE_SHAPE = {
   currentStep: 0,
@@ -29,6 +29,7 @@ const INITIAL_STATE_SHAPE = {
     walkGoalPresetId: '',
     runGoalPresetId: '',
     sourceHints: [],
+    aiImportSummary: null,
     pathBudgetPercentages: { crawl: 80, walk: 100, run: 110 },
     budgetGbDayOverride: null,
     recommendedApps: [],
@@ -97,6 +98,10 @@ export function migrateSession(raw) {
 
     if ((state.schemaVersion ?? 0) < 6) {
       state = migrateV5ToV6(state)
+    }
+
+    if ((state.schemaVersion ?? 0) < 7) {
+      state = migrateV6ToV7(state)
     }
 
     return { state: finalizeSessionState(state), migrated: true, fromVersion, error: null }
@@ -241,6 +246,20 @@ export function migrateV5ToV6(state) {
     migrated.currentStep = remapLegacyCurrentStep(migrated.currentStep)
   }
   migrated.schemaVersion = 6
+  return migrated
+}
+
+/**
+ * v6 → v7: Cursor-assisted import AI summary on intake.
+ */
+export function migrateV6ToV7(state) {
+  const migrated = { ...state }
+  if (!migrated.intake || typeof migrated.intake !== 'object') {
+    migrated.intake = { ...INITIAL_STATE_SHAPE.intake }
+  } else if (migrated.intake.aiImportSummary === undefined) {
+    migrated.intake = { ...migrated.intake, aiImportSummary: null }
+  }
+  migrated.schemaVersion = 7
   return migrated
 }
 

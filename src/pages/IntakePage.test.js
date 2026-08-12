@@ -10,11 +10,18 @@ const robbins = sampleScenarios.find((s) => s.id === 'robbins_retail_hybrid');
 
 describe('IntakePage simplified UX', () => {
   it('shows only core intake sections on the main scroll', () => {
-    expect(pageSource).toContain('Circuit-assisted import');
+    expect(pageSource).toContain('Cursor-assisted import');
     expect(pageSource).toContain('Customer');
     expect(pageSource).toContain('Budget');
     expect(pageSource).toContain('Apps');
     expect(pageSource).toContain('Path targets');
+  });
+
+  it('includes Cursor import workflow and AI summary card', () => {
+    expect(pageSource).toContain('Copy Cursor Extraction Prompt');
+    expect(pageSource).toContain('Process Cursor Output');
+    expect(pageSource).toContain('AiImportSummaryCard');
+    expect(pageSource).toContain('Sources to apply');
   });
 
   it('does not render removed sections or example profile panel', () => {

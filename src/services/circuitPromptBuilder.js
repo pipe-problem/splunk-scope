@@ -1,11 +1,12 @@
 /**
- * Builds a copyable prompt for Cisco Circuit structured intake extraction.
- * No network calls — SE copies prompt into Circuit manually.
+ * Builds a copyable prompt for Cursor-assisted structured intake extraction.
+ * No network calls — SE copies prompt into Cursor manually.
  */
 import useCaseProfiles from '../data/useCaseProfiles.json';
 import { getAllGoalPresetIds, getGoalPresetsForPhase } from '../utils/goalPresets.js';
 import { getAllowedIntakeSplunkAppIds } from './intakeImportHelpers.js';
 import { getIntakeSplunkAppsCatalog } from './splunkAppsCatalog.js';
+import { buildSourceCatalogAppendix } from './importSourceMapper.js';
 
 const ALLOWED_DEPLOYMENT = ['cloud', 'onprem', 'hybrid', 'unknown'];
 
@@ -16,18 +17,19 @@ function formatPresetList(phase) {
 }
 
 /**
- * @returns {string} Full prompt text for Circuit
+ * @returns {string} Full prompt text for Cursor-assisted import
  */
 export function buildCircuitExtractionPrompt() {
   const useCaseNames = useCaseProfiles.map((p) => p.name);
   const apps = getIntakeSplunkAppsCatalog().flatMap((cat) => cat.apps);
   const appLines = apps.map((a) => `  - ${a.id}: ${a.name}`).join('\n');
   const presetIds = getAllGoalPresetIds();
+  const sourceCatalogAppendix = buildSourceCatalogAppendix();
 
   return [
     'You are helping prepare structured intake for Splunk Scope — a Splunk sales engineering planning tool.',
     '',
-    'Analyze the customer notes pasted AFTER this prompt. Return JSON only.',
+    'Analyze the customer notes pasted AFTER this prompt (and any attached PDFs or emails). Return JSON only.',
     'Do not include markdown. Do not include explanations outside JSON.',
     '',
     'Extract only what is stated or strongly implied in the notes.',
@@ -41,6 +43,11 @@ export function buildCircuitExtractionPrompt() {
     '  "budget": null,',
     '  "summary": "",',
     '  "discoveryNotes": "",',
+    '  "aiSummary": {',
+    '    "useCaseAssessment": "",',
+    '    "recommendedSplunkCapabilities": [],',
+    '    "recommendedAppIds": []',
+    '  },',
     '  "primaryUseCases": [],',
     '  "secondaryUseCases": [],',
     '  "splunkApps": [],',
@@ -59,6 +66,9 @@ export function buildCircuitExtractionPrompt() {
     '      "vendor": null,',
     '      "product": null,',
     '      "count": null,',
+    '      "inputs": {},',
+    '      "confidence": "low | medium | high",',
+    '      "skipReason": null,',
     '      "environment": "unknown",',
     '      "status": "current",',
     '      "notes": ""',
@@ -79,7 +89,7 @@ export function buildCircuitExtractionPrompt() {
     'Allowed use case names (use exactly — primaryUseCases and secondaryUseCases):',
     useCaseNames.map((n) => `  - ${n}`).join('\n'),
     '',
-    'Allowed Splunk app IDs (splunkApps array — use IDs exactly):',
+    'Allowed Splunk app IDs (splunkApps and aiSummary.recommendedAppIds — use IDs exactly):',
     appLines,
     '',
     'Allowed crawl goal preset IDs (crawlGoalPresetId — use one ID exactly, or null):',
@@ -102,6 +112,20 @@ export function buildCircuitExtractionPrompt() {
     `  walk: ${presetIds.walk.join(', ')}`,
     `  run: ${presetIds.run.join(', ')}`,
     '',
+    sourceCatalogAppendix,
+    '',
+    'Source confidence rules (critical):',
+    '- Set dataSources[].confidence to "high" ONLY when sourceId, explicit count, and vendor (if required) are clear in the notes.',
+    '- Use "medium" when the source is likely but count or vendor needs SE confirmation.',
+    '- Use "low" for vague mentions (e.g. "some cloud stuff", "maybe O365") — set skipReason explaining why.',
+    '- Populate inputs with catalog primary field names when known (e.g. number_of_endpoints, number_of_dcs).',
+    '- Do NOT size sources you cannot map to a catalog sourceId.',
+    '',
+    'aiSummary rules:',
+    '- useCaseAssessment: 2–3 sentences describing what this customer appears to need (SOC, observability, compliance, etc.).',
+    '- recommendedSplunkCapabilities: short bullets (Enterprise Security, CIM, SOAR, ITSI, UBA, etc.).',
+    '- recommendedAppIds: subset of allowed Splunk app IDs that fit the use case.',
+    '',
     'Rules:',
     '- Use only allowed use case names exactly.',
     '- Use only allowed Splunk app IDs exactly in splunkApps.',
@@ -112,10 +136,13 @@ export function buildCircuitExtractionPrompt() {
     '- Put uncertain items in openQuestions.',
     '- Return JSON only.',
     '',
-    '--- Paste customer meeting notes, emails, discovery notes, or customer details below this line ---',
+    '--- Paste customer meeting notes, emails, discovery notes, RFP excerpts, or customer details below this line ---',
     '',
   ].join('\n');
 }
+
+/** Alias for Cursor-assisted import UI. */
+export const buildCursorExtractionPrompt = buildCircuitExtractionPrompt;
 
 export function getAllowedDeploymentTypes() {
   return [...ALLOWED_DEPLOYMENT];

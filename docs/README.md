@@ -14,7 +14,7 @@ Product and engineering documentation for **Splunk Scope** (v2.0.1).
 |-----|-------------|
 | [`USER_GUIDE.md`](./USER_GUIDE.md) | Every workflow step: Intake → Analysis → Sources → Review → Paths → Report |
 | [`SIZING_METHODOLOGY.md`](./SIZING_METHODOLOGY.md) | GB/day bands, units, multipliers, when to override |
-| [`CIRCUIT_IMPORT.md`](./CIRCUIT_IMPORT.md) | Circuit-assisted intake import |
+| [`CURSOR_IMPORT.md`](./CURSOR_IMPORT.md) | Cursor-assisted intake import |
 | [`SOURCE_RECOMMENDATION_RULES.md`](./SOURCE_RECOMMENDATION_RULES.md) | How source priority labels and scores work |
 | [`APP_RECOMMENDATION_ENGINE.md`](./APP_RECOMMENDATION_ENGINE.md) | How Splunk product suggestions are derived |
 

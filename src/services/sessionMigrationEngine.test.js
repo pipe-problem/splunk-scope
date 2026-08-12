@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   migrateSession,
   migrateV5ToV6,
+  migrateV6ToV7,
   CURRENT_SCHEMA_VERSION,
 } from './sessionMigrationEngine.js';
 import { LEGACY_STEP, STEP, remapLegacyCurrentStep } from '../config/workflowSteps.js';
@@ -73,5 +74,13 @@ describe('migrateSession v5→v6', () => {
     expect(state.intake.pathBudgetPercentages).toEqual({ crawl: 80, walk: 100, run: 110 });
     expect(state.intake.budgetGbDayOverride).toBeNull();
     expect(Array.isArray(state.intake.recommendedApps)).toBe(true);
+  });
+});
+
+describe('migrateV6ToV7', () => {
+  it('adds aiImportSummary null on intake', () => {
+    const migrated = migrateV6ToV7({ ...baseSession, schemaVersion: 6, intake: { customerName: 'Acme' } });
+    expect(migrated.schemaVersion).toBe(7);
+    expect(migrated.intake.aiImportSummary).toBeNull();
   });
 });
