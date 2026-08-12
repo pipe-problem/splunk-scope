@@ -7,6 +7,7 @@ import { getAllGoalPresetIds, getGoalPresetsForPhase } from '../utils/goalPreset
 import { getAllowedIntakeSplunkAppIds } from './intakeImportHelpers.js';
 import { getIntakeSplunkAppsCatalog } from './splunkAppsCatalog.js';
 import { buildSourceCatalogAppendix } from './importSourceMapper.js';
+import { CURSOR_IMPORT_SKILL_PREAMBLE } from './cursorImportSkillPrompt.js';
 
 const ALLOWED_DEPLOYMENT = ['cloud', 'onprem', 'hybrid', 'unknown'];
 
@@ -27,6 +28,7 @@ export function buildCircuitExtractionPrompt() {
   const sourceCatalogAppendix = buildSourceCatalogAppendix();
 
   return [
+    CURSOR_IMPORT_SKILL_PREAMBLE,
     'You are helping prepare structured intake for Splunk Scope — a Splunk sales engineering planning tool.',
     '',
     'Analyze the customer notes pasted AFTER this prompt (and any attached PDFs or emails). Return JSON only.',

@@ -22,6 +22,8 @@ describe('IntakePage simplified UX', () => {
     expect(pageSource).toContain('Process Cursor Output');
     expect(pageSource).toContain('AiImportSummaryCard');
     expect(pageSource).toContain('Sources to apply');
+    expect(pageSource).toContain('editCount');
+    expect(pageSource).toContain('splunk-scope-import');
   });
 
   it('does not render removed sections or example profile panel', () => {

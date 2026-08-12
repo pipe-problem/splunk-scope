@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapImportDataSources } from './importSourceMapper.js';
+import { mapImportDataSources, buildImportPreviewRows, buildAppliedSourcePatch } from './importSourceMapper.js';
 
 describe('importSourceMapper', () => {
   it('maps high-confidence EDR with count and vendor to apply-eligible candidate', () => {
@@ -91,5 +91,20 @@ describe('importSourceMapper', () => {
     ]);
 
     expect(sourceCandidates[0].applyEligible).toBe(false);
+  });
+
+  it('buildImportPreviewRows merges hint-only mapped sources', () => {
+    const rows = buildImportPreviewRows(
+      [],
+      [{ sourceId: 'firewalls', sourceName: 'Firewalls', count: 10, vendor: 'Palo Alto Networks', confidence: 'medium' }],
+    );
+    expect(rows).toHaveLength(1);
+    expect(rows[0].editCount).toBe(10);
+  });
+
+  it('buildAppliedSourcePatch maps count to primary field', () => {
+    const patch = buildAppliedSourcePatch('active_directory', { count: 6, vendor: 'Microsoft Active Directory' });
+    expect(patch.number_of_dcs).toBe(6);
+    expect(patch.status).toBe('current');
   });
 });

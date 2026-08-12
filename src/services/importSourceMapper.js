@@ -193,6 +193,75 @@ export function mapImportDataSources(dataSources, warnings = []) {
   return { sourceCandidates, sourceHints };
 }
 
+/**
+ * Merge mapped candidates and hints into editable preview rows (deduped by sourceId).
+ * @param {object[]} sourceCandidates
+ * @param {object[]} sourceHints
+ */
+export function buildImportPreviewRows(sourceCandidates = [], sourceHints = []) {
+  const byId = new Map();
+
+  for (const candidate of sourceCandidates || []) {
+    if (!candidate?.sourceId) continue;
+    byId.set(candidate.sourceId, {
+      ...candidate,
+      editCount: candidate.primaryCount ?? '',
+      editVendor: candidate.vendor ?? '',
+    });
+  }
+
+  for (const hint of sourceHints || []) {
+    if (!hint?.sourceId || byId.has(hint.sourceId)) continue;
+    const primaryField = getPrimaryInputField(hint.sourceId);
+    const catalogEntry = CATALOG_BY_ID.get(hint.sourceId);
+    byId.set(hint.sourceId, {
+      sourceId: hint.sourceId,
+      sourceName: catalogEntry?.name || hint.sourceName || hint.sourceId,
+      confidence: hint.confidence || 'low',
+      applyEligible: false,
+      applyByDefault: false,
+      skipReason: hint.skipReason || null,
+      primaryField,
+      primaryCount: hint.count ?? null,
+      vendor: hint.vendor || null,
+      patch: { status: hint.status === 'future' ? 'future' : 'current' },
+      editCount: hint.count ?? '',
+      editVendor: hint.vendor ?? '',
+    });
+  }
+
+  return [...byId.values()];
+}
+
+/**
+ * Build a Sources-page patch from SE-edited preview values (apply time).
+ * @param {string} sourceId
+ * @param {{ count?: *, vendor?: string|null, status?: string, notes?: string, inputs?: object }} edits
+ * @returns {object|null}
+ */
+export function buildAppliedSourcePatch(sourceId, edits = {}) {
+  const catalogEntry = CATALOG_BY_ID.get(sourceId);
+  if (!catalogEntry) return null;
+
+  const count = parsePositiveNumber(edits.count);
+  if (count == null) return null;
+
+  const row = {
+    sourceId,
+    count,
+    vendor: edits.vendor ?? null,
+    status: edits.status || 'current',
+    notes: edits.notes || '',
+    inputs: edits.inputs || {},
+  };
+
+  const { patch } = buildInputPatch(sourceId, row, catalogEntry);
+  return {
+    status: row.status === 'future' ? 'future' : 'current',
+    ...patch,
+  };
+}
+
 export function buildSourceCatalogAppendix() {
   const lines = ['Source catalog (use sourceId exactly; map counts to primaryInputField):'];
   for (const entry of FLAT_CATALOG) {

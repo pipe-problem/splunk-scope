@@ -235,7 +235,7 @@ Home → Intake → Analysis → Data Sources → Review → Architecture Paths 
 
 | Step | What you do here |
 |------|------------------|
-| **Intake** | Customer context, use cases, apps, goals, optional budget; Circuit import or Load Example |
+| **Intake** | Customer context, use cases, apps, goals, optional budget; Cursor import or Load Example |
 | **Analysis** | Customer-facing summary and Splunk product suggestions |
 | **Data Sources** | Configure sources, enter quantities, resolve overlap annotations |
 | **Review** | Sanity-check ingest totals and missing priorities |
@@ -260,7 +260,7 @@ Overlap notes are **annotate-only**: they flag possible double-counting between 
 | [**Documentation index**](docs/DOC_INDEX.md) | Full list of guides and reference material |
 | [**Versioning**](docs/VERSIONING.md) | Release numbering and checklist |
 | [**Sizing Methodology**](docs/SIZING_METHODOLOGY.md) | How GB/day bands and units are calculated |
-| [**Circuit Import**](docs/CIRCUIT_IMPORT.md) | Paste discovery notes from Circuit or other LLM workflows |
+| [**Cursor Import**](docs/CURSOR_IMPORT.md) | Paste discovery JSON from Cursor or other LLM workflows |
 | [**Source Recommendation Rules**](docs/SOURCE_RECOMMENDATION_RULES.md) | How source priorities and labels are assigned |
 | [**App Recommendation Engine**](docs/APP_RECOMMENDATION_ENGINE.md) | How Splunk product suggestions are derived |
 
@@ -272,7 +272,7 @@ Additional reference material lives under [`docs/`](docs/). See [`docs/DOC_INDEX
 
 - Session data stays in **your browser** (`localStorage`) until you export it
 - Scope does not send customer data to external services at runtime
-- Circuit-assisted import is **copy/paste only**—you control what text enters the app
+- Cursor-assisted import is **copy/paste only**—you control what text enters the app
 - Splunkbase and documentation links open in your browser when you click them
 
 ---

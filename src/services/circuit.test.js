@@ -88,6 +88,13 @@ describe('circuitPromptBuilder', () => {
     expect(prompt).toContain('primaryInputField');
     expect(prompt).toContain('sourceId exactly');
   });
+
+  it('embeds splunk-scope-import skill instructions', () => {
+    const prompt = buildCircuitExtractionPrompt();
+    expect(prompt).toContain('splunk-scope-import');
+    expect(prompt).toContain('@splunk-scope-import');
+    expect(prompt).toContain('.cursor/skills/splunk-scope-import/SKILL.md');
+  });
 });
 
 describe('circuitResponseProcessor', () => {

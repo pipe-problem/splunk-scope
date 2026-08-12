@@ -15,6 +15,10 @@ import sampleScenarios, { getSampleScenarioById } from '../data/sampleScenarios'
 import { parseCustomerContext, formatExtractionSummary } from '../services/contextImportEngine';
 import { buildCircuitExtractionPrompt } from '../services/circuitPromptBuilder.js';
 import { processCircuitResponse } from '../services/circuitResponseProcessor.js';
+import {
+  buildAppliedSourcePatch,
+  buildImportPreviewRows,
+} from '../services/importSourceMapper.js';
 import { matchParsedSplunkLabelToAppId } from '../services/intakeImportHelpers.js';
 import {
   getGoalPresetsForPhase,
@@ -229,6 +233,10 @@ export default function IntakePage() {
           .map((c) => c.sourceId),
       );
       setSelectedSourceIds(defaultSelected);
+      const sourcePreviewRows = buildImportPreviewRows(
+        result.fields.sourceCandidates,
+        result.fields.sourceHints,
+      );
       setPreviewEdits({
         customerName: result.fields.customerName || '',
         deploymentType: result.fields.deploymentType || 'unknown',
@@ -240,8 +248,8 @@ export default function IntakePage() {
         walkGoalPresetId: result.fields.walkGoalPresetId || DEFAULT_GOAL_PRESET_IDS.walk,
         runGoalPresetId: result.fields.runGoalPresetId || DEFAULT_GOAL_PRESET_IDS.run,
         pathBudgetPercentages: result.fields.pathBudgetPercentages || { ...DEFAULT_PATH_BUDGET_PERCENTAGES },
-        sourceHints: result.fields.sourceHints || [],
-        sourceCandidates: result.fields.sourceCandidates || [],
+        sourceHints: (result.fields.sourceHints || []).filter((h) => !h.sourceId),
+        sourcePreviewRows,
         aiImportSummary: result.fields.aiImportSummary || null,
       });
       setApplyBudget(result.fields.budget != null);
@@ -295,9 +303,23 @@ export default function IntakePage() {
     dispatch({ type: 'UPDATE_INTAKE', payload: updates });
 
     const sourcePatches = {};
-    for (const candidate of previewEdits.sourceCandidates || []) {
-      if (!selectedSourceIds.has(candidate.sourceId)) continue;
-      sourcePatches[candidate.sourceId] = candidate.patch;
+    const skippedSources = [];
+    for (const row of previewEdits.sourcePreviewRows || []) {
+      if (!selectedSourceIds.has(row.sourceId)) continue;
+      const patch = buildAppliedSourcePatch(row.sourceId, {
+        count: row.editCount,
+        vendor: row.editVendor,
+        status: row.patch?.status,
+        notes: row.patch?.notes,
+      });
+      if (patch) {
+        sourcePatches[row.sourceId] = { ...row.patch, ...patch };
+      } else {
+        skippedSources.push(row.sourceName || row.sourceId);
+      }
+    }
+    if (skippedSources.length > 0) {
+      toast.error(`Skipped ${skippedSources.length} source(s) — enter a valid count before apply.`);
     }
     if (Object.keys(sourcePatches).length > 0) {
       dispatch({ type: 'APPLY_IMPORTED_SOURCES', payload: sourcePatches });
@@ -464,7 +486,7 @@ export default function IntakePage() {
               <span className="text-badge uppercase tracking-wider text-[var(--cast-text-muted)] px-1.5 py-0.5 rounded border border-[var(--cast-border)]/80">Structured import</span>
             </div>
             <p className="text-label text-[var(--cast-text-secondary)] mb-3 leading-snug">
-              Copy the extraction prompt into Cursor, attach customer notes or PDFs there, then paste Cursor&apos;s JSON response below.
+              Copy the extraction prompt into Cursor (includes the <code className="text-[12px]">splunk-scope-import</code> skill instructions), attach customer notes or PDFs, then paste Cursor&apos;s JSON below.
               Customer notes stay in Cursor — Scope only parses structured JSON locally.
             </p>
             <div className="flex flex-wrap gap-2 mb-3">
@@ -803,7 +825,16 @@ function CircuitPreview({
     setSelectedSourceIds(next);
   }
 
-  const candidates = previewEdits.sourceCandidates || [];
+  function updatePreviewSourceRow(sourceId, updates) {
+    setPreviewEdits({
+      ...previewEdits,
+      sourcePreviewRows: (previewEdits.sourcePreviewRows || []).map((row) => (
+        row.sourceId === sourceId ? { ...row, ...updates } : row
+      )),
+    });
+  }
+
+  const previewRows = previewEdits.sourcePreviewRows || [];
 
   return (
     <div className="card-alt border border-[var(--cast-border-strong)] p-3 space-y-2 relative">
@@ -899,10 +930,12 @@ function CircuitPreview({
             </select>
           </div>
         </div>
-        {(candidates.length > 0) && (
+        {(previewRows.length > 0) && (
           <div>
             <span className="text-badge text-[var(--cast-text-muted)] uppercase">Sources to apply</span>
-            <p className="text-badge text-[var(--cast-text-muted)] mt-0.5 mb-1">High-confidence sources are checked by default. Uncheck any you do not want pre-filled on the Sources page.</p>
+            <p className="text-badge text-[var(--cast-text-muted)] mt-0.5 mb-1">
+              High-confidence sources are checked by default. Check any row you want on the Sources page, enter counts, then apply.
+            </p>
             <div className="overflow-x-auto rounded-lg border border-[var(--cast-border)]">
               <table className="w-full text-badge">
                 <thead>
@@ -915,31 +948,47 @@ function CircuitPreview({
                   </tr>
                 </thead>
                 <tbody>
-                  {candidates.map((candidate) => {
-                    const badge = confidenceStyle(candidate.confidence);
+                  {previewRows.map((row) => {
+                    const badge = confidenceStyle(row.confidence);
                     return (
-                      <tr key={candidate.sourceId} className="border-b border-[var(--cast-border)]/60 last:border-0">
+                      <tr key={row.sourceId} className="border-b border-[var(--cast-border)]/60 last:border-0">
                         <td className="p-2 align-top">
                           <input
                             type="checkbox"
-                            checked={selectedSourceIds.has(candidate.sourceId)}
-                            disabled={!candidate.applyEligible}
-                            onChange={() => toggleSourceApply(candidate.sourceId)}
-                            aria-label={`Apply ${candidate.sourceName}`}
+                            checked={selectedSourceIds.has(row.sourceId)}
+                            onChange={() => toggleSourceApply(row.sourceId)}
+                            aria-label={`Apply ${row.sourceName}`}
                           />
                         </td>
                         <td className="p-2 align-top">
-                          <div className="font-medium text-[var(--cast-text)]">{candidate.sourceName}</div>
-                          <div className="text-[var(--cast-text-muted)]">{candidate.sourceId}</div>
-                          {candidate.skipReason && !candidate.applyEligible && (
-                            <div className="text-[var(--cast-warning)] mt-0.5">{candidate.skipReason}</div>
+                          <div className="font-medium text-[var(--cast-text)]">{row.sourceName}</div>
+                          <div className="text-[var(--cast-text-muted)]">{row.sourceId}</div>
+                          {row.skipReason && (
+                            <div className="text-[var(--cast-warning)] mt-0.5">{row.skipReason}</div>
                           )}
                         </td>
-                        <td className="p-2 align-top">{candidate.primaryCount ?? '—'}</td>
-                        <td className="p-2 align-top">{candidate.vendor || '—'}</td>
+                        <td className="p-2 align-top">
+                          <input
+                            type="number"
+                            min={1}
+                            className="input-field w-24 text-sm"
+                            value={row.editCount ?? ''}
+                            placeholder="Count"
+                            onChange={(e) => updatePreviewSourceRow(row.sourceId, { editCount: e.target.value })}
+                          />
+                        </td>
+                        <td className="p-2 align-top">
+                          <input
+                            type="text"
+                            className="input-field w-full min-w-[8rem] text-sm"
+                            value={row.editVendor ?? ''}
+                            placeholder="Vendor"
+                            onChange={(e) => updatePreviewSourceRow(row.sourceId, { editVendor: e.target.value })}
+                          />
+                        </td>
                         <td className="p-2 align-top">
                           <span className="px-2 py-0.5 rounded-full capitalize" style={{ color: badge.fg, backgroundColor: badge.bg }}>
-                            {candidate.confidence}
+                            {row.confidence}
                           </span>
                         </td>
                       </tr>

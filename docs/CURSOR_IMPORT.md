@@ -24,9 +24,9 @@ All parsing after paste runs **locally in the browser**. Customer content only t
    ```bash
    node scripts/validate-import-json.mjs scope-import.json
    ```
-5. Paste into Scope **Intake → Cursor-assisted import → Process Cursor Output → Apply to Intake**.
+5. Paste into Scope **Intake → Cursor-assisted import → Process Cursor Output**. In the preview, check sources to apply, **edit counts and vendors inline**, then **Apply to Intake**.
 
-Regenerate the copyable prompt after catalog changes:
+Regenerate the copyable prompt after catalog changes (prompt embeds **splunk-scope-import** skill instructions):
 
 ```bash
 node scripts/generate-import-prompt.mjs > scope-import-prompt.txt
