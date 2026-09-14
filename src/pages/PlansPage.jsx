@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import sourceCatalog from '../data/sources.json';
 import { generatePlans } from '../services/planEngine';
 import { computeIngestBudgetFromIntake } from '../services/budgetEngine';
@@ -24,6 +25,7 @@ const flatCatalog = flattenSourceCatalog(sourceCatalog);
 
 export default function PlansPage() {
   const { state, dispatch } = useApp();
+  const { goToStep } = useWorkflowNavigation();
 
   const useCases = useMemo(() => resolveUseCaseProfiles(state.intake).profiles, [state.intake]);
 
@@ -112,9 +114,9 @@ export default function PlansPage() {
           state={state}
           backLabel={SHOW_COVERAGE_PAGE ? 'Coverage' : 'Review'}
           backStep={SHOW_COVERAGE_PAGE ? STEP.COVERAGE : STEP.REVIEW}
-          onBack={() => dispatch({ type: 'SET_STEP', payload: SHOW_COVERAGE_PAGE ? STEP.COVERAGE : STEP.REVIEW })}
+          onBack={() => goToStep(SHOW_COVERAGE_PAGE ? STEP.COVERAGE : STEP.REVIEW)}
           continueLabel="Report"
-          onContinue={() => dispatch({ type: 'SET_STEP', payload: STEP.REPORT })}
+          onContinue={() => goToStep(STEP.REPORT)}
         />
       </div>
 

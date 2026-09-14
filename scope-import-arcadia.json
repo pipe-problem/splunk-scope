@@ -1,0 +1,247 @@
+{
+  "customerName": "City of Arcadia",
+  "deploymentType": "unknown",
+  "budget": null,
+  "summary": "City of Arcadia is evaluating Splunk for centralized log management and security monitoring across municipal infrastructure. They want budgetary pricing for Splunk Enterprise and Splunk Cloud (1/3/5-year subscriptions) plus professional services, and plan to validate the platform via a POV or trial before procurement.",
+  "discoveryNotes": "Anticipated log sources: Palo Alto firewalls, Cisco switches/routers, VMware ESXi and vCenter, Windows servers, Active Directory, Genetec Security Center, CAD/RMS, network monitoring, UPS, and environmental monitoring. Separate endpoint pricing requested for approximately 350–400 desktops/laptops. Evaluating Splunk Enterprise vs Splunk Cloud; daily ingest volume, retention, and device counts not yet captured. Follow-up technical discovery scheduled 7/23/2026.",
+  "aiSummary": {
+    "useCaseAssessment": "Municipal government seeking centralized log management with improved security monitoring and operational visibility across city infrastructure. Evaluation is early-stage with POV validation planned before purchase; sizing depends on follow-up discovery for ingest volume, retention, and per-source device counts.",
+    "recommendedSplunkCapabilities": [
+      "Centralized log ingestion and search across network, server, and identity telemetry",
+      "Enterprise Security for SOC-style monitoring and correlation",
+      "CIM normalization for firewall, AD, and network device data",
+      "Dashboards and reporting for operational and security stakeholders",
+      "Proof of Value scoped to representative high-value sources before full rollout"
+    ],
+    "recommendedAppIds": [
+      "enterprise_security",
+      "enterprise",
+      "cloud_platform",
+      "app_windows_infrastructure",
+      "app_vmware",
+      "monitoring_console",
+      "infosec_app"
+    ]
+  },
+  "primaryUseCases": [
+    "Foundational Security / InfoSec",
+    "Enterprise Security / SIEM",
+    "IT Operations Monitoring"
+  ],
+  "secondaryUseCases": [
+    "Threat Detection and Investigation",
+    "Platform Administration / Splunk Health"
+  ],
+  "splunkApps": [
+    "enterprise_security",
+    "enterprise",
+    "cloud_platform",
+    "app_windows_infrastructure",
+    "app_vmware",
+    "monitoring_console"
+  ],
+  "crawlGoalPresetId": "crawl_initial_security_visibility",
+  "walkGoalPresetId": "walk_expand_correlation",
+  "runGoalPresetId": "run_optimize_and_mature",
+  "pathBudgetPercentages": {
+    "crawl": 80,
+    "walk": 100,
+    "run": 110
+  },
+  "dataSources": [
+    {
+      "sourceName": "Firewalls (Next-Gen Firewalls)",
+      "sourceId": "firewalls",
+      "vendor": "Palo Alto Networks",
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "Firewall vendor confirmed (Palo Alto) but device count not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer anticipates ingesting Palo Alto firewall logs."
+    },
+    {
+      "sourceName": "Network Switches",
+      "sourceId": "switches",
+      "vendor": "Cisco",
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "Switch vendor confirmed (Cisco) but managed switch count not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer anticipates ingesting Cisco switch logs."
+    },
+    {
+      "sourceName": "Routers",
+      "sourceId": "routers",
+      "vendor": "Cisco",
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "Router vendor confirmed (Cisco) but router count not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer anticipates ingesting Cisco router logs."
+    },
+    {
+      "sourceName": "Virtual Infrastructure (Hypervisor)",
+      "sourceId": "hypervisor",
+      "vendor": "VMware",
+      "product": "ESXi / vCenter",
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "VMware ESXi and vCenter mentioned but host/management system counts not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Includes VMware ESXi hosts and vCenter management logs."
+    },
+    {
+      "sourceName": "Windows Servers",
+      "sourceId": "windows_servers",
+      "vendor": "Microsoft Windows Server",
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "Windows servers in scope but server count not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer listed Windows servers among anticipated log sources."
+    },
+    {
+      "sourceName": "Active Directory / Domain Controllers",
+      "sourceId": "active_directory",
+      "vendor": "Microsoft Active Directory",
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "medium",
+      "skipReason": "Active Directory mentioned but domain controller count not provided",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer anticipates ingesting Active Directory security and authentication logs."
+    },
+    {
+      "sourceName": "Desktops / Workstations",
+      "sourceId": "desktops",
+      "vendor": "Microsoft Windows",
+      "product": null,
+      "count": 375,
+      "inputs": {
+        "number_of_endpoints": 375
+      },
+      "confidence": "medium",
+      "skipReason": "Endpoint count given as approximate range (350–400); midpoint used pending confirmation",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer requested separate endpoint/workstation logging pricing for approximately 350–400 desktops and laptops."
+    },
+    {
+      "sourceName": "Genetec Security Center",
+      "sourceId": null,
+      "vendor": "Genetec",
+      "product": "Security Center",
+      "count": null,
+      "inputs": {},
+      "confidence": "low",
+      "skipReason": "Physical security / VMS platform not mapped to catalog sourceId; confirm ingest method and sizing unit",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer anticipates Genetec Security Center logs; no catalog sourceId available."
+    },
+    {
+      "sourceName": "CAD/RMS systems",
+      "sourceId": null,
+      "vendor": null,
+      "product": "CAD/RMS",
+      "count": null,
+      "inputs": {},
+      "confidence": "low",
+      "skipReason": "Public-safety CAD/RMS mentioned without vendor, instance count, or catalog mapping",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer listed CAD/RMS among critical city infrastructure log sources."
+    },
+    {
+      "sourceName": "Network monitoring systems",
+      "sourceId": "netflow",
+      "vendor": null,
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "low",
+      "skipReason": "Network monitoring mentioned generically; confirm whether NetFlow/sFlow/IPFIX or SNMP/syslog-only tooling",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Placed under netflow as placeholder; vendor and export type unknown."
+    },
+    {
+      "sourceName": "UPS systems",
+      "sourceId": null,
+      "vendor": null,
+      "product": "UPS",
+      "count": null,
+      "inputs": {},
+      "confidence": "low",
+      "skipReason": "UPS environmental/power monitoring not mapped to catalog sourceId",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer listed UPS systems among other critical city infrastructure."
+    },
+    {
+      "sourceName": "Environmental monitoring systems",
+      "sourceId": null,
+      "vendor": null,
+      "product": null,
+      "count": null,
+      "inputs": {},
+      "confidence": "low",
+      "skipReason": "Environmental monitoring mentioned without vendor, system count, or catalog mapping",
+      "environment": "unknown",
+      "status": "current",
+      "notes": "Customer listed environmental monitoring among anticipated sources."
+    }
+  ],
+  "importantRequirements": [
+    "Centralized log management and security monitoring for municipal infrastructure",
+    "Budgetary pricing for Splunk Enterprise and Splunk Cloud Platform",
+    "Subscription term options: 1-year, 3-year, and 5-year",
+    "Include support, maintenance, professional services, deployment, configuration, and knowledge transfer",
+    "Government/municipal pricing if applicable",
+    "Proof of Value or trial validation before procurement",
+    "Separate pricing line for endpoint/workstation logging (350–400 devices)"
+  ],
+  "knownGaps": [
+    "Daily log ingestion volume (GB/day) not provided",
+    "Log retention requirements not specified",
+    "On-premises vs cloud deployment preference undecided",
+    "Device counts missing for firewalls, network gear, servers, AD, and VMware",
+    "Current logging and monitoring tools not documented",
+    "Genetec, CAD/RMS, UPS, and environmental sources lack catalog mapping and counts"
+  ],
+  "openQuestions": [
+    "What is the estimated daily ingest volume (GB/day)?",
+    "What log retention periods are required?",
+    "Preferred deployment: Splunk Enterprise on-premises, Splunk Cloud, or hybrid?",
+    "How many Palo Alto firewalls, Cisco switches, Cisco routers, Windows servers, and domain controllers?",
+    "How many VMware ESXi hosts and vCenter instances?",
+    "Exact endpoint count for workstation logging: 350, 400, or another number?",
+    "Which CAD/RMS vendor/platform and how many systems?",
+    "What network monitoring platform(s) are in use and what telemetry do they export?",
+    "Can Genetec Security Center logs be forwarded via syslog/API and at what volume?",
+    "What compliance or audit frameworks apply to the City?",
+    "What is the POV scope, timeline, and success criteria?",
+    "How many alternative vendors are being evaluated and what are buying criteria?",
+    "Is there an approved budget range or fiscal-year procurement deadline?"
+  ],
+  "confidence": {
+    "overall": "medium",
+    "notes": "Customer name, objectives, anticipated source types, and endpoint range are clear; sizing counts, ingest volume, retention, deployment choice, and several specialty municipal sources need follow-up discovery on 7/23/2026."
+  }
+}

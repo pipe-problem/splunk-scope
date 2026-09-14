@@ -154,10 +154,10 @@
       "sourceId": "casb",
       "primaryInputField": "number_of_users",
       "unitLabel": "active users",
-      "rateGbPerUnit": 0.05,
+      "rateGbPerUnit": 0.005,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Zscaler, Cisco Cloudlock, Forcepoint",
+      "notes": "Policy/alert CASB events (discovery, violations) — not full inline SaaS proxy. Use casbCollectionProfile=full_inline_saas for SWG-scale volume.",
       "sheetRowRef": "DSA (with Calculations)!A20",
       "sheetLabel": "Cloud Access Security Broker (CASB)"
     },

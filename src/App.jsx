@@ -15,7 +15,8 @@ import ScenarioComparisonPage from './pages/ScenarioComparisonPage';
 import SourceReferenceLibraryPage from './pages/SourceReferenceLibraryPage';
 import ScopeLogo from './components/layout/ScopeLogo';
 import { SHOW_COVERAGE_PAGE } from './config/featureFlags.js';
-import { WORKFLOW_STEP_DEFS, getSourcesRequiredFromStep } from './config/workflowSteps.js';
+import { WORKFLOW_STEP_DEFS, getSourcesRequiredFromStep, STEP } from './config/workflowSteps.js';
+import { navigateToWorkflowStep } from './utils/workflowNavigation.js';
 import {
   Download,
   Upload,
@@ -101,8 +102,7 @@ function App() {
   }
 
   function goHome() {
-    navigate('/');
-    dispatch({ type: 'SET_STEP', payload: 0 });
+    navigateToWorkflowStep(navigate, dispatch, 0);
   }
 
   function goToStep(stepIndex) {
@@ -114,7 +114,7 @@ function App() {
           : 'No sources configured yet — configure sources before paths for meaningful estimates.',
       );
     }
-    dispatch({ type: 'SET_STEP', payload: stepIndex });
+    navigateToWorkflowStep(navigate, dispatch, stepIndex);
   }
 
   function exportSession() {
@@ -137,6 +137,8 @@ function App() {
       try {
         const data = JSON.parse(ev.target.result);
         dispatch({ type: 'LOAD_SESSION', payload: data });
+        const step = Math.min(Math.max(0, Number(data.currentStep) || STEP.INTAKE), STEPS.length - 1);
+        navigateToWorkflowStep(navigate, dispatch, step);
         toast.success('Session imported successfully.');
       } catch {
         toast.error('Invalid session file.');
@@ -156,6 +158,7 @@ function App() {
   function handleResetClick() {
     if (!resetConfirm) { setResetConfirm(true); return; }
     dispatch({ type: 'RESET_SESSION' });
+    navigateToWorkflowStep(navigate, dispatch, 0);
     setResetConfirm(false);
     setToolsOpen(false);
     toast.info('Session reset.');

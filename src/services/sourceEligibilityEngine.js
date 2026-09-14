@@ -12,6 +12,7 @@ import { getExcludedSources } from './overlapEngine.js'
 import { formatIngestString } from '../utils/formatIngestDisplay.js'
 import { applySizingGuardrails } from './sourceSizingGuardrailEngine.js'
 import { calculateSimpleSourceIngest } from './simpleSizingEngine.js'
+import { applyPlanningAdjustments } from './sourcePlanningAdjustments.js'
 
 /**
  * Canonical ingest calculation for a source including child log options.
@@ -21,7 +22,12 @@ import { calculateSimpleSourceIngest } from './simpleSizingEngine.js'
  */
 export function calculateFullSourceIngest(source, sourceState, sizingContext) {
   if (SIZING_MODE === 'simple') {
-    return calculateSimpleSourceIngest(source, sourceState, sizingContext)
+    return applyPlanningAdjustments(
+      source,
+      sourceState,
+      calculateSimpleSourceIngest(source, sourceState, sizingContext),
+      sizingContext,
+    )
   }
 
   const rollup = sizingContext?.catalog && sizingContext?.allInputs && source?.id
@@ -52,7 +58,7 @@ export function calculateFullSourceIngest(source, sourceState, sizingContext) {
       bufferApplied: false,
       childIngest,
     }
-    return applySizingGuardrails(source, sourceState, channelResult)
+    return applyPlanningAdjustments(source, sourceState, channelResult, sizingContext)
   }
 
   const base = calculateSourceSize(source, sourceState, sizingContext)
@@ -63,7 +69,12 @@ export function calculateFullSourceIngest(source, sourceState, sizingContext) {
     high: base.high + childIngest * 1.5,
     childIngest,
   }
-  return applySizingGuardrails(source, sourceState, combined)
+  return applyPlanningAdjustments(
+    source,
+    sourceState,
+    applySizingGuardrails(source, sourceState, combined),
+    sizingContext,
+  )
 }
 
 /**

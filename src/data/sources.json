@@ -677,9 +677,9 @@
     "whyItMatters": "CASB logs reveal shadow IT, unsanctioned data sharing, and policy violations across cloud services — key for insider threat and data loss investigations.",
     "configuredItemLabel": "# of users covered",
     "sizingUnit": "per_user",
-    "sizingRate": 0.05,
-    "sizingRateLow": 0.04000000000000001,
-    "sizingRateHigh": 0.06,
+    "sizingRate": 0.005,
+    "sizingRateLow": 0.004,
+    "sizingRateHigh": 0.006,
     "exampleVendors": [
       "Zscaler",
       "Cisco Cloudlock",
@@ -717,14 +717,24 @@
         "key": "number_of_users",
         "label": "Number of users",
         "type": "number"
+      },
+      {
+        "key": "casbCollectionProfile",
+        "label": "Collection profile",
+        "type": "select",
+        "options": [
+          "policy_alerts",
+          "full_inline_saas"
+        ],
+        "defaultValue": "policy_alerts"
       }
     ],
     "sizing_formula": {
       "primary_input": "number_of_users",
       "strategy": "per_user",
-      "rate_per_unit": 0.05
+      "rate_per_unit": 0.005
     },
-    "workbookRateGbPerUnit": 0.05,
+    "workbookRateGbPerUnit": 0.005,
     "customerSummary": "Cloud app discovery, sanctioned/unsanctioned usage, and CASB policy violation logs."
   },
   {

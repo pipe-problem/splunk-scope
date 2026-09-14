@@ -14,6 +14,7 @@ import {
   Target,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import { interpretInputs } from '../services/interpretationEngine';
 import { recommendApps } from '../services/appRecommendationEngine';
 import { getGoalsForIntake, APPS_BY_ID } from '../services/goalAppSourceKnowledge.js';
@@ -213,6 +214,7 @@ function PrioritySourceRow({ row, category }) {
 
 export default function InterpretationPage() {
   const { state, dispatch } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const { intake } = state;
   const currentIntakeKey = useMemo(() => intakeKey(intake), [intake]);
   const isStale = !!(
@@ -299,7 +301,7 @@ export default function InterpretationPage() {
     if (result) {
       dispatch({ type: 'SET_INTERPRETATION', payload: result, intakeKey: currentIntakeKey });
     }
-    dispatch({ type: 'SET_STEP', payload: STEP.SOURCES });
+    goToStep(STEP.SOURCES);
   }
 
   if (!result) {
@@ -321,7 +323,7 @@ export default function InterpretationPage() {
         <PageHeaderActions
           state={state}
           backLabel="Intake"
-          onBack={() => dispatch({ type: 'SET_STEP', payload: STEP.INTAKE })}
+          onBack={() => goToStep(STEP.INTAKE)}
           continueLabel="Begin sizing"
           onContinue={goSources}
         >

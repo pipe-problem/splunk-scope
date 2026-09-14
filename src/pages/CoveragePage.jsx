@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import sourceCatalog from '../data/sources.json';
 import { DOMAIN_CATEGORIES, TELEMETRY_DOMAINS, calculateSplitCoverage, validateMultiUseCase, SIEM_DEFAULT_DOMAINS, formatDomainForCustomer } from '../services/coverageEngine';
 import { flattenSourceCatalog } from '../services/sizingEngine';
@@ -149,6 +150,7 @@ function DomainHierarchy({ splitCoverage, relevantDomains, requiredSet }) {
 
 export default function CoveragePage() {
   const { state, dispatch } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [rightTab, setRightTab] = useState('summary');
 
@@ -303,9 +305,9 @@ export default function CoveragePage() {
         <PageHeaderActions
           state={state}
           backLabel="Review"
-          onBack={() => dispatch({ type: 'SET_STEP', payload: STEP.REVIEW })}
+          onBack={() => goToStep(STEP.REVIEW)}
           continueLabel="Paths"
-          onContinue={() => dispatch({ type: 'SET_STEP', payload: STEP.PATHS })}
+          onContinue={() => goToStep(STEP.PATHS)}
         />
       </div>
 
@@ -522,7 +524,7 @@ export default function CoveragePage() {
                                 <tr
                                   key={source.id}
                                   className={`border-b border-[var(--cast-border)]/30 hover:bg-[var(--cast-panel-alt)]/50 ${isExcluded ? 'opacity-40' : ''} ${!isExcluded ? 'cursor-pointer' : ''}`}
-                                  onClick={() => { if (!isExcluded) dispatch({ type: 'SET_STEP', payload: 3 }); }}
+                                  onClick={() => { if (!isExcluded) goToStep(STEP.SOURCES); }}
                                 >
                                   <td className="py-1 px-2 font-medium text-[var(--cast-text)]">
                                     <span className={isExcluded ? 'line-through' : ''}>{source.name}</span>

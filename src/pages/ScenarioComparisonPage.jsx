@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import sourceCatalog from '../data/sources.json';
 import { flattenSourceCatalog } from '../services/sizingEngine';
 import { calculateCoverage, validateMultiUseCase, TELEMETRY_DOMAINS, formatDomainForCustomer } from '../services/coverageEngine';
@@ -59,7 +60,8 @@ function DeltaIndicator({ value, suffix = '', invert = false }) {
 }
 
 export default function ScenarioComparisonPage() {
-  const { state, dispatch } = useApp();
+  const { state } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const { scenarios } = state;
   const [leftId, setLeftId] = useState(scenarios[0]?.id || '');
   const [rightId, setRightId] = useState(scenarios[1]?.id || '');
@@ -84,7 +86,7 @@ export default function ScenarioComparisonPage() {
           <div className="flex items-center gap-3 min-w-0">
             <h2>Scenario Comparison</h2>
           </div>
-          <button type="button" onClick={() => dispatch({ type: 'SET_STEP', payload: 0 })} className="btn-secondary flex items-center gap-1.5">
+          <button type="button" onClick={() => goToStep(0)} className="btn-secondary flex items-center gap-1.5">
             <ArrowLeft size={14} /> Back
           </button>
         </div>
@@ -140,7 +142,7 @@ export default function ScenarioComparisonPage() {
           <h2>Scenario Comparison</h2>
           <p className="hidden sm:block page-subtitle">Compare ingest, coverage, and source mix between saved scenarios</p>
         </div>
-        <button type="button" onClick={() => dispatch({ type: 'SET_STEP', payload: 0 })} className="btn-secondary flex items-center gap-1.5">
+        <button type="button" onClick={() => goToStep(0)} className="btn-secondary flex items-center gap-1.5">
           <ArrowLeft size={14} /> Back
         </button>
       </div>
