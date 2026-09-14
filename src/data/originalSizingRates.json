@@ -64,12 +64,12 @@
     },
     "saas_general": {
       "sourceId": "saas_general",
-      "primaryInputField": "number_of_users",
-      "unitLabel": "saas tenants, active users, and integrations",
+      "primaryInputField": "saasTenantCount",
+      "unitLabel": "SaaS applications / tenants",
       "rateGbPerUnit": 0.15,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Cloud Services like 365; Web Conferencing etc. See grouping",
+      "notes": "Parent catch-all for distinct SaaS applications, tenants, orgs, or instances not covered by dedicated child rows. The 0.15 rate is per SaaS item, not per user.",
       "sheetRowRef": "DSA (with Calculations)!A12",
       "sheetLabel": "SaaS"
     },
@@ -482,11 +482,11 @@
     "dlp": {
       "sourceId": "dlp",
       "primaryInputField": "number_of_users",
-      "unitLabel": "endpoints covered by dlp",
-      "rateGbPerUnit": 0.05,
+      "unitLabel": "active users / endpoints monitored by DLP",
+      "rateGbPerUnit": 0.002,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,
-      "notes": "Microsoft; Clearswift; Digital Guardian; Symantec; McAfee",
+      "notes": "Policy violations, incidents, and classification results. Calibrated at 0.002 GB per monitored user/day; 0.05 is retained only as a per-product/channel planning floor.",
       "sheetRowRef": "DSA (with Calculations)!A82",
       "sheetLabel": "Data Loss/Leakage Prevention (DLP)"
     },

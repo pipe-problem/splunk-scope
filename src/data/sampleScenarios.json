@@ -117,7 +117,7 @@
       },
       "saas_office": { "status": "current", "officeActiveUserCount": 1200, "vendor": "Microsoft 365" },
       "saas_crm": { "status": "current", "number_of_users": 350, "vendor": "Salesforce" },
-      "saas_general": { "status": "current", "number_of_users": 500, "vendor": "Average / Blended" },
+      "saas_general": { "status": "current", "saasTenantCount": 5, "vendor": "Average / Blended" },
       "database": { "status": "current", "number_of_instances": 20, "vendor": "PostgreSQL" },
       "app_servers": { "status": "current", "number_of_servers": 35 },
       "dlp": { "status": "current", "number_of_users": 1200 },

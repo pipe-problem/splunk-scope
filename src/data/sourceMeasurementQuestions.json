@@ -46,11 +46,11 @@
     },
     "saas_general": {
       "sourceId": "saas_general",
-      "question": "How many active users or SaaS tenants generate audit logs not covered elsewhere?",
-      "primaryInputField": "number_of_users",
-      "unitLabel": "saas tenants, active users, and integrations",
-      "exampleQuantity": 8500,
-      "helperText": "General SaaS application audit logs not covered by Office, CRM, or IdP rows."
+      "question": "How many distinct SaaS applications or tenants send audit logs not covered elsewhere?",
+      "primaryInputField": "saasTenantCount",
+      "unitLabel": "SaaS applications / tenants",
+      "exampleQuantity": 5,
+      "helperText": "Count each SaaS application, tenant, org, or instance once. Do not enter users here; use the dedicated Office, CRM, SSO, conferencing, or file-sharing rows for user-based sizing."
     },
     "saas_office": {
       "sourceId": "saas_office",
@@ -328,9 +328,9 @@
       "sourceId": "dlp",
       "question": "How many users or endpoints are monitored by your DLP solution?",
       "primaryInputField": "number_of_users",
-      "unitLabel": "endpoints covered by dlp",
+      "unitLabel": "active users / endpoints monitored by DLP",
       "exampleQuantity": 8000,
-      "helperText": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems."
+      "helperText": "Count active users or endpoints that can generate DLP incidents. This sizes policy violations and incident records, not full endpoint telemetry or inspected content."
     },
     "edr": {
       "sourceId": "edr",

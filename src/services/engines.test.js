@@ -198,7 +198,7 @@ describe('Plan Engine', () => {
     }
   });
 
-  it('Robbins retail stack: configured ingest exceeds budget; paths stay under cap', () => {
+  it('Robbins retail stack: calibrated configured ingest stays under budget', () => {
     const robbins = sampleScenarios.find((s) => s.id === 'robbins_retail_hybrid');
     expect(robbins).toBeTruthy();
     const { profiles } = resolveUseCaseProfiles(robbins.intake);
@@ -215,7 +215,7 @@ describe('Plan Engine', () => {
       sizingContext: sizingCtx,
     });
 
-    expect(sessionTotals.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
+    expect(sessionTotals.totals.buffered.expected).toBeLessThan(budgetGbDay);
     expect(crawl.totals.buffered.expected).toBeLessThanOrEqual(walk.totals.buffered.expected + 0.01);
     expect(walk.totals.buffered.expected).toBeLessThanOrEqual(budgetGbDay * 1.05);
     expect(run.totals.buffered.expected).toBeGreaterThanOrEqual(crawl.totals.buffered.expected * 0.95);
@@ -623,7 +623,7 @@ describe('v1.9 Sizing Accuracy Validation', () => {
       expect(r.expected).toBeGreaterThan(0);
     });
 
-    it('Robbins configured stack exceeds 150 GB/day budget before overlap trim', () => {
+    it('Robbins configured stack stays below budget after SaaS and DLP calibration', () => {
       const robbins = sampleScenarios.find((s) => s.id === 'robbins_retail_hybrid');
       const budgetGbDay = computeIngestBudgetFromIntake(robbins.intake).budgetGbDay;
       const session = sumSessionPlanningIngest({
@@ -632,8 +632,8 @@ describe('v1.9 Sizing Accuracy Validation', () => {
         overlapDecisions: robbins.overlapDecisions,
         sizingContext: { catalog: sourceCatalog, allInputs: robbins.sources },
       });
-      expect(session.totals.expected).toBeGreaterThan(budgetGbDay);
-      expect(session.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
+      expect(session.totals.expected).toBeLessThan(budgetGbDay);
+      expect(session.totals.buffered.expected).toBeLessThan(budgetGbDay);
     });
   });
 

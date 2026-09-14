@@ -258,15 +258,16 @@
       ]
     },
     "dlp": {
-      "primaryUnit": "endpoints covered by dlp",
+      "primaryUnit": "active users or endpoints monitored by DLP",
       "secondaryUnits": [
-        "Managed channels (web, email, endpoint)"
+        "DLP products / channels (web, email, endpoint)"
       ],
-      "howToCount": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems.",
+      "howToCount": "Count active users or endpoints that can generate DLP policy violations. Count products/channels separately; do not treat inspected content or full endpoint telemetry as DLP incident ingest.",
       "customerQuestion": "How many users or endpoints are monitored by your DLP solution?",
       "commonMistakes": [
         "Using email-only DLP stats for endpoint DLP",
-        "Omitting server DLP agents"
+        "Omitting server DLP agents",
+        "Applying the 0.05 GB/day product/channel allowance to every monitored user"
       ]
     },
     "dns": {
@@ -737,16 +738,14 @@
       ]
     },
     "saas_general": {
-      "primaryUnit": "saas tenants, active users, and integrations",
+      "primaryUnit": "distinct SaaS applications / tenants",
       "secondaryUnits": [
-        "Tenants / orgs / instances",
-        "Integrations / API clients",
-        "Collection profile and activity level"
+        "Active users and integrations in advanced sizing only"
       ],
       "howToCount": "General SaaS application audit logs not covered by Office, CRM, or IdP rows.",
-      "customerQuestion": "How many active users or SaaS tenants generate audit logs not covered elsewhere?",
+      "customerQuestion": "How many distinct SaaS applications or tenants send audit logs not covered elsewhere?",
       "commonMistakes": [
-        "Using licensed seats instead of regularly active users",
+        "Entering users in the parent SaaS row and multiplying them by the per-tenant 0.15 rate",
         "Sizing M365/Google here when dedicated Office SaaS child is used",
         "Omitting integration/API client volume in full-activity profiles"
       ]

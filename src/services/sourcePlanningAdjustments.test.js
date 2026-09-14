@@ -34,6 +34,72 @@ describe('CASB planning calibration', () => {
   });
 });
 
+describe('SaaS parent simple-sizing unit', () => {
+  const saas = byId('saas_general');
+
+  it('sizes configured SaaS applications or tenants at 0.15 each', () => {
+    const ss = { status: 'current', saasTenantCount: '5' };
+    const est = calculateFullSourceIngest(saas, ss, {
+      catalog: sourceCatalog,
+      allInputs: { saas_general: ss },
+    });
+    expect(est.expected).toBeCloseTo(0.75, 5);
+    expect(est.countBasis).toContain('SaaS applications');
+  });
+
+  it('does not reinterpret a legacy user count as tenant count', () => {
+    const ss = { status: 'current', number_of_users: '500' };
+    const est = calculateFullSourceIngest(saas, ss, {
+      catalog: sourceCatalog,
+      allInputs: { saas_general: ss },
+    });
+    expect(est.expected).toBe(0);
+    expect(est.warnings.some((warning) => warning.includes('Legacy SaaS user count'))).toBe(true);
+  });
+});
+
+describe('DLP planning calibration', () => {
+  const dlp = byId('dlp');
+
+  it('sizes incident telemetry at 0.002 GB/day per monitored user', () => {
+    const ss = { status: 'current', number_of_users: '8000' };
+    const est = calculateFullSourceIngest(dlp, ss, {
+      catalog: sourceCatalog,
+      allInputs: { dlp: ss },
+    });
+    expect(est.expected).toBeCloseTo(16, 5);
+    expect(est.high).toBeCloseTo(19.2, 5);
+  });
+
+  it('uses 0.05 GB/day per DLP product for channel-only sizing', () => {
+    const ss = {
+      status: 'current',
+      number_of_users: '0',
+      number_of_channels: '3',
+      dlpSizingProfile: 'channel_products',
+    };
+    const est = calculateFullSourceIngest(dlp, ss, {
+      catalog: sourceCatalog,
+      allInputs: { dlp: ss },
+    });
+    expect(est.expected).toBeCloseTo(0.15, 5);
+  });
+
+  it('excludes lookup-only DLP context from ingest', () => {
+    const ss = {
+      status: 'current',
+      number_of_users: '8000',
+      dlpSizingProfile: 'lookup_context',
+    };
+    const est = calculateFullSourceIngest(dlp, ss, {
+      catalog: sourceCatalog,
+      allInputs: { dlp: ss },
+    });
+    expect(est.expected).toBe(0);
+    expect(est.lookupContextOnly).toBe(true);
+  });
+});
+
 describe('Windows Server + EDR overlap', () => {
   const windows = byId('windows_servers');
   const edr = byId('edr');

@@ -297,17 +297,17 @@ describe('mathConsistency — robbins_retail_hybrid', () => {
     assertExportHtmlMatchesReport(files['se-sales-summary.html'], report);
   });
 
-  it('session exceeds budget cap and Walk/Run paths differentiate under cap percentages', () => {
+  it('calibrated session stays under budget while Walk/Run paths differentiate', () => {
     const { session, plans } = assertPlanningMath(robbins.sources, robbins.overlapDecisions, robbins.intake);
     const budgetGbDay = computeIngestBudgetFromIntake(robbins.intake).budgetGbDay;
 
-    expect(session.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
+    expect(session.totals.buffered.expected).toBeLessThan(budgetGbDay);
 
     const walk = plans.find((p) => p.pathPhase === 'walk') || plans[1];
     const run = plans.find((p) => p.pathPhase === 'run') || plans[2];
     expect(walk.totals.buffered.expected).toBeLessThanOrEqual(budgetGbDay * 1.05);
     expect(run.totals.buffered.expected).toBeGreaterThanOrEqual(walk.totals.buffered.expected);
-    expect(run.totals.buffered.expected).toBeGreaterThan(budgetGbDay * 0.9);
+    expect(run.totals.buffered.expected).toBeLessThan(budgetGbDay);
   });
 });
 
