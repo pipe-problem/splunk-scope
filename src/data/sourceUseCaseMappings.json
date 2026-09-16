@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.7",
-  "lastUpdated": "2026-05-06",
+  "lastUpdated": "2026-09-16",
   "mappings": {
     "active_directory": {
       "useCases": [
         {
           "useCaseId": "cloud_security",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "compliance_audit",
@@ -27,10 +27,6 @@
         {
           "useCaseId": "identity_access",
           "relevance": "high"
-        },
-        {
-          "useCaseId": "kubernetes_container",
-          "relevance": "medium"
         },
         {
           "useCaseId": "risk_based_alerting",
@@ -233,11 +229,11 @@
         },
         {
           "useCaseId": "enterprise_security",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "identity_access",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "threat_detection",
@@ -291,11 +287,11 @@
         },
         {
           "useCaseId": "enterprise_security",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "foundational_security",
-          "relevance": "medium"
+          "relevance": "low"
         },
         {
           "useCaseId": "kubernetes_container",
@@ -320,11 +316,11 @@
         },
         {
           "useCaseId": "endpoint_security",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "enterprise_security",
-          "relevance": "high"
+          "relevance": "medium"
         },
         {
           "useCaseId": "kubernetes_container",
@@ -587,7 +583,7 @@
         },
         {
           "useCaseId": "enterprise_security",
-          "relevance": "medium"
+          "relevance": "high"
         },
         {
           "useCaseId": "foundational_security",
@@ -677,10 +673,6 @@
           "relevance": "high"
         },
         {
-          "useCaseId": "kubernetes_container",
-          "relevance": "medium"
-        },
-        {
           "useCaseId": "risk_based_alerting",
           "relevance": "high"
         },
@@ -735,10 +727,6 @@
           "relevance": "high"
         },
         {
-          "useCaseId": "kubernetes_container",
-          "relevance": "medium"
-        },
-        {
           "useCaseId": "network_operations",
           "relevance": "high"
         },
@@ -748,7 +736,7 @@
         },
         {
           "useCaseId": "threat_detection",
-          "relevance": "medium"
+          "relevance": "high"
         }
       ],
       "needsReview": false
@@ -1389,10 +1377,6 @@
           "relevance": "medium"
         },
         {
-          "useCaseId": "kubernetes_container",
-          "relevance": "medium"
-        },
-        {
           "useCaseId": "network_operations",
           "relevance": "high"
         },
@@ -1402,7 +1386,7 @@
         },
         {
           "useCaseId": "threat_detection",
-          "relevance": "medium"
+          "relevance": "high"
         }
       ],
       "needsReview": false
@@ -2204,16 +2188,8 @@
           "relevance": "medium"
         },
         {
-          "useCaseId": "cloud_security",
-          "relevance": "medium"
-        },
-        {
           "useCaseId": "compliance_audit",
           "relevance": "high"
-        },
-        {
-          "useCaseId": "database_monitoring",
-          "relevance": "medium"
         },
         {
           "useCaseId": "endpoint_security",
@@ -2221,7 +2197,7 @@
         },
         {
           "useCaseId": "enterprise_security",
-          "relevance": "medium"
+          "relevance": "high"
         },
         {
           "useCaseId": "foundational_security",
@@ -2237,6 +2213,10 @@
         },
         {
           "useCaseId": "platform_admin",
+          "relevance": "high"
+        },
+        {
+          "useCaseId": "threat_detection",
           "relevance": "high"
         }
       ],

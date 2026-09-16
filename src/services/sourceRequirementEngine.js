@@ -7,6 +7,8 @@ import {
   checkCapabilitySatisfaction,
   getSourceCapabilities,
   resolveAppRequirementKey,
+  strengthForCatalogSource,
+  resolveCatalogSourceId,
 } from './logRequirementEngine.js'
 import { classifySource } from './sourceRecommendationEngine.js'
 import appRequirementsData from '../data/appRequirements.json' with { type: 'json' }
@@ -88,7 +90,7 @@ export function getSourceStrengthProfile(source) {
   if (!sid) return out
 
   for (const cap of Object.values(logCapabilities)) {
-    const strength = cap.strengthBySource?.[sid]
+    const strength = strengthForCatalogSource(cap, sid)
     if (!strength) continue
     out[cap.id] = {
       strength,
@@ -104,21 +106,23 @@ export function getSourceStrengthProfile(source) {
 function overlappingProviders(capabilityId, sourceId, sourceStates) {
   const capDef = logCapabilities[capabilityId]
   if (!capDef?.strengthBySource) return []
-  const str = capDef.strengthBySource[sourceId]
+  const str = strengthForCatalogSource(capDef, sourceId)
   if (!str) return []
   const rank = STRENGTH_SCORE[str] || 0
   const peers = []
   for (const otherId of Object.keys(capDef.strengthBySource)) {
-    if (otherId === sourceId) continue
-    if (!isSourceActive(sourceStates, otherId)) continue
+    const otherCatalogId = resolveCatalogSourceId(otherId)
+    if (otherCatalogId === sourceId || otherId === sourceId) continue
+    if (!isSourceActive(sourceStates, otherCatalogId) && !isSourceActive(sourceStates, otherId)) continue
     const otherStr = capDef.strengthBySource[otherId]
-    if ((STRENGTH_SCORE[otherStr] || 0) >= rank) peers.push(otherId)
+    if ((STRENGTH_SCORE[otherStr] || 0) >= rank) peers.push(otherCatalogId)
   }
   return peers
 }
 
 function isSourceActive(sourceStates, sourceId) {
-  const st = sourceStates?.[sourceId]
+  const catalogId = resolveCatalogSourceId(sourceId)
+  const st = sourceStates?.[catalogId] || sourceStates?.[sourceId]
   return st && (st.status === 'current' || st.status === 'future')
 }
 
@@ -229,9 +233,9 @@ export function classifySourceByCapability(source, useCases, desiredApps, allSou
 
   const isOnlyStrongActiveProvider = gapsAddressed.some((capId) => {
     const capDef = logCapabilities[capId]
-    if (capDef?.strengthBySource?.[source.id] !== 'strong') return false
-    for (const [oid, st] of Object.entries(capDef.strengthBySource)) {
-      if (oid === source.id) continue
+    if (strengthForCatalogSource(capDef, source.id) !== 'strong') return false
+    for (const [oid, st] of Object.entries(capDef.strengthBySource || {})) {
+      if (resolveCatalogSourceId(oid) === source.id || oid === source.id) continue
       if (st !== 'strong') continue
       if (isSourceActive(sourceStates, oid)) return false
     }

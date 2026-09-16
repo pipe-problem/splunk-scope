@@ -27,11 +27,7 @@ export function shouldUseMeasuredBands(rawEstimate) {
   return true;
 }
 
-/**
- * Map a raw sizing estimate to display columns (low / expected / high).
- * @param {{ low?: number, expected?: number, high?: number, rateSource?: string }} rawEstimate
- */
-export function toPlanningDisplayColumns(rawEstimate) {
+function bandColumns(rawEstimate) {
   if (!rawEstimate) {
     return { gbLow: 0, gbExpected: 0, gbHigh: 0, usedMeasuredBands: false };
   }
@@ -50,6 +46,39 @@ export function toPlanningDisplayColumns(rawEstimate) {
     gbExpected: planned.expected,
     gbHigh: planned.high,
     usedMeasuredBands: false,
+  };
+}
+
+/**
+ * Map a raw sizing estimate to display columns (low / expected / high).
+ * When Cisco promo applied, also returns buffered gross columns for strikethrough.
+ * @param {{ low?: number, expected?: number, high?: number, rateSource?: string, ciscoPromoApplied?: boolean, gbGrossExpected?: number, gbGrossLow?: number, gbGrossHigh?: number }} rawEstimate
+ */
+export function toPlanningDisplayColumns(rawEstimate) {
+  const billable = bandColumns(rawEstimate);
+  const promoApplied = Boolean(rawEstimate?.ciscoPromoApplied);
+  const grossExpected = rawEstimate?.gbGrossExpected;
+  if (promoApplied && grossExpected != null && grossExpected > 0) {
+    const grossCols = bandColumns({
+      expected: grossExpected,
+      low: rawEstimate.gbGrossLow,
+      high: rawEstimate.gbGrossHigh,
+      rateSource: rawEstimate.rateSource,
+    });
+    return {
+      ...billable,
+      ciscoPromoApplied: true,
+      gbGrossLow: grossCols.gbLow,
+      gbGrossExpected: grossCols.gbExpected,
+      gbGrossHigh: grossCols.gbHigh,
+    };
+  }
+  return {
+    ...billable,
+    ciscoPromoApplied: false,
+    gbGrossLow: billable.gbLow,
+    gbGrossExpected: billable.gbExpected,
+    gbGrossHigh: billable.gbHigh,
   };
 }
 

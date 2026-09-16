@@ -13,6 +13,16 @@ import { formatIngestString } from '../utils/formatIngestDisplay.js'
 import { applySizingGuardrails } from './sourceSizingGuardrailEngine.js'
 import { calculateSimpleSourceIngest } from './simpleSizingEngine.js'
 import { applyPlanningAdjustments } from './sourcePlanningAdjustments.js'
+import { applyCiscoIngestPromo } from './ciscoIngestPromo.js'
+
+function finalizeSourceIngest(source, sourceState, estimate, sizingContext) {
+  return applyCiscoIngestPromo(
+    source,
+    sourceState,
+    estimate,
+    sizingContext,
+  )
+}
 
 /**
  * Canonical ingest calculation for a source including child log options.
@@ -22,10 +32,15 @@ import { applyPlanningAdjustments } from './sourcePlanningAdjustments.js'
  */
 export function calculateFullSourceIngest(source, sourceState, sizingContext) {
   if (SIZING_MODE === 'simple') {
-    return applyPlanningAdjustments(
+    return finalizeSourceIngest(
       source,
       sourceState,
-      calculateSimpleSourceIngest(source, sourceState, sizingContext),
+      applyPlanningAdjustments(
+        source,
+        sourceState,
+        calculateSimpleSourceIngest(source, sourceState, sizingContext),
+        sizingContext,
+      ),
       sizingContext,
     )
   }
@@ -58,7 +73,12 @@ export function calculateFullSourceIngest(source, sourceState, sizingContext) {
       bufferApplied: false,
       childIngest,
     }
-    return applyPlanningAdjustments(source, sourceState, channelResult, sizingContext)
+    return finalizeSourceIngest(
+      source,
+      sourceState,
+      applyPlanningAdjustments(source, sourceState, channelResult, sizingContext),
+      sizingContext,
+    )
   }
 
   const base = calculateSourceSize(source, sourceState, sizingContext)
@@ -69,10 +89,15 @@ export function calculateFullSourceIngest(source, sourceState, sizingContext) {
     high: base.high + childIngest * 1.5,
     childIngest,
   }
-  return applyPlanningAdjustments(
+  return finalizeSourceIngest(
     source,
     sourceState,
-    applySizingGuardrails(source, sourceState, combined),
+    applyPlanningAdjustments(
+      source,
+      sourceState,
+      applySizingGuardrails(source, sourceState, combined),
+      sizingContext,
+    ),
     sizingContext,
   )
 }

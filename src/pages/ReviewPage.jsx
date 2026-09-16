@@ -6,6 +6,8 @@ import WorkflowStepIndicator from '../components/layout/WorkflowStepIndicator';
 import { SHOW_COVERAGE_PAGE } from '../config/featureFlags.js';
 import { STEP } from '../config/workflowSteps.js';
 import { formatIngestString, formatIngestValue } from '../utils/formatIngestDisplay.js';
+import CiscoPromoIngestValue from '../components/CiscoPromoIngestValue.jsx';
+import { CISCO_INGEST_PROMO_COPY } from '../services/ciscoIngestPromo.js';
 import { truncateSubtitle } from '../utils/displayLabels.js';
 import { buildReviewGateData, formatQuantityUnit } from '../services/reviewGateEngine.js';
 import sourceCatalog from '../data/sources.json';
@@ -38,7 +40,7 @@ function RelevanceBar({ score }) {
   );
 }
 
-function RangeBandBar({ low, expected, high }) {
+function RangeBandBar({ low, expected, high, grossExpected, ciscoPromoApplied }) {
   const span = Math.max(high - low, 0.001);
   const expectedPct = Math.max(0, Math.min(100, ((expected - low) / span) * 100));
 
@@ -54,7 +56,14 @@ function RangeBandBar({ low, expected, high }) {
       </div>
       <div className="flex justify-between text-label text-[var(--cast-text-muted)] tabular-nums">
         <span>{formatIngestString(low)}</span>
-        <span className="font-semibold text-[var(--cast-accent)]">{formatIngestString(expected)}</span>
+        <span className="font-semibold text-[var(--cast-accent)]">
+          <CiscoPromoIngestValue
+            billable={expected}
+            gross={grossExpected}
+            promoApplied={ciscoPromoApplied}
+            billableClassName="font-semibold text-[var(--cast-accent)]"
+          />
+        </span>
         <span>{formatIngestString(high)}</span>
       </div>
       <p className="text-center text-badge text-[var(--cast-text-muted)]">
@@ -83,7 +92,14 @@ function TopSourcesBarChart({ rows }) {
           <div key={row.id} className="space-y-1">
             <div className="flex items-center justify-between gap-2 text-label">
               <span className="truncate text-[var(--cast-text-secondary)]">{row.name}</span>
-              <span className="font-mono font-semibold text-[var(--cast-text)] shrink-0 tabular-nums">{formatIngestString(row.gbExpected)}</span>
+              <span className="font-mono font-semibold text-[var(--cast-text)] shrink-0 tabular-nums">
+                <CiscoPromoIngestValue
+                  billable={row.gbExpected}
+                  gross={row.gbGrossExpected}
+                  promoApplied={row.ciscoPromoApplied}
+                  billableClassName="font-mono font-semibold text-[var(--cast-text)] tabular-nums"
+                />
+              </span>
             </div>
             <div className="h-2 rounded-full bg-[var(--cast-panel-alt)] overflow-hidden">
               <div
@@ -331,9 +347,23 @@ export default function ReviewPage() {
             <div className="card-compact text-center py-8 sm:py-10">
               <p className="text-metric-label text-[var(--cast-text-muted)] mb-2 uppercase tracking-wide">{TOTAL_CONFIGURED_INGEST_LABEL}</p>
               <p className="text-5xl sm:text-6xl lg:text-7xl font-black tabular-nums text-[var(--cast-accent)] leading-none">
-                {expectedDisplay.text}
+                {totals.ciscoPromoApplied ? (
+                  <span className="inline-flex flex-col items-center gap-2">
+                    <s className="text-lg sm:text-2xl font-semibold text-[var(--cast-text-muted)] decoration-[var(--cast-text-muted)]">
+                      {formatIngestValue(totals.gross?.expected ?? totals.expected).display}
+                    </s>
+                    <span>{expectedDisplay.text}</span>
+                  </span>
+                ) : (
+                  expectedDisplay.text
+                )}
               </p>
               <p className="text-lg sm:text-xl font-semibold text-[var(--cast-text-muted)] mt-1">{expectedDisplay.unit || 'GB/day'}</p>
+              {totals.ciscoPromoApplied && (
+                <p className="text-sm text-[var(--cast-accent)] mt-3 max-w-md mx-auto leading-relaxed">
+                  {CISCO_INGEST_PROMO_COPY}
+                </p>
+              )}
               <p className="text-sm text-[var(--cast-text-muted)] mt-3 max-w-md mx-auto leading-relaxed">
                 Estimated daily volume from sources you sized together
               </p>
@@ -355,7 +385,13 @@ export default function ReviewPage() {
             </div>
 
             <div className="card-compact">
-              <RangeBandBar low={totals.low} expected={totals.expected} high={totals.high} />
+              <RangeBandBar
+                low={totals.low}
+                expected={totals.expected}
+                high={totals.high}
+                grossExpected={totals.gross?.expected}
+                ciscoPromoApplied={totals.ciscoPromoApplied}
+              />
             </div>
 
             <div className="card-compact">
@@ -385,7 +421,14 @@ export default function ReviewPage() {
                     </p>
                     <p className="text-label text-[var(--cast-text-muted)] mt-0.5">{formatQuantityUnit(row)}</p>
                   </div>
-                  <p className="font-mono font-bold text-[var(--cast-text)] tabular-nums shrink-0">{formatIngestString(row.gbExpected)}</p>
+                  <p className="font-mono font-bold text-[var(--cast-text)] tabular-nums shrink-0">
+                    <CiscoPromoIngestValue
+                      billable={row.gbExpected}
+                      gross={row.gbGrossExpected}
+                      promoApplied={row.ciscoPromoApplied}
+                      billableClassName="font-mono font-bold text-[var(--cast-text)] tabular-nums"
+                    />
+                  </p>
                   <span className="text-label text-[var(--cast-accent)] font-medium shrink-0">Edit</span>
                 </button>
               ))

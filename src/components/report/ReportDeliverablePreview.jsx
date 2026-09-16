@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ExternalLink, ChevronDown, ChevronRight } from 'lucide-react';
 import PlanningKpiStrip from '../PlanningKpiStrip.jsx';
-import { formatIngestString } from '../../utils/formatIngestDisplay.js';
+import CiscoPromoIngestValue from '../CiscoPromoIngestValue.jsx';
 import {
   FUTURE_MATURITY_SECTION_TITLE,
   TELEMETRY_GAPS_SECTION_TITLE,
@@ -132,7 +132,12 @@ export default function ReportDeliverablePreview({ data }) {
             <li key={src.id} className="flex items-center justify-between gap-3 py-2 text-body">
               <span className="text-[var(--cast-text-secondary)] truncate">{src.name}</span>
               <span className="font-mono text-sm text-[var(--cast-success)] tabular-nums shrink-0">
-                {formatIngestString(src.ingestExpected)}
+                <CiscoPromoIngestValue
+                  billable={src.ingestExpected}
+                  gross={src.ingestGrossExpected}
+                  promoApplied={src.ciscoPromoApplied}
+                  billableClassName="font-mono text-sm text-[var(--cast-success)] tabular-nums"
+                />
               </span>
             </li>
           ))}

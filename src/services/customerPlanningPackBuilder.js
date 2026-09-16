@@ -5,10 +5,10 @@ import { buildValueProposalDocument } from './valueProposalExportBuilder.js';
 import { buildStartupGuideDocument } from './startupGuideExportBuilder.js';
 import {
   sanitizeCustomerFacingText,
-  formatIngestWithUnit,
   formatIngestRangeWithUnit,
   formatDisplayDate,
 } from './exportShared.js';
+import { formatIngestPromoPlain } from '../utils/formatIngestDisplay.js';
 
 function buildProductRecommendationsPage(payload) {
   const rec = payload.productRecommendations;
@@ -80,7 +80,11 @@ export function buildSourcesDetailPages(payload) {
     .slice(0, 10)
     .map((r) => ({
       name: r.name,
-      gbDay: formatIngestWithUnit(r.ingest?.expected ?? r.ingestRange?.expected ?? 0),
+    gbDay: formatIngestPromoPlain(
+      r.ingest?.expected ?? r.ingestRange?.expected ?? 0,
+      r.ingest?.grossExpected,
+      r.ingest?.ciscoPromoApplied,
+    ),
       category: r.category || 'Uncategorized',
     }));
 

@@ -165,6 +165,10 @@ export function buildSourceSizingResult(source, session, options = {}) {
     sizingState,
     statusMessage,
     usedMeasuredBands: cols.usedMeasuredBands,
+    ciscoPromoApplied: Boolean(cols.ciscoPromoApplied),
+    gbGrossLow: cols.gbGrossLow,
+    gbGrossExpected: cols.gbGrossExpected,
+    gbGrossHigh: cols.gbGrossHigh,
     rawEstimate,
   };
 }

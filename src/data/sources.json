@@ -1508,7 +1508,7 @@
       "rate_per_unit": 0.25
     },
     "workbookRateGbPerUnit": 0.25,
-    "customerSummary": "Application server logs including J2EE containers, ."
+    "customerSummary": "Application server logs from Java/.NET runtimes such as Tomcat, WebSphere, WebLogic, and IIS."
   },
   {
     "id": "app_servers_nonprod",
@@ -1566,7 +1566,7 @@
       "rate_per_unit": 0.15
     },
     "workbookRateGbPerUnit": 0.15,
-    "customerSummary": "Application server logs from development, test, and staging J2EE, ."
+    "customerSummary": "Application server logs from development, test, and staging Java/.NET runtimes."
   },
   {
     "id": "middleware",
@@ -1914,7 +1914,7 @@
     "customerSummary": "Privileged-access and vault session logs from PAM tools (CyberArk, BeyondTrust)—not the same as everyday SSO sign-ins.",
     "description": "Privileged access management and vault platform logs: vaulted credential checkout, session recording, policy changes, and privileged session activity.",
     "whyItMatters": "PAM logs prove who accessed privileged credentials and when — essential for insider threat, audit, and investigating lateral movement using admin accounts.",
-    "configuredItemLabel": "# of identity management platforms",
+    "configuredItemLabel": "# of PAM / vault platforms",
     "sizingUnit": "per_item",
     "sizingRate": 0.25,
     "sizingRateLow": 0.2,
@@ -1960,7 +1960,7 @@
       },
       {
         "key": "number_of_systems",
-        "label": "Number of identity management platforms",
+        "label": "Number of PAM / vault platforms",
         "type": "number"
       }
     ],
@@ -2786,7 +2786,7 @@
   },
   {
     "id": "firewalls",
-    "name": "Firewalls (Next-Gen Firewalls)",
+    "name": "Next-Gen Firewalls",
     "category": "Networking",
     "subcategory": "Perimeter",
     "overlap_group": "network_security_controls",
@@ -3237,7 +3237,7 @@
     "category": "Networking",
     "subcategory": "Infrastructure",
     "description": "DNS query and response logs from internal resolvers and authoritative servers.",
-    "whyItMatters": "DNS is used in nearly every cyberattack — from initial payload delivery to C2 communication to data exfiltration. DNS logs are one of the most underutilized yet valuable data sources for threat detection.",
+    "whyItMatters": "DNS is used in nearly every cyberattack — from initial payload delivery to C2 communication to data exfiltration. DNS query logs are one of the highest-signal, often-missed sources for threat detection.",
     "configuredItemLabel": "# of DNS servers",
     "sizingUnit": "per_item",
     "sizingRate": 0.15,

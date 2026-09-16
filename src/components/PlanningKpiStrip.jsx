@@ -1,4 +1,6 @@
-import { formatIngestString, formatIngestValue } from '../utils/formatIngestDisplay.js';
+import { formatIngestValue } from '../utils/formatIngestDisplay.js';
+import CiscoPromoIngestValue from './CiscoPromoIngestValue.jsx';
+import { CISCO_INGEST_PROMO_COPY } from '../services/ciscoIngestPromo.js';
 
 const SCOPE_META = {
   session: {
@@ -46,7 +48,16 @@ export default function PlanningKpiStrip({
             >
               <p className="text-metric-label mb-0.5">{m.label}</p>
               <p className={`${compact ? 'text-base' : 'text-lg'} font-bold tabular-nums`} style={{ color: m.color }}>
-                {fmt.text}
+                {m.highlight && totals?.ciscoPromoApplied ? (
+                  <CiscoPromoIngestValue
+                    billable={m.value}
+                    gross={totals.gross?.expected}
+                    promoApplied
+                    billableClassName=""
+                  />
+                ) : (
+                  fmt.text
+                )}
               </p>
               <p className="text-metric-sub">{fmt.unit || 'GB/day'}</p>
             </div>
@@ -54,6 +65,9 @@ export default function PlanningKpiStrip({
         })}
       </div>
       <p className="text-label text-[var(--cast-text-muted)] mt-1.5 leading-snug">{footnote || meta.footnote}</p>
+      {totals?.ciscoPromoApplied && (
+        <p className="text-label text-[var(--cast-accent)] mt-1 leading-snug">{CISCO_INGEST_PROMO_COPY}</p>
+      )}
     </div>
   );
 }
