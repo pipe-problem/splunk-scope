@@ -7,6 +7,8 @@ import { applySourceConfigSave, applySourceConfigReset } from '../../services/so
 import { getNestedValue, patchDraftField } from '../../utils/draftPathUtils.js';
 import { fieldMatchesPrimary } from '../../utils/measurementInputFields.js';
 import SourceMoreInfoPanel from './SourceMoreInfoPanel.jsx';
+import CiscoIngestPromoBanner from './CiscoIngestPromoBanner.jsx';
+import sourceCatalog from '../../data/sources.json';
 
 function resolveSelectOptions(optionsSource) {
   if (!optionsSource) return [];
@@ -304,6 +306,15 @@ export default function SourceConfigPanel({
               ))}
             </div>
           ) : null}
+
+          <div className="mt-5">
+            <CiscoIngestPromoBanner
+              source={source}
+              sourceState={draft}
+              catalog={sourceCatalog}
+              allInputs={sessionSources}
+            />
+          </div>
 
           {showLogToggles && logOpts.length > 0 && (
             <div className="rounded-xl border border-[var(--cast-border)] bg-[var(--cast-panel-alt)]/30 px-5 py-4 sm:px-6 sm:py-5 mt-6 space-y-3">

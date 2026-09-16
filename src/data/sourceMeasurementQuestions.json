@@ -202,7 +202,7 @@
       "primaryInputField": "number_of_servers",
       "unitLabel": "production application servers",
       "exampleQuantity": 10,
-      "helperText": "Application server logs including J2EE containers, ."
+      "helperText": "Application server logs from Java/.NET runtimes such as Tomcat, WebSphere, WebLogic, and IIS."
     },
     "middleware": {
       "sourceId": "middleware",
@@ -256,8 +256,8 @@
       "sourceId": "sso_pam",
       "question": "How many PAM or vault platforms forward privileged-access audit logs?",
       "primaryInputField": "number_of_systems",
-      "unitLabel": "identity management platforms",
-      "exampleQuantity": 3500,
+      "unitLabel": "PAM / vault platforms",
+      "exampleQuantity": 2,
       "helperText": "Privileged-access and vault session logs from PAM tools (CyberArk, BeyondTrust)—not the same as everyday SSO sign-ins."
     },
     "active_directory": {
@@ -370,7 +370,7 @@
       "primaryInputField": "number_of_servers",
       "unitLabel": "non-prod application servers",
       "exampleQuantity": 10,
-      "helperText": "Application server logs from development, test, and staging J2EE, ."
+      "helperText": "Application server logs from development, test, and staging Java/.NET runtimes."
     },
     "middleware_nonprod": {
       "sourceId": "middleware_nonprod",

@@ -35,7 +35,7 @@
         "Hosted business applications",
         "Clusters / scale-out nodes"
       ],
-      "howToCount": "Application server logs including J2EE containers, .",
+      "howToCount": "Application server logs from Java/.NET runtimes such as Tomcat, WebSphere, WebLogic, and IIS.",
       "customerQuestion": "How many production application servers (J2EE, .NET, etc.) forward application logs?",
       "commonMistakes": [
         "Double-counting the same host under Web Servers and App Servers",
@@ -48,7 +48,7 @@
       "secondaryUnits": [
         "Dev/test/stage environments"
       ],
-      "howToCount": "Application server logs from development, test, and staging J2EE, .",
+      "howToCount": "Application server logs from development, test, and staging Java/.NET runtimes.",
       "customerQuestion": "How many non-production application servers forward logs?",
       "commonMistakes": [
         "Double-counting hosts already scoped under Web Servers (Non-Production)",
@@ -838,7 +838,7 @@
       ]
     },
     "sso_pam": {
-      "primaryUnit": "identity management platforms",
+      "primaryUnit": "PAM / vault platforms",
       "secondaryUnits": [
         "Identity platforms (IdP / PAM consoles)",
         "Privileged access sessions (context)"

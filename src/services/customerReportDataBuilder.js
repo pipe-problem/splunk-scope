@@ -279,6 +279,9 @@ export function buildCustomerReportData(state, options = {}) {
       expected: planned.expected,
       high: planned.high,
       confidence: raw.confidence,
+      ciscoPromoApplied: Boolean(raw.ciscoPromoApplied || breakdown?.ciscoPromoApplied),
+      grossExpected: breakdown?.gbGrossExpected
+        ?? applyPlanningBufferToSource({ expected: raw.gbGrossExpected ?? raw.expected }).expected,
     };
     const valueProp = generateSourceValueProp(s, useCases, selectedPlan.coverage);
     return {
@@ -397,6 +400,8 @@ export function buildCustomerReportData(state, options = {}) {
       ingestExpected: r.ingest.expected,
       ingestLow: r.ingest.low,
       ingestHigh: r.ingest.high,
+      ingestGrossExpected: r.ingest.grossExpected,
+      ciscoPromoApplied: Boolean(r.ingest.ciscoPromoApplied),
     }))
     .sort((a, b) => b.ingestExpected - a.ingestExpected);
 
@@ -493,6 +498,8 @@ export function buildCustomerReportData(state, options = {}) {
             low: bufferedTotals.low,
             expected: bufferedTotals.expected,
             high: bufferedTotals.high,
+            gross: selectedPlan?.totals?.gross || null,
+            ciscoPromoApplied: Boolean(selectedPlan?.totals?.ciscoPromoApplied),
           },
           sourceCount: sourcesIncluded.length,
           sourcesIncluded,
@@ -524,6 +531,8 @@ export function buildCustomerReportData(state, options = {}) {
       low: bufferedTotals.low,
       expected: bufferedTotals.expected,
       high: bufferedTotals.high,
+      gross: selectedPlan?.totals?.gross || null,
+      ciscoPromoApplied: Boolean(selectedPlan?.totals?.ciscoPromoApplied),
     },
     coverageSummary: {
       score: planCoverageValidation.overallScore,

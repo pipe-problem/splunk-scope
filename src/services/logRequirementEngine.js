@@ -12,6 +12,64 @@ const appsRegistry = appRequirementsData.apps || {}
 const STRENGTH_ORDER = { strong: 3, partial: 2, minimal: 1 }
 const SATISFIED_RANK = STRENGTH_ORDER.strong
 
+/**
+ * Legacy logRequirements source ids → live catalog ids.
+ * strengthBySource / sources[] still use workbook-era keys.
+ */
+export const REQUIREMENT_SOURCE_ID_ALIASES = {
+  firewall_logs: 'firewalls',
+  edr_logs: 'edr',
+  active_directory_security: 'active_directory',
+  vpn_logs: 'vpn',
+  proxy_web_gateway: 'proxy',
+  dns_logs: 'dns',
+  netflow_data: 'netflow',
+  vulnerability_scanner: 'vuln_mgmt',
+  m365_audit_logs: 'saas_office',
+  okta_sso: 'saas_sso',
+  ids_ips_logs: 'ids_ips',
+  windows_security_event_log: 'windows_servers',
+  linux_auth: 'linux_servers',
+  azure_ad: 'saas_sso',
+  pam_logs: 'sso_pam',
+  cloud_security_posture: 'cspm',
+  aws_cloudtrail: 'iaas',
+  azure_activity_logs: 'iaas',
+  gcp_audit_logs: 'iaas',
+  email_security_logs: 'email',
+  google_workspace_logs: 'saas_office',
+  saas_casb_logs: 'casb',
+  application_logs: 'app_servers',
+  apm_traces: 'apm',
+  opentelemetry_data: 'apm',
+  server_metrics: 'linux_servers',
+  cloud_infrastructure_metrics: 'iaas',
+  kubernetes_metrics: 'iaas_containers',
+  kubernetes_logs: 'iaas_containers',
+  database_audit_logs: 'database',
+  database_performance_logs: 'database',
+  change_management_logs: 'config_mgmt',
+  ot_network_monitor: 'ot_security',
+  ot_firewall_logs: 'ot_security',
+  scada_historian: 'ot_security',
+  threat_intel_feeds: 'threat_intel',
+  sysmon_logs: 'windows_servers',
+}
+
+export function resolveCatalogSourceId(requirementSourceId) {
+  if (!requirementSourceId) return requirementSourceId
+  return REQUIREMENT_SOURCE_ID_ALIASES[requirementSourceId] || requirementSourceId
+}
+
+export function strengthForCatalogSource(capDef, catalogSourceId) {
+  const bySrc = capDef?.strengthBySource || {}
+  if (bySrc[catalogSourceId]) return bySrc[catalogSourceId]
+  for (const [legacy, catalog] of Object.entries(REQUIREMENT_SOURCE_ID_ALIASES)) {
+    if (catalog === catalogSourceId && bySrc[legacy]) return bySrc[legacy]
+  }
+  return undefined
+}
+
 /** @type {Record<string, string | null>} */
 const APP_KEY_ALIASES = {
   splunk_es: 'splunk_enterprise_security',
@@ -203,8 +261,9 @@ export function resolveLogRequirements(useCases, desiredApps) {
   }
 }
 
-function isSourceActive(sourceStates, sourceId) {
-  const st = sourceStates?.[sourceId]
+function isSourceActive(sourceStates, requirementSourceId) {
+  const catalogId = resolveCatalogSourceId(requirementSourceId)
+  const st = sourceStates?.[catalogId] || sourceStates?.[requirementSourceId]
   return st && (st.status === 'current' || st.status === 'future')
 }
 
@@ -313,7 +372,7 @@ export function getSourceCapabilities(sourceId) {
   if (!sourceId) return out
 
   for (const cap of Object.values(logCapabilities)) {
-    const str = cap.strengthBySource?.[sourceId]
+    const str = strengthForCatalogSource(cap, sourceId)
     if (str) out[cap.id] = str
   }
   return out

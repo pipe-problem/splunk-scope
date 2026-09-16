@@ -92,7 +92,7 @@ function scoreUseCaseRelevance(sourceId, useCases) {
     if (!selectedIds.has(row.useCaseId)) continue
     if (row.relevance === 'high') score += 12
     else if (row.relevance === 'medium') score += 7
-    else score += 3
+    else if (row.relevance === 'low') score += 0
   }
   return Math.min(rules.scoreWeights.useCaseRelevance || 22, score)
 }
@@ -269,7 +269,7 @@ export function prioritizeSource(
 
   if (rules.enrichmentSourceIds?.includes(source.id) && budgetBand === 'low') {
     score -= budgetMod.enrichmentPenalty || 18
-    if (label === 'suggested' && gapCount === 0) label = 'optional'
+    if (label === 'suggested') label = 'optional'
   }
 
   if (substitution?.penalty) score -= substitution.penalty
@@ -290,10 +290,12 @@ export function prioritizeSource(
     label = 'optional'
   }
   if (priorityScore >= 62 && gapCount > 0 && label === 'optional') {
-    label = 'suggested'
+    const lowBudgetEnrichment = rules.enrichmentSourceIds?.includes(source.id) && budgetBand === 'low'
+    if (!lowBudgetEnrichment) label = 'suggested'
   }
   if (priorityScore >= 68 && domainLabel === 'suggested' && label === 'optional' && !substitution) {
-    label = 'suggested'
+    const lowBudgetEnrichment = rules.enrichmentSourceIds?.includes(source.id) && budgetBand === 'low'
+    if (!lowBudgetEnrichment) label = 'suggested'
   }
 
   const customerReason = buildCustomerReason(label, source, {

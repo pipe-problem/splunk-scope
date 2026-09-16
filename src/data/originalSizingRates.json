@@ -383,7 +383,7 @@
     "sso_pam": {
       "sourceId": "sso_pam",
       "primaryInputField": "number_of_systems",
-      "unitLabel": "identity management platforms",
+      "unitLabel": "PAM / vault platforms",
       "rateGbPerUnit": 0.25,
       "lowMultiplier": 0.8,
       "highMultiplier": 1.2,

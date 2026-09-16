@@ -76,9 +76,14 @@ export function getEligibleConfiguredSources({
       ...source,
       ...ss,
       rawExpected: est.expected,
+      rawGrossExpected: est.gbGrossExpected ?? est.expected,
       gbLow: cols.gbLow,
       gbExpected: cols.gbExpected,
       gbHigh: cols.gbHigh,
+      gbGrossLow: cols.gbGrossLow,
+      gbGrossExpected: cols.gbGrossExpected,
+      gbGrossHigh: cols.gbGrossHigh,
+      ciscoPromoApplied: Boolean(cols.ciscoPromoApplied),
       usedMeasuredBands: cols.usedMeasuredBands,
       confidence: est.confidence,
       quantity: est.quantity,
@@ -97,9 +102,14 @@ export function getEligibleConfiguredSources({
       ...source,
       ...ss,
       rawExpected: est.expected,
+      rawGrossExpected: est.gbGrossExpected ?? est.expected,
       gbLow: cols.gbLow,
       gbExpected: cols.gbExpected,
       gbHigh: cols.gbHigh,
+      gbGrossLow: cols.gbGrossLow,
+      gbGrossExpected: cols.gbGrossExpected,
+      gbGrossHigh: cols.gbGrossHigh,
+      ciscoPromoApplied: Boolean(cols.ciscoPromoApplied),
       usedMeasuredBands: cols.usedMeasuredBands,
       confidence: est.confidence,
       quantity: est.quantity,
@@ -134,23 +144,44 @@ export function sumPlanningIngestForSources(
     if (!ss) continue;
     const est = calculateFullSourceIngest(source, ss, ctx);
     if (!sourceCountsTowardTotals(source, ss, est, excludedIds)) continue;
-    sizeResults[source.id] = { expected: est.expected };
+    sizeResults[source.id] = {
+      expected: est.expected,
+      grossExpected: est.gbGrossExpected ?? est.expected,
+      ciscoPromoApplied: Boolean(est.ciscoPromoApplied),
+    };
   }
 
   const { results: adjustedResults } = OVERLAP_ANNOTATE_ONLY
     ? { results: { ...sizeResults }, excluded: [], assumptions: [] }
     : applyOverlapExclusions(sizeResults, overlapDecisions);
-  const totals = calculatePlanningTotals(adjustedResults);
+  const totals = attachGrossTotals(calculatePlanningTotals(adjustedResults), adjustedResults);
 
   return { totals, adjustedResults, sizeResults };
+}
+
+function attachGrossTotals(totals, sourceResults) {
+  const grossMap = {};
+  let ciscoPromoApplied = false;
+  for (const [id, r] of Object.entries(sourceResults || {})) {
+    grossMap[id] = { expected: r.grossExpected ?? r.expected ?? 0 };
+    if (r.ciscoPromoApplied) ciscoPromoApplied = true;
+  }
+  const gross = calculatePlanningTotals(grossMap);
+  return { ...totals, gross, ciscoPromoApplied };
 }
 
 /** Session-wide eligible totals (Review / Coverage KPI strip). */
 export function sumSessionPlanningIngest(params) {
   const eligible = getEligibleConfiguredSources(params);
-  const totals = calculatePlanningTotals(
-    Object.fromEntries(eligible.map((s) => [s.id, { expected: s.rawExpected }])),
+  const billableMap = Object.fromEntries(eligible.map((s) => [s.id, { expected: s.rawExpected }]));
+  const grossMap = Object.fromEntries(
+    eligible.map((s) => [s.id, {
+      expected: s.rawGrossExpected ?? s.rawExpected,
+      ciscoPromoApplied: s.ciscoPromoApplied,
+      grossExpected: s.rawGrossExpected ?? s.rawExpected,
+    }]),
   );
+  const totals = attachGrossTotals(calculatePlanningTotals(billableMap), grossMap);
   return { totals, eligible, count: eligible.length };
 }
 
@@ -166,14 +197,21 @@ export function sumPathPlanningIngest(pathSources, sourceStates, overlapDecision
 /** Buffered per-source breakdown for path / report tables. */
 export function buildPathSourceIngestBreakdown(pathSources, adjustedResults) {
   return (pathSources || []).map((s) => {
-    const raw = adjustedResults[s.id]?.expected ?? 0;
-    const cols = toPlanningDisplayColumns({ expected: raw });
+    const row = adjustedResults[s.id] || {};
+    const raw = row.expected ?? 0;
+    const cols = toPlanningDisplayColumns({
+      expected: raw,
+      gbGrossExpected: row.grossExpected ?? raw,
+      ciscoPromoApplied: Boolean(row.ciscoPromoApplied),
+    });
     return {
       id: s.id,
       name: s.name,
       gbDay: cols.gbExpected,
       gbLow: cols.gbLow,
       gbHigh: cols.gbHigh,
+      gbGrossExpected: cols.gbGrossExpected,
+      ciscoPromoApplied: Boolean(cols.ciscoPromoApplied),
     };
   });
 }

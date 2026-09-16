@@ -111,6 +111,10 @@ export function buildReviewGateData(params) {
       gbLow: row.gbLow,
       gbExpected: row.gbExpected,
       gbHigh: row.gbHigh,
+      gbGrossLow: row.gbGrossLow,
+      gbGrossExpected: row.gbGrossExpected,
+      gbGrossHigh: row.gbGrossHigh,
+      ciscoPromoApplied: Boolean(row.ciscoPromoApplied),
       isCustom: row.isCustom,
     }));
 

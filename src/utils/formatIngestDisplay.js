@@ -43,6 +43,21 @@ export function formatIngestString(gb) {
   return formatIngestValue(gb).display;
 }
 
+export function ingestPromoApplies(promoApplied, gross, billable) {
+  if (!promoApplied) return false;
+  const g = Number(gross);
+  const b = Number(billable);
+  if (!Number.isFinite(g) || !Number.isFinite(b)) return false;
+  return Math.abs(g - b) > 1e-9;
+}
+
+/** Plain-text promo pair for PDF / CSV exports. */
+export function formatIngestPromoPlain(billable, gross, promoApplied) {
+  const billableStr = formatIngestString(billable);
+  if (!ingestPromoApplies(promoApplied, gross, billable)) return billableStr;
+  return `${formatIngestString(gross)} → ${billableStr}`;
+}
+
 /**
  * @param {{ lowGb?: number, expectedGb?: number, highGb?: number }} triplet
  */
