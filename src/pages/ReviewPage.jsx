@@ -1,5 +1,6 @@
 import { useMemo, useCallback, useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import PageHeaderActions from '../components/layout/PageHeaderActions';
 import WorkflowStepIndicator from '../components/layout/WorkflowStepIndicator';
 import { SHOW_COVERAGE_PAGE } from '../config/featureFlags.js';
@@ -249,6 +250,7 @@ function ReviewTabBar({ activeTab, onChange, counts }) {
 
 export default function ReviewPage() {
   const { state, dispatch } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const [activeTab, setActiveTab] = useState('overview');
 
   const sizingCtx = useMemo(
@@ -285,9 +287,9 @@ export default function ReviewPage() {
         type: 'OPEN_SOURCE_FOR_CONFIG',
         payload: { sourceId, category: category || null },
       });
-      dispatch({ type: 'SET_STEP', payload: STEP.SOURCES });
+      goToStep(STEP.SOURCES);
     },
-    [dispatch],
+    [dispatch, goToStep],
   );
 
   return (
@@ -305,9 +307,9 @@ export default function ReviewPage() {
         <PageHeaderActions
           state={state}
           backLabel="Sources"
-          onBack={() => dispatch({ type: 'SET_STEP', payload: STEP.SOURCES })}
+          onBack={() => goToStep(STEP.SOURCES)}
           continueLabel={SHOW_COVERAGE_PAGE ? 'Coverage' : 'Paths'}
-          onContinue={() => dispatch({ type: 'SET_STEP', payload: SHOW_COVERAGE_PAGE ? STEP.COVERAGE : STEP.PATHS })}
+          onContinue={() => goToStep(SHOW_COVERAGE_PAGE ? STEP.COVERAGE : STEP.PATHS)}
           exportHint="splunk-scope-review"
         />
       </div>

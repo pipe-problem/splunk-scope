@@ -34,7 +34,7 @@ describe('reviewGateEngine', () => {
       saas_general: {
         ...robbins.sources.saas_general,
         status: 'current',
-        number_of_users: 200,
+        saasTenantCount: 2,
       },
       saas_office: {
         ...robbins.sources.saas_office,

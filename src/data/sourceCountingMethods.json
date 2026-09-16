@@ -22,7 +22,7 @@
         "Daily trace sample volume"
       ],
       "howToCount": "Application performance metrics, traces, and error tracking from APM platforms.",
-      "customerQuestion": "How many apm-monitored applications are in scope for APM (Application Performance Monitoring)?",
+      "customerQuestion": "How many applications are monitored by your APM platform?",
       "commonMistakes": [
         "Counting every container replica as a separate app",
         "Omitting non-prod if it forwards to the same index",
@@ -36,7 +36,7 @@
         "Clusters / scale-out nodes"
       ],
       "howToCount": "Application server logs including J2EE containers, .",
-      "customerQuestion": "How many production application servers are in scope for Application Servers (Production)?",
+      "customerQuestion": "How many production application servers (J2EE, .NET, etc.) forward application logs?",
       "commonMistakes": [
         "Double-counting the same host under Web Servers and App Servers",
         "Counting DB servers as app servers",
@@ -49,7 +49,7 @@
         "Dev/test/stage environments"
       ],
       "howToCount": "Application server logs from development, test, and staging J2EE, .",
-      "customerQuestion": "How many non-prod application servers are in scope for Application Servers (Non-Production)?",
+      "customerQuestion": "How many non-production application servers forward logs?",
       "commonMistakes": [
         "Double-counting hosts already scoped under Web Servers (Non-Production)",
         "Assuming non-prod volume is negligible during release testing"
@@ -73,7 +73,7 @@
         "Total records synced per source"
       ],
       "howToCount": "Asset inventory, identity directory, and CMDB data used for enrichment and context in security operations.",
-      "customerQuestion": "How many asset or identity data sources are in scope for Asset & Identity Lists (CMDB / AD / LDAP)?",
+      "customerQuestion": "How many asset inventory or identity directory sources feed enrichment data?",
       "commonMistakes": [
         "Counting total CI rows instead of upstream integrations",
         "Treating every SCCM site as a separate source when one aggregator export exists"
@@ -85,7 +85,7 @@
         "Transactions per day (volume driver)"
       ],
       "howToCount": "Application-level business transaction logs including order processing, payment systems, and ERP activity.",
-      "customerQuestion": "How many business applications instrumented are in scope for Business Transaction Logs?",
+      "customerQuestion": "How many business applications produce instrumented transaction logs?",
       "commonMistakes": [
         "Using order counts as 'application count'",
         "Ignoring batch windows that spike TPS",
@@ -98,12 +98,12 @@
         "Monitored SaaS platforms",
         "API connectors"
       ],
-      "howToCount": "Cloud app discovery, sanctioned/unsanctioned usage, and CASB policy violation logs.",
-      "customerQuestion": "How many users are in scope for Cloud Access Security Broker (CASB)?",
+      "howToCount": "Users whose cloud app activity is governed by CASB policy/audit feeds (discovery, violations, admin changes) — not every employee if only a subset is inline-proxied.",
+      "customerQuestion": "How many users are covered by CASB policy and audit logging?",
       "commonMistakes": [
-        "Counting SaaS licenses instead of routed user population",
-        "Omitting service accounts with API activity",
-        "Using global user count when only a BU is enforced"
+        "Using the SASE/SWG per-user proxy rate for CASB policy-only feeds",
+        "Counting SaaS licenses instead of CASB-enforced user population",
+        "Omitting service accounts with API activity"
       ]
     },
     "config_mgmt": {
@@ -113,7 +113,7 @@
         "Environments"
       ],
       "howToCount": "Configuration management platform logs including state changes, compliance drift, and deployment activities.",
-      "customerQuestion": "How many servers running config management are in scope for Configuration Management / Deployment Tools?",
+      "customerQuestion": "How many servers are managed by your configuration management platform?",
       "commonMistakes": [
         "Counting only masters/orchestrators",
         "Including containers twice if also counted elsewhere without scope rules"
@@ -126,7 +126,7 @@
         "Integrated projects/subscriptions"
       ],
       "howToCount": "CSPM tools continuously monitor cloud infrastructure for misconfigurations, compliance violations, and security risks.",
-      "customerQuestion": "How many cloud accounts under assessment are in scope for Cloud Security Posture Management (CSPM)?",
+      "customerQuestion": "How many cloud accounts does your CSPM tool continuously assess?",
       "commonMistakes": [
         "Counting every resource instead of account boundary",
         "Excluding sandbox accounts that still generate findings",
@@ -140,7 +140,7 @@
         "Server OS instances"
       ],
       "howToCount": "Runtime protection for cloud workloads including VMs, containers, and serverless functions.",
-      "customerQuestion": "How many protected workloads are in scope for Cloud Workload Protection Platform (CWPP)?",
+      "customerQuestion": "How many cloud workloads (VMs, containers, serverless) does your CWPP agent protect?",
       "commonMistakes": [
         "Double-counting EDR on same host without dedupe rules",
         "Using hypervisor count instead of VM/agent count"
@@ -152,7 +152,7 @@
         "Clusters / replicas (if logged separately)"
       ],
       "howToCount": "Database audit logs, transaction logs, access logs, and error logs from relational and NoSQL database systems.",
-      "customerQuestion": "How many database instances are in scope for Database Instances?",
+      "customerQuestion": "How many database instances (relational or NoSQL) send audit and error logs?",
       "commonMistakes": [
         "Counting schemas instead of instances",
         "Ignoring passive replicas with audit enabled",
@@ -165,7 +165,7 @@
         "Sensitive tables monitored"
       ],
       "howToCount": "Database access and authentication audit logs (DBA actions, failed logins, privilege use) from enterprise RDBMS platforms.",
-      "customerQuestion": "How many instances for access logs are in scope for Access / Audit Logs?",
+      "customerQuestion": "How many database instances capture access and authentication audit logs?",
       "commonMistakes": [
         "Assuming default auditing is on",
         "Forgetting proxy/scan user noise in logs"
@@ -177,7 +177,7 @@
         "High-churn applications"
       ],
       "howToCount": "Database transaction or SQL audit streams capturing DML/DDL activity, sensitive table access, and application database calls.",
-      "customerQuestion": "How many instances for transaction logs are in scope for Transaction Logs?",
+      "customerQuestion": "How many database instances capture transaction or SQL audit streams?",
       "commonMistakes": [
         "Enabling full statement logging without filtering",
         "Underestimating OLTP peak windows"
@@ -189,7 +189,7 @@
         "Protected sites / ASNs"
       ],
       "howToCount": "DDoS mitigation platform logs including attack detection, traffic scrubbing, and rate limiting events.",
-      "customerQuestion": "How many ddos protection services are in scope for DDoS Protection?",
+      "customerQuestion": "How many DDoS mitigation services or scrubbing centers forward attack logs?",
       "commonMistakes": [
         "Counting public IPs instead of contracted services",
         "Omitting DNS-based protection logs"
@@ -201,7 +201,7 @@
         "Campaigns / decoy networks"
       ],
       "howToCount": "Honeypot, honeytoken, and deception platform alerts indicating interaction with decoy systems or credentials.",
-      "customerQuestion": "How many deception/honeypot systems are in scope for Deception Technology?",
+      "customerQuestion": "How many honeypot, honeytoken, or deception decoy systems are deployed?",
       "commonMistakes": [
         "Counting production servers as decoys",
         "Ignoring emulated services that burst alerts during scans"
@@ -213,7 +213,7 @@
         "VDI sessions if broken out"
       ],
       "howToCount": "Windows Event Logs, macOS unified logs, and Linux desktop logs from end-user workstations.",
-      "customerQuestion": "How many users are in scope for Desktops / Workstations?",
+      "customerQuestion": "How many end-user workstations or laptops forward desktop logs?",
       "commonMistakes": [
         "Using headcount instead of deployed agents",
         "Counting kiosk/shared devices twice",
@@ -227,7 +227,7 @@
         "Build agents"
       ],
       "howToCount": "Build system, deployment pipeline, and CI/CD platform logs including build results, deployments, and artifact management.",
-      "customerQuestion": "How many build/ci servers are in scope for CI/CD and Build Systems?",
+      "customerQuestion": "How many CI/CD pipelines or build servers forward deployment logs?",
       "commonMistakes": [
         "Counting every ephemeral build pod as a permanent unit",
         "Ignoring Git audit vs pipeline logs split"
@@ -240,7 +240,7 @@
         "Scopes"
       ],
       "howToCount": "DHCP lease logs mapping IP addresses to MAC addresses and hostnames over time.",
-      "customerQuestion": "How many dhcp servers are in scope for DHCP?",
+      "customerQuestion": "How many DHCP servers forward lease assignment logs?",
       "commonMistakes": [
         "Counting relays instead of authoritative servers",
         "Mixing IPAM-only exports with DHCP service logs"
@@ -258,15 +258,16 @@
       ]
     },
     "dlp": {
-      "primaryUnit": "endpoints covered by dlp",
+      "primaryUnit": "active users or endpoints monitored by DLP",
       "secondaryUnits": [
-        "Managed channels (web, email, endpoint)"
+        "DLP products / channels (web, email, endpoint)"
       ],
-      "howToCount": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems.",
-      "customerQuestion": "How many users are in scope for Data Loss/Leakage Prevention (DLP)?",
+      "howToCount": "Count active users or endpoints that can generate DLP policy violations. Count products/channels separately; do not treat inspected content or full endpoint telemetry as DLP incident ingest.",
+      "customerQuestion": "How many users or endpoints are monitored by your DLP solution?",
       "commonMistakes": [
         "Using email-only DLP stats for endpoint DLP",
-        "Omitting server DLP agents"
+        "Omitting server DLP agents",
+        "Applying the 0.05 GB/day product/channel allowance to every monitored user"
       ]
     },
     "dns": {
@@ -276,7 +277,7 @@
         "User population behind resolvers"
       ],
       "howToCount": "Internal DNS query and response logs from resolvers and authoritative servers.",
-      "customerQuestion": "How many dns servers are in scope for DNS?",
+      "customerQuestion": "How many internal DNS resolvers or authoritative servers forward query logs?",
       "commonMistakes": [
         "Counting external public resolvers you don't operate",
         "Enabling full query logging without sizing"
@@ -299,7 +300,7 @@
         "Inspected Gbps"
       ],
       "howToCount": "Full packet capture and deep packet inspection data providing complete network transaction visibility.",
-      "customerQuestion": "How many dpi systems are in scope for Deep Packet Inspection / Full PCAP?",
+      "customerQuestion": "How many deep packet inspection or full-packet-capture systems forward network data?",
       "commonMistakes": [
         "Equating SPAN ports with production DPI capacity",
         "Ignoring SSL inspection policy impact"
@@ -325,7 +326,7 @@
         "Protected mailboxes (volume driver)"
       ],
       "howToCount": "On-prem mail server or secure email gateway message tracking and threat logs.",
-      "customerQuestion": "How many mail servers or gateways are in scope for Email Servers / Email Gateways?",
+      "customerQuestion": "How many mail servers or secure email gateways forward message tracking logs?",
       "commonMistakes": [
         "Using mailbox/user count instead of server or gateway appliances"
       ]
@@ -337,7 +338,7 @@
         "Logging profile"
       ],
       "howToCount": "Next-generation firewall traffic, threat, URL, and VPN logs from perimeter and internal devices.",
-      "customerQuestion": "How many firewall devices total are in scope for Firewalls (Next-Gen Firewalls)?",
+      "customerQuestion": "How many next-generation firewall appliances will send traffic and threat logs to Splunk?",
       "commonMistakes": [
         "Counting HA passive devices without logs",
         "Treating VPN concentrator logs as separate firewall without scoping",
@@ -361,7 +362,7 @@
         "Zones segmented"
       ],
       "howToCount": "Internal segmentation firewall logs for east-west traffic between zones.",
-      "customerQuestion": "How many internal firewalls are in scope for Internal Segmentation Firewalls?",
+      "customerQuestion": "How many internal segmentation firewalls enforce east-west zone boundaries?",
       "commonMistakes": [
         "Double-counting the same device under perimeter and internal"
       ]
@@ -372,7 +373,7 @@
         "Public links protected"
       ],
       "howToCount": "Internet-facing firewall traffic and threat logs (north-south).",
-      "customerQuestion": "How many internet-facing firewalls are in scope for Perimeter Firewalls?",
+      "customerQuestion": "How many internet-facing perimeter firewalls handle north-south traffic?",
       "commonMistakes": [
         "Including internal-only virtual firewalls",
         "Missing cloud edge NGFW pairs per AZ"
@@ -384,7 +385,7 @@
         "Public applications"
       ],
       "howToCount": "Web application firewall HTTP/S request and block logs.",
-      "customerQuestion": "How many waf instances are in scope for Web Application Firewall (WAF)?",
+      "customerQuestion": "How many web application firewall instances protect HTTP/HTTPS applications?",
       "commonMistakes": [
         "Counting origin web servers as WAFs",
         "Omitting CDN-managed WAF edges"
@@ -396,7 +397,7 @@
         "Registered VMs (context)"
       ],
       "howToCount": "Hypervisor and virtual infrastructure management logs from VMware vCenter, ESXi hosts, Hyper-V, and other platforms.",
-      "customerQuestion": "How many virtualization hosts are in scope for Virtual Infrastructure (Hypervisor)?",
+      "customerQuestion": "How many hypervisor hosts or management platforms (vCenter, Hyper-V) forward logs?",
       "commonMistakes": [
         "Counting every VM instead of hosts",
         "Ignoring vCenter-only exports without host logs"
@@ -409,7 +410,7 @@
         "Kubernetes clusters (advanced)"
       ],
       "howToCount": "IaaS includes cloud provider infrastructure logs such as audit activity, VM events, flow logs, storage access logs, Kubernetes control-plane logs, and configuration/inventory changes.",
-      "customerQuestion": "How many cloud accounts are in scope for IaaS (Cloud Infrastructure)?",
+      "customerQuestion": "How many cloud provider accounts (AWS, Azure, GCP, etc.) will you monitor?",
       "commonMistakes": [
         "Using instance count as the primary account metric in standard mode",
         "Double-counting VMs or clusters also sized as separate child sources"
@@ -422,7 +423,7 @@
         "Active pods or containers (stdout)"
       ],
       "howToCount": "Containers / Pods / Clusters includes Kubernetes and container platform logs such as control-plane activity, audit events, node/runtime logs, and application logs written by containers.",
-      "customerQuestion": "How many container clusters are in scope for Containers / Pods / Clusters?",
+      "customerQuestion": "How many Kubernetes or container platform clusters forward logs to Splunk?",
       "commonMistakes": [
         "Counting namespaces as clusters",
         "Sizing container stdout here and again under application or web server sources",
@@ -436,7 +437,7 @@
         "Optional per-component toggles"
       ],
       "howToCount": "Cloud Instances / VMs includes logs collected from cloud virtual machines through provider agents or VM log forwarding, such as OS events, authentication/security activity, agent health, and optionally application/service logs.",
-      "customerQuestion": "How many vms or cloud servers are in scope for Cloud Instances / VMs?",
+      "customerQuestion": "How many cloud virtual machines will send OS and security logs?",
       "commonMistakes": [
         "Including stopped instances that are not logging",
         "Sizing application logs here and again under Application Servers or Web Servers",
@@ -450,7 +451,7 @@
         "Optional per-component toggles"
       ],
       "howToCount": "Cloud Storage includes logs from cloud object storage and cloud file storage platforms, such as management activity, object/file access requests, lifecycle or replication events, and storage health telemetry.",
-      "customerQuestion": "How many storage assets are in scope for Cloud Storage?",
+      "customerQuestion": "How many cloud storage buckets, volumes, or file shares generate access logs?",
       "commonMistakes": [
         "Counting every bucket when only sensitive prefixes log",
         "Sizing access logs here and again under Application Servers or Web Servers",
@@ -464,7 +465,7 @@
         "Manual GB/day overrides"
       ],
       "howToCount": "Industrial control system logs including SCADA events, PLC state changes, and process variable anomalies.",
-      "customerQuestion": "How many industrial control or scada systems are in scope for ICS / SCADA Systems?",
+      "customerQuestion": "How many ICS or SCADA systems (PLCs, HMIs, historians) forward operational logs?",
       "commonMistakes": [
         "IT asset counts as OT",
         "Underestimating historian polling volume"
@@ -476,7 +477,7 @@
         "Protected segments"
       ],
       "howToCount": "Alert and event logs from network-based intrusion detection and prevention systems.",
-      "customerQuestion": "How many ids/ips sensors are in scope for Intrusion Prevention/Detection Systems (IPS/IDS)?",
+      "customerQuestion": "How many network IDS/IPS sensors or managers forward alert logs?",
       "commonMistakes": [
         "Counting passive PCAP taps twice with NDR",
         "Omitting virtual sensors per VLAN"
@@ -500,7 +501,7 @@
         "Log forwarders"
       ],
       "howToCount": "System logs from production Linux/Unix servers including syslog, auth logs, performance metrics, and security events.",
-      "customerQuestion": "How many production linux/unix servers are in scope for Linux / Unix Servers (Production)?",
+      "customerQuestion": "How many production Linux or Unix servers send syslog and security logs?",
       "commonMistakes": [
         "Containers counted as hosts without policy",
         "Omitting AIX/mainframe-adjacent Linux"
@@ -512,7 +513,7 @@
         "Environments (dev/test/stage)"
       ],
       "howToCount": "System logs from development, test, and staging Linux/Unix environments.",
-      "customerQuestion": "How many non-prod linux/unix servers are in scope for Linux / Unix Servers (Non-Production)?",
+      "customerQuestion": "How many dev, test, or staging Linux/Unix servers forward logs?",
       "commonMistakes": [
         "Assuming non-prod is negligible during release spikes"
       ]
@@ -523,7 +524,7 @@
         "Back-end pools"
       ],
       "howToCount": "Load balancer logs including traffic distribution, health checks, SSL termination events, and connection metadata.",
-      "customerQuestion": "How many load balancer devices are in scope for Load Balancers?",
+      "customerQuestion": "How many load balancer appliances or virtual instances forward traffic logs?",
       "commonMistakes": [
         "Counting VIPs instead of devices",
         "Omitting GSLB-only appliances"
@@ -536,7 +537,7 @@
         "Manual GB/day"
       ],
       "howToCount": "Mainframe system logs including SMF records, RACF security events, and system activity.",
-      "customerQuestion": "How many mainframe systems are in scope for Mainframe?",
+      "customerQuestion": "How many mainframe LPARs or logical systems forward SMF and security logs?",
       "commonMistakes": [
         "Treating DASD count as systems",
         "Underestimating SMF volume"
@@ -548,7 +549,7 @@
         "Enrolled users"
       ],
       "howToCount": "MDM platform logs including device compliance, app deployment, and security policy enforcement.",
-      "customerQuestion": "How many managed mobile devices are in scope for Mobile Device Management (MDM)?",
+      "customerQuestion": "How many mobile devices are enrolled and managed by your MDM platform?",
       "commonMistakes": [
         "Counting inactive devices",
         "Mixing BYOD privacy-limited telemetry"
@@ -560,7 +561,7 @@
         "Integrated applications"
       ],
       "howToCount": "Message queuing, ESB, and integration platform logs.",
-      "customerQuestion": "How many production middleware systems are in scope for Middleware Services (Production)?",
+      "customerQuestion": "How many production message queues, ESBs, or integration platforms forward logs?",
       "commonMistakes": [
         "Counting Kafka topics instead of brokers",
         "Double-counting with app_servers"
@@ -572,7 +573,7 @@
         "Dev/test/stage environments"
       ],
       "howToCount": "Message queuing, ESB, and integration platform logs from dev, test, and staging environments.",
-      "customerQuestion": "How many non-prod middleware systems are in scope for Middleware Services (Non-Production)?",
+      "customerQuestion": "How many non-production middleware systems forward logs?",
       "commonMistakes": [
         "Assuming non-prod brokers are silent",
         "Double-counting shared integration test harnesses"
@@ -584,7 +585,7 @@
         "Access switches integrated"
       ],
       "howToCount": "NAC platform logs including device posture assessment, network admission decisions, and quarantine events.",
-      "customerQuestion": "How many nac servers are in scope for Network Access Control (NAC)?",
+      "customerQuestion": "How many NAC policy servers assess device posture and admission decisions?",
       "commonMistakes": [
         "Counting every access switch",
         "Omitting guest workflow logs"
@@ -597,7 +598,7 @@
         "Sites"
       ],
       "howToCount": "Network-based detection and response platform logs including lateral movement alerts, encrypted traffic analysis, and behavioral anomalies.",
-      "customerQuestion": "How many ndr network sensors are in scope for NDR (Network Detection & Response)?",
+      "customerQuestion": "How many NDR sensors or collectors analyze network traffic for threats?",
       "commonMistakes": [
         "Confusing NetFlow exporters with full NDR sensors",
         "Double-counting Corelight + tap on same link without dedupe"
@@ -610,7 +611,7 @@
         "Sampling rate"
       ],
       "howToCount": "NetFlow, sFlow, or IPFIX metadata from routers, switches, or firewalls.",
-      "customerQuestion": "How many devices exporting netflow data are in scope for Network Traffic Analysis / NetFlow?",
+      "customerQuestion": "How many network devices export NetFlow, sFlow, or IPFIX to Splunk?",
       "commonMistakes": [
         "Using interface count instead of exporting devices",
         "Ignoring sampler asymmetry across vendors"
@@ -622,7 +623,7 @@
         "Monitored OT VLANs"
       ],
       "howToCount": "OT-specific intrusion detection and asset discovery platform logs.",
-      "customerQuestion": "How many ot network security sensors are in scope for OT Security Solutions (OT IDS)?",
+      "customerQuestion": "How many OT network security sensors or OT IDS platforms are deployed?",
       "commonMistakes": [
         "Mapping 1:1 with every PLC",
         "Missing dual-homed sensors"
@@ -634,7 +635,7 @@
         "Underlying instances"
       ],
       "howToCount": "Platform-as-a-Service logs including managed databases, serverless functions, messaging queues, and application hosting platforms.",
-      "customerQuestion": "How many managed cloud platform services are in scope for PaaS (Platform Services)?",
+      "customerQuestion": "How many managed platform services (databases, queues, serverless) produce logs?",
       "commonMistakes": [
         "Counting every serverless invocation",
         "Omitting integration with shared diagnostic settings"
@@ -657,7 +658,7 @@
         "Issued certificates per year"
       ],
       "howToCount": "Certificate lifecycle logs including issuance, revocation, renewal, and enrollment events.",
-      "customerQuestion": "How many pki / ca servers are in scope for Public Key Infrastructure (PKI)?",
+      "customerQuestion": "How many certificate authority or PKI servers log issuance and revocation events?",
       "commonMistakes": [
         "Counting public CA certs instead of internal CA systems"
       ]
@@ -681,7 +682,7 @@
         "Sites"
       ],
       "howToCount": "Web proxy URL, category, and policy enforcement logs.",
-      "customerQuestion": "How many web proxy devices are in scope for Web Proxy / Secure Web Gateway?",
+      "customerQuestion": "How many web proxy or secure web gateway appliances log user URL activity?",
       "commonMistakes": [
         "Transparent intercept devices missed",
         "Omitting PAC-based cloud proxies"
@@ -693,7 +694,7 @@
         "WAN links"
       ],
       "howToCount": "Router logs including routing table changes, BGP events, ACL hits, and interface state changes.",
-      "customerQuestion": "How many routers are in scope for Routers?",
+      "customerQuestion": "How many network routers forward routing and ACL event logs?",
       "commonMistakes": [
         "Counting L3 switches billed as routers without clarity",
         "Missing SD-WAN edge routers"
@@ -705,7 +706,7 @@
         "Tenants"
       ],
       "howToCount": "Web conferencing audit logs (Zoom, Teams, Webex, Slack huddles): meetings, recordings, admin settings, and sign-in activity forwarded to Splunk.",
-      "customerQuestion": "How many users are in scope for Web Conferencing?",
+      "customerQuestion": "How many licensed web conferencing users (Zoom, Teams, Webex) forward meeting audit logs?",
       "commonMistakes": [
         "Meeting minutes vs user seats confusion"
       ]
@@ -718,7 +719,7 @@
         "Collection profile and activity level"
       ],
       "howToCount": "CRM audit logs (Salesforce, Dynamics, etc.) for logins, record changes, and integrations.",
-      "customerQuestion": "How many users are in scope for CRM?",
+      "customerQuestion": "How many active CRM users (Salesforce, Dynamics, etc.) generate audit logs?",
       "commonMistakes": [
         "Sizing Salesforce here and again under SaaS (General)",
         "API integration volume omitted in full-activity profiles",
@@ -731,22 +732,20 @@
         "Shared sites/libraries"
       ],
       "howToCount": "Enterprise file-sharing audit logs (Box, Dropbox, OneDrive standalone tenants): file access, sharing links, admin actions, and DLP-related events.",
-      "customerQuestion": "How many users are in scope for File Sharing / Collaboration?",
+      "customerQuestion": "How many collaboration platform users (Box, Dropbox, OneDrive) generate file-sharing audit logs?",
       "commonMistakes": [
         "External collaborator double count"
       ]
     },
     "saas_general": {
-      "primaryUnit": "saas tenants, active users, and integrations",
+      "primaryUnit": "distinct SaaS applications / tenants",
       "secondaryUnits": [
-        "Tenants / orgs / instances",
-        "Integrations / API clients",
-        "Collection profile and activity level"
+        "Active users and integrations in advanced sizing only"
       ],
       "howToCount": "General SaaS application audit logs not covered by Office, CRM, or IdP rows.",
-      "customerQuestion": "How many users are in scope for SaaS (General)?",
+      "customerQuestion": "How many distinct SaaS applications or tenants send audit logs not covered elsewhere?",
       "commonMistakes": [
-        "Using licensed seats instead of regularly active users",
+        "Entering users in the parent SaaS row and multiplying them by the per-tenant 0.15 rate",
         "Sizing M365/Google here when dedicated Office SaaS child is used",
         "Omitting integration/API client volume in full-activity profiles"
       ]
@@ -761,7 +760,7 @@
         "Collection profile"
       ],
       "howToCount": "Microsoft 365 or Google Workspace audit logs—mail, files, Teams, and admin activity.",
-      "customerQuestion": "How many users are in scope for Office Productivity (M365/Google)?",
+      "customerQuestion": "How many licensed Microsoft 365 or Google Workspace users generate audit activity?",
       "commonMistakes": [
         "Counting Microsoft 365 suite and Exchange/SharePoint/Teams workloads twice",
         "Using licensed seats instead of active mailboxes or file users",
@@ -774,7 +773,7 @@
         "IdP apps integrated"
       ],
       "howToCount": "Sign-in and MFA events from your cloud identity provider (Okta, Entra, Ping) for SaaS and VPN apps.",
-      "customerQuestion": "How many users are in scope for Cloud IdP SSO Sign-ins?",
+      "customerQuestion": "How many users authenticate through your cloud identity provider?",
       "commonMistakes": [
         "Double-counting with Privileged Access (PAM) row",
         "Including on-prem AD users not using cloud IdP SSO"
@@ -786,7 +785,7 @@
         "Daily analysis submissions"
       ],
       "howToCount": "Sandbox detonation results including behavioral analysis, IOC extraction, and verdict information.",
-      "customerQuestion": "How many sandbox systems are in scope for Automated Malware Analysis (Sandbox)?",
+      "customerQuestion": "How many malware sandbox or detonation systems forward analysis results?",
       "commonMistakes": [
         "Submission spikes during outbreaks",
         "Omitting integration retries"
@@ -798,7 +797,7 @@
         "Application users"
       ],
       "howToCount": "SAP application logs including security audit logs, change documents, and transaction logs.",
-      "customerQuestion": "How many sap systems are in scope for SAP?",
+      "customerQuestion": "How many SAP systems (ERP, S/4HANA, etc.) forward security and change logs?",
       "commonMistakes": [
         "Dialog users vs named users licensing mismatch"
       ]
@@ -809,7 +808,7 @@
         "Sites / branches"
       ],
       "howToCount": "Secure access edge logs for remote users (SWG, ZTNA, CASB bundle).",
-      "customerQuestion": "How many users are in scope for Secure Access Service Edge (SASE)?",
+      "customerQuestion": "How many remote users connect through your SASE platform?",
       "commonMistakes": [
         "Site count instead of user count",
         "VPN-only users not hairpinned through SASE"
@@ -857,7 +856,7 @@
         "Manual GB/day"
       ],
       "howToCount": "Storage array logs including access patterns, performance metrics, and administrative changes for production data stores.",
-      "customerQuestion": "How many production storage arrays are in scope for Production Storage Arrays?",
+      "customerQuestion": "How many production storage arrays forward access and performance logs?",
       "commonMistakes": [
         "Counting individual disks",
         "Ignoring replication partners"
@@ -869,7 +868,7 @@
         "Access ports"
       ],
       "howToCount": "Switch logs including port security, VLAN changes, spanning tree events, and MAC address table changes.",
-      "customerQuestion": "How many managed switches are in scope for Network Switches?",
+      "customerQuestion": "How many managed network switches forward syslog or SNMP trap logs?",
       "commonMistakes": [
         "Unmanaged access switches omitted",
         "Duplicate stacks"
@@ -904,7 +903,7 @@
         "Indicators per day"
       ],
       "howToCount": "Threat intelligence indicators (IOCs), threat actor profiles, and campaign information from commercial and open-source feeds.",
-      "customerQuestion": "How many threat intel feeds are in scope for Threat Intelligence Feeds?",
+      "customerQuestion": "How many distinct threat intelligence feeds does Splunk ingest?",
       "commonMistakes": [
         "Treating very large STIX bundles as one feed without volume planning",
         "Duplicate feeds from partner resellers"
@@ -928,7 +927,7 @@
         "Concurrent remote users"
       ],
       "howToCount": "VPN gateway connection and authentication logs from concentrators and SSL VPN appliances.",
-      "customerQuestion": "How many vpn gateway devices are in scope for VPN Gateways?",
+      "customerQuestion": "How many VPN concentrators or SSL VPN gateways log user connections?",
       "commonMistakes": [
         "Using concurrent VPN user count instead of appliance count"
       ]
@@ -940,7 +939,7 @@
         "Scan frequency"
       ],
       "howToCount": "Vulnerability scanner results, compliance scan data, and asset discovery information.",
-      "customerQuestion": "How many scanning appliances or managers are in scope for Vulnerability Management?",
+      "customerQuestion": "How many vulnerability scanners or scan managers feed results to Splunk?",
       "commonMistakes": [
         "IP count vs authenticated scan asset count",
         "Duplicates across overlapping scans"
@@ -952,7 +951,7 @@
         "Requests per day"
       ],
       "howToCount": "Web server access logs, error logs, and performance metrics from HTTP/HTTPS serving infrastructure.",
-      "customerQuestion": "How many production web servers hosting applications are in scope for Web Servers (Production)?",
+      "customerQuestion": "How many production web servers hosting HTTP/HTTPS applications forward access logs?",
       "commonMistakes": [
         "Reverse proxies vs origins",
         "Debug log level"
@@ -964,7 +963,7 @@
         "Dev/test/stage environments"
       ],
       "howToCount": "Web server access logs, error logs, and performance metrics from dev, test, and staging HTTP/HTTPS environments.",
-      "customerQuestion": "How many non-prod web servers are in scope for Web Servers (Non-Production)?",
+      "customerQuestion": "How many non-production web servers in dev, test, or staging forward logs?",
       "commonMistakes": [
         "Mixing production traffic through non-prod VIPs",
         "Omitting internal-only staging tiers"
@@ -987,7 +986,7 @@
         "Domain membership"
       ],
       "howToCount": "Windows Event Logs from physical and virtual servers.",
-      "customerQuestion": "How many total windows servers are in scope for Windows Servers?",
+      "customerQuestion": "How many Windows servers forward event logs to Splunk?",
       "commonMistakes": [
         "Excluding VDIs misclassified",
         "Jump boxes skewing auth volume"
@@ -999,7 +998,7 @@
         "SSIDs"
       ],
       "howToCount": "Wireless controller and access point logs including client associations, rogue AP detection, and authentication events.",
-      "customerQuestion": "How many wireless access points are in scope for Wireless Access Points?",
+      "customerQuestion": "How many wireless access points or controllers forward client association logs?",
       "commonMistakes": [
         "Autonomous vs controller architectures miscounted"
       ]

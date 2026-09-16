@@ -58,6 +58,8 @@ function getProfileValue(sourceId, inputState) {
       return normalizeCloudStorageState(state).cloudStorageCollectionProfile;
     case 'windows_servers':
       return state.windowsLogProfile || 'selected_channels';
+    case 'casb':
+      return state.casbCollectionProfile || 'policy_alerts';
     default:
       if (guardrailsData.guardrails.find((g) => g.sourceId === sourceId)?.profileField) {
         const field = guardrailsData.guardrails.find((g) => g.sourceId === sourceId).profileField;
@@ -126,6 +128,26 @@ function normalizeAssetProfile(value) {
   if (v === 'lookup/context only' || v === 'lookup_context') return 'lookup_context';
   if (v === 'full asset/identity synchronization' || v === 'full_sync') return 'full_sync';
   return 'periodic_sync';
+}
+
+function normalizeCasbProfile(value) {
+  const v = String(value || '').trim().toLowerCase();
+  if (v === 'full_inline_saas' || v === 'full inline saas') return 'full_inline_saas';
+  return 'policy_alerts';
+}
+
+function resolveCasbGuardrail(inputState, estimate) {
+  const users = parseCount(inputState.number_of_users);
+  if (users <= 0) return estimate;
+
+  const profile = normalizeCasbProfile(inputState.casbCollectionProfile);
+  const rate = profile === 'full_inline_saas' ? 0.05 : 0.005;
+  const guardrailBands = ratesToBands(
+    { lowPerUnit: rate * 0.8, expectedPerUnit: rate, highPerUnit: rate * 1.2 },
+    users,
+  );
+  const note = NOTES.casb;
+  return applyMaxWithAdditive(estimate, guardrailBands, note);
 }
 
 function resolveDlpGuardrail(inputState, estimate) {
@@ -334,6 +356,9 @@ export function applySizingGuardrails(source, inputState, estimate) {
 
     case 'dlp_combined':
       return resolveDlpGuardrail(inputState, estimate);
+
+    case 'casb_collection':
+      return resolveCasbGuardrail(inputState, estimate);
 
     case 'firewall_max':
       return resolveFirewallGuardrail(inputState, estimate);

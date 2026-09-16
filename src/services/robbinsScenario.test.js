@@ -51,7 +51,7 @@ describe('Robbins retail example scenario', () => {
     expect(robbins.selectedPlanIndex).toBeNull();
   });
 
-  it('configured session and run path exceed 150 GB/day buffered', () => {
+  it('configured session stays below 150 GB/day after SaaS and DLP calibration', () => {
     const budgetGbDay = computeIngestBudgetFromIntake(robbins.intake).budgetGbDay;
     expect(budgetGbDay).toBeCloseTo(150, 0);
     const session = sumSessionPlanningIngest({
@@ -71,8 +71,8 @@ describe('Robbins retail example scenario', () => {
       { budgetGbDay, intake: robbins.intake },
     );
     const run = plans.find((p) => p.pathPhase === 'run') || plans[2];
-    expect(session.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
-    expect(run.totals.buffered.expected).toBeGreaterThan(budgetGbDay);
+    expect(session.totals.buffered.expected).toBeLessThan(budgetGbDay);
+    expect(run.totals.buffered.expected).toBeLessThan(budgetGbDay);
   });
 
   it('generates three distinct budget-aware paths under cap', () => {
@@ -120,7 +120,7 @@ describe('Robbins retail example scenario', () => {
       saas_general: {
         ...robbins.sources.saas_general,
         status: 'current',
-        number_of_users: 200,
+        saasTenantCount: 2,
       },
       saas_office: {
         ...robbins.sources.saas_office,

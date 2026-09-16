@@ -6,7 +6,7 @@
   "questions": {
     "iaas": {
       "sourceId": "iaas",
-      "question": "How many cloud accounts are in scope for IaaS (Cloud Infrastructure)?",
+      "question": "How many cloud provider accounts (AWS, Azure, GCP, etc.) will you monitor?",
       "primaryInputField": "iaasAccountCount",
       "unitLabel": "cloud accounts",
       "exampleQuantity": 3,
@@ -14,7 +14,7 @@
     },
     "iaas_containers": {
       "sourceId": "iaas_containers",
-      "question": "How many container clusters are in scope for Containers / Pods / Clusters?",
+      "question": "How many Kubernetes or container platform clusters forward logs to Splunk?",
       "primaryInputField": "containerCounts.clusters",
       "unitLabel": "container clusters",
       "exampleQuantity": 10,
@@ -22,7 +22,7 @@
     },
     "iaas_instances": {
       "sourceId": "iaas_instances",
-      "question": "How many vms or cloud servers are in scope for Cloud Instances / VMs?",
+      "question": "How many cloud virtual machines will send OS and security logs?",
       "primaryInputField": "cloudVmInstanceCount",
       "unitLabel": "vms or cloud servers",
       "exampleQuantity": 400,
@@ -30,7 +30,7 @@
     },
     "iaas_storage": {
       "sourceId": "iaas_storage",
-      "question": "How many storage assets are in scope for Cloud Storage?",
+      "question": "How many cloud storage buckets, volumes, or file shares generate access logs?",
       "primaryInputField": "cloudStorageAssetCount",
       "unitLabel": "storage assets",
       "exampleQuantity": 25,
@@ -38,7 +38,7 @@
     },
     "paas": {
       "sourceId": "paas",
-      "question": "How many managed cloud platform services are in scope for PaaS (Platform Services)?",
+      "question": "How many managed platform services (databases, queues, serverless) produce logs?",
       "primaryInputField": "number_of_applications",
       "unitLabel": "managed cloud platform services",
       "exampleQuantity": 10,
@@ -46,15 +46,15 @@
     },
     "saas_general": {
       "sourceId": "saas_general",
-      "question": "How many users are in scope for SaaS (General)?",
-      "primaryInputField": "number_of_users",
-      "unitLabel": "saas tenants, active users, and integrations",
-      "exampleQuantity": 8500,
-      "helperText": "General SaaS application audit logs not covered by Office, CRM, or IdP rows."
+      "question": "How many distinct SaaS applications or tenants send audit logs not covered elsewhere?",
+      "primaryInputField": "saasTenantCount",
+      "unitLabel": "SaaS applications / tenants",
+      "exampleQuantity": 5,
+      "helperText": "Count each SaaS application, tenant, org, or instance once. Do not enter users here; use the dedicated Office, CRM, SSO, conferencing, or file-sharing rows for user-based sizing."
     },
     "saas_office": {
       "sourceId": "saas_office",
-      "question": "How many users are in scope for Office Productivity (M365/Google)?",
+      "question": "How many licensed Microsoft 365 or Google Workspace users generate audit activity?",
       "primaryInputField": "officeActiveUserCount",
       "unitLabel": "active productivity users",
       "exampleQuantity": 12000,
@@ -62,7 +62,7 @@
     },
     "saas_crm": {
       "sourceId": "saas_crm",
-      "question": "How many users are in scope for CRM?",
+      "question": "How many active CRM users (Salesforce, Dynamics, etc.) generate audit logs?",
       "primaryInputField": "crmActiveUserCount",
       "unitLabel": "active crm users",
       "exampleQuantity": 450,
@@ -70,7 +70,7 @@
     },
     "saas_sso": {
       "sourceId": "saas_sso",
-      "question": "How many users are in scope for Cloud IdP SSO Sign-ins?",
+      "question": "How many users authenticate through your cloud identity provider?",
       "primaryInputField": "ssoActiveUserCount",
       "unitLabel": "sso-enrolled users",
       "exampleQuantity": 8000,
@@ -78,7 +78,7 @@
     },
     "saas_conferencing": {
       "sourceId": "saas_conferencing",
-      "question": "How many users are in scope for Web Conferencing?",
+      "question": "How many licensed web conferencing users (Zoom, Teams, Webex) forward meeting audit logs?",
       "primaryInputField": "count",
       "unitLabel": "licensed conferencing users",
       "exampleQuantity": 100,
@@ -86,7 +86,7 @@
     },
     "saas_filesharing": {
       "sourceId": "saas_filesharing",
-      "question": "How many users are in scope for File Sharing / Collaboration?",
+      "question": "How many collaboration platform users (Box, Dropbox, OneDrive) generate file-sharing audit logs?",
       "primaryInputField": "count",
       "unitLabel": "collaboration users",
       "exampleQuantity": 100,
@@ -94,7 +94,7 @@
     },
     "cspm": {
       "sourceId": "cspm",
-      "question": "How many cloud accounts under assessment are in scope for Cloud Security Posture Management (CSPM)?",
+      "question": "How many cloud accounts does your CSPM tool continuously assess?",
       "primaryInputField": "number_of_accounts",
       "unitLabel": "cloud accounts under assessment",
       "exampleQuantity": 12,
@@ -102,7 +102,7 @@
     },
     "cwpp": {
       "sourceId": "cwpp",
-      "question": "How many protected workloads are in scope for Cloud Workload Protection Platform (CWPP)?",
+      "question": "How many cloud workloads (VMs, containers, serverless) does your CWPP agent protect?",
       "primaryInputField": "number_of_instances",
       "unitLabel": "protected workloads",
       "exampleQuantity": 120,
@@ -110,15 +110,15 @@
     },
     "casb": {
       "sourceId": "casb",
-      "question": "How many users are in scope for Cloud Access Security Broker (CASB)?",
+      "question": "How many users are covered by CASB policy and audit logging?",
       "primaryInputField": "number_of_users",
       "unitLabel": "active users",
-      "exampleQuantity": 6000,
-      "helperText": "Cloud app discovery, sanctioned/unsanctioned usage, and CASB policy violation logs."
+      "exampleQuantity": 3400,
+      "helperText": "Policy/alert CASB feeds (discovery, violations, admin changes) — default ~0.005 GB/user/day. Full inline SaaS proxy logging is ~0.05 GB/user/day; use SASE source if all user web traffic is proxied."
     },
     "sase": {
       "sourceId": "sase",
-      "question": "How many users are in scope for Secure Access Service Edge (SASE)?",
+      "question": "How many remote users connect through your SASE platform?",
       "primaryInputField": "number_of_users",
       "unitLabel": "active users",
       "exampleQuantity": 5000,
@@ -126,7 +126,7 @@
     },
     "windows_servers": {
       "sourceId": "windows_servers",
-      "question": "How many total windows servers are in scope for Windows Servers?",
+      "question": "How many Windows servers forward event logs to Splunk?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "total windows servers",
       "exampleQuantity": 120,
@@ -134,7 +134,7 @@
     },
     "linux_servers": {
       "sourceId": "linux_servers",
-      "question": "How many production linux/unix servers are in scope for Linux / Unix Servers (Production)?",
+      "question": "How many production Linux or Unix servers send syslog and security logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "production linux/unix servers",
       "exampleQuantity": 10,
@@ -142,7 +142,7 @@
     },
     "mainframe": {
       "sourceId": "mainframe",
-      "question": "How many mainframe systems are in scope for Mainframe?",
+      "question": "How many mainframe LPARs or logical systems forward SMF and security logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "mainframe systems",
       "exampleQuantity": 10,
@@ -150,7 +150,7 @@
     },
     "linux_servers_nonprod": {
       "sourceId": "linux_servers_nonprod",
-      "question": "How many non-prod linux/unix servers are in scope for Linux / Unix Servers (Non-Production)?",
+      "question": "How many dev, test, or staging Linux/Unix servers forward logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "non-prod linux/unix servers",
       "exampleQuantity": 10,
@@ -158,7 +158,7 @@
     },
     "hypervisor": {
       "sourceId": "hypervisor",
-      "question": "How many virtualization hosts are in scope for Virtual Infrastructure (Hypervisor)?",
+      "question": "How many hypervisor hosts or management platforms (vCenter, Hyper-V) forward logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "virtualization hosts",
       "exampleQuantity": 10,
@@ -166,7 +166,7 @@
     },
     "database": {
       "sourceId": "database",
-      "question": "How many database instances are in scope for Database Instances?",
+      "question": "How many database instances (relational or NoSQL) send audit and error logs?",
       "primaryInputField": "number_of_instances",
       "unitLabel": "database instances",
       "exampleQuantity": 10,
@@ -174,7 +174,7 @@
     },
     "db_transaction": {
       "sourceId": "db_transaction",
-      "question": "How many instances for transaction logs are in scope for Transaction Logs?",
+      "question": "How many database instances capture transaction or SQL audit streams?",
       "primaryInputField": "count",
       "unitLabel": "instances for transaction logs",
       "exampleQuantity": 10,
@@ -182,7 +182,7 @@
     },
     "db_access": {
       "sourceId": "db_access",
-      "question": "How many instances for access logs are in scope for Access / Audit Logs?",
+      "question": "How many database instances capture access and authentication audit logs?",
       "primaryInputField": "count",
       "unitLabel": "instances for access logs",
       "exampleQuantity": 10,
@@ -190,7 +190,7 @@
     },
     "web_servers": {
       "sourceId": "web_servers",
-      "question": "How many production web servers hosting applications are in scope for Web Servers (Production)?",
+      "question": "How many production web servers hosting HTTP/HTTPS applications forward access logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "production web servers hosting applications",
       "exampleQuantity": 10,
@@ -198,7 +198,7 @@
     },
     "app_servers": {
       "sourceId": "app_servers",
-      "question": "How many production application servers are in scope for Application Servers (Production)?",
+      "question": "How many production application servers (J2EE, .NET, etc.) forward application logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "production application servers",
       "exampleQuantity": 10,
@@ -206,7 +206,7 @@
     },
     "middleware": {
       "sourceId": "middleware",
-      "question": "How many production middleware systems are in scope for Middleware Services (Production)?",
+      "question": "How many production message queues, ESBs, or integration platforms forward logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "production middleware systems",
       "exampleQuantity": 10,
@@ -214,7 +214,7 @@
     },
     "business_txn": {
       "sourceId": "business_txn",
-      "question": "How many business applications instrumented are in scope for Business Transaction Logs?",
+      "question": "How many business applications produce instrumented transaction logs?",
       "primaryInputField": "number_of_applications",
       "unitLabel": "business applications instrumented",
       "exampleQuantity": 10,
@@ -222,7 +222,7 @@
     },
     "apm": {
       "sourceId": "apm",
-      "question": "How many apm-monitored applications are in scope for APM (Application Performance Monitoring)?",
+      "question": "How many applications are monitored by your APM platform?",
       "primaryInputField": "number_of_applications",
       "unitLabel": "apm-monitored applications",
       "exampleQuantity": 10,
@@ -230,7 +230,7 @@
     },
     "pki": {
       "sourceId": "pki",
-      "question": "How many pki / ca servers are in scope for Public Key Infrastructure (PKI)?",
+      "question": "How many certificate authority or PKI servers log issuance and revocation events?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "pki / ca servers",
       "exampleQuantity": 10,
@@ -238,7 +238,7 @@
     },
     "sap": {
       "sourceId": "sap",
-      "question": "How many sap systems are in scope for SAP?",
+      "question": "How many SAP systems (ERP, S/4HANA, etc.) forward security and change logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "sap systems",
       "exampleQuantity": 10,
@@ -246,7 +246,7 @@
     },
     "desktops": {
       "sourceId": "desktops",
-      "question": "How many users are in scope for Desktops / Workstations?",
+      "question": "How many end-user workstations or laptops forward desktop logs?",
       "primaryInputField": "number_of_endpoints",
       "unitLabel": "managed end-user devices",
       "exampleQuantity": 5000,
@@ -270,7 +270,7 @@
     },
     "email": {
       "sourceId": "email",
-      "question": "How many mail servers or gateways are in scope for Email Servers / Email Gateways?",
+      "question": "How many mail servers or secure email gateways forward message tracking logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "mail servers or gateways",
       "exampleQuantity": 12,
@@ -278,7 +278,7 @@
     },
     "mdm": {
       "sourceId": "mdm",
-      "question": "How many managed mobile devices are in scope for Mobile Device Management (MDM)?",
+      "question": "How many mobile devices are enrolled and managed by your MDM platform?",
       "primaryInputField": "number_of_devices",
       "unitLabel": "managed mobile devices",
       "exampleQuantity": 10,
@@ -286,7 +286,7 @@
     },
     "vuln_mgmt": {
       "sourceId": "vuln_mgmt",
-      "question": "How many scanning appliances or managers are in scope for Vulnerability Management?",
+      "question": "How many vulnerability scanners or scan managers feed results to Splunk?",
       "primaryInputField": "number_of_assets",
       "unitLabel": "scanning appliances or managers",
       "exampleQuantity": 10,
@@ -294,7 +294,7 @@
     },
     "netflow": {
       "sourceId": "netflow",
-      "question": "How many devices exporting netflow data are in scope for Network Traffic Analysis / NetFlow?",
+      "question": "How many network devices export NetFlow, sFlow, or IPFIX to Splunk?",
       "primaryInputField": "number_of_devices",
       "unitLabel": "devices exporting netflow data",
       "exampleQuantity": 10,
@@ -302,7 +302,7 @@
     },
     "ids_ips": {
       "sourceId": "ids_ips",
-      "question": "How many ids/ips sensors are in scope for Intrusion Prevention/Detection Systems (IPS/IDS)?",
+      "question": "How many network IDS/IPS sensors or managers forward alert logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "ids/ips sensors",
       "exampleQuantity": 10,
@@ -310,7 +310,7 @@
     },
     "threat_intel": {
       "sourceId": "threat_intel",
-      "question": "How many threat intel feeds are in scope for Threat Intelligence Feeds?",
+      "question": "How many distinct threat intelligence feeds does Splunk ingest?",
       "primaryInputField": "number_of_feeds",
       "unitLabel": "threat intel feeds",
       "exampleQuantity": 10,
@@ -318,7 +318,7 @@
     },
     "sandbox": {
       "sourceId": "sandbox",
-      "question": "How many sandbox systems are in scope for Automated Malware Analysis (Sandbox)?",
+      "question": "How many malware sandbox or detonation systems forward analysis results?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "sandbox systems",
       "exampleQuantity": 10,
@@ -326,11 +326,11 @@
     },
     "dlp": {
       "sourceId": "dlp",
-      "question": "How many users are in scope for Data Loss/Leakage Prevention (DLP)?",
+      "question": "How many users or endpoints are monitored by your DLP solution?",
       "primaryInputField": "number_of_users",
-      "unitLabel": "endpoints covered by dlp",
+      "unitLabel": "active users / endpoints monitored by DLP",
       "exampleQuantity": 8000,
-      "helperText": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems."
+      "helperText": "Count active users or endpoints that can generate DLP incidents. This sizes policy violations and incident records, not full endpoint telemetry or inspected content."
     },
     "edr": {
       "sourceId": "edr",
@@ -342,7 +342,7 @@
     },
     "ndr": {
       "sourceId": "ndr",
-      "question": "How many ndr network sensors are in scope for NDR (Network Detection & Response)?",
+      "question": "How many NDR sensors or collectors analyze network traffic for threats?",
       "primaryInputField": "number_of_sensors",
       "unitLabel": "ndr network sensors",
       "exampleQuantity": 10,
@@ -350,7 +350,7 @@
     },
     "deception": {
       "sourceId": "deception",
-      "question": "How many deception/honeypot systems are in scope for Deception Technology?",
+      "question": "How many honeypot, honeytoken, or deception decoy systems are deployed?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "deception/honeypot systems",
       "exampleQuantity": 10,
@@ -358,7 +358,7 @@
     },
     "web_servers_nonprod": {
       "sourceId": "web_servers_nonprod",
-      "question": "How many non-prod web servers are in scope for Web Servers (Non-Production)?",
+      "question": "How many non-production web servers in dev, test, or staging forward logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "non-prod web servers",
       "exampleQuantity": 10,
@@ -366,7 +366,7 @@
     },
     "app_servers_nonprod": {
       "sourceId": "app_servers_nonprod",
-      "question": "How many non-prod application servers are in scope for Application Servers (Non-Production)?",
+      "question": "How many non-production application servers forward logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "non-prod application servers",
       "exampleQuantity": 10,
@@ -374,7 +374,7 @@
     },
     "middleware_nonprod": {
       "sourceId": "middleware_nonprod",
-      "question": "How many non-prod middleware systems are in scope for Middleware Services (Non-Production)?",
+      "question": "How many non-production middleware systems forward logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "non-prod middleware systems",
       "exampleQuantity": 10,
@@ -382,7 +382,7 @@
     },
     "config_mgmt": {
       "sourceId": "config_mgmt",
-      "question": "How many servers running config management are in scope for Configuration Management / Deployment Tools?",
+      "question": "How many servers are managed by your configuration management platform?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "servers running config management",
       "exampleQuantity": 10,
@@ -390,7 +390,7 @@
     },
     "devops_cicd": {
       "sourceId": "devops_cicd",
-      "question": "How many build/ci servers are in scope for CI/CD and Build Systems?",
+      "question": "How many CI/CD pipelines or build servers forward deployment logs?",
       "primaryInputField": "number_of_pipelines",
       "unitLabel": "build/ci servers",
       "exampleQuantity": 10,
@@ -398,7 +398,7 @@
     },
     "switches": {
       "sourceId": "switches",
-      "question": "How many managed switches are in scope for Network Switches?",
+      "question": "How many managed network switches forward syslog or SNMP trap logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "managed switches",
       "exampleQuantity": 10,
@@ -406,7 +406,7 @@
     },
     "routers": {
       "sourceId": "routers",
-      "question": "How many routers are in scope for Routers?",
+      "question": "How many network routers forward routing and ACL event logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "routers",
       "exampleQuantity": 10,
@@ -414,7 +414,7 @@
     },
     "firewalls": {
       "sourceId": "firewalls",
-      "question": "How many firewall devices total are in scope for Firewalls (Next-Gen Firewalls)?",
+      "question": "How many next-generation firewall appliances will send traffic and threat logs to Splunk?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "firewall devices total",
       "exampleQuantity": 12,
@@ -422,7 +422,7 @@
     },
     "fw_perimeter": {
       "sourceId": "fw_perimeter",
-      "question": "How many internet-facing firewalls are in scope for Perimeter Firewalls?",
+      "question": "How many internet-facing perimeter firewalls handle north-south traffic?",
       "primaryInputField": "count",
       "unitLabel": "internet-facing firewalls",
       "exampleQuantity": 10,
@@ -430,7 +430,7 @@
     },
     "fw_internal": {
       "sourceId": "fw_internal",
-      "question": "How many internal firewalls are in scope for Internal Segmentation Firewalls?",
+      "question": "How many internal segmentation firewalls enforce east-west zone boundaries?",
       "primaryInputField": "count",
       "unitLabel": "internal firewalls",
       "exampleQuantity": 10,
@@ -438,7 +438,7 @@
     },
     "fw_waf": {
       "sourceId": "fw_waf",
-      "question": "How many waf instances are in scope for Web Application Firewall (WAF)?",
+      "question": "How many web application firewall instances protect HTTP/HTTPS applications?",
       "primaryInputField": "count",
       "unitLabel": "waf instances",
       "exampleQuantity": 10,
@@ -446,7 +446,7 @@
     },
     "ddos": {
       "sourceId": "ddos",
-      "question": "How many ddos protection services are in scope for DDoS Protection?",
+      "question": "How many DDoS mitigation services or scrubbing centers forward attack logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "ddos protection services",
       "exampleQuantity": 10,
@@ -454,7 +454,7 @@
     },
     "vpn": {
       "sourceId": "vpn",
-      "question": "How many vpn gateway devices are in scope for VPN Gateways?",
+      "question": "How many VPN concentrators or SSL VPN gateways log user connections?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "vpn gateway devices",
       "exampleQuantity": 8,
@@ -462,7 +462,7 @@
     },
     "proxy": {
       "sourceId": "proxy",
-      "question": "How many web proxy devices are in scope for Web Proxy / Secure Web Gateway?",
+      "question": "How many web proxy or secure web gateway appliances log user URL activity?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "web proxy devices",
       "exampleQuantity": 6,
@@ -470,7 +470,7 @@
     },
     "nac": {
       "sourceId": "nac",
-      "question": "How many nac servers are in scope for Network Access Control (NAC)?",
+      "question": "How many NAC policy servers assess device posture and admission decisions?",
       "primaryInputField": "number_of_devices",
       "unitLabel": "nac servers",
       "exampleQuantity": 10,
@@ -478,7 +478,7 @@
     },
     "wireless": {
       "sourceId": "wireless",
-      "question": "How many wireless access points are in scope for Wireless Access Points?",
+      "question": "How many wireless access points or controllers forward client association logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "wireless access points",
       "exampleQuantity": 10,
@@ -486,7 +486,7 @@
     },
     "dns": {
       "sourceId": "dns",
-      "question": "How many dns servers are in scope for DNS?",
+      "question": "How many internal DNS resolvers or authoritative servers forward query logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "dns servers",
       "exampleQuantity": 8,
@@ -494,7 +494,7 @@
     },
     "dpi": {
       "sourceId": "dpi",
-      "question": "How many dpi systems are in scope for Deep Packet Inspection / Full PCAP?",
+      "question": "How many deep packet inspection or full-packet-capture systems forward network data?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "dpi systems",
       "exampleQuantity": 10,
@@ -502,7 +502,7 @@
     },
     "dhcp": {
       "sourceId": "dhcp",
-      "question": "How many dhcp servers are in scope for DHCP?",
+      "question": "How many DHCP servers forward lease assignment logs?",
       "primaryInputField": "number_of_servers",
       "unitLabel": "dhcp servers",
       "exampleQuantity": 10,
@@ -510,7 +510,7 @@
     },
     "loadbalancer": {
       "sourceId": "loadbalancer",
-      "question": "How many load balancer devices are in scope for Load Balancers?",
+      "question": "How many load balancer appliances or virtual instances forward traffic logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "load balancer devices",
       "exampleQuantity": 10,
@@ -518,7 +518,7 @@
     },
     "storage_prod": {
       "sourceId": "storage_prod",
-      "question": "How many production storage arrays are in scope for Production Storage Arrays?",
+      "question": "How many production storage arrays forward access and performance logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "production storage arrays",
       "exampleQuantity": 10,
@@ -526,7 +526,7 @@
     },
     "ics_scada": {
       "sourceId": "ics_scada",
-      "question": "How many industrial control or scada systems are in scope for ICS / SCADA Systems?",
+      "question": "How many ICS or SCADA systems (PLCs, HMIs, historians) forward operational logs?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "industrial control or scada systems",
       "exampleQuantity": 10,
@@ -534,7 +534,7 @@
     },
     "asset_cmdb": {
       "sourceId": "asset_cmdb",
-      "question": "How many asset or identity data sources are in scope for Asset & Identity Lists (CMDB / AD / LDAP)?",
+      "question": "How many asset inventory or identity directory sources feed enrichment data?",
       "primaryInputField": "number_of_assets",
       "unitLabel": "asset or identity data sources",
       "exampleQuantity": 10,
@@ -542,7 +542,7 @@
     },
     "ot_security": {
       "sourceId": "ot_security",
-      "question": "How many ot network security sensors are in scope for OT Security Solutions (OT IDS)?",
+      "question": "How many OT network security sensors or OT IDS platforms are deployed?",
       "primaryInputField": "number_of_systems",
       "unitLabel": "ot network security sensors",
       "exampleQuantity": 10,

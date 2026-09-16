@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Save, Layers } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import WorkflowStepIndicator from '../components/layout/WorkflowStepIndicator';
 import { STEP } from '../config/workflowSteps.js';
 import { useToast } from '../components/layout/Toast';
@@ -11,7 +12,8 @@ import ReportDeliverablePreview from '../components/report/ReportDeliverablePrev
 import { useCustomerReportData } from '../hooks/useCustomerReportData';
 
 export default function ReportPage() {
-  const { state, dispatch } = useApp();
+  const { state } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -34,7 +36,7 @@ export default function ReportPage() {
           </div>
           <button
             type="button"
-            onClick={() => dispatch({ type: 'SET_STEP', payload: STEP.PATHS })}
+            onClick={() => goToStep(STEP.PATHS)}
             className="btn-secondary flex items-center gap-1.5 text-sm shrink-0"
           >
             <ChevronLeft size={14} /> Architecture Paths
@@ -51,7 +53,7 @@ export default function ReportPage() {
             <button
               type="button"
               className="btn-primary"
-              onClick={() => dispatch({ type: 'SET_STEP', payload: STEP.PATHS })}
+              onClick={() => goToStep(STEP.PATHS)}
             >
               Go to Architecture Paths
             </button>
@@ -81,7 +83,7 @@ export default function ReportPage() {
           />
           <button
             type="button"
-            onClick={() => dispatch({ type: 'SET_STEP', payload: STEP.PATHS })}
+            onClick={() => goToStep(STEP.PATHS)}
             className="btn-secondary flex items-center gap-1.5 text-sm shrink-0"
           >
             <ChevronLeft size={14} /> Back

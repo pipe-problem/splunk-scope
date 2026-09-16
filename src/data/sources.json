@@ -272,10 +272,10 @@
     "name": "SaaS (General)",
     "category": "Cloud/SaaS Services",
     "subcategory": "SaaS",
-    "description": "SaaS platform audit and activity logs: admin/configuration changes, authentication and access security, user/object activity, and API/integration events. Sized by tenant count, active users, and integrations — not per-1,000 users.",
+    "description": "Catch-all SaaS platform audit logs not covered by the dedicated Office, CRM, SSO, conferencing, or file-sharing rows. Simple sizing counts distinct SaaS applications or tenants, not users.",
     "whyItMatters": "SaaS platforms are primary vectors for business email compromise, data exfiltration, and account takeover. Visibility into user activity is critical for detecting insider threats and compromised accounts.",
-    "configuredItemLabel": "SaaS tenants, active users, and integrations",
-    "sizingUnit": "per_user",
+    "configuredItemLabel": "# of SaaS applications / tenants",
+    "sizingUnit": "per_item",
     "sizingRate": 0.15,
     "sizingRateLow": 0.12,
     "sizingRateHigh": 0.18,
@@ -320,14 +320,14 @@
         ]
       },
       {
-        "key": "number_of_users",
-        "label": "Number of users",
+        "key": "saasTenantCount",
+        "label": "Number of SaaS applications / tenants",
         "type": "number"
       }
     ],
     "sizing_formula": {
-      "primary_input": "number_of_users",
-      "strategy": "per_user",
+      "primary_input": "saasTenantCount",
+      "strategy": "per_item",
       "rate_per_unit": 0.15
     },
     "children": [
@@ -549,7 +549,7 @@
       }
     ],
     "workbookRateGbPerUnit": 0.15,
-    "customerSummary": "General SaaS application audit logs not covered by Office, CRM, or IdP rows."
+    "customerSummary": "General SaaS audit logs sized by distinct application or tenant. User-based SaaS products are sized in their dedicated rows."
   },
   {
     "id": "cspm",
@@ -677,9 +677,9 @@
     "whyItMatters": "CASB logs reveal shadow IT, unsanctioned data sharing, and policy violations across cloud services — key for insider threat and data loss investigations.",
     "configuredItemLabel": "# of users covered",
     "sizingUnit": "per_user",
-    "sizingRate": 0.05,
-    "sizingRateLow": 0.04000000000000001,
-    "sizingRateHigh": 0.06,
+    "sizingRate": 0.005,
+    "sizingRateLow": 0.004,
+    "sizingRateHigh": 0.006,
     "exampleVendors": [
       "Zscaler",
       "Cisco Cloudlock",
@@ -722,9 +722,9 @@
     "sizing_formula": {
       "primary_input": "number_of_users",
       "strategy": "per_user",
-      "rate_per_unit": 0.05
+      "rate_per_unit": 0.005
     },
-    "workbookRateGbPerUnit": 0.05,
+    "workbookRateGbPerUnit": 0.005,
     "customerSummary": "Cloud app discovery, sanctioned/unsanctioned usage, and CASB policy violation logs."
   },
   {
@@ -2577,11 +2577,11 @@
     "subcategory": "Data Security",
     "description": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems.",
     "whyItMatters": "DLP logs are essential for detecting and investigating data exfiltration — both malicious insiders and external attackers staging data for theft.",
-    "configuredItemLabel": "# of endpoints covered by DLP",
+    "configuredItemLabel": "# of active users / endpoints monitored by DLP",
     "sizingUnit": "per_user",
-    "sizingRate": 0.05,
-    "sizingRateLow": 0.04000000000000001,
-    "sizingRateHigh": 0.06,
+    "sizingRate": 0.002,
+    "sizingRateLow": 0.001,
+    "sizingRateHigh": 0.004,
     "exampleVendors": [
       "Microsoft Purview",
       "Digital Guardian",
@@ -2613,17 +2613,17 @@
       },
       {
         "key": "number_of_users",
-        "label": "Number of users",
+        "label": "Number of active users / endpoints",
         "type": "number"
       }
     ],
     "sizing_formula": {
       "primary_input": "number_of_users",
       "strategy": "per_user",
-      "rate_per_unit": 0.05
+      "rate_per_unit": 0.002
     },
-    "workbookRateGbPerUnit": 0.05,
-    "customerSummary": "DLP policy violation events, data classification results, and incident alerts from network and endpoint DLP systems."
+    "workbookRateGbPerUnit": 0.002,
+    "customerSummary": "DLP policy violations, incidents, and classification results. This does not represent full endpoint telemetry or inspected content volume."
   },
   {
     "id": "uba",

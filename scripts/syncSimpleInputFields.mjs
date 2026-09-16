@@ -97,24 +97,6 @@ function buildInputFields(source, orig) {
   return fields.slice(0, 2);
 }
 
-function buildQuestion(source, orig) {
-  const primary = orig.primaryInputField;
-  const unit = orig.unitLabel || 'units';
-  if (primary?.includes('user') || String(unit).includes('user')) {
-    return `How many users are in scope for ${source.name}?`;
-  }
-  if (primary?.includes('dc')) {
-    return 'How many Active Directory domain controllers send logs to Splunk?';
-  }
-  if (primary === 'number_of_endpoints') {
-    return 'How many endpoints report into this platform daily?';
-  }
-  if (primary === 'number_of_systems' && source.id === 'sso_pam') {
-    return 'How many PAM or vault platforms forward privileged-access audit logs?';
-  }
-  return `How many ${unit} are in scope for ${source.name}?`;
-}
-
 function walk(nodes, origEntries, stats) {
   for (const node of nodes) {
     const orig = origEntries[node.id];
@@ -160,15 +142,15 @@ function main() {
     const orig = origEntries[sourceId];
     if (!source || !orig) continue;
 
-    const question = buildQuestion(source, orig);
     const primary = orig.primaryInputField;
 
     if (!questions[sourceId]) {
       questions[sourceId] = { sourceId };
     }
     const q = questions[sourceId];
-    if (q.question !== question) {
-      q.question = question;
+    // Hand-authored questions in JSON are authoritative; only bootstrap when missing.
+    if (!q.question) {
+      q.question = `How many ${orig.unitLabel || 'units'}?`;
       stats.qUpdates += 1;
     }
     if (q.primaryInputField !== primary) {
@@ -182,8 +164,8 @@ function main() {
       methods[sourceId] = { sourceId };
     }
     const m = methods[sourceId];
-    if (m.customerQuestion !== question) {
-      m.customerQuestion = question;
+    if (!m.customerQuestion && q.question) {
+      m.customerQuestion = q.question;
       stats.mUpdates += 1;
     }
     if (m.primaryUnit !== orig.unitLabel) {

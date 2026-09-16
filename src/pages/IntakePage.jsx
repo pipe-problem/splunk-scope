@@ -5,7 +5,7 @@ import { ChevronRight, ChevronDown, Copy, Upload, AlertTriangle, X, ClipboardLis
 import SearchableMultiSelect from '../components/SearchableMultiSelect';
 import UseCaseSelect from '../components/UseCaseSelect';
 import AutoTextarea from '../components/AutoTextarea';
-import { getIntakeSplunkAppsCatalog } from '../services/splunkAppsCatalog.js';
+import { getIntakeSplunkAppsCatalog, getFlatSplunkApps } from '../services/splunkAppsCatalog.js';
 import { formatImportReviewLabel } from '../utils/displayLabels.js';
 import { filterIntakeAppIds } from '../services/intakeImportHelpers.js';
 import { suggestRecommendedAppIds } from '../services/intakeRecommendations.js';
@@ -15,6 +15,10 @@ import sampleScenarios, { getSampleScenarioById } from '../data/sampleScenarios'
 import { parseCustomerContext, formatExtractionSummary } from '../services/contextImportEngine';
 import { buildCircuitExtractionPrompt } from '../services/circuitPromptBuilder.js';
 import { processCircuitResponse } from '../services/circuitResponseProcessor.js';
+import {
+  buildAppliedSourcePatch,
+  buildImportPreviewRows,
+} from '../services/importSourceMapper.js';
 import { matchParsedSplunkLabelToAppId } from '../services/intakeImportHelpers.js';
 import {
   getGoalPresetsForPhase,
@@ -68,6 +72,30 @@ function PathBudgetInput({ label, hint, value, defaultValue, onChange }) {
         <span className="text-sm text-[var(--cast-text-muted)]">%</span>
       </div>
     </div>
+  );
+}
+
+function AiImportSummaryCard({ summary }) {
+  if (!summary?.useCaseAssessment?.trim()) return null;
+  const appById = new Map(getFlatSplunkApps().map((a) => [a.id, a.name]));
+  const appLabels = (summary.recommendedAppIds || []).map((id) => appById.get(id) || id);
+
+  return (
+    <IntakeCard title="AI assessment" className="border-[var(--cast-accent)]/25 bg-[var(--cast-accent-muted)]/20">
+      <p className="text-label text-[var(--cast-text-secondary)] leading-relaxed">{summary.useCaseAssessment}</p>
+      {(summary.recommendedSplunkCapabilities?.length > 0) && (
+        <ul className="mt-2 space-y-1 text-label text-[var(--cast-text-secondary)] list-disc pl-4">
+          {summary.recommendedSplunkCapabilities.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      )}
+      {appLabels.length > 0 && (
+        <p className="mt-2 text-badge text-[var(--cast-text-muted)]">
+          Suggested Splunk apps: {appLabels.join(' · ')}
+        </p>
+      )}
+    </IntakeCard>
   );
 }
 
@@ -126,6 +154,7 @@ export default function IntakePage() {
   const [heuristicResult, setHeuristicResult] = useState(null);
 
   const [previewEdits, setPreviewEdits] = useState(null);
+  const [selectedSourceIds, setSelectedSourceIds] = useState(() => new Set());
 
   function update(field, value) {
     dispatch({ type: 'UPDATE_INTAKE', payload: { [field]: value } });
@@ -182,7 +211,7 @@ export default function IntakePage() {
     const prompt = buildCircuitExtractionPrompt();
     try {
       await navigator.clipboard.writeText(prompt);
-      toast.success('Circuit prompt copied');
+      toast.success('Cursor prompt copied');
     } catch {
       toast.error('Could not copy to clipboard — select and copy manually.');
     }
@@ -198,6 +227,16 @@ export default function IntakePage() {
     const result = processCircuitResponse(text);
     setCircuitResult(result);
     if (result.parsed && result.fields) {
+      const defaultSelected = new Set(
+        (result.fields.sourceCandidates || [])
+          .filter((c) => c.applyByDefault)
+          .map((c) => c.sourceId),
+      );
+      setSelectedSourceIds(defaultSelected);
+      const sourcePreviewRows = buildImportPreviewRows(
+        result.fields.sourceCandidates,
+        result.fields.sourceHints,
+      );
       setPreviewEdits({
         customerName: result.fields.customerName || '',
         deploymentType: result.fields.deploymentType || 'unknown',
@@ -209,11 +248,14 @@ export default function IntakePage() {
         walkGoalPresetId: result.fields.walkGoalPresetId || DEFAULT_GOAL_PRESET_IDS.walk,
         runGoalPresetId: result.fields.runGoalPresetId || DEFAULT_GOAL_PRESET_IDS.run,
         pathBudgetPercentages: result.fields.pathBudgetPercentages || { ...DEFAULT_PATH_BUDGET_PERCENTAGES },
-        sourceHints: result.fields.sourceHints || [],
+        sourceHints: (result.fields.sourceHints || []).filter((h) => !h.sourceId),
+        sourcePreviewRows,
+        aiImportSummary: result.fields.aiImportSummary || null,
       });
       setApplyBudget(result.fields.budget != null);
     } else {
       setPreviewEdits(null);
+      setSelectedSourceIds(new Set());
     }
     if (!result.parsed && result.parseError) {
       toast.error(result.parseError);
@@ -252,25 +294,62 @@ export default function IntakePage() {
     if (previewEdits.sourceHints?.length) {
       updates.sourceHints = [...(intake.sourceHints || []), ...previewEdits.sourceHints];
     }
+    if (previewEdits.aiImportSummary) {
+      updates.aiImportSummary = {
+        ...previewEdits.aiImportSummary,
+        appliedAt: new Date().toISOString(),
+      };
+    }
     dispatch({ type: 'UPDATE_INTAKE', payload: updates });
+
+    const sourcePatches = {};
+    const skippedSources = [];
+    for (const row of previewEdits.sourcePreviewRows || []) {
+      if (!selectedSourceIds.has(row.sourceId)) continue;
+      const patch = buildAppliedSourcePatch(row.sourceId, {
+        count: row.editCount,
+        vendor: row.editVendor,
+        status: row.patch?.status,
+        notes: row.patch?.notes,
+      });
+      if (patch) {
+        sourcePatches[row.sourceId] = { ...row.patch, ...patch };
+      } else {
+        skippedSources.push(row.sourceName || row.sourceId);
+      }
+    }
+    if (skippedSources.length > 0) {
+      toast.error(`Skipped ${skippedSources.length} source(s) — enter a valid count before apply.`);
+    }
+    if (Object.keys(sourcePatches).length > 0) {
+      dispatch({ type: 'APPLY_IMPORTED_SOURCES', payload: sourcePatches });
+    }
+
     dispatch({
       type: 'SET_IMPORTED_CONTEXT',
       payload: {
         result: circuitResult.raw,
-        summary: `Circuit-assisted import (${circuitResult.source})`,
+        summary: `Cursor-assisted import (${circuitResult.source})`,
         appliedAt: new Date().toISOString(),
         source: circuitResult.source,
       },
     });
     setCircuitResult(null);
     setPreviewEdits(null);
+    setSelectedSourceIds(new Set());
     setCircuitDraft('');
-    toast.success('Circuit findings applied to intake.');
+    const sourceCount = Object.keys(sourcePatches).length;
+    toast.success(
+      sourceCount > 0
+        ? `Applied intake and ${sourceCount} source${sourceCount === 1 ? '' : 's'}.`
+        : 'Cursor findings applied to intake.',
+    );
   }
 
   function handleDismissCircuit() {
     setCircuitResult(null);
     setPreviewEdits(null);
+    setSelectedSourceIds(new Set());
   }
 
   function handleHeuristicExtract() {
@@ -365,7 +444,7 @@ export default function IntakePage() {
             <h2>Customer Intake</h2>
             <WorkflowStepIndicator currentStep={STEP.INTAKE} />
           </div>
-          <p className="hidden md:block page-subtitle">Capture customer context with Circuit-assisted structured import or manual entry</p>
+          <p className="hidden md:block page-subtitle">Capture customer context with Cursor-assisted structured import or manual entry</p>
         </div>
         <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
           <div className="relative" ref={exampleMenuRef}>
@@ -399,37 +478,37 @@ export default function IntakePage() {
 
       <div className="page-scroll py-4 sm:py-5">
         <div className="page-content-width page-content-width--intake space-y-4 scroll-mt-3">
-          {/* Circuit-assisted import */}
+          {/* Cursor-assisted import */}
           <CircuitImportSection>
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <ClipboardList size={14} className="text-[var(--cast-accent)] shrink-0" aria-hidden="true" />
-              <h3 className="text-card-title m-0">Circuit-assisted import</h3>
+              <h3 className="text-card-title m-0">Cursor-assisted import</h3>
               <span className="text-badge uppercase tracking-wider text-[var(--cast-text-muted)] px-1.5 py-0.5 rounded border border-[var(--cast-border)]/80">Structured import</span>
             </div>
             <p className="text-label text-[var(--cast-text-secondary)] mb-3 leading-snug">
-              Copy the extraction prompt into Cisco Circuit, paste customer notes there, then paste Circuit&apos;s JSON response below.
-              Customer data stays in Circuit — Scope only parses structured JSON locally.
+              Copy the extraction prompt into Cursor (includes the <code className="text-[12px]">splunk-scope-import</code> skill instructions), attach customer notes or PDFs, then paste Cursor&apos;s JSON below.
+              Customer notes stay in Cursor — Scope only parses structured JSON locally.
             </p>
             <div className="flex flex-wrap gap-2 mb-3">
               <button type="button" className="btn-secondary flex items-center gap-1.5 text-badge" onClick={handleCopyCircuitPrompt}>
-                <Copy size={12} /> Copy Circuit Extraction Prompt
+                <Copy size={12} /> Copy Cursor Extraction Prompt
               </button>
               <input ref={fileInputRef} type="file" accept=".txt,.md,.json,text/plain,application/json" className="hidden" onChange={handleFileChange} />
               <button type="button" className="btn-secondary flex items-center gap-1.5 text-badge" onClick={() => fileInputRef.current?.click()}>
                 <Upload size={12} /> Upload response file
               </button>
             </div>
-            <label className="text-label block mb-1">Paste Circuit response here</label>
+            <label className="text-label block mb-1">Paste Cursor JSON response here</label>
             <AutoTextarea
               className="font-mono text-[13px]"
               value={circuitDraft}
               onChange={(e) => setCircuitDraft(e.target.value)}
-              placeholder="Paste JSON returned by Circuit (JSON only, no markdown)…"
+              placeholder="Paste JSON returned by Cursor (JSON only, no markdown)…"
               minRows={4}
               maxRows={14}
             />
             <div className="flex flex-wrap items-center gap-2 mt-2">
-              <button type="button" className="btn-primary text-badge" onClick={handleProcessCircuit}>Process Circuit Output</button>
+              <button type="button" className="btn-primary text-badge" onClick={handleProcessCircuit}>Process Cursor Output</button>
             </div>
             {circuitResult?.parsed && previewEdits && conf && (
               <div className="mt-3">
@@ -438,6 +517,8 @@ export default function IntakePage() {
                   conf={conf}
                   previewEdits={previewEdits}
                   setPreviewEdits={setPreviewEdits}
+                  selectedSourceIds={selectedSourceIds}
+                  setSelectedSourceIds={setSelectedSourceIds}
                   applyBudget={applyBudget}
                   setApplyBudget={setApplyBudget}
                   onApply={handleApplyCircuit}
@@ -449,6 +530,10 @@ export default function IntakePage() {
               <p className="text-badge text-[var(--cast-warning)] mt-2">{circuitResult.parseError}</p>
             )}
           </CircuitImportSection>
+
+          {(previewEdits?.aiImportSummary || intake.aiImportSummary) && (
+            <AiImportSummaryCard summary={previewEdits?.aiImportSummary || intake.aiImportSummary} />
+          )}
 
           {/* Customer */}
           <IntakeCard title="Customer">
@@ -680,7 +765,7 @@ export default function IntakePage() {
                     {fallbackOpen && (
                       <div className="mt-2 space-y-2">
                         <p className="text-badge text-[var(--cast-text-muted)]">
-                          For pasted notes without Circuit JSON — local regex/heuristic extraction only.
+                          For pasted notes without Cursor JSON — local regex/heuristic extraction only.
                         </p>
                         <AutoTextarea
                           className="font-mono text-[13px]"
@@ -714,13 +799,42 @@ export default function IntakePage() {
   );
 }
 
-function CircuitPreview({ result, conf, previewEdits, setPreviewEdits, applyBudget, setApplyBudget, onApply, onDismiss }) {
+function CircuitPreview({
+  result,
+  conf,
+  previewEdits,
+  setPreviewEdits,
+  selectedSourceIds,
+  setSelectedSourceIds,
+  applyBudget,
+  setApplyBudget,
+  onApply,
+  onDismiss,
+}) {
   const toggleUseCase = (name) => {
     const set = new Set(previewEdits.useCases || []);
     if (set.has(name)) set.delete(name);
     else set.add(name);
     setPreviewEdits({ ...previewEdits, useCases: [...set] });
   };
+
+  function toggleSourceApply(sourceId) {
+    const next = new Set(selectedSourceIds);
+    if (next.has(sourceId)) next.delete(sourceId);
+    else next.add(sourceId);
+    setSelectedSourceIds(next);
+  }
+
+  function updatePreviewSourceRow(sourceId, updates) {
+    setPreviewEdits({
+      ...previewEdits,
+      sourcePreviewRows: (previewEdits.sourcePreviewRows || []).map((row) => (
+        row.sourceId === sourceId ? { ...row, ...updates } : row
+      )),
+    });
+  }
+
+  const previewRows = previewEdits.sourcePreviewRows || [];
 
   return (
     <div className="card-alt border border-[var(--cast-border-strong)] p-3 space-y-2 relative">
@@ -816,12 +930,85 @@ function CircuitPreview({ result, conf, previewEdits, setPreviewEdits, applyBudg
             </select>
           </div>
         </div>
+        {(previewRows.length > 0) && (
+          <div>
+            <span className="text-badge text-[var(--cast-text-muted)] uppercase">Sources to apply</span>
+            <p className="text-badge text-[var(--cast-text-muted)] mt-0.5 mb-1">
+              High-confidence sources are checked by default. Check any row you want on the Sources page, enter counts, then apply.
+            </p>
+            <div className="overflow-x-auto rounded-lg border border-[var(--cast-border)]">
+              <table className="w-full text-badge">
+                <thead>
+                  <tr className="text-left text-[var(--cast-text-muted)] border-b border-[var(--cast-border)]">
+                    <th className="p-2 w-8" />
+                    <th className="p-2">Source</th>
+                    <th className="p-2">Count</th>
+                    <th className="p-2">Vendor</th>
+                    <th className="p-2">Confidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {previewRows.map((row) => {
+                    const badge = confidenceStyle(row.confidence);
+                    return (
+                      <tr key={row.sourceId} className="border-b border-[var(--cast-border)]/60 last:border-0">
+                        <td className="p-2 align-top">
+                          <input
+                            type="checkbox"
+                            checked={selectedSourceIds.has(row.sourceId)}
+                            onChange={() => toggleSourceApply(row.sourceId)}
+                            aria-label={`Apply ${row.sourceName}`}
+                          />
+                        </td>
+                        <td className="p-2 align-top">
+                          <div className="font-medium text-[var(--cast-text)]">{row.sourceName}</div>
+                          <div className="text-[var(--cast-text-muted)]">{row.sourceId}</div>
+                          {row.skipReason && (
+                            <div className="text-[var(--cast-warning)] mt-0.5">{row.skipReason}</div>
+                          )}
+                        </td>
+                        <td className="p-2 align-top">
+                          <input
+                            type="number"
+                            min={1}
+                            className="input-field w-24 text-sm"
+                            value={row.editCount ?? ''}
+                            placeholder="Count"
+                            onChange={(e) => updatePreviewSourceRow(row.sourceId, { editCount: e.target.value })}
+                          />
+                        </td>
+                        <td className="p-2 align-top">
+                          <input
+                            type="text"
+                            className="input-field w-full min-w-[8rem] text-sm"
+                            value={row.editVendor ?? ''}
+                            placeholder="Vendor"
+                            onChange={(e) => updatePreviewSourceRow(row.sourceId, { editVendor: e.target.value })}
+                          />
+                        </td>
+                        <td className="p-2 align-top">
+                          <span className="px-2 py-0.5 rounded-full capitalize" style={{ color: badge.fg, backgroundColor: badge.bg }}>
+                            {row.confidence}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
         {(previewEdits.sourceHints?.length > 0) && (
           <div>
-            <span className="text-badge text-[var(--cast-text-muted)] uppercase">Data sources found</span>
+            <span className="text-badge text-[var(--cast-text-muted)] uppercase">Source hints (not auto-applied)</span>
             <ul className="text-badge text-[var(--cast-text-secondary)] list-disc pl-4 mt-1">
               {previewEdits.sourceHints.map((h, i) => (
-                <li key={i}>{[h.sourceName, h.sourceId, h.vendor, h.count != null ? `count: ${h.count}` : null].filter(Boolean).join(' · ')}</li>
+                <li key={i}>
+                  {[h.sourceName, h.sourceId, h.vendor, h.count != null ? `count: ${h.count}` : null, h.skipReason]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </li>
               ))}
             </ul>
           </div>

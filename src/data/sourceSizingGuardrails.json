@@ -4,6 +4,7 @@
     "crm": "CRM sizing includes a planning guardrail based on active CRM users to avoid underestimating record and activity volume.",
     "office": "Office productivity sizing uses the largest user/mailbox/collaboration basis for planning guardrails.",
     "sso": "Identity sizing uses a conservative active-user planning guardrail because sign-in, MFA, policy, and application access events can vary significantly.",
+    "casb": "CASB default sizing uses policy/alert event rates (~0.005 GB/user/day), not inline SWG session volume. Select Full inline SaaS profile only when all proxied SaaS traffic is forwarded.",
     "saas_audit_only": "Audit-only tenant baseline. User activity and integrations are not included.",
     "office_audit_only": "Audit-only productivity logging. Mail, file, and collaboration activity are not fully included.",
     "containers": "The original sizing sheet treated container/platform logging as a high-level item. Scope sizes it more accurately from clusters, nodes, and containers.",
@@ -69,6 +70,12 @@
       "appliesToProfiles": null,
       "clusterRates": { "lowPerUnit": 0.1, "expectedPerUnit": 0.25, "highPerUnit": 0.35 },
       "noteKey": "containers"
+    },
+    {
+      "sourceId": "casb",
+      "applyMode": "casb_collection",
+      "profileField": "casbCollectionProfile",
+      "noteKey": "casb"
     },
     {
       "sourceId": "windows_servers",

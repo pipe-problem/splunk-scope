@@ -30,7 +30,7 @@ Single map of project documentation. **Start with [`README.md`](../README.md)** 
 |-----|----------|--------------|
 | [`APP_RECOMMENDATION_ENGINE.md`](./APP_RECOMMENDATION_ENGINE.md) | SE, engineering | Interpretation / exports Splunk product picks |
 | [`SOURCE_RECOMMENDATION_RULES.md`](./SOURCE_RECOMMENDATION_RULES.md) | SE, engineering | Data Sources priority labels and scoring |
-| [`CIRCUIT_IMPORT.md`](./CIRCUIT_IMPORT.md) | SE, engineering | Circuit-assisted intake, schema v5, rollback |
+| [`CURSOR_IMPORT.md`](./CURSOR_IMPORT.md) | SE, engineering | Cursor-assisted intake, schema v7, rollback |
 | [`SIZING_METHODOLOGY.md`](./SIZING_METHODOLOGY.md) | SE, catalog maintainers | GB/day bands, units, multipliers |
 | [`SOURCE_CATALOG_QA.md`](./SOURCE_CATALOG_QA.md) | Catalog maintainers | Per-source QA rubric |
 | [`src/data/README.md`](../src/data/README.md) | Catalog maintainers | Which JSON file to edit |

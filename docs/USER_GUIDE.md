@@ -48,15 +48,15 @@ Capture the minimum context Scope needs to interpret goals and size sources.
 - **Goals** — use **Crawl / Walk / Run** preset dropdowns for workshop-friendly language, or expand **Advanced** for freeform notes
 - **Planning budget** — optional GB/day cap or Splunk Cloud spend (used on Architecture Paths)
 
-### Circuit-assisted import (optional)
+### Cursor-assisted import (optional)
 
-If you used Splunk Circuit (or another LLM) to structure discovery notes:
+If you used Cursor (or another LLM) to structure discovery notes:
 
-1. Click **Circuit-assisted import**
-2. Copy the generated prompt → run in Circuit → paste JSON back
-3. Review the preview → **Apply to intake**
+1. Click **Cursor-assisted import**
+2. Copy the generated prompt (includes the `splunk-scope-import` skill) → run in Cursor with customer PDFs → paste JSON back
+3. Review the preview — edit source counts/vendors, check rows to apply → **Apply to Intake**
 
-See [`CIRCUIT_IMPORT.md`](./CIRCUIT_IMPORT.md) for schema details and rollback.
+See [`CURSOR_IMPORT.md`](./CURSOR_IMPORT.md) for schema details and rollback.
 
 ### Load Example
 
@@ -269,5 +269,5 @@ Save two or more named scenarios from Session Tools, then compare ingest, covera
 | [`README.md`](../README.md) | Install, quick start, doc index |
 | [`SIZING_METHODOLOGY.md`](./SIZING_METHODOLOGY.md) | GB/day bands and multipliers |
 | [`SOURCE_RECOMMENDATION_RULES.md`](./SOURCE_RECOMMENDATION_RULES.md) | Priority labels and scoring |
-| [`CIRCUIT_IMPORT.md`](./CIRCUIT_IMPORT.md) | AI-assisted intake |
+| [`CURSOR_IMPORT.md`](./CURSOR_IMPORT.md) | AI-assisted intake |
 | [`PRODUCT_PRINCIPLES.md`](./PRODUCT_PRINCIPLES.md) | UX and estimate honesty rules |

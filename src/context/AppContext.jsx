@@ -22,6 +22,7 @@ const initialState = {
     walkGoalPresetId: 'walk_expand_correlation',
     runGoalPresetId: 'run_optimize_and_mature',
     sourceHints: [],
+    aiImportSummary: null,
     discoveryNotes: '',
     importedContext: null,
     opportunityBudgetUsd: '',
@@ -74,6 +75,15 @@ function appReducer(state, action) {
           [sourceId]: { ...state.sources[sourceId], ...data },
         },
       };
+    }
+    case 'APPLY_IMPORTED_SOURCES': {
+      const patches = action.payload || {};
+      const nextSources = { ...state.sources };
+      for (const [sourceId, data] of Object.entries(patches)) {
+        if (!sourceId || !data) continue;
+        nextSources[sourceId] = { ...nextSources[sourceId], ...data };
+      }
+      return { ...state, sources: nextSources };
     }
     case 'REMOVE_SOURCE': {
       const { sourceId } = action.payload;

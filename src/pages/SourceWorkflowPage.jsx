@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
+import { useWorkflowNavigation } from '../hooks/useWorkflowNavigation.js';
 import sourceCatalog from '../data/sources.json';
 import { flattenSourceCatalog } from '../services/sizingEngine';
 import { resolveUseCaseProfiles } from '../services/useCaseResolver';
@@ -53,6 +54,7 @@ function sortSourcesForGrid(sources, sourceStates, displayMetaById, intakeReady)
 
 export default function SourceWorkflowPage() {
   const { state, dispatch } = useApp();
+  const { goToStep } = useWorkflowNavigation();
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [openedSourceId, setOpenedSourceId] = useState(null);
   const [panelAnchorRect, setPanelAnchorRect] = useState(null);
@@ -317,9 +319,9 @@ export default function SourceWorkflowPage() {
           <PageHeaderActions
             state={state}
             backLabel="Analysis"
-            onBack={() => dispatch({ type: 'SET_STEP', payload: STEP.ANALYSIS })}
+            onBack={() => goToStep(STEP.ANALYSIS)}
             continueLabel="Review"
-            onContinue={() => dispatch({ type: 'SET_STEP', payload: STEP.REVIEW })}
+            onContinue={() => goToStep(STEP.REVIEW)}
           />
         </div>
       </div>

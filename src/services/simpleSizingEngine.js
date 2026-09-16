@@ -32,7 +32,7 @@ export function resolvePrimaryQuantity(sourceId, sourceState = {}) {
 /**
  * @returns {{ expected: number, low: number, high: number, unit: string, quantity: number, rateSource: 'original_calculator', confidence: string, warnings: string[], assumptions: string[], needsReview: boolean, countBasis: string, vendorMultiplier: number, scopeMultiplier: number, bufferApplied: boolean, childIngest: number }}
  */
-export function calculateSimpleSourceIngest(source, sourceState = {}) {
+export function calculateSimpleSourceIngest(source, sourceState = {}, sizingContext = {}) {
   const sourceId = source?.id;
   const entry = getOriginalSizingRateEntry(sourceId);
 
